@@ -1,3 +1,21 @@
+## Stack
+- NextJs
+- Material UI
+- Storybook
+- Typescript
+- i18n 
+- i18nexus
+
+
+## Deployment
+Two potential ways to deploy the application
+### 1. Amplify
+### 2. Serverless
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
