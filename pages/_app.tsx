@@ -1,5 +1,5 @@
 // import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
 
 // function MyApp({ Component, pageProps }: AppProps) {
 //   return <Component {...pageProps} />
@@ -13,13 +13,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 
-import { lightTheme } from 'snet-ui/Theme/theme';
-import createEmotionCache from 'snet-ui/Theme/createEmotionCache';
+import { lightTheme } from "snet-ui/Theme/theme";
+import createEmotionCache from "snet-ui/Theme/createEmotionCache";
+import { appWithTranslation } from "next-i18next";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
-export default function MyApp(props: AppProps) {
+function MyApp(props: AppProps) {
   // @ts-ignore
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
@@ -43,3 +43,6 @@ MyApp.propTypes = {
   emotionCache: PropTypes.object,
   pageProps: PropTypes.object.isRequired,
 };
+
+// @ts-ignore
+export default appWithTranslation(MyApp);
