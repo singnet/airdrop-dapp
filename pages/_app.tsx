@@ -1,4 +1,3 @@
-// import '../styles/globals.css'
 import type { AppProps } from "next/app";
 
 // function MyApp({ Component, pageProps }: AppProps) {
@@ -16,9 +15,11 @@ import { CacheProvider } from "@emotion/react";
 import { lightTheme } from "snet-ui/Theme/theme";
 import createEmotionCache from "snet-ui/Theme/createEmotionCache";
 import { appWithTranslation } from "next-i18next";
+import "../styles/globals.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
+
 function MyApp(props: AppProps) {
   // @ts-ignore
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
