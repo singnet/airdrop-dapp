@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import React from "react";
 
 const PrimaryButton = styled(Button)`
-    color: 
-`
+  background-color: ${({ theme }) => theme.palette.primary.main};
+`;
 
-export default PrimaryButton
+export default PrimaryButton;

@@ -1,8 +1,8 @@
+import { Button } from "@mui/material";
 import { Meta } from "@storybook/react";
-import { PrimaryButton } from "./";
 
 export default {
   title: "Components/Button",
-  component: PrimaryButton,
 } as Meta;
-export const Primary: React.VFC<{}> = () => <PrimaryButton>Button</PrimaryButton>;
+export const Primary: React.VFC<{}> = () => <Button color="primary" variant="contained">Button</Button>;
+export const Secondary: React.VFC<{}> = () => <Button color="secondary" variant="contained">Secondary</Button>;
