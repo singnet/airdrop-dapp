@@ -1,10 +1,5 @@
 import type { AppProps } from "next/app";
 
-// function MyApp({ Component, pageProps }: AppProps) {
-//   return <Component {...pageProps} />
-// }
-// export default MyApp
-
 import * as React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
@@ -14,7 +9,6 @@ import { CacheProvider } from "@emotion/react";
 
 import { lightTheme } from "snet-ui/Theme/theme";
 import createEmotionCache from "snet-ui/Theme/createEmotionCache";
-// import { appWithTranslation } from "next-i18next";
 import "../styles/globals.css";
 import { appWithTranslation } from "next-i18next";
 import nextI18NextConfig from "../next-i18next.config";

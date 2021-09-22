@@ -5,21 +5,14 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from 'next/router'
 
-import { useRouter } from "next/dist/client/router";
 
-// export const getStaticProps = async ({ locale }) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale, ["common"])),
-//   },
-//   // if using the approach with the live translation download, meaning using i18next-locize-backend on server side,
-//   // there is a reloadInterval for i18next-locize-backend that can be used to reload resources in a specific interval: https://github.com/locize/i18next-locize-backend#backend-options
-//   // doing so it is suggested to also use the revalidate option, here:
-//   // Next.js will attempt to re-generate the page:
-//   // - When a request comes in
-//   // - At most once every hour
-//   // revalidate: 60 * 60, // in seconds
-// });
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
