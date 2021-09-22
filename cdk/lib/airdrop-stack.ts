@@ -32,7 +32,7 @@ console.log("build options", options);
 const builder = new Builder(nextConfigDir, outputDir, options);
 
 const defaultLambdaName = "defaultEdgeLambda";
-const apiLambdaName = "apiLambdaName";
+// const apiLambdaName = "apiLambdaName";
 const imageLambdaName = "imageEdgeLambda";
 const bucketName = "bucketName";
 const distributionName = "myDist";
@@ -52,12 +52,12 @@ export class AirdropStack extends cdk.Stack {
           code: lambda.Code.fromAsset(path.join(outputDir, "default-lambda")),
         });
 
-        // Lambda functions for handling edge api requests
-        const apiLambda = new lambda.Function(this, apiLambdaName, {
-          runtime: lambda.Runtime.NODEJS_12_X,
-          handler: "index.handler",
-          code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
-        });
+        // // Lambda functions for handling edge api requests
+        // const apiLambda = new lambda.Function(this, apiLambdaName, {
+        //   runtime: lambda.Runtime.NODEJS_12_X,
+        //   handler: "index.handler",
+        //   code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
+        // });
 
         // Lambda functions for handling images
         const imageLambda = new lambda.Function(this, imageLambdaName, {
@@ -92,16 +92,16 @@ export class AirdropStack extends cdk.Stack {
         // Forward static file request to s3 directly
         distribution.addBehavior("_next/static/*", origin, {});
 
-        // Forward API requests to the API edge lambda
-        distribution.addBehavior("api/*", origin, {
-          edgeLambdas: [
-            {
-              functionVersion: apiLambda.currentVersion,
-              eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-              includeBody: true,
-            },
-          ],
-        });
+        // // Forward API requests to the API edge lambda
+        // distribution.addBehavior("api/*", origin, {
+        //   edgeLambdas: [
+        //     {
+        //       functionVersion: apiLambda.currentVersion,
+        //       eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+        //       includeBody: true,
+        //     },
+        //   ],
+        // });
 
         // Image cache policy extends the default cache policy, but with query params
         const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
