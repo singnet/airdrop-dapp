@@ -11,7 +11,7 @@ import { lightTheme } from "snet-ui/Theme/theme";
 import createEmotionCache from "snet-ui/Theme/createEmotionCache";
 import "../styles/globals.css";
 import { appWithTranslation } from "next-i18next";
-import nextI18NextConfig from "../next-i18next.config";
+import nextI18NextConfig from "next-i18next.config";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

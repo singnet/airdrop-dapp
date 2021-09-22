@@ -5,12 +5,12 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from 'next/router'
-
+import { useRouter } from "next/router";
+import nextI18NextConfig from "next-i18next.config";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["common"])),
+    ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
   },
 });
 
