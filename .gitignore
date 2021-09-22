@@ -37,3 +37,10 @@ cdk/node_modules
 cdk/cdk.out
 cdk.out
 .serverless_nextjs
+
+# local env files
+cdk/.env
+cdk/.env.local
+cdk/.env.development.local
+cdk/.env.test.local
+cdk/.env.production.local

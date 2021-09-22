@@ -1,14 +1,18 @@
+import * as dotenv from "dotenv";
 import * as cdk from "@aws-cdk/core";
 import * as cloudfront from "@aws-cdk/aws-cloudfront";
 import * as origins from "@aws-cdk/aws-cloudfront-origins";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as s3deploy from "@aws-cdk/aws-s3-deployment";
-import * as acm from "@aws-cdk/aws-certificatemanager";
-import * as r53 from "@aws-cdk/aws-route53";
+// import * as acm from "@aws-cdk/aws-certificatemanager";
+// import * as r53 from "@aws-cdk/aws-route53";
 
 import * as path from "path";
 import { Builder } from "@sls-next/lambda-at-edge";
+
+// dotenv Must be the first expression
+dotenv.config();
 
 // The builder wraps nextJS in Compatibility layers for Lambda@Edge; handles the page
 // manifest and creating the default-lambda and api-lambda. The final output is an assets
@@ -31,12 +35,12 @@ console.log("build options", options);
 
 const builder = new Builder(nextConfigDir, outputDir, options);
 
-const defaultLambdaName = "defaultEdgeLambda";
-// const apiLambdaName = "apiLambdaName";
-const imageLambdaName = "imageEdgeLambda";
-const bucketName = "bucketName";
-const distributionName = "myDist";
-const imageCachePolicyName = "imageCachePolicy";
+const defaultLambdaName = process.env.DEFAULT_LAMBDA_NAME || "";
+// const apiLambdaName = process.env.API_LAMBDA_NAME || "";
+const imageLambdaName = process.env.IMAGE_LAMBDA_NAME || "";
+const bucketName = process.env.BUCKET_NAME || "";
+const distributionName = process.env.DISTRIBUTION_NAME || "";
+const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "";
 
 export class AirdropStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -47,7 +51,7 @@ export class AirdropStack extends cdk.Stack {
       .then(() => {
         // Lambda functions for handling edge page requests
         const defaultLambda = new lambda.Function(this, defaultLambdaName, {
-          runtime: lambda.Runtime.NODEJS_12_X,
+          runtime: lambda.Runtime.NODEJS_14_X,
           handler: "index.handler",
           code: lambda.Code.fromAsset(path.join(outputDir, "default-lambda")),
         });
@@ -61,7 +65,7 @@ export class AirdropStack extends cdk.Stack {
 
         // Lambda functions for handling images
         const imageLambda = new lambda.Function(this, imageLambdaName, {
-          runtime: lambda.Runtime.NODEJS_12_X,
+          runtime: lambda.Runtime.NODEJS_14_X,
           handler: "index.handler",
           code: lambda.Code.fromAsset(path.join(outputDir, "image-lambda")),
         });
@@ -134,7 +138,7 @@ export class AirdropStack extends cdk.Stack {
       })
       .catch((err) => {
         console.warn("Build failed for NextJS, aborting CDK operation");
-        console.log("detailed error", err.toString())
+        console.log("detailed error", err.toString());
         console.error({ err });
         throw err;
       });
