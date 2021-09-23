@@ -11,10 +11,10 @@ export class CDKPipelineStack extends Stack {
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.gitHub("Vivek205/airdrop-dapp", "pipeline"),
         commands: [
-            "cd cdk",
-            "npm i", 
-            "npm run build", 
-            "npx cdk synth"
+            "npm i",
+            "cd cdk && npm i", 
+            "cd cdk && npm run build", 
+            "cd cdk && npx cdk synth"
         ]
       }),
     });
