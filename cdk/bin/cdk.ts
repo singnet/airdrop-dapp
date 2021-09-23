@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import { AirdropStack } from '../lib/Airdrop/airdrop-stack';
+// import { AirdropStack } from '../lib/Airdrop/airdrop-stack';
 import { CDKPipelineStack } from '../lib/Airdrop/cdk-pipeline-stack';
 
 const app = new cdk.App();
