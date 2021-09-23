@@ -11,7 +11,8 @@ export class CDKPipelineStack extends Stack {
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.gitHub("Vivek205/airdrop-dapp", "pipeline"),
         commands: [
-            "NPM_CONFIG_UNSAFE_PERM=true &&  npm i", 
+            "cd cdk",
+            "npm i", 
             "npm run build", 
             "npx cdk synth"
         ]
