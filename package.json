@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "install-cdk": "cd cdk && npm i",
-    "build": "cd cdk && npm run build",
-    "synth": "cd cdk && npx cdk synth",
+    "install-cdk": "cd cdk && pwd && npm i",
+    "build": "cd cdk && pwd && npm run build",
+    "synth": "cd cdk && pwd && npx cdk synth",
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006 -c snet-ui/.storybook ",
