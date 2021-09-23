@@ -3,20 +3,19 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
+import nextI18NextConfig from "next-i18next.config";
 
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
+  },
+});
 
 const Home: NextPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const router = useRouter();
 
@@ -42,7 +41,7 @@ const Home: NextPage = () => {
         </select>
 
         <Button color="primary" variant="contained" sx={{ marginTop: 2 }}>
-          {t("common:primary")}
+          {t("welcome")}
         </Button>
         <Button color="secondary" variant="contained" sx={{ marginTop: 2 }}>
           Secondary

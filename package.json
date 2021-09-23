@@ -17,6 +17,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.0",
+    "@sls-next/serverless-component": "3.3.0",
     "@storybook/react": "^6.3.8",
     "next": "11.1.2",
     "next-i18next": "^8.8.0",
