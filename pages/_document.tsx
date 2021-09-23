@@ -1,5 +1,5 @@
 import * as React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import { lightTheme } from "snet-ui/Theme/theme";
 import createEmotionCache from "snet-ui/Theme/createEmotionCache";

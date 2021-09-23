@@ -1,14 +1,11 @@
-import { Button } from "@mui/material";
+import { default as BlockchainWalletModal } from "./WalletModal";
 import { Meta } from "@storybook/react";
 import { useState } from "react";
-import { default as BlockchainWalletModal } from "../Blockchain/WalletModal";
+import { Button } from "@mui/material";
 
 export default {
-  title: "Components/Button",
+  title: "Components/Blockchain",
 } as Meta;
-export const Primary: React.VFC<{}> = () => <Button color="primary" variant="contained">Button</Button>;
-export const Secondary: React.VFC<{}> = () => <Button color="secondary" variant="contained">Secondary</Button>;
-
 
 export const WalletModal: React.VFC<{}> = () => {
   const [open, setOpen] = useState(false);
