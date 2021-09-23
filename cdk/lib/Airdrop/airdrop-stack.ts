@@ -43,12 +43,16 @@ const distributionName = process.env.DISTRIBUTION_NAME || "";
 const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "";
 
 export class AirdropStack extends cdk.Stack {
+  public readonly urlOutput: cdk.CfnOutput;
+
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    builder
-      .build()
-      .then(() => {
+    // builder
+    //   .build()
+    //   .then(() => {
+
+
         // Lambda functions for handling edge page requests
         const defaultLambda = new lambda.Function(this, defaultLambdaName, {
           runtime: lambda.Runtime.NODEJS_14_X,
@@ -132,15 +136,21 @@ export class AirdropStack extends cdk.Stack {
           distribution: distribution,
         });
 
-        new cdk.CfnOutput(this, "DistributionDomain", {
+        this.urlOutput =   new cdk.CfnOutput(this, "DistributionDomain", {
           value: `https://${distribution.distributionDomainName}`,
         });
-      })
-      .catch((err) => {
-        console.warn("Build failed for NextJS, aborting CDK operation");
-        console.log("detailed error", err.toString());
-        console.error({ err });
-        throw err;
-      });
+
+        
+      // })
+      // .catch((err) => {
+      //   console.warn("Build failed for NextJS, aborting CDK operation");
+      //   console.log("detailed error", err.toString());
+      //   console.error({ err });
+      //   throw err;
+      // });
+
+      // this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
+      //   value: distribution.,
+      // });
   }
 }
