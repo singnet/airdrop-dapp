@@ -42,6 +42,14 @@ const bucketName = process.env.BUCKET_NAME || "";
 const distributionName = process.env.DISTRIBUTION_NAME || "";
 const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "";
 
+console.log("environments",{
+  defaultLambdaName,
+  imageLambdaName,
+  bucketName,
+  distributionName,
+  imageCachePolicyName,
+});
+
 export class AirdropStack extends cdk.Stack {
   public urlOutput: cdk.CfnOutput;
 
@@ -135,7 +143,7 @@ export class AirdropStack extends cdk.Stack {
           distribution: distribution,
         });
 
-        this.urlOutput =   new cdk.CfnOutput(this, "DistributionDomain", {
+        this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
           value: `https://${distribution.distributionDomainName}`,
         });
       })
@@ -148,6 +156,5 @@ export class AirdropStack extends cdk.Stack {
       .finally(() => {
         console.log("build run completed");
       });
-
   }
 }

@@ -13,6 +13,7 @@ export class CDKPipelineStack extends Stack {
         commands: [
             "npm i",
             "npm run install-cdk", 
+            "npm run deploy"
         ]
       }),
     });
