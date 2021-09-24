@@ -30,7 +30,7 @@ export class CDKPipelineStage extends Stage {
     // builder
     //   .build()
     //   .then(() => {
-    console.log("inside the builder");
+    // console.log("inside the builder");
     const service = new AirdropStack(this, "WebService");
 
     this.urlOutput = service.urlOutput;

@@ -35,12 +35,12 @@ console.log("build options", options);
 
 const builder = new Builder(nextConfigDir, outputDir, options);
 
-const defaultLambdaName = process.env.DEFAULT_LAMBDA_NAME || "";
+const defaultLambdaName = process.env.DEFAULT_LAMBDA_NAME || "defaultEdgeLambda";
 // const apiLambdaName = process.env.API_LAMBDA_NAME || "";
-const imageLambdaName = process.env.IMAGE_LAMBDA_NAME || "";
-const bucketName = process.env.BUCKET_NAME || "";
-const distributionName = process.env.DISTRIBUTION_NAME || "";
-const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "";
+const imageLambdaName = process.env.IMAGE_LAMBDA_NAME || "imageEdgeLambda";
+const bucketName = process.env.BUCKET_NAME || "bucketName";
+const distributionName = process.env.DISTRIBUTION_NAME || "myDist";
+const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "imageCachePolicy";
 
 console.log("environments",{
   defaultLambdaName,
