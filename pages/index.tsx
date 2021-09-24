@@ -50,7 +50,7 @@ const Home: NextPage = () => {
           Warning
         </Button>
         <Button color="error" variant="contained" sx={{ marginTop: 2 }}>
-          Error
+          Error test
         </Button>
       </main>
 
