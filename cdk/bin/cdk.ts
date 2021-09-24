@@ -1,27 +1,48 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import * as cdk from '@aws-cdk/core';
-// import { AirdropStack } from '../lib/Airdrop/airdrop-stack';
-import { CDKPipelineStack } from '../lib/Airdrop/cdk-pipeline-stack';
+import "source-map-support/register";
+import * as cdk from "@aws-cdk/core";
+import * as path from "path";
+import { Builder } from "@sls-next/lambda-at-edge";
 
-const app = new cdk.App();
+import { CDKPipelineStack } from "../lib/Airdrop/cdk-pipeline-stack";
 
-new CDKPipelineStack(app, "CDKPipelineStack");
+// BUILDING THE APPLICATION
+const nextConfigDir = "../";
+const cwd = path.join(process.cwd(), nextConfigDir);
+export const buildOutputDir = path.join(nextConfigDir, ".serverless_nextjs");
 
-app.synth()
+const options = {
+  // cmd: path.join(cwd, "./node_modules/.bin/next"),
+  cmd: "yarn",
+  cwd: cwd,
+  env: {},
+  args: ["build"],
+};
 
-// new AirdropStack(app, 'AirdropStack', {
-//   /* If you don't specify 'env', this stack will be environment-agnostic.
-//    * Account/Region-dependent features and context lookups will not work,
-//    * but a single synthesized template can be deployed anywhere. */
+console.log("nextConfigDir", nextConfigDir);
+console.log("outputDir", buildOutputDir);
+console.log("build options", options);
 
-//   /* Uncomment the next line to specialize this stack for the AWS Account
-//    * and Region that are implied by the current CLI configuration. */
-//   // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// The builder wraps nextJS in Compatibility layers for Lambda@Edge; handles the page
+// manifest and creating the default-lambda and api-lambda. The final output is an assets
+// folder which can be uploaded to s3 on every deploy.
+const builder = new Builder(nextConfigDir, buildOutputDir, options);
 
-//   /* Uncomment the next line if you know exactly what Account and Region you
-//    * want to deploy the stack to. */
-//   // env: { account: '123456789012', region: 'us-east-1' },
+builder
+  .build()
+  .then(() => {
+    const app = new cdk.App();
 
-//   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-// });
+    new CDKPipelineStack(app, "CDKPipelineStack");
+
+    app.synth();
+  })
+  .catch((err: Error) => {
+    console.warn("Build failed for NextJS, aborting CDK operation");
+    console.log("detailed error", err.toString());
+    console.error({ err });
+    throw err;
+  })
+  .finally(() => {
+    console.log("build run completed");
+  });

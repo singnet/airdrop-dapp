@@ -9,38 +9,23 @@ import * as s3deploy from "@aws-cdk/aws-s3-deployment";
 // import * as r53 from "@aws-cdk/aws-route53";
 
 import * as path from "path";
-import { Builder } from "@sls-next/lambda-at-edge";
+import { buildOutputDir } from "../../bin/cdk";
+import config, { appEnv } from "../../config";
 
 // dotenv Must be the first expression
 dotenv.config();
 
-// The builder wraps nextJS in Compatibility layers for Lambda@Edge; handles the page
-// manifest and creating the default-lambda and api-lambda. The final output is an assets
-// folder which can be uploaded to s3 on every deploy.
-const nextConfigDir = "../";
-const cwd = path.join(process.cwd(), nextConfigDir);
-const outputDir = path.join(nextConfigDir, ".serverless_nextjs");
+console.log("app environment derived from process => ", process.env.APP_ENV)
+const appEnvStage: appEnv = <appEnv>process.env.APP_ENV || appEnv.ropsten;
+const appConfig = config.get(appEnvStage);
 
-const options = {
-  // cmd: path.join(cwd, "./node_modules/.bin/next"),
-  cmd: "yarn",
-  cwd: cwd,
-  env: {},
-  args: ["build"],
-};
+if (!appConfig) {
+  throw new Error("Invalid config for the App");
+}
 
-console.log("nextConfigDir", nextConfigDir);
-console.log("outputDir", outputDir);
-console.log("build options", options);
-
-const builder = new Builder(nextConfigDir, outputDir, options);
-
-const defaultLambdaName = process.env.DEFAULT_LAMBDA_NAME || "defaultEdgeLambda";
-// const apiLambdaName = process.env.API_LAMBDA_NAME || "";
-const imageLambdaName = process.env.IMAGE_LAMBDA_NAME || "imageEdgeLambda";
-const bucketName = process.env.BUCKET_NAME || "bucketName";
-const distributionName = process.env.DISTRIBUTION_NAME || "myDist";
-const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "imageCachePolicy";
+const {
+  appStack: { defaultLambdaName, imageLambdaName, bucketName, distributionName, imageCachePolicyName },
+} = appConfig;
 
 console.log("environments", {
   defaultLambdaName,
@@ -56,107 +41,94 @@ export class AirdropStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    builder
-      .build()
-      .then(() => {
-        console.log("inside the builder");
-        // Lambda functions for handling edge page requests
-        const defaultLambda = new lambda.Function(this, defaultLambdaName, {
-          runtime: lambda.Runtime.NODEJS_14_X,
-          handler: "index.handler",
-          code: lambda.Code.fromAsset(path.join(outputDir, "default-lambda")),
-        });
+    console.log("inside the builder");
+    // Lambda functions for handling edge page requests
+    const defaultLambda = new lambda.Function(this, defaultLambdaName, {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(path.join(buildOutputDir, "default-lambda")),
+    });
 
-        // // Lambda functions for handling edge api requests
-        // const apiLambda = new lambda.Function(this, apiLambdaName, {
-        //   runtime: lambda.Runtime.NODEJS_12_X,
-        //   handler: "index.handler",
-        //   code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
-        // });
+    // // Lambda functions for handling edge api requests
+    // const apiLambda = new lambda.Function(this, apiLambdaName, {
+    //   runtime: lambda.Runtime.NODEJS_12_X,
+    //   handler: "index.handler",
+    //   code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
+    // });
 
-        // Lambda functions for handling images
-        const imageLambda = new lambda.Function(this, imageLambdaName, {
-          runtime: lambda.Runtime.NODEJS_14_X,
-          handler: "index.handler",
-          code: lambda.Code.fromAsset(path.join(outputDir, "image-lambda")),
-        });
+    // Lambda functions for handling images
+    const imageLambda = new lambda.Function(this, imageLambdaName, {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(path.join(buildOutputDir, "image-lambda")),
+    });
 
-        // Static Asset bucket for cloudfront distribution as default origin
-        const myBucket = new s3.Bucket(this, bucketName, {});
+    // Static Asset bucket for cloudfront distribution as default origin
+    const myBucket = new s3.Bucket(this, bucketName, {});
 
-        // Allow images to be fetched
-        myBucket.grantRead(imageLambda);
+    // Allow images to be fetched
+    myBucket.grantRead(imageLambda);
 
-        const origin = new origins.S3Origin(myBucket);
+    const origin = new origins.S3Origin(myBucket);
 
-        // Default distribution requests to the default lambda
-        const distribution = new cloudfront.Distribution(this, distributionName, {
-          defaultBehavior: {
-            origin: origin,
-            viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-            edgeLambdas: [
-              {
-                functionVersion: defaultLambda.currentVersion,
-                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-              },
-            ],
+    // Default distribution requests to the default lambda
+    const distribution = new cloudfront.Distribution(this, distributionName, {
+      defaultBehavior: {
+        origin: origin,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        edgeLambdas: [
+          {
+            functionVersion: defaultLambda.currentVersion,
+            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
           },
-          enableLogging: true,
-        });
+        ],
+      },
+      enableLogging: true,
+    });
 
-        // Forward static file request to s3 directly
-        distribution.addBehavior("_next/static/*", origin, {});
+    // Forward static file request to s3 directly
+    distribution.addBehavior("_next/static/*", origin, {});
 
-        // // Forward API requests to the API edge lambda
-        // distribution.addBehavior("api/*", origin, {
-        //   edgeLambdas: [
-        //     {
-        //       functionVersion: apiLambda.currentVersion,
-        //       eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-        //       includeBody: true,
-        //     },
-        //   ],
-        // });
+    // // Forward API requests to the API edge lambda
+    // distribution.addBehavior("api/*", origin, {
+    //   edgeLambdas: [
+    //     {
+    //       functionVersion: apiLambda.currentVersion,
+    //       eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+    //       includeBody: true,
+    //     },
+    //   ],
+    // });
 
-        // Image cache policy extends the default cache policy, but with query params
-        const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
-          ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
-          cachePolicyName: imageCachePolicyName,
-          comment: "Policy to cache images for _next/image",
-          queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
-        });
+    // Image cache policy extends the default cache policy, but with query params
+    const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
+      ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
+      cachePolicyName: imageCachePolicyName,
+      comment: "Policy to cache images for _next/image",
+      queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
+    });
 
-        // Forward image requests
-        distribution.addBehavior("_next/image*", origin, {
-          edgeLambdas: [
-            {
-              functionVersion: imageLambda.currentVersion,
-              eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-            },
-          ],
-          cachePolicy: imageCachePolicy,
-        });
-        // Upload deployment bucket
-        new s3deploy.BucketDeployment(this, "nextJsAssets", {
-          sources: [s3deploy.Source.asset(path.join(outputDir, "assets"))],
-          destinationBucket: myBucket,
-          distribution: distribution,
-        });
+    // Forward image requests
+    distribution.addBehavior("_next/image*", origin, {
+      edgeLambdas: [
+        {
+          functionVersion: imageLambda.currentVersion,
+          eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+        },
+      ],
+      cachePolicy: imageCachePolicy,
+    });
+    // Upload deployment bucket
+    new s3deploy.BucketDeployment(this, "nextJsAssets", {
+      sources: [s3deploy.Source.asset(path.join(buildOutputDir, "assets"))],
+      destinationBucket: myBucket,
+      distribution: distribution,
+    });
 
-        this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
-          value: `https://${distribution.distributionDomainName}`,
-        });
+    this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
+      value: `https://${distribution.distributionDomainName}`,
+    });
 
-        console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
-      })
-      .catch((err) => {
-        console.warn("Build failed for NextJS, aborting CDK operation");
-        console.log("detailed error", err.toString());
-        console.error({ err });
-        throw err;
-      })
-      .finally(() => {
-        console.log("build run completed");
-      });
+    console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
   }
 }
