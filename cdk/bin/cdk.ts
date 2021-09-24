@@ -7,21 +7,21 @@ import { Builder } from "@sls-next/lambda-at-edge";
 import { CDKPipelineStack } from "../lib/Airdrop/cdk-pipeline-stack";
 
 // BUILDING THE APPLICATION
-const nextConfigDir = "./";
-const cwd = path.join(process.cwd(), nextConfigDir);
-export const buildOutputDir = path.join(nextConfigDir, ".serverless_nextjs");
+const nextConfigDir = "../";
+const commandDir = path.join(process.cwd(), nextConfigDir);
+export const buildOutputDir = path.join(process.cwd(), nextConfigDir, ".serverless_nextjs");
 
 const options = {
   // cmd: path.join(cwd, "./node_modules/.bin/next"),
   cmd: "yarn",
-  cwd: cwd,
+  cwd: commandDir,
   env: {},
   args: ["build"],
 };
 
 console.log("nextConfigDir", nextConfigDir);
 console.log("outputDir", buildOutputDir);
-console.log("build options", options);
+console.log("build options, cwd<->commandDir", options);
 
 // The builder wraps nextJS in Compatibility layers for Lambda@Edge; handles the page
 // manifest and creating the default-lambda and api-lambda. The final output is an assets
