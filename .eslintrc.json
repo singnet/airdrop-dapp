@@ -1,7 +1,8 @@
 {
   "extends": "next/core-web-vitals",
-  "rules":{
+  "rules": {
     "react/display-name": "off",
-    "import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": "off",
+    "sort-imports": "warn"
   }
 }
