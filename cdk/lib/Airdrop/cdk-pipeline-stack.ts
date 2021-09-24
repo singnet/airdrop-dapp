@@ -10,15 +10,12 @@ export class CDKPipelineStack extends Stack {
       pipelineName: "RootAppPipeline",
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.gitHub("Vivek205/airdrop-dapp", "pipeline"),
-        commands: [
-            "npm i",
-            "npm run install-cdk", 
-            "npm run deploy"
-        ]
+        commands: ["npm i", "npm run install-cdk", "npm run deploy"],
+        primaryOutputDirectory: "cdk/cdk.out",
       }),
     });
 
-    const cdkPipelineStage = new CDKPipelineStage(this, 'PreProd', {}) as Stage
+    const cdkPipelineStage = new CDKPipelineStage(this, "PreProd", {}) as Stage;
     // @ts-ignore
     pipeline.addStage(cdkPipelineStage);
   }
