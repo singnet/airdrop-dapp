@@ -34,7 +34,7 @@ export class CDKPipelineStage extends Stage {
     const service = new AirdropStack(this, "WebService");
 
     this.urlOutput = service.urlOutput;
-    console.log("cdk pipeline stage: urloutput", this.urlOutput);
+    // console.log("cdk pipeline stage: urloutput", this.urlOutput);
     //   })
     //   .catch((err) => {
     //     console.warn("Build failed for NextJS, aborting CDK operation");
