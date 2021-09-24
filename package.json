@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "install-cdk": "cd cdk && pwd && npm i",
+    "install-cdk": "cd cdk && pwd && yarn install --frozen-lockfile",
     "build": "next build",
+    "deploy": "pwd && npx cdk deploy --require-approval=never --verbose",
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006 -c snet-ui/.storybook ",
