@@ -6,7 +6,7 @@
     "dev": "next dev",
     "install-cdk": "cd cdk && pwd && npm i",
     "build": "next build",
-    "deploy": "cd cdk && pwd && npx cdk synth && ls && npx cdk deploy",
+    "deploy": "cd cdk && pwd && npx cdk synth && ls && npx cdk deploy --require-approval=never --verbose",
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006 -c snet-ui/.storybook ",
