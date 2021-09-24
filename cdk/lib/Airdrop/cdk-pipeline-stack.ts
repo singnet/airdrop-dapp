@@ -15,6 +15,7 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
       input: CodePipelineSource.gitHub(appConfig.repo.source, appConfig.repo.branch),
       commands: [
         `APP_ENV=${stage}`,
+        "yarn",
         "yarn build",
         "cd cdk",
         "pwd && yarn install --frozen-lockfile",
