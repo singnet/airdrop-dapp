@@ -8,12 +8,12 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
   if (!appConfig) {
     throw new Error("Unknown stage");
   }
-  
+
   const pipeline = new CodePipeline(stack, `${stage}-airdrop-pipeline`, {
     pipelineName: `${stage}-airdrop-pipeline`,
     synth: new ShellStep("Synth", {
       input: CodePipelineSource.gitHub(appConfig.repo.source, appConfig.repo.branch),
-      commands: [`APP_ENV=${stage}`, "cd cdk", "pwd && npm run install-cdk", "npm run deploy"],
+      commands: [`APP_ENV=${stage}`, "pwd && cd cdk && pwd", "npm ci", "npm run deploy"],
       primaryOutputDirectory: "cdk/cdk.out",
     }),
   });

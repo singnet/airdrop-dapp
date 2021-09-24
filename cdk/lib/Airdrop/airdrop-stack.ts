@@ -129,6 +129,6 @@ export class AirdropStack extends cdk.Stack {
       value: `https://${distribution.distributionDomainName}`,
     });
 
-    console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
+    // console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
   }
 }
