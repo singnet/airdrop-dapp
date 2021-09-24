@@ -15,7 +15,7 @@ import config, { appEnv } from "../../config";
 // dotenv Must be the first expression
 dotenv.config();
 
-console.log("app environment derived from process => ", process.env.APP_ENV)
+console.log("app environment derived from process => ", process.env.APP_ENV);
 const appEnvStage: appEnv = <appEnv>process.env.APP_ENV || appEnv.ropsten;
 const appConfig = config.get(appEnvStage);
 
@@ -64,7 +64,10 @@ export class AirdropStack extends cdk.Stack {
     });
 
     // Static Asset bucket for cloudfront distribution as default origin
-    const myBucket = new s3.Bucket(this, bucketName, {});
+    const myBucket = new s3.Bucket(this, bucketName, {
+      autoDeleteObjects: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
 
     // Allow images to be fetched
     myBucket.grantRead(imageLambda);
