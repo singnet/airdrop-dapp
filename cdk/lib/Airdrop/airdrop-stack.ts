@@ -42,7 +42,7 @@ const bucketName = process.env.BUCKET_NAME || "bucketName";
 const distributionName = process.env.DISTRIBUTION_NAME || "myDist";
 const imageCachePolicyName = process.env.IMAGE_CACHE_POLICY_NAME || "imageCachePolicy";
 
-console.log("environments",{
+console.log("environments", {
   defaultLambdaName,
   imageLambdaName,
   bucketName,
@@ -146,6 +146,8 @@ export class AirdropStack extends cdk.Stack {
         this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
           value: `https://${distribution.distributionDomainName}`,
         });
+
+        console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
       })
       .catch((err) => {
         console.warn("Build failed for NextJS, aborting CDK operation");
