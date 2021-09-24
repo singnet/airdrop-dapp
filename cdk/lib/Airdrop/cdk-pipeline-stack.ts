@@ -13,14 +13,12 @@ export class CDKPipelineStack extends Stack {
         commands: [
             "npm i",
             "npm run install-cdk", 
-            "npm run build", 
-            "npm run synth"
         ]
       }),
     });
 
-    // const cdkPipelineStage = new CDKPipelineStage(this, 'PreProd', {}) as Stage
-    // // @ts-ignore
-    // pipeline.addStage(cdkPipelineStage);
+    const cdkPipelineStage = new CDKPipelineStage(this, 'PreProd', {}) as Stage
+    // @ts-ignore
+    pipeline.addStage(cdkPipelineStage);
   }
 }
