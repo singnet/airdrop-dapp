@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "install-cdk": "cd cdk && pwd && yarn install --frozen-lockfile",
-    "build": "next build",
+    "build": " echo \" I'm here da  \" && next build",
     "deploy": "ls -l && cd cdk && pwd && npx cdk deploy --require-approval=never --verbose",
     "start": "next start",
     "lint": "next lint",

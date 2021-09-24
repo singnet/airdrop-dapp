@@ -7,7 +7,7 @@ import { Builder } from "@sls-next/lambda-at-edge";
 import { CDKPipelineStack } from "../lib/Airdrop/cdk-pipeline-stack";
 
 // BUILDING THE APPLICATION
-const nextConfigDir = "../";
+const nextConfigDir = "./";
 const cwd = path.join(process.cwd(), nextConfigDir);
 export const buildOutputDir = path.join(nextConfigDir, ".serverless_nextjs");
 
