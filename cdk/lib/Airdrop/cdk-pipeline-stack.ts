@@ -13,7 +13,12 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
     pipelineName: `${stage}-airdrop-pipeline`,
     synth: new ShellStep("Synth", {
       input: CodePipelineSource.gitHub(appConfig.repo.source, appConfig.repo.branch),
-      commands: [`APP_ENV=${stage}`, "yarn install-cdk", "yarn deploy"],
+      commands: [
+        `APP_ENV=${stage}`,
+        "cd cdk",
+        "pwd && yarn install --frozen-lockfile",
+        "pwd && npx cdk deploy --require-approval=never --verbose",
+      ],
       primaryOutputDirectory: "cdk/cdk.out",
     }),
   });
