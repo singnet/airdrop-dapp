@@ -3,7 +3,19 @@ export enum appEnv {
   mainnet = "mainnet",
 }
 
-const githubRepo = "Vivek205/airdrop-dapp";
+const envS3Bucket: { [key in appEnv]: string } = {
+  [appEnv.ropsten]: "snet-ropsten-v2-configs",
+  [appEnv.mainnet]: "snet-mainnet-v2-configs",
+};
+
+const zoneName = "singularitynet.io";
+
+const domainNames: { [key in appEnv]: string } = {
+  [appEnv.ropsten]: "ropsten-airdrop.singularitynet.io",
+  [appEnv.mainnet]: "airdrop.singularitynet.io",
+};
+
+const githubRepo = "singnet/airdrop-dapp";
 const githubBranch: { [key in string]: string } = {
   ropsten: "development",
   mainnet: "master",
@@ -21,11 +33,15 @@ type Config = {
     distributionName: string;
     imageCachePolicyName: string;
   };
+  envBucketPath: string;
+  zoneName: string;
+  domainName: string;
+  certificateARN: string;
 };
 
 const config = new Map<appEnv, Config>();
 
-const createConfig = (stage: string): Config => ({
+const createConfig = (stage: appEnv): Config => ({
   repo: {
     source: githubRepo,
     branch: githubBranch[stage],
@@ -37,6 +53,10 @@ const createConfig = (stage: string): Config => ({
     distributionName: `${stage}-airdrop-distribution`,
     imageCachePolicyName: `${stage}-airdrop-image-cache-policy`,
   },
+  envBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/application/.env`,
+  domainName: domainNames[stage],
+  zoneName,
+  certificateARN: "arn:aws:acm:us-east-1:533793137436:certificate/cbea64df-2a5a-4a8f-80f9-d9cf5c9ef716",
 });
 
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
