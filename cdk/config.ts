@@ -3,7 +3,7 @@ export enum appEnv {
   mainnet = "mainnet",
 }
 
-const githubRepo = "Vivek205/airdrop-dapp";
+const githubRepo = "singnet/airdrop-dapp";
 const githubBranch: { [key in string]: string } = {
   ropsten: "development",
   mainnet: "master",
