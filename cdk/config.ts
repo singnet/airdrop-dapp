@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 export enum appEnv {
   ropsten = "ropsten",
   mainnet = "mainnet",
@@ -33,7 +36,8 @@ type Config = {
     distributionName: string;
     imageCachePolicyName: string;
   };
-  envBucketPath: string;
+  appEnvBucketPath: string;
+  cdkEnvBucketPath: string;
   zoneName: string;
   domainName: string;
   certificateARN: string;
@@ -53,10 +57,11 @@ const createConfig = (stage: appEnv): Config => ({
     distributionName: `${stage}-airdrop-distribution`,
     imageCachePolicyName: `${stage}-airdrop-image-cache-policy`,
   },
-  envBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/application/.env`,
+  appEnvBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/application/.env`,
+  cdkEnvBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/cdk/.env`,
   domainName: domainNames[stage],
   zoneName,
-  certificateARN: "arn:aws:acm:us-east-1:533793137436:certificate/cbea64df-2a5a-4a8f-80f9-d9cf5c9ef716",
+  certificateARN: <string>process.env.CERTIFICATE_ARN,
 });
 
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
