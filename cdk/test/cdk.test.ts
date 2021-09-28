@@ -1,6 +1,6 @@
 import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import * as AirdropCDK from '../lib/airdrop-stack';
+import * as AirdropCDK from '../lib/Airdrop/airdrop-stack';
 
 test('Empty Stack', () => {
     const app = new cdk.App();

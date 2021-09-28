@@ -5,10 +5,11 @@
     "cdk": "bin/cdk.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "echo \"I'm inside CDK build da \" && tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy": "cdk deploy --require-approval=never --verbose"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.123.0",
@@ -29,6 +30,8 @@
     "@aws-cdk/aws-s3": "^1.124.0",
     "@aws-cdk/aws-s3-deployment": "^1.124.0",
     "@aws-cdk/core": "1.123.0",
+    "@aws-cdk/pipelines": "^1.124.0",
+    "@sls-next/lambda-at-edge": "^3.3.0",
     "dotenv": "^10.0.0",
     "source-map-support": "^0.5.16"
   },
