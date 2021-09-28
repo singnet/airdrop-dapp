@@ -32,6 +32,8 @@ const {
   certificateARN,
 } = appConfig;
 
+console.log("certificateARN", certificateARN);
+
 console.log("environments", {
   defaultLambdaName,
   imageLambdaName,

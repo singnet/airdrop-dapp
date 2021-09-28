@@ -15,7 +15,8 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
       input: CodePipelineSource.gitHub(appConfig.repo.source, appConfig.repo.branch),
       commands: [
         `APP_ENV=${stage}`,
-        `aws s3 cp ${appConfig.envBucketPath} .`,
+        `aws s3 cp ${appConfig.appEnvBucketPath} .`,
+        `aws s3 cp ${appConfig.cdkEnvBucketPath} ./cdk/`,
         "yarn",
         "yarn build",
         "cd cdk",
