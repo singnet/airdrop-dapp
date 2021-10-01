@@ -34,3 +34,5 @@ export const walletconnect = new WalletConnectConnector({
   rpc: NETWORK_URLS,
   qrcode: true,
 });
+
+export const NetworkContextName = "NETWORK";
