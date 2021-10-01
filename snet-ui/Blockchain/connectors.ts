@@ -1,5 +1,6 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { NetworkConnector } from "./NetworkConnector";
 
 export enum SupportedChainId {
   MAINNET = 1,
@@ -36,3 +37,8 @@ export const walletconnect = new WalletConnectConnector({
 });
 
 export const NetworkContextName = "NETWORK";
+
+export const network = new NetworkConnector({
+  urls: NETWORK_URLS,
+  defaultChainId: 1,
+});
