@@ -2,6 +2,7 @@ import { default as BlockchainWalletModal } from "./WalletModal";
 import { Meta } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import BlockChainProvider from "./Provider";
 
 export default {
   title: "Components/Blockchain",
@@ -12,8 +13,10 @@ export const WalletModal: React.VFC<{}> = () => {
   const handleOpen = () => setOpen(true);
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
-      <BlockchainWalletModal open={open} setOpen={setOpen} />
+      <BlockChainProvider>
+        <Button onClick={handleOpen}>Open modal</Button>
+        <BlockchainWalletModal open={open} setOpen={setOpen} />
+      </BlockChainProvider>
     </div>
   );
 };
