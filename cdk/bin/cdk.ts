@@ -31,7 +31,6 @@ const builder = new Builder(nextConfigDir, buildOutputDir, options);
 builder
   .build(true)
   .then(() => {
-    return;
     const app = new cdk.App();
 
     new CDKPipelineStack(app, "CDKPipelineStack");
