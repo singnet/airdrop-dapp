@@ -27,7 +27,7 @@ if (!appConfig) {
 
 const {
   appStack: { defaultLambdaName, imageLambdaName, bucketName, distributionName, imageCachePolicyName },
-  zoneName,
+  // zoneName,
   domainName,
   certificateARN,
 } = appConfig;
@@ -114,13 +114,14 @@ export class AirdropStack extends cdk.Stack {
     //   ],
     // });
 
-    // Image cache policy extends the default cache policy, but with query params
-    const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
-      ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
-      cachePolicyName: imageCachePolicyName,
-      comment: "Policy to cache images for _next/image",
-      queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Image cache policy extends the default cache policy, but with query params
+    // const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
+    //   ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
+    //   cachePolicyName: imageCachePolicyName,
+    //   comment: "Policy to cache images for _next/image",
+    //   queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
+    // });
 
     // TODO: uncomment if imageLambda is required
     // // Forward image requests
