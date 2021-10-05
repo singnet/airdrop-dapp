@@ -29,13 +29,13 @@ console.log("build options, cwd<->commandDir", options);
 const builder = new Builder(nextConfigDir, buildOutputDir, options);
 
 builder
-  .build(true)
+  .build()
   .then(() => {
     const app = new cdk.App();
 
     new CDKPipelineStack(app, "CDKPipelineStack");
 
-    app.synth();
+    // app.synth();
   })
   .catch((err: Error) => {
     console.warn("Build failed for NextJS, aborting CDK operation");
