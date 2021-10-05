@@ -7,5 +7,5 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  target: "serverless",
+  // target: "serverless",
 };

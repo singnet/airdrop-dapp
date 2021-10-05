@@ -29,8 +29,9 @@ console.log("build options, cwd<->commandDir", options);
 const builder = new Builder(nextConfigDir, buildOutputDir, options);
 
 builder
-  .build()
+  .build(true)
   .then(() => {
+    return;
     const app = new cdk.App();
 
     new CDKPipelineStack(app, "CDKPipelineStack");

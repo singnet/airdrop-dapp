@@ -63,12 +63,13 @@ export class AirdropStack extends cdk.Stack {
     //   code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
     // });
 
-    // Lambda functions for handling images
-    const imageLambda = new lambda.Function(this, imageLambdaName, {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      handler: "index.handler",
-      code: lambda.Code.fromAsset(path.join(buildOutputDir, "image-lambda")),
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Lambda functions for handling images
+    // const imageLambda = new lambda.Function(this, imageLambdaName, {
+    //   runtime: lambda.Runtime.NODEJS_14_X,
+    //   handler: "index.handler",
+    //   code: lambda.Code.fromAsset(path.join(buildOutputDir, "image-lambda")),
+    // });
 
     // Static Asset bucket for cloudfront distribution as default origin
     const myBucket = new s3.Bucket(this, bucketName, {
@@ -76,8 +77,9 @@ export class AirdropStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Allow images to be fetched
-    myBucket.grantRead(imageLambda);
+    // TODO: uncomment if imageLambda is required
+    // // Allow images to be fetched
+    // myBucket.grantRead(imageLambda);
 
     const origin = new origins.S3Origin(myBucket);
 
@@ -120,16 +122,19 @@ export class AirdropStack extends cdk.Stack {
       queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
     });
 
-    // Forward image requests
-    distribution.addBehavior("_next/image*", origin, {
-      edgeLambdas: [
-        {
-          functionVersion: imageLambda.currentVersion,
-          eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-        },
-      ],
-      cachePolicy: imageCachePolicy,
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Forward image requests
+    // distribution.addBehavior("_next/image*", origin, {
+    //   edgeLambdas: [
+    //     {
+    //       functionVersion: imageLambda.currentVersion,
+    //       eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+    //     },
+    //   ],
+    //   cachePolicy: imageCachePolicy,
+    // });
+
+
     // Upload deployment bucket
     new s3deploy.BucketDeployment(this, "nextJsAssets", {
       sources: [s3deploy.Source.asset(path.join(buildOutputDir, "assets"))],
