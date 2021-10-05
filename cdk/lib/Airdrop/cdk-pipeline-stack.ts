@@ -1,7 +1,11 @@
-import { Construct, SecretValue, Stack, StackProps, Stage } from "@aws-cdk/core";
-import { CdkPipeline, CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
+import * as dotenv from "dotenv";
+import { Construct, Stack, StackProps, Stage } from "@aws-cdk/core";
+import { CodeBuildStep, CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
+import { Role } from "@aws-cdk/aws-iam";
 import config, { appEnv } from "../../config";
 import { CDKPipelineStage } from "./cdk-pipeline-stage";
+
+dotenv.config();
 
 const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline => {
   const appConfig = config.get(stage);
@@ -11,7 +15,7 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
 
   const pipeline = new CodePipeline(stack, `${stage}-airdrop-pipeline`, {
     pipelineName: `${stage}-airdrop-pipeline`,
-    synth: new ShellStep("Synth", {
+    synth: new CodeBuildStep("Synth", {
       input: CodePipelineSource.gitHub(appConfig.repo.source, appConfig.repo.branch),
       commands: [
         `APP_ENV=${stage}`,
@@ -25,6 +29,7 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
         "pwd && npx cdk deploy --require-approval=never --verbose",
       ],
       primaryOutputDirectory: "cdk/cdk.out",
+      role: Role.fromRoleArn(stack, "singularitynet-cd", <string>process.env.SINGULARITYNET_CD_ROLE_ARN),
     }),
   });
 
