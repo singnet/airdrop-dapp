@@ -30,6 +30,7 @@ const AirdropSchedules = () => {
       {schedules.map((schedule, index) => {
         return (
           <AirdropSchedule
+            key={index} // TODO: Remove index as Key, it is a bad approach
             date={schedule.airdrop_schedule_date}
             title={schedule.airdrop_schedule_info}
             description={schedule.airdrop_schedule_description}
