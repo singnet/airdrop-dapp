@@ -5,7 +5,7 @@
     "cdk": "bin/cdk.js"
   },
   "scripts": {
-    "build": "echo \"I'm inside CDK build da \" && tsc",
+    "build": "echo \" Using cdk package.json \" && tsc",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
