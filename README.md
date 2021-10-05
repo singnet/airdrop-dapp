@@ -17,8 +17,17 @@ Two potential ways to deploy the application
 
 ## Wallet Connections
 
-- To fetch the user details use the hook `useActiveWeb3React`
+- To implement wallet connection use the `BlockChainProvider` from the snet-ui.  
+   `import BlockChainProvider from "snet-ui/Blockchain/Provider"`  
+   you can also look the sample implementation of the blockchain provider in `snet-ui/Blockchain/WalletModal.stories.tsx`
+
+- In order to trigger the wallet connection, please display the `WalletModal`.  
+   You can refer to the same storybook component as the above point.
+
+- To fetch the user details use the hook `useActiveWeb3React`  
   `import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks.ts"`
+
+-
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
