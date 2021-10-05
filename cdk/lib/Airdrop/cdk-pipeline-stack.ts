@@ -29,7 +29,7 @@ const createPipeline = (stack: CDKPipelineStack, stage: appEnv): CodePipeline =>
         "pwd && npx cdk deploy --require-approval=never --verbose",
       ],
       primaryOutputDirectory: "cdk/cdk.out",
-      role: Role.fromRoleArn(stack, "singularitynet-cd", <string>process.env.SINGULARITYNET_CD_ROLE_ARN),
+      role: Role.fromRoleArn(stack, `${stage}-singularitynet-cd`, <string>process.env.SINGULARITYNET_CD_ROLE_ARN),
     }),
   });
 
