@@ -1,8 +1,12 @@
 import { UAParser } from "ua-parser-js";
 
-const parser = new UAParser(window.navigator.userAgent);
-const { type } = parser.getDevice();
+const isServer = typeof window === "undefined";
 
-export const userAgent = parser.getResult();
+const parser = !isServer ? new UAParser(window.navigator.userAgent):null;
+
+
+const { type } =!isServer? parser.getDevice(): {};
+
+export const userAgent =!isServer? parser.getResult(): {};
 
 export const isMobile = type === "mobile" || type === "tablet";
