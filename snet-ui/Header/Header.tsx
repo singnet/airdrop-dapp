@@ -5,9 +5,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import WalletModal from "snet-ui/Blockchain/WalletModal";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openWallet, setWalletStatus] = React.useState<boolean>(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -16,9 +18,25 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const onMetamaskClick = () => {
+    setWalletStatus(true);
+  };
+
+  const onWalletConnect = () => {
+    setWalletStatus(true);
+  };
+
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <WalletModal open={openWallet} setOpen={setWalletStatus} />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+          marginBottom: 4,
+        }}
+      >
         <Typography sx={{ minWidth: 100 }}>NuNet Sites</Typography>
         <Typography sx={{ minWidth: 100 }}>SingularityNET Airdrops</Typography>
         <Typography sx={{ minWidth: 100 }}>Contact Us</Typography>
@@ -60,10 +78,10 @@ const Header = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem onClick={onMetamaskClick}>
           <Avatar /> Metamask
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onWalletConnect}>
           <Avatar /> Wallet Connect
         </MenuItem>
       </Menu>
