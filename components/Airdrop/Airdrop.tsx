@@ -7,24 +7,21 @@ import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
+import { useAppDispatch } from "utils/store/hooks";
 
 interface AirdropProps {}
 
 const Airdrop: FunctionComponent<AirdropProps> = () => {
   const [airdrop, setAirdrop] = useState<any>(null);
-  const [openWallet, setWalletStatus] = useState<boolean>(false);
   const [error, setErrors] = useState<any>(null);
 
   const { account, library } = useActiveWeb3React();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     fetchAirdrop();
   }, []);
-
-  const handleWalletConnect = () => {
-    setWalletStatus(true);
-  };
 
   const fetchAirdrop = async () => {
     try {
@@ -43,7 +40,7 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
   const airdropRegistration = async () => {
     try {
       if (!account) {
-        handleWalletConnect();
+        dispatch(setShowConnectionModal(true));
         return;
       }
 
@@ -71,7 +68,6 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
     const signer = await library.getSigner();
     const signature = await signer.signMessage(bytesDataHash);
 
-    setWalletStatus(false);
     return signature;
   };
 
