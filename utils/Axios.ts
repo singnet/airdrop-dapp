@@ -1,6 +1,6 @@
 import instance from "axios";
 
-const API_HOST = process.env.REACT_APP_API_ENDPOINT;
+const API_HOST = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 const axios = instance.create({
   baseURL: API_HOST,
