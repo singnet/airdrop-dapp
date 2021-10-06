@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import WalletModal from "snet-ui/Blockchain/WalletModal";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import axios from "../../utils/Axios";
+import axios from "utils/Axios";
 
 interface AirdropProps {}
 
@@ -76,10 +76,7 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
     return signature;
   };
 
-  const airdropUserRegistration = async (
-    address: string,
-    signature: string
-  ) => {
+  const airdropUserRegistration = async (address: string, signature: string) => {
     try {
       const { airdrop_id, airdrop_window_id } = airdrop;
       const payload = {
@@ -94,10 +91,7 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
     }
   };
 
-  const airdropEligibilityCheck = async (
-    address: string,
-    signature: string
-  ) => {
+  const airdropEligibilityCheck = async (address: string, signature: string) => {
     try {
       const { airdrop_id, airdrop_window_id } = airdrop;
       const payload = {
