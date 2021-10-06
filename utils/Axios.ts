@@ -1,13 +1,13 @@
-import instance from "axios";
+import axios from "axios";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-const axios = instance.create({
+const instance = axios.create({
   baseURL: API_HOST,
   timeout: 30000,
 });
 
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -18,8 +18,8 @@ axios.interceptors.response.use(
     if (error.response) {
       statusCode = error.response.status || 400;
       try {
-        errorText = error.response.data 
-      } catch (e:any) {
+        errorText = error.response.data;
+      } catch (e: any) {
         errorText = e.toString();
       }
     }
@@ -27,4 +27,4 @@ axios.interceptors.response.use(
   }
 );
 
-export default axios;
+export default instance;
