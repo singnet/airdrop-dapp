@@ -5,6 +5,7 @@ import * as path from "path";
 import { Builder } from "@sls-next/lambda-at-edge";
 
 import { CDKPipelineStack } from "../lib/Airdrop/cdk-pipeline-stack";
+import { awsEnvironment } from "../config";
 
 // BUILDING THE APPLICATION
 const nextConfigDir = "../";
@@ -33,7 +34,7 @@ builder
   .then(() => {
     const app = new cdk.App();
 
-    new CDKPipelineStack(app, "CDKPipelineStack");
+    new CDKPipelineStack(app, "CDKPipelineStack", { env: awsEnvironment });
 
     // app.synth();
   })
