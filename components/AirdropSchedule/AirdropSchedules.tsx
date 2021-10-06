@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AirdropSchedule from "snet-ui/AirdropSchedule/AirdropSchedule";
 import AirdropScheduleTitle from "./AirdropScheduleTitle";
 import axios from "utils/Axios";

@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import { arrayify, solidityKeccak256 } from "ethers/lib/utils";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
-import WalletModal from "snet-ui/Blockchain/WalletModal";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
 
@@ -108,7 +107,6 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
 
   return airdrop !== null ? (
     <>
-      <WalletModal open={openWallet} setOpen={setWalletStatus} />
       <Box
         sx={{
           padding: "4rem",
