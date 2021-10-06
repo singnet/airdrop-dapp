@@ -1,23 +1,13 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { arrayify, solidityKeccak256 } from "ethers/lib/utils";
+import { useRouter } from "next/router";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import WalletModal from "snet-ui/Blockchain/WalletModal";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import { useRouter } from "next/router";
-import {
-  solidityKeccak256,
-  solidityPack,
-  soliditySha256,
-  recoverAddress,
-  splitSignature,
-  keccak256,
-  hashMessage,
-  arrayify,
-  verifyMessage,
-} from "ethers/lib/utils";
+import axios from "../../utils/Axios";
 
 interface AirdropProps {}
 

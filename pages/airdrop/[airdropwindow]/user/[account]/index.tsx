@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import Header from "snet-ui/Header/Header";
-import Head from "next/head";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import Header from "snet-ui/Header/Header";
 import axios from "utils/Axios";
 
 interface AirdropWindowProps {}
@@ -28,7 +28,7 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
 
   useEffect(() => {
     getUserRegistrationInfo();
-  }, []);
+  }, [account, airdropwindow]);
 
   const getUserRegistrationInfo = async () => {
     try {

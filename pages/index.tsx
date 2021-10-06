@@ -1,11 +1,11 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import nextI18NextConfig from "next-i18next.config";
-import Header from "snet-ui/Header/Header";
-import AirdropSchedules from "components/AirdropSchedule/AirdropSchedules";
 import Airdrop from "components/Airdrop/Airdrop";
+import AirdropSchedules from "components/AirdropSchedule/AirdropSchedules";
+import type { NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import nextI18NextConfig from "next-i18next.config";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
+import Header from "snet-ui/Header/Header";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
