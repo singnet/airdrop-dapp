@@ -8,6 +8,12 @@ export enum SupportedChainId {
   KOVAN = 42,
 }
 
+// export enum NetworkName {
+//   mainnet = SupportedChainId.MAINNET,
+//   ropsten = SupportedChainId.ROPSTEN,
+//   kovan = SupportedChainId.KOVAN,
+// }
+
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
   SupportedChainId.ROPSTEN,
