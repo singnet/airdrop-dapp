@@ -11,6 +11,7 @@ import HowItWorks from "snet-ui/HowItWorks";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
+import Rules from "snet-ui/Rules";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
         <Airdrop />
       </Box>
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
-      <Box sx={{ p: 10 }}>Airdrop Rules</Box>
+      <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
       <AirdropSchedules />
     </>
   );
