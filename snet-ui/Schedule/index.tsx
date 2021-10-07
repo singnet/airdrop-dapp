@@ -25,17 +25,17 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main" }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", p:3 }}>
       <Typography align="center" fontWeight="bold">
         {title}
       </Typography>
       <Timeline>
-        {events.map((event) => (
+        {events.map((event, index) => (
           <TimelineItem key={event.time.toDateString()}>
             <TimelineOppositeContent sx={{ display: "none" }} />
             <TimelineSeparator>
               <TimelineDot />
-              <TimelineConnector />
+              {index !== events.length - 1 ? <TimelineConnector /> : null}
             </TimelineSeparator>
             <TimelineContent>
               <Grid container spacing={4}>

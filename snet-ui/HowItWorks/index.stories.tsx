@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import { Meta } from "@storybook/react";
 import { useState } from "react";
 import HowItWorksComponent from "./";
@@ -8,7 +7,7 @@ export default {
 } as Meta;
 
 export const HowItWorks: React.VFC<{}> = () => {
-  return <HowItWorksComponent title="Sample How it Works" steps={HowItWorksSampleData} />;
+  return <HowItWorksComponent title="Sample How it Works" steps={HowItWorksSampleData} blogLink="www.google.com" />;
 };
 
 const HowItWorksSampleData = [

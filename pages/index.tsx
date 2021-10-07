@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         <EligibilityBanner />
         <Airdrop />
       </Box>
-      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} />
+      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
     </>
