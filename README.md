@@ -6,6 +6,8 @@
 - Typescript
 - i18n
 - i18nexus
+- Redux 
+- Redux Toolkit
 
 ## Deployment
 

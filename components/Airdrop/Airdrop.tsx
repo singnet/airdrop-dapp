@@ -49,7 +49,7 @@ const Airdrop: FunctionComponent<AirdropProps> = () => {
       const signature = await signTransaction(account);
       await airdropEligibilityCheck(account, signature);
       await airdropUserRegistration(account, signature);
-      router.push(`airdrop/${airdrop.airdrop_window_id}/user/${account}`);
+      router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
       console.log(error);
       setErrors(error.toString());

@@ -12,6 +12,7 @@ import { SUPPORTED_WALLETS } from "./Wallet";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
+import { useEagerConnect } from "./web3Hooks";
 
 const style: SxProps<Theme> = {
   position: "absolute",
@@ -32,14 +33,8 @@ type Props = {
 
 export default function WalletModal({ open, setOpen }: Props) {
   const handleClose = () => setOpen(false);
-  const {
-    active,
-    account,
-    connector,
-    activate,
-    error,
-    library,
-  } = useWeb3React();
+  const { active, account, connector, activate, error, library } = useWeb3React();
+  useEagerConnect();
 
   const handleConnect = async (connector: AbstractConnector | undefined) => {
     console.log("inside handle connect");
@@ -54,24 +49,27 @@ export default function WalletModal({ open, setOpen }: Props) {
     console.log("connecting to the wallet", name);
 
     // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (
-      connector instanceof WalletConnectConnector &&
-      connector.walletConnectProvider?.wc?.uri
-    ) {
+    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
       connector.walletConnectProvider = undefined;
     }
 
     connector &&
-      activate(connector, undefined, true).catch((error) => {
-        if (error instanceof UnsupportedChainIdError) {
-          activate(connector); // a little janky...can't use setError because the connector isn't set
-        } else {
-          console.log("connection error", error);
-          // setPendingError(true)
-        }
-      });
+      activate(connector, undefined, true)
+        .then(() => {
+          console.log("activate promise resolved");
+          setOpen(false);
+        })
+        .catch((error) => {
+          if (error instanceof UnsupportedChainIdError) {
+            activate(connector); // a little janky...can't use setError because the connector isn't set
+          } else {
+            console.log("connection error", error);
+            // setPendingError(true)
+          }
+        });
 
     if (account) {
+      console.log("account connected");
       setOpen(false);
     }
   };
@@ -87,11 +85,7 @@ export default function WalletModal({ open, setOpen }: Props) {
         <DialogTitle>Connect to a wallet</DialogTitle>
         <List sx={{ pt: 0 }}>
           {Object.entries(SUPPORTED_WALLETS).map(([walletKey, wallet]) => (
-            <ListItem
-              button
-              key={wallet.name}
-              onClick={() => handleConnect(wallet.connector)}
-            >
+            <ListItem button key={wallet.name} onClick={() => handleConnect(wallet.connector)}>
               <ListItemAvatar>
                 <Avatar>
                   <PersonIcon />

@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import Header from "snet-ui/Header/Header";
 import axios from "utils/Axios";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
@@ -19,7 +20,6 @@ const style = {
 
 const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
   const [values, setValues] = useState({
-    account: "",
     airdropWindowName: "",
     airdropWindowRewards: "Pending",
     airdropWindowRewardsClaimed: "Pending",
@@ -29,7 +29,8 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
-  const { account, airdropwindow } = router.query;
+  const { airdropwindow } = router.query;
+  const { account } = useActiveWeb3React();
 
   useEffect(() => {
     getUserRegistrationInfo();
@@ -44,7 +45,6 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
       const { data } = await axios.post("airdrop/user-details", payload);
       setValues({
         ...values,
-        account,
         airdropwindow,
         airdropWindowName: data.data.window_name,
         airdropWindowRegisteredAt: data.data.registered_at,
@@ -69,7 +69,7 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
             </Box>
             <Box>
               <Typography variant="body2">Connected Wallet address</Typography>
-              <Typography variant="h6">{values.account}</Typography>
+              <Typography variant="h6">{account}</Typography>
             </Box>
           </Box>
           <Box sx={style}>
