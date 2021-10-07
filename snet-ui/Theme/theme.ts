@@ -27,7 +27,7 @@ export const lightTheme = createTheme({
       main: "#0052cc",
     },
     secondary: {
-      main: "#edf2ff",
+      main: "#01A79E",
     },
     bgHighlight: {
       main: "#f2f6fe",

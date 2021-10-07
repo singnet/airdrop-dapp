@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import AirdropSchedule from "snet-ui/AirdropSchedule/AirdropSchedule";
-import AirdropScheduleTitle from "./AirdropScheduleTitle";
 import axios from "utils/Axios";
+import Schedule from "snet-ui/Schedule";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const AirdropSchedules = () => {
   const [schedules, setSchedule] = useState([]);
@@ -24,20 +25,16 @@ const AirdropSchedules = () => {
     }
   };
 
+  const events = schedules.map((schedule) => ({
+    time: new Date(schedule.airdrop_schedule_date),
+    title: schedule.airdrop_schedule_info,
+    description: schedule.airdrop_schedule_description,
+  }));
+
   return (
-    <>
-      <AirdropScheduleTitle />
-      {schedules.map((schedule, index) => {
-        return (
-          <AirdropSchedule
-            key={index} // TODO: Remove index as Key, it is a bad approach
-            date={schedule.airdrop_schedule_date}
-            title={schedule.airdrop_schedule_info}
-            description={schedule.airdrop_schedule_description}
-          />
-        );
-      })}
-    </>
+    <Box sx={{ bgcolor: "bgHighlight.main" }}>
+      <Schedule title="Airdrop Schedule" events={events} blogLink="www.google.com" />
+    </Box>
   );
 };
 
