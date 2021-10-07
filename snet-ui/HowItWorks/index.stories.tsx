@@ -1,46 +1,15 @@
-import Airdrop from "components/Airdrop/Airdrop";
-import AirdropSchedules from "components/AirdropSchedule/AirdropSchedules";
-import EligibilityBanner from "components/EligibilityBanner";
-import type { NextPage } from "next";
-import { useTranslation } from "next-i18next";
-import nextI18NextConfig from "next-i18next.config";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Head from "next/head";
-import Header from "snet-ui/Header/Header";
-import HowItWorks from "snet-ui/HowItWorks";
-import { setShowConnectionModal } from "utils/store/features/walletSlice";
-import { useAppDispatch } from "utils/store/hooks";
-import Box from "@mui/material/Box";
+import { Button } from "@mui/material";
+import { Meta } from "@storybook/react";
+import { useState } from "react";
+import HowItWorksComponent from "./";
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
-  },
-});
+export default {
+  title: "Components/HowItWorks",
+} as Meta;
 
-const Home: NextPage = () => {
-  const { t } = useTranslation("common");
-
-  // const { showConnectionModal } = useAppSelector((state) => state.wallet);
-  const dispatch = useAppDispatch();
-
-  return (
-    <>
-      <Head>
-        <title>Airdrop</title>
-      </Head>
-      <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
-      <Box sx={{ mx: 5 }}>
-        <EligibilityBanner />
-        <Airdrop />
-        <AirdropSchedules />
-      </Box>
-      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} />
-    </>
-  );
+export const HowItWorks: React.VFC<{}> = () => {
+  return <HowItWorksComponent title="Sample How it Works" steps={HowItWorksSampleData} />;
 };
-
-export default Home;
 
 const HowItWorksSampleData = [
   {
