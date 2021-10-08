@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="43px" height="43px" viewBox="0 0 43 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>8855250A-3C17-4746-9688-CBC83B25D37F</title>
+    <g id="SNET-Main-Site---Main-Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page-:-Menu-:-Products" transform="translate(-402.000000, -122.000000)">
+            <g id="Dropdown-menu/Products" transform="translate(387.000000, 60.000000)">
+                <g id="Group" transform="translate(-1.000000, 16.000000)">
+                    <g id="Menu" transform="translate(0.000000, 34.000000)">
+                        <g id="AI-Marketplace" transform="translate(0.000000, 2.000000)">
+                            <g id="icon:-marketplace" transform="translate(17.000000, 11.000000)">
+                                <polyline id="Stroke-1" stroke="#220D3A" stroke-width="2" points="0 10.73284 7.06953889 0 33.7838548 0 41 10.8301887"></polyline>
+                                <path d="M41,10.8301887 C41,12.823717 40.2129783,13.9245283 38.326087,13.9245283 C36.4391957,13.9245283 34.7608696,12.823717 34.7608696,10.8301887 C34.7608696,12.823717 33.423913,13.9245283 31.1956522,13.9245283 C28.9673913,13.9245283 27.6304348,12.823717 27.6304348,10.8301887 C27.6304348,12.823717 25.8478261,13.9245283 24.0652174,13.9245283 C22.2826087,13.9245283 20.5,12.823717 20.5,10.8301887 C20.5,12.823717 18.7173913,13.9245283 16.9347826,13.9245283 C15.1521739,13.9245283 13.3695652,12.823717 13.3695652,10.8301887 C13.3695652,12.823717 12.0326087,13.9245283 9.80434783,13.9245283 C7.57608696,13.9245283 6.23913043,12.823717 6.23913043,10.8301887 C6.23913043,12.823717 4.56080435,13.9245283 2.67391304,13.9245283 C0.787021739,13.9245283 0,12.823717 0,10.8301887" id="Stroke-3" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></path>
+                                <polyline id="Stroke-5" stroke="#220D3A" stroke-width="2" stroke-linecap="round" points="38.6792453 13.9245283 38.6792453 41 1.54716981 41 1.54716981 13.9245283"></polyline>
+                                <line x1="6.18867925" y1="10.8301887" x2="11.6037736" y2="0" id="Stroke-7" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></line>
+                                <line x1="13.1509434" y1="10.8301887" x2="16.245283" y2="0" id="Stroke-9" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></line>
+                                <line x1="20.1736174" y1="11.6037736" x2="20.0527977" y2="0" id="Stroke-11" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></line>
+                                <line x1="27.0754717" y1="10.8301887" x2="25.5283019" y2="0" id="Stroke-13" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></line>
+                                <line x1="34.8113208" y1="10.8301887" x2="30.1698113" y2="0" id="Stroke-15" stroke="#220D3A" stroke-width="2" stroke-linecap="round"></line>
+                                <line x1="1.54716981" y1="33.6509434" x2="38.6792453" y2="33.6509434" id="Stroke-17" stroke="#220D3A" stroke-width="1.5" stroke-linejoin="round"></line>
+                                <g id="Group-23" transform="translate(19.339623, 20.113208)" stroke="#4086FF" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline id="Stroke-19" stroke-width="2" points="7.29946783 9.28301887 3.64973391 0 0 9.28301887"></polyline>
+                                    <line x1="6.66473149" y1="7.52244632" x2="0.634736333" y2="7.52244632" id="Stroke-21" stroke-width="1.5"></line>
+                                    <line x1="11.9013062" y1="0" x2="11.9013062" y2="9.28301887" id="Stroke-23" stroke-width="2"></line>
+                                </g>
+                                <path d="M14.0216327,20.1268616 C12.8798427,20.0003484 11.6483702,21.7698036 11.2173963,22.738051 C10.7855921,21.7698036 9.5541196,20.0003484 8.41232953,20.1268616 C6.90765782,20.2947024 5.93941984,21.852501 6.24500439,23.3546338 C6.66103117,25.3965561 8.93879855,26.3141982 11.2173963,28.6226415 C13.4951637,26.3141982 15.7729311,25.3965561 16.1889579,23.3546338 C16.4945424,21.852501 15.5263044,20.2947024 14.0216327,20.1268616 Z" id="Stroke-1" stroke="#4086FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
