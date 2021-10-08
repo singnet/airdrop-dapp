@@ -1,9 +1,5 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import { SxProps, Theme } from "@mui/system";
-import Card from "@mui/material/Card";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import List from "@mui/material/List";
@@ -13,9 +9,10 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import { SUPPORTED_WALLETS } from "./Wallet";
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { AbstractConnector } from "@web3-react/abstract-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
+import { useEagerConnect } from "./web3Hooks";
 
 const style: SxProps<Theme> = {
   position: "absolute",
@@ -36,35 +33,46 @@ type Props = {
 
 export default function WalletModal({ open, setOpen }: Props) {
   const handleClose = () => setOpen(false);
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { active, account, connector, activate, error, library } = useWeb3React();
+  useEagerConnect();
 
   const handleConnect = async (connector: AbstractConnector | undefined) => {
-    console.log("inside handle connect")
-    let name = ''
+    console.log("inside handle connect");
+    let name = "";
     Object.keys(SUPPORTED_WALLETS).map((key) => {
       if (connector === SUPPORTED_WALLETS[key].connector) {
-        return (name = SUPPORTED_WALLETS[key].name)
+        return (name = SUPPORTED_WALLETS[key].name);
       }
-      return true
-    })
+      return true;
+    });
 
-    console.log("connecting to the wallet", name)
+    console.log("connecting to the wallet", name);
 
-     // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-     if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-      connector.walletConnectProvider = undefined
+    // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+      connector.walletConnectProvider = undefined;
     }
 
     connector &&
-      activate(connector, undefined, true).catch((error) => {
-        if (error instanceof UnsupportedChainIdError) {
-          activate(connector) // a little janky...can't use setError because the connector isn't set
-        } else {
-          console.log("connection error", error)
-          // setPendingError(true)
-        }
-      })
-  }
+      activate(connector, undefined, true)
+        .then(() => {
+          console.log("activate promise resolved");
+          setOpen(false);
+        })
+        .catch((error) => {
+          if (error instanceof UnsupportedChainIdError) {
+            activate(connector); // a little janky...can't use setError because the connector isn't set
+          } else {
+            console.log("connection error", error);
+            // setPendingError(true)
+          }
+        });
+
+    if (account) {
+      console.log("account connected");
+      setOpen(false);
+    }
+  };
 
   return (
     <div>
@@ -77,7 +85,7 @@ export default function WalletModal({ open, setOpen }: Props) {
         <DialogTitle>Connect to a wallet</DialogTitle>
         <List sx={{ pt: 0 }}>
           {Object.entries(SUPPORTED_WALLETS).map(([walletKey, wallet]) => (
-            <ListItem button key={wallet.name} onClick={()=>handleConnect(wallet.connector)}>
+            <ListItem button key={wallet.name} onClick={() => handleConnect(wallet.connector)}>
               <ListItemAvatar>
                 <Avatar>
                   <PersonIcon />

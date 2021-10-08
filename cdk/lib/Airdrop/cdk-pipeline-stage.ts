@@ -1,4 +1,5 @@
 import { CfnOutput, Construct, Stage, StageProps } from "@aws-cdk/core";
+import { awsEnvironment } from "../../config";
 import { AirdropStack } from "./airdrop-stack";
 
 export class CDKPipelineStage extends Stage {
@@ -7,7 +8,7 @@ export class CDKPipelineStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const service = new AirdropStack(this, "WebService");
+    const service = new AirdropStack(this, "WebService", { env: awsEnvironment });
 
     this.urlOutput = service.urlOutput;
   }

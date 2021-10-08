@@ -12,6 +12,13 @@ declare module "@mui/material/styles" {
       danger?: string;
     };
   }
+
+  interface TypeBackground {
+    highlight: string;
+  }
+  interface PaletteOptions {
+    bgHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
+  }
 }
 
 export const lightTheme = createTheme({
@@ -20,7 +27,14 @@ export const lightTheme = createTheme({
       main: "#0052cc",
     },
     secondary: {
-      main: "#edf2ff",
+      main: "#01A79E",
+    },
+    bgHighlight: {
+      main: "#f2f6fe",
+    },
+    background: {
+      default: "#fff",
+      paper: "#fff",
     },
   },
 });

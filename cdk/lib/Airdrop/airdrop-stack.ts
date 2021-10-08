@@ -6,10 +6,8 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as s3deploy from "@aws-cdk/aws-s3-deployment";
 import * as acm from "@aws-cdk/aws-certificatemanager";
-// import * as route53 from "@aws-cdk/aws-route53";
-// import * as acm from "@aws-cdk/aws-certificatemanager";
-// import * as r53 from "@aws-cdk/aws-route53";
-
+import * as route53 from "@aws-cdk/aws-route53";
+import * as route53Targets from "@aws-cdk/aws-route53-targets";
 import * as path from "path";
 import { buildOutputDir } from "../../bin/cdk";
 import config, { appEnv } from "../../config";
@@ -63,12 +61,13 @@ export class AirdropStack extends cdk.Stack {
     //   code: lambda.Code.fromAsset(path.join(outputDir, "api-lambda")),
     // });
 
-    // Lambda functions for handling images
-    const imageLambda = new lambda.Function(this, imageLambdaName, {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      handler: "index.handler",
-      code: lambda.Code.fromAsset(path.join(buildOutputDir, "image-lambda")),
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Lambda functions for handling images
+    // const imageLambda = new lambda.Function(this, imageLambdaName, {
+    //   runtime: lambda.Runtime.NODEJS_14_X,
+    //   handler: "index.handler",
+    //   code: lambda.Code.fromAsset(path.join(buildOutputDir, "image-lambda")),
+    // });
 
     // Static Asset bucket for cloudfront distribution as default origin
     const myBucket = new s3.Bucket(this, bucketName, {
@@ -76,8 +75,9 @@ export class AirdropStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Allow images to be fetched
-    myBucket.grantRead(imageLambda);
+    // TODO: uncomment if imageLambda is required
+    // // Allow images to be fetched
+    // myBucket.grantRead(imageLambda);
 
     const origin = new origins.S3Origin(myBucket);
 
@@ -112,24 +112,27 @@ export class AirdropStack extends cdk.Stack {
     //   ],
     // });
 
-    // Image cache policy extends the default cache policy, but with query params
-    const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
-      ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
-      cachePolicyName: imageCachePolicyName,
-      comment: "Policy to cache images for _next/image",
-      queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Image cache policy extends the default cache policy, but with query params
+    // const imageCachePolicy = new cloudfront.CachePolicy(this, imageCachePolicyName, {
+    //   ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
+    //   cachePolicyName: imageCachePolicyName,
+    //   comment: "Policy to cache images for _next/image",
+    //   queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...["url", "w", "q"]),
+    // });
 
-    // Forward image requests
-    distribution.addBehavior("_next/image*", origin, {
-      edgeLambdas: [
-        {
-          functionVersion: imageLambda.currentVersion,
-          eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-        },
-      ],
-      cachePolicy: imageCachePolicy,
-    });
+    // TODO: uncomment if imageLambda is required
+    // // Forward image requests
+    // distribution.addBehavior("_next/image*", origin, {
+    //   edgeLambdas: [
+    //     {
+    //       functionVersion: imageLambda.currentVersion,
+    //       eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+    //     },
+    //   ],
+    //   cachePolicy: imageCachePolicy,
+    // });
+
     // Upload deployment bucket
     new s3deploy.BucketDeployment(this, "nextJsAssets", {
       sources: [s3deploy.Source.asset(path.join(buildOutputDir, "assets"))],
@@ -139,6 +142,19 @@ export class AirdropStack extends cdk.Stack {
 
     this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
       value: `https://${distribution.distributionDomainName}`,
+    });
+
+    // ROUTE53 MAPPING
+    // We are using a Zone that already exists so we can use a lookup on the Zone name.
+    const zone = route53.HostedZone.fromLookup(this, "baseZone", {
+      domainName: zoneName,
+    });
+
+    // Create the wildcard DNS entry in route53 as an alias to the new CloudFront Distribution.
+    new route53.ARecord(this, "AliasRecord", {
+      zone,
+      recordName: domainName,
+      target: route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(distribution)),
     });
 
     // console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());

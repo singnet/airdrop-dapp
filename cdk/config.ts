@@ -1,6 +1,11 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+export const awsEnvironment = {
+  account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
+  region: process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION,
+};
+
 export enum appEnv {
   ropsten = "ropsten",
   mainnet = "mainnet",
