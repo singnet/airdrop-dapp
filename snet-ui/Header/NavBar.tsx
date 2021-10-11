@@ -149,7 +149,9 @@ const NavBar = ({
           </li>
         ))}
       </ul>
-      <Button onClick={onConnectWallet}>Connect Wallet</Button>
+      <Button onClick={onConnectWallet} color="info" variant="contained">
+        Connect Wallet
+      </Button>
     </nav>
   );
 };

@@ -11,6 +11,9 @@ import HowItWorks from "snet-ui/HowItWorks";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
+import UseFormControl from "snet-ui/Notification";
+import Falsemessage from "snet-ui/Flasemessage";
+import Ecosystem from "snet-ui/Ecosystem";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -27,14 +30,21 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
+      <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
       <Box sx={{ mx: 5 }}>
         <EligibilityBanner />
         <Airdrop />
       </Box>
-      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <HowItWorks
+        title="How Airdrop Works"
+        steps={HowItWorksSampleData}
+        blogLink="www.google.com"
+      />
+      <UseFormControl />
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
+      <Ecosystem blogLink="www.google.com" />
     </>
   );
 };

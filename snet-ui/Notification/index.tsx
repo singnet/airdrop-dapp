@@ -1,0 +1,56 @@
+import React, { useEffect } from "react";
+
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { withStyles } from "@mui/styles";
+
+import { TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import FormHelperText from "@mui/material/FormHelperText";
+import Button from "@mui/material/Button";
+import EmailIcon from "@mui/icons-material/Email";
+import { styles } from "./styles";
+import { Stack } from "@mui/material";
+
+//const HowItWorks = ({ classes }) => {
+
+export default function CustomizedTextField() {
+  return (
+    <Box
+      component="form"
+      noValidate
+      autoComplete="off"
+      color="background.primary"
+    >
+      <Typography
+        align="center"
+        fontWeight="bold"
+        variant="h6"
+        color="text.secondary"
+      >
+        Get Notification Updates
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box component="form" name="mc-embedded-subscribe-form">
+          <Stack spacing={2} direction="row">
+            <TextField
+              name="EMAIL"
+              InputProps={{ startAdornment: <EmailIcon /> }}
+              label="Please enter your email address"
+
+              //InputProps={{ startAdornment: <EmailIcon /> }}
+            />
+            <Button
+              type="submit"
+              children="subscribe"
+              color="info"
+              variant="contained"
+            />
+          </Stack>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+//export default withStyles(styles)(HowItWorks);
