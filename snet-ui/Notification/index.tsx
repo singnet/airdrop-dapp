@@ -6,13 +6,9 @@ import { withStyles } from "@mui/styles";
 
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import EmailIcon from "@mui/icons-material/Email";
-import { styles } from "./styles";
 import { Stack } from "@mui/material";
-
-//const HowItWorks = ({ classes }) => {
 
 export default function CustomizedTextField() {
   return (
