@@ -20,6 +20,7 @@ declare module "@mui/material/styles" {
     bgHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgGradient?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
   }
 }
 
@@ -47,9 +48,13 @@ export const lightTheme = createTheme({
       secondary:"#fff",
       primary:"#000",
     
+    
     },
     bgBox:{
       main:"#603E95",
+    },
+    bgtext:{
+      main:"#220D3A",
     },
     
     

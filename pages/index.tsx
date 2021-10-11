@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import UseFormControl from "snet-ui/Notification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
+import BoxSx from "snet-ui/Airdropinfo";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -32,6 +33,7 @@ const Home: NextPage = () => {
       </Head>
       <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
+      <BoxSx blogLink="www.google.com" />
       <Box sx={{ mx: 5 }}>
         <EligibilityBanner />
         <Airdrop />
