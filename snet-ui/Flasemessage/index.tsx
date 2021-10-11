@@ -7,7 +7,7 @@ export default function Falsemessage() {
       component="form"
       noValidate
       autoComplete="off"
-      sx={{ background: "#603E95" }}
+      sx={{ bgcolor: "bgBox.main" }}
     >
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Typography variant="body2" color="text.secondary">

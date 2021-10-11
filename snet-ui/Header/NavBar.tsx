@@ -25,7 +25,6 @@ const NavBar = ({
   };
 
   if (activeNavItem) {
-    //if (typeof window === "undefined") return;
     window.addEventListener("click", (event: any) => {
       if (event.target.id !== "navLink") {
         setActiveNavItem(0);

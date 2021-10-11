@@ -18,6 +18,8 @@ declare module "@mui/material/styles" {
   }
   interface PaletteOptions {
     bgHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgGradient?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
   }
 }
 
@@ -32,19 +34,23 @@ export const lightTheme = createTheme({
     bgHighlight: {
       main: "#f2f6fe",
     },
+    bgGradient:{
+      main:"linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+      //main:"#000",
+    },
     background: {
       default: "#fff",
       paper: "#fff",
       
-    
     },
     text:{
       secondary:"#fff",
       primary:"#000",
     
-    
-
-  }
+    },
+    bgBox:{
+      main:"#603E95",
+    },
     
     
   },
