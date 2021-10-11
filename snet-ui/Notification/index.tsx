@@ -20,7 +20,7 @@ export default function CustomizedTextField() {
       component="form"
       noValidate
       autoComplete="off"
-      color="background.primary"
+      sx={{ background: "linear-gradient(180deg, #061753 0%, #184FA7 100%)" }}
     >
       <Typography
         align="center"
@@ -30,7 +30,7 @@ export default function CustomizedTextField() {
       >
         Get Notification Updates
       </Typography>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
         <Box component="form" name="mc-embedded-subscribe-form">
           <Stack spacing={2} direction="row">
             <TextField
