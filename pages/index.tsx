@@ -12,6 +12,10 @@ import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
 import Rules from "snet-ui/Rules";
+import UseFormControl from "snet-ui/Notification";
+import Falsemessage from "snet-ui/Flasemessage";
+import Ecosystem from "snet-ui/Ecosystem";
+import Airdropinfo from "snet-ui/Airdropinfo";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -28,14 +32,19 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
+      <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
+      <Airdropinfo blogLink="www.google.com" />
       <Box sx={{ mx: 5 }}>
         <EligibilityBanner />
         <Airdrop />
       </Box>
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
+      <UseFormControl />
+      <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
+      <Ecosystem blogLink="www.google.com" />
     </>
   );
 };
@@ -67,6 +76,11 @@ const HowItWorksSampleData = [
     title: "atise on the theory of ethics, very popu",
     description:
       "ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, c",
+  },
+  {
+    title: "atise Ipsum is simply dummy text of the printing an",
+    description:
+      "there are many variations in the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised",
   },
 ];
 

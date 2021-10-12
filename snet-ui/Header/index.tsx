@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
+//import {theme } from "snet-ui/Theme/theme";
 import AirdropLogo from "snet-ui/images/AirdropLogo.png";
 import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
