@@ -88,6 +88,12 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
+    h1: {
+      fontSize: "48px",
+      fontWeight: 500,
+      lineHeight: "56px",
+      letterSpacing: "-1px",
+    },
     h3: {
       fontSize: "24px",
       fontWeight: 600,
