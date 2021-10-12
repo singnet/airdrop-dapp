@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       <Box px={4} mt={3}>
         <EligibilityBanner />
       </Box>
-      <Grid container spacing={2} px={4} mt={2}>
+      <Grid container spacing={2} px={4} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
           <Airdropinfo blogLink="www.google.com" />
         </Grid>
