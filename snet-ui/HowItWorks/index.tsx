@@ -17,8 +17,21 @@ type Props = {
 
 export default function HowItWorks({ title, steps, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", p: 3 }}>
-      <Typography align="center" fontWeight="bold">
+    <Box
+      sx={{
+        bgcolor: "bgHighlight.main",
+        p: 1,
+        height: "728px",
+        width: "1160px",
+        m: 12,
+      }}
+    >
+      <Typography
+        align="center"
+        fontWeight="bold"
+        color="bgtext.main"
+        variant="h4"
+      >
         {title}
       </Typography>
 
@@ -30,18 +43,27 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
                 sx={{
                   bgcolor: "primary.main",
                   color: "primary.contrastText",
-                  borderRadius: 1.5,
+                  borderRadius: "4px",
                   textAlign: "center",
-                  p: 0,
+                  //p: 0,
                   maxWidth: 35,
+                  height: "49px",
+                  width: "36px",
                 }}
               >
-                <Typography>step</Typography>
+                <Typography>Step</Typography>
                 <Typography fontWeight="bold">{index + 1}</Typography>
               </Box>
             </Grid>
             <Grid item xs={10} sm={11} md={10}>
-              <Typography fontWeight="bold">{step.title}</Typography>
+              <Typography
+                fontWeight="bold"
+                color="bgtext.main"
+                fontFamily="Montserrat"
+                variant="h6"
+              >
+                {step.title}
+              </Typography>
               <Typography>{step.description}</Typography>
             </Grid>
           </Grid>
