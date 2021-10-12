@@ -25,7 +25,6 @@ const NavBar = ({
   };
 
   if (activeNavItem) {
-    //if (typeof window === "undefined") return;
     window.addEventListener("click", (event: any) => {
       if (event.target.id !== "navLink") {
         setActiveNavItem(0);
@@ -149,7 +148,9 @@ const NavBar = ({
           </li>
         ))}
       </ul>
-      <Button onClick={onConnectWallet}>Connect Wallet</Button>
+      <Button onClick={onConnectWallet} color="info" variant="contained">
+        Connect Wallet
+      </Button>
     </nav>
   );
 };
