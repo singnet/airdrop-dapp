@@ -16,6 +16,11 @@
   box-shadow: 0px 10px 10px -10px grey;
 }
 
+.flipUnitContainer .unit {
+  display: table;
+  margin: 0 auto;
+}
+
 .upperCard,
 .lowerCard {
   display: flex;

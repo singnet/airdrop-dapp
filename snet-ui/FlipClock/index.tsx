@@ -3,7 +3,7 @@ import React from "react";
 import FlipUnitContainer from "./FlipUnitContainer";
 import styles from "./style.module.css";
 
-export type Unit = "hours" | "minutes" | "seconds";
+export type Unit = "days" | "hours" | "minutes" | "seconds";
 export type Animation = "fold" | "unfold";
 export type Position = "upperCard" | "lowerCard";
 export type Digit = string | number;

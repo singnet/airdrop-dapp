@@ -23,6 +23,9 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
+const next10Days = new Date();
+next10Days.setDate(next10Days.getDate() + 10);
+
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
   const dispatch = useAppDispatch();

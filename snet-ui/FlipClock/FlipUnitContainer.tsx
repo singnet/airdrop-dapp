@@ -8,13 +8,14 @@ type FlipUnitContainerProps = {
   digit: Digit;
   shuffle: boolean;
   unit: Unit;
+  countdown?: boolean;
 };
 
 // function component
-const FlipUnitContainer = ({ digit, shuffle, unit }: FlipUnitContainerProps) => {
+const FlipUnitContainer = ({ digit, shuffle, unit, countdown = false }: FlipUnitContainerProps) => {
   // assign digit values
   let currentDigit: Digit = digit;
-  let previousDigit: Digit = Number(digit) - 1;
+  let previousDigit: Digit = countdown ? Number(digit) + 1 : Number(digit) - 1;
 
   // to prevent a negative value
   if (unit !== "hours") {
@@ -45,6 +46,7 @@ const FlipUnitContainer = ({ digit, shuffle, unit }: FlipUnitContainerProps) => 
       <StaticCard position={"lowerCard"} digit={previousDigit} />
       <AnimatedCard digit={digit1} animation={animation1} />
       <AnimatedCard digit={digit2} animation={animation2} />
+      <span className={styles.unit}>{unit}</span>
     </div>
   );
 };
