@@ -15,7 +15,7 @@ type Props = {
   blogLink?: string;
 };
 
-export default function ColoredLine({ title, steps, blogLink }: Props) {
+export default function Airdroprules({ title, steps, blogLink }: Props) {
   return (
     <Box
     //   sx={{

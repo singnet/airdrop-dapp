@@ -15,7 +15,7 @@ import UseFormControl from "snet-ui/Notification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
-import ColoredLine from "snet-ui/Airdroprules";
+import Airdroprules from "snet-ui/Airdroprules";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
       />
       <UseFormControl />
 
-      <ColoredLine
+      <Airdroprules
         title="Airdrop Rules"
         steps={RulesData}
         blogLink="www.google.com"
