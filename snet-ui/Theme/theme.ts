@@ -35,10 +35,7 @@ export const lightTheme = createTheme({
     bgHighlight: {
       main: "#f2f6fe",
     },
-    bgGradient:{
-      main:"linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-      //main:"#000",
-    },
+    
     background: {
       default: "#fff",
       paper: "#fff",
@@ -54,7 +51,7 @@ export const lightTheme = createTheme({
       main:"#603E95",
     },
     bgtext:{
-      main:"#220D3A",
+      main:"#062362",
     },
     
     

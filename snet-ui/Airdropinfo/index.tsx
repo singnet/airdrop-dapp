@@ -6,7 +6,7 @@ type Props = {
   blogLink?: string;
 };
 
-export default function BoxSx({ blogLink }: Props) {
+export default function Airdropinfo({ blogLink }: Props) {
   return (
     <Box
       sx={{
