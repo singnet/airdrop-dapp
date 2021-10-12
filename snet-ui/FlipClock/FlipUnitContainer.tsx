@@ -1,3 +1,4 @@
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { Digit, Unit } from "./";
 import AnimatedCard from "./AnimatedCard";
@@ -46,7 +47,9 @@ const FlipUnitContainer = ({ digit, shuffle, unit, countdown = false }: FlipUnit
       <StaticCard position={"lowerCard"} digit={previousDigit} />
       <AnimatedCard digit={digit1} animation={animation1} />
       <AnimatedCard digit={digit2} animation={animation2} />
-      <span className={styles.unit}>{unit}</span>
+      <Typography variant="normal" color="text.secondary" className={styles.unit}>
+        {unit}
+      </Typography>
     </div>
   );
 };

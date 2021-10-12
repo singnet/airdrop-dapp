@@ -1,7 +1,7 @@
 .flipClock {
   display: flex;
   justify-content: space-between;
-  width: 500px;
+  /* width: 500px; */
 }
 
 .flipUnitContainer {
@@ -19,6 +19,7 @@
 .flipUnitContainer .unit {
   display: table;
   margin: 0 auto;
+  text-transform: capitalize;
 }
 
 .upperCard,

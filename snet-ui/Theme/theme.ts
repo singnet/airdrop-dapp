@@ -24,6 +24,38 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/styles/createTypography" {
+  interface Typography {
+    priority: React.CSSProperties;
+    normal: React.CSSProperties;
+    small: React.CSSProperties;
+    link: React.CSSProperties;
+    label: React.CSSProperties;
+    menu: React.CSSProperties;
+  }
+
+  // allow configuration using `createMuiTheme`
+  interface TypographyOptions {
+    priority: React.CSSProperties;
+    normal?: React.CSSProperties;
+    small?: React.CSSProperties;
+    link?: React.CSSProperties;
+    label?: React.CSSProperties;
+    menu?: React.CSSProperties;
+  }
+}
+
+declare module "@mui/material/Typography/Typography" {
+  interface TypographyPropsVariantOverrides {
+    priority: true;
+    normal: true;
+    small: true;
+    link: true;
+    label: true;
+    menu: true;
+  }
+}
+
 export const lightTheme = createTheme({
   palette: {
     common: {
@@ -39,25 +71,50 @@ export const lightTheme = createTheme({
     bgHighlight: {
       main: "#f2f6fe",
     },
-    
+
     background: {
       default: "#fff",
       paper: "#fff",
-      
     },
-    text:{
-      secondary:"#fff",
-      primary:"#000",
-    
-    
+    text: {
+      secondary: "#F4F8FF",
+      primary: "#000",
     },
-    bgBox:{
-      main:"#603E95",
+    bgBox: {
+      main: "#603E95",
     },
-    bgtext:{
-      main:"#062362",
+    bgtext: {
+      main: "#062362",
     },
-    
-    
+  },
+  typography: {
+    h3: {
+      fontSize: "24px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
+    },
+    h4: {
+      fontSize: "20px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
+    },
+    priority: {
+      fontSize: "18px",
+      lineHeight: "29px",
+      letterSpacing: 0,
+    },
+    normal: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      letterSpacing: 0,
+    },
+    small: {
+      fontSize: "10px",
+      lineHeight: "13px",
+      fontWeight: 500,
+      letterSpacing: 0,
+    },
   },
 });

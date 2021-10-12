@@ -33,7 +33,7 @@ type FlipClockState = {
 };
 
 // class component
-export default class FlipClock extends React.Component<FlipClockProps, FlipClockState> {
+export default class FlipCountdown extends React.Component<FlipClockProps, FlipClockState> {
   timerID?: NodeJS.Timer | number;
   constructor(props) {
     super(props);

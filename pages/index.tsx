@@ -16,6 +16,8 @@ import UseFormControl from "snet-ui/Notification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
+import Grid from "@mui/material/Grid";
+import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -37,7 +39,14 @@ const Home: NextPage = () => {
       </Head>
       <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
-      <Airdropinfo blogLink="www.google.com" />
+      <Grid container spacing={2} px={4} mt={2}>
+        <Grid item xs={12} sm={6}>
+          <Airdropinfo blogLink="www.google.com" />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <AirdropRegistrationMini startDate={next10Days} />
+        </Grid>
+      </Grid>
       <Box sx={{ mx: 5 }}>
         <EligibilityBanner />
         <Airdrop />
