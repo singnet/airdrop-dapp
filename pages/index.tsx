@@ -12,7 +12,7 @@ import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
 import Rules from "snet-ui/Rules";
-import UseFormControl from "snet-ui/Notification";
+import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
@@ -51,9 +51,10 @@ const Home: NextPage = () => {
         </Grid>
       </Grid>
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <SubscribeToNotification />
       <Airdrop />
       <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
-      <UseFormControl />
+      
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
