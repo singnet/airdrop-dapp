@@ -17,21 +17,8 @@ type Props = {
 
 export default function HowItWorks({ title, steps, blogLink }: Props) {
   return (
-    <Box
-      sx={{
-        bgcolor: "bgHighlight.main",
-        p: 1,
-        height: "728px",
-        width: "1160px",
-        m: 12,
-      }}
-    >
-      <Typography
-        align="center"
-        fontWeight="bold"
-        color="bgtext.main"
-        variant="h4"
-      >
+    <Box sx={{ bgcolor: "bgHighlight.main", px: 4, py: 8 }}>
+      <Typography align="center" fontWeight="bold" color="bgtext.main" variant="h3">
         {title}
       </Typography>
 
@@ -43,12 +30,10 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
                 sx={{
                   bgcolor: "primary.main",
                   color: "primary.contrastText",
-                  borderRadius: "4px",
+                  borderRadius: 1.5,
                   textAlign: "center",
-                  //p: 0,
-                  maxWidth: 35,
+                  maxWidth: 40,
                   height: "49px",
-                  width: "36px",
                 }}
               >
                 <Typography>Step</Typography>
@@ -56,20 +41,15 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
               </Box>
             </Grid>
             <Grid item xs={10} sm={11} md={10}>
-              <Typography
-                fontWeight="bold"
-                color="bgtext.main"
-                fontFamily="Montserrat"
-                variant="h6"
-              >
+              <Typography fontWeight="bold" color="bgtext.main" variant="priority" component="p">
                 {step.title}
               </Typography>
-              <Typography>{step.description}</Typography>
+              <Typography variant="normal">{step.description}</Typography>
             </Grid>
           </Grid>
         ))}
       </Grid>
-      <Box textAlign="center">
+      <Box textAlign="center" mt={5}>
         {blogLink ? (
           <Button
             variant="outlined"

@@ -94,6 +94,12 @@ export const lightTheme = createTheme({
       lineHeight: "56px",
       letterSpacing: "-1px",
     },
+    h2: {
+      fontSize: "32px",
+      fontWeight: "bold",
+      lineHeight: "56px",
+      letterSpacing: "-0.67px",
+    },
     h3: {
       fontSize: "24px",
       fontWeight: 600,

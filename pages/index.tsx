@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       </Head>
       <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
-      <Box px={4} mt={3} >
+      <Box px={4} mt={3}>
         <EligibilityBanner />
       </Box>
       <Grid container spacing={2} px={4} mt={2}>
@@ -50,8 +50,8 @@ const Home: NextPage = () => {
           <AirdropRegistrationMini startDate={next10Days} />
         </Grid>
       </Grid>
-      <Airdrop />
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <Airdrop />
       <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
       <UseFormControl />
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
