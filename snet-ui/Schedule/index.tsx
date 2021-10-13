@@ -25,8 +25,8 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", p:3 }}>
-      <Typography align="center" fontWeight="bold">
+    <Box sx={{ bgcolor: "bgHighlight.main", p: 3 }}>
+      <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
       <Timeline>
@@ -40,11 +40,15 @@ export default function Schedule({ title, events, blogLink }: Props) {
             <TimelineContent>
               <Grid container spacing={4}>
                 <Grid item xs={3}>
-                  {event.time.toDateString()}
+                  <Typography variant="priority" color="primary">
+                    {event.time.toDateString()}
+                  </Typography>
                 </Grid>
                 <Grid item xs={9}>
-                  <Typography fontWeight="bold">{event.title}</Typography>
-                  <Typography>{event.description}</Typography>
+                  <Typography variant="priority" color="primary" component="p">
+                    {event.title}
+                  </Typography>
+                  <Typography variant="normal">{event.description}</Typography>
                 </Grid>
               </Grid>
             </TimelineContent>
