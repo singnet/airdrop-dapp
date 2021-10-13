@@ -5,7 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import Header from "snet-ui/Header/Header";
+import Header from "snet-ui/Header";
 import axios from "utils/Axios";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";

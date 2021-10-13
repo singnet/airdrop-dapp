@@ -12,12 +12,7 @@ type NavbarProps = WithStyles<typeof styles> & {
   onConnectWallet: () => void;
 };
 
-const NavBar = ({
-  navigationData,
-  classes,
-  type,
-  onConnectWallet,
-}: NavbarProps) => {
+const NavBar = ({ navigationData, classes, type, onConnectWallet }: NavbarProps) => {
   const [activeNavItem, setActiveNavItem] = useState(0);
 
   const onMenuClick = (id: number) => {
@@ -58,11 +53,9 @@ const NavBar = ({
               </a>
             )}
             <div
-              className={`${
-                type === "mobile"
-                  ? classes.subMenuContainer
-                  : classes.megaMenuContainer
-              } ${activeNavItem === navItem.id ? classes.active : null}`}
+              className={`${type === "mobile" ? classes.subMenuContainer : classes.megaMenuContainer} ${
+                activeNavItem === navItem.id ? classes.active : null
+              }`}
               onClick={handlePopupClick}
             >
               {navItem.sections &&
@@ -70,13 +63,7 @@ const NavBar = ({
                   <Fragment key={item.section_name}>
                     <h5>{item.section_name}</h5>
                     {item.section_type === "megamenu" ? (
-                      <div
-                        className={
-                          type === "mobile"
-                            ? classes.subMenues
-                            : classes.megaMenues
-                        }
-                      >
+                      <div className={type === "mobile" ? classes.subMenues : classes.megaMenues}>
                         <ul>
                           {item.section_elements.map((subMenue: any) => (
                             <li key={subMenue.section_name}>
@@ -87,10 +74,7 @@ const NavBar = ({
                                 rel="noopener noreferrer"
                               >
                                 {subMenue.section_icon ? (
-                                  <img
-                                    src={subMenue.section_icon}
-                                    alt={subMenue.section_name}
-                                  />
+                                  <img src={subMenue.section_icon} alt={subMenue.section_name} />
                                 ) : null}
                                 <div className={classes.megaMenuContent}>
                                   <h6>{subMenue.section_name}</h6>
@@ -124,10 +108,7 @@ const NavBar = ({
                       <div className={classes.followUsContainer}>
                         <ul>
                           {item.section_elements.map((socialLink: any) => (
-                            <li
-                              className={classes.socialIconsLink}
-                              key={socialLink.section_name}
-                            >
+                            <li className={classes.socialIconsLink} key={socialLink.section_name}>
                               <a
                                 href={socialLink.section_url}
                                 title={socialLink.section_name}

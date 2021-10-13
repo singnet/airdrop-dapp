@@ -5,17 +5,15 @@ import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
-//import {theme } from "snet-ui/Theme/theme";
 import AirdropLogo from "snet-ui/images/AirdropLogo.png";
 import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
 
 type HeaderProps = WithStyles<typeof styles> & {
-  fixHeader: boolean;
   onConnectWallet: () => void;
 };
 
-const Header = ({ classes, fixHeader, onConnectWallet }: HeaderProps) => {
+const Header = ({ classes, onConnectWallet }: HeaderProps) => {
   return (
     <div className={`${classes.header} ${classes.addBgColor}`}>
       <div className={classes.wrapper}>
@@ -29,10 +27,7 @@ const Header = ({ classes, fixHeader, onConnectWallet }: HeaderProps) => {
             </h1>
           </Grid>
           <Grid item md={6} className={classes.navigationSection}>
-            <NavBar
-              navigationData={navData}
-              onConnectWallet={onConnectWallet}
-            />
+            <NavBar navigationData={navData} onConnectWallet={onConnectWallet} />
           </Grid>
         </Grid>
       </div>
