@@ -2,6 +2,7 @@ import { AbstractConnector } from "@web3-react/abstract-connector";
 import { injected, walletconnect } from "./connectors";
 
 interface WalletInfo {
+  id: string;
   connector?: AbstractConnector;
   name: string;
   iconURL: string;
@@ -15,6 +16,7 @@ interface WalletInfo {
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   METAMASK: {
+    id: "METAMASK",
     connector: injected,
     name: "MetaMask",
     iconURL: "METAMASK_ICON_URL",
@@ -23,6 +25,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: "#E8831D",
   },
   WALLET_CONNECT: {
+    id: "WALLET_CONNECT",
     connector: walletconnect,
     name: "WalletConnect",
     iconURL: "WALLETCONNECT_ICON_URL",
