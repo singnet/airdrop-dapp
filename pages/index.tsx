@@ -17,6 +17,8 @@ import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
 import Airdroprules from "snet-ui/Airdroprules";
 import FAQPage from "snet-ui/FAQ";
+import Success from "snet-ui/Registrationsuccess";
+import Notqualified from "snet-ui/Noteligible";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -38,6 +40,7 @@ const Home: NextPage = () => {
       <Airdropinfo blogLink="www.google.com" />
       <Box sx={{ mx: 5 }}>
         <EligibilityBanner />
+        <Success />
         <Airdrop />
       </Box>
       <HowItWorks
@@ -55,6 +58,7 @@ const Home: NextPage = () => {
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
       <FAQPage />
+      <Notqualified />
     </>
   );
 };
