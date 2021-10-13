@@ -12,16 +12,21 @@ import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
 import Rules from "snet-ui/Rules";
-import UseFormControl from "snet-ui/Notification";
+import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
+import Grid from "@mui/material/Grid";
+import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
   },
 });
+
+const next10Days = new Date();
+next10Days.setDate(next10Days.getDate() + 10);
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
@@ -34,14 +39,22 @@ const Home: NextPage = () => {
       </Head>
       <Falsemessage />
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
-      <Airdropinfo blogLink="www.google.com" />
-      <Box sx={{ mx: 5 }}>
+      <Box px={4} mt={3}>
         <EligibilityBanner />
-        <Airdrop />
       </Box>
+      <Grid container spacing={2} px={4} mt={2} mb={8}>
+        <Grid item xs={12} sm={6}>
+          <Airdropinfo blogLink="www.google.com" />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <AirdropRegistrationMini startDate={next10Days} />
+        </Grid>
+      </Grid>
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <SubscribeToNotification />
+      <Airdrop />
       <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
-      <UseFormControl />
+      
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />

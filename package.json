@@ -39,7 +39,8 @@
     "react-redux": "^7.2.5",
     "storybook-addon-material-ui": "^0.9.0-alpha.24",
     "tiny-invariant": "^1.1.0",
-    "ua-parser-js": "^0.7.28"
+    "ua-parser-js": "^0.7.28",
+    "usehooks-ts": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "17.0.22",
