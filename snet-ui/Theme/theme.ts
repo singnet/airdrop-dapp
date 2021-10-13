@@ -21,6 +21,10 @@ declare module "@mui/material/styles" {
     bgGradient?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
+    note?: { light?: string; main: string; dark?: string; contrastText?: string };
+    redtext?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgcolor?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bordercolor?: { light?: string; main: string; dark?: string; contrastText?: string };
   }
 }
 
@@ -52,6 +56,18 @@ export const lightTheme = createTheme({
     },
     bgtext:{
       main:"#062362",
+    },
+    note:{
+      main:"#CBDDFD",
+    },
+    redtext:{
+      main:"#A70147",
+    },
+    bgcolor:{
+      main:"#FDE5E8",
+    },
+    bordercolor:{
+      main:"#E67381",
     },
     
     
