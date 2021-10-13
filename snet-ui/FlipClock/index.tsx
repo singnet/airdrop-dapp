@@ -47,15 +47,15 @@ export default class FlipClock extends React.Component<{}, FlipClockState> {
     const hours = time.getHours();
     const minutes = time.getMinutes();
     const seconds = time.getSeconds();
-    // on hour chanage, update hours and shuffle state
+    // on hour change, update hours and shuffle state
     if (hours !== this.state.hours) {
       this.setState((prevState) => ({ hours, hoursShuffle: !prevState.hoursShuffle }));
     }
-    // on minute chanage, update minutes and shuffle state
+    // on minute change, update minutes and shuffle state
     if (minutes !== this.state.minutes) {
       this.setState((prevState) => ({ minutes, minutesShuffle: !prevState.minutesShuffle }));
     }
-    // on second chanage, update seconds and shuffle state
+    // on second change, update seconds and shuffle state
     if (seconds !== this.state.seconds) {
       this.setState((prevState) => ({ seconds, secondsShuffle: !prevState.secondsShuffle }));
     }
