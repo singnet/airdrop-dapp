@@ -18,6 +18,9 @@ import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
 import Grid from "@mui/material/Grid";
 import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
+import FAQPage from "snet-ui/FAQ";
+import Notqualified from "snet-ui/Noteligible";
+import Success from "snet-ui/Registrationsuccess";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -41,6 +44,7 @@ const Home: NextPage = () => {
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
       <Box px={4} mt={3}>
         <EligibilityBanner />
+        <Success />
       </Box>
       <Grid container spacing={2} px={4} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
