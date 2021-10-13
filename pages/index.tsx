@@ -6,7 +6,7 @@ import { useTranslation } from "next-i18next";
 import nextI18NextConfig from "next-i18next.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import Header from "snet-ui/Header/Header";
+import Header from "snet-ui/Header";
 import HowItWorks from "snet-ui/HowItWorks";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";

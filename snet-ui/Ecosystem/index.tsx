@@ -15,30 +15,18 @@ export default function Ecosystem({ blogLink }: Props) {
   const theme = useTheme();
   console.log("theme", theme);
   return (
-    <GradientBox
-      sx={{
-        my: 2,
-      }}
-    >
-      <Typography
-        align="center"
-        fontWeight="bold"
-        variant="h6"
-        color="text.secondary"
-      >
+    <GradientBox $background="bgGradient" sx={{ my: 2, py: 8 }}>
+      <Typography align="center" variant="h2" color="text.secondary" component="p" mb={5}>
         SingularityNet Ecosystem
       </Typography>
 
-      <Typography color="text.secondary" align="center">
-        Lorem Ipsum is simply dummy text of the printing and type industry.
-        Lorem Ipsum has been the industry's standard dummy text eve since the
-        1500s, when an unknown printer took a galley of type and scrambled it to
-        make a type specimen book. It has survived not only five centuries, but
-        also the leap into electronic typesetting, remaining essentially
-        unchanged. It was popularised in the 1960s with the release of Letraset
-        sheets co
+      <Typography color="text.secondary" align="left" px={8}>
+        Lorem Ipsum is simply dummy text of the printing and type industry. Lorem Ipsum has been the industry's standard
+        dummy text eve since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+        specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets co
       </Typography>
-      <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <Box textAlign="center">
           <Stack spacing={2} direction="row">
             {blogLink ? (

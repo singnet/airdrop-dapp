@@ -44,7 +44,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
               <Typography fontWeight="bold" color="bgtext.main" variant="priority" component="p">
                 {step.title}
               </Typography>
-              <Typography variant="normal">{step.description}</Typography>
+              <Typography variant="normal" color="textAdvanced.dark">{step.description}</Typography>
             </Grid>
           </Grid>
         ))}

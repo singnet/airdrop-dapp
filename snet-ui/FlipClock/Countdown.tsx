@@ -63,19 +63,22 @@ export default class FlipCountdown extends React.Component<FlipClockProps, FlipC
     // set time units
     // const hours = time.getHours();
     // const minutes = time.getMinutes();
-    const obsseconds = now.getSeconds();
-    console.log("obs seconds", obsseconds);
+
     const { days, hours, minutes, seconds } = secondsToDhms((this.props.endDate.getTime() - now.getTime()) / 1000);
-    console.log("diff seconds", seconds);
-    // on hour chanage, update hours and shuffle state
+
+    // on day change, update hours and shuffle state
+    if (days !== this.state.days) {
+      this.setState((prevState) => ({ days, daysShuffle: !prevState.daysShuffle }));
+    }
+    // on hour change, update hours and shuffle state
     if (hours !== this.state.hours) {
       this.setState((prevState) => ({ hours, hoursShuffle: !prevState.hoursShuffle }));
     }
-    // on minute chanage, update minutes and shuffle state
+    // on minute change, update minutes and shuffle state
     if (minutes !== this.state.minutes) {
       this.setState((prevState) => ({ minutes, minutesShuffle: !prevState.minutesShuffle }));
     }
-    // on second chanage, update seconds and shuffle state
+    // on second change, update seconds and shuffle state
     if (seconds !== this.state.seconds) {
       this.setState((prevState) => ({ seconds, secondsShuffle: !prevState.secondsShuffle }));
     }
