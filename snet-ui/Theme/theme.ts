@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import colors from "./colors";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -19,57 +20,141 @@ declare module "@mui/material/styles" {
   interface PaletteOptions {
     bgHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgGradient?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgGradientHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
-    note?: { light?: string; main: string; dark?: string; contrastText?: string };
-    redtext?: { light?: string; main: string; dark?: string; contrastText?: string };
-    bgcolor?: { light?: string; main: string; dark?: string; contrastText?: string };
-    bordercolor?: { light?: string; main: string; dark?: string; contrastText?: string };
+    textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
+  }
+}
+
+declare module "@mui/material/styles/createTypography" {
+  interface Typography {
+    priority: React.CSSProperties;
+    normal: React.CSSProperties;
+    small: React.CSSProperties;
+    link: React.CSSProperties;
+    label: React.CSSProperties;
+    menu: React.CSSProperties;
+  }
+
+  // allow configuration using `createMuiTheme`
+  interface TypographyOptions {
+    priority: React.CSSProperties;
+    normal?: React.CSSProperties;
+    small?: React.CSSProperties;
+    link?: React.CSSProperties;
+    label?: React.CSSProperties;
+    menu?: React.CSSProperties;
+  }
+}
+
+declare module "@mui/material/Typography/Typography" {
+  interface TypographyPropsVariantOverrides {
+    priority: true;
+    normal: true;
+    small: true;
+    link: true;
+    label: true;
+    menu: true;
   }
 }
 
 export const lightTheme = createTheme({
   palette: {
-    primary: {
-      main: "#0052cc",
+    common: { black: colors.BLACK, white: colors.WHITE },
+    primary: { main: colors.DARK_BLUE },
+    secondary: { main: colors.LIGHT_TEAL },
+    bgHighlight: { main: colors.WHITE_2 },
+    bgGradient: { main: colors.GRADIENT_1 },
+    bgGradientHighlight: { main: colors.GRADIENT_2 },
+    background: { default: colors.WHITE, paper: colors.WHITE },
+    text: { primary: colors.WHITE, secondary: colors.WHITE_2 },
+    textAdvanced: {
+      primary: colors.BLACK,
+      secondary: colors.WHITE_2,
+      tertiary: colors.PURPLE,
+      dark: colors.DARK_GREY,
+      grey: colors.LIGHT_GREY,
+      white: colors.WHITE,
     },
-    secondary: {
-      main: "#01A79E",
+    bgBox: { main: colors.PURPLE },
+    bgtext: { main: colors.DARK_BLUE },
+  },
+  typography: {
+    h1: {
+      fontSize: "48px",
+      fontWeight: 500,
+      lineHeight: "56px",
+      letterSpacing: "-1px",
     },
-    bgHighlight: {
-      main: "#f2f6fe",
+    h2: {
+      fontSize: "32px",
+      fontWeight: "bold",
+      lineHeight: "56px",
+      letterSpacing: "-0.67px",
     },
-    
-    background: {
-      default: "#fff",
-      paper: "#fff",
-      
+    h3: {
+      fontSize: "24px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
     },
-    text:{
-      secondary:"#fff",
-      primary:"#000",
-    
-    
+    h4: {
+      fontSize: "20px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
     },
-    bgBox:{
-      main:"#603E95",
+    h5: {
+      fontSize: "18px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
     },
-    bgtext:{
-      main:"#062362",
+    priority: {
+      fontSize: "18px",
+      lineHeight: "29px",
+      letterSpacing: 0,
     },
-    note:{
-      main:"#CBDDFD",
+    normal: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      letterSpacing: 0,
     },
-    redtext:{
-      main:"#A70147",
+    small: {
+      fontSize: "10px",
+      lineHeight: "13px",
+      fontWeight: 500,
+      letterSpacing: 0,
     },
-    bgcolor:{
-      main:"#FDE5E8",
+    link: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      fontWeight: 600,
+      letterSpacing: 0,
     },
-    bordercolor:{
-      main:"#E67381",
+    label: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      letterSpacing: 0,
     },
-    
-    
+    menu: {
+      fontSize: "16px",
+      lineHeight: "19px",
+      fontWeight: 500,
+      letterSpacing: 0,
+    },
+  },
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: {
+            color: colors.WHITE,
+          },
+        },
+      ],
+    },
   },
 });

@@ -14,24 +14,17 @@ export default function EligibilityBanner() {
   if (!account) return null;
 
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", p: 3 }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", p: 3, borderRadius: 2 }} color="textAdvanced.dark">
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography>Airdrop Eligibility</Typography>
+          <Typography variant="normal">Airdrop Eligibility</Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
             <Box color="success" sx={{ mr: 1 }}>
               <CheckCircleIcon color="success" />
             </Box>
 
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: "inherit",
-                flexGrow: 1,
-                bgcolor: "bgHighlight.main",
-              }}
-            >
+            <Typography variant="priority" color="primary.main">
               Qualified for Airdrop Window 2/2
             </Typography>
           </Box>
@@ -42,8 +35,10 @@ export default function EligibilityBanner() {
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography>Connected Wallet Address</Typography>
-          <Typography>{account}</Typography>
-          <Typography sx={{ textTransform: "capitalize" }} variant="h6">
+          <Typography noWrap variant="priority" component="p">
+            {account}
+          </Typography>
+          <Typography sx={{ textTransform: "capitalize" }} variant="priority">
             Ethereum {network?.toLowerCase()}
           </Typography>
         </Grid>

@@ -2,17 +2,26 @@ import * as React from "react";
 import { SxProps, Theme } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import List from "@mui/material/List";
-import Avatar from "@mui/material/Avatar";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import PersonIcon from "@mui/icons-material/Person";
+// import List from "@mui/material/List";
+// import Avatar from "@mui/material/Avatar";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemAvatar from "@mui/material/ListItemAvatar";
+// import ListItemText from "@mui/material/ListItemText";
+// import PersonIcon from "@mui/icons-material/Person";
 import { SUPPORTED_WALLETS } from "./Wallet";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useEagerConnect } from "./web3Hooks";
+import Typography from "@mui/material/Typography";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
+import Image from "next/image";
 
 const style: SxProps<Theme> = {
   position: "absolute",
@@ -29,6 +38,20 @@ const style: SxProps<Theme> = {
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
+};
+
+const WalletButton = ({ wallet, handleConnect, imgSrc }) => {
+  return (
+    <ButtonBase onClick={() => handleConnect(SUPPORTED_WALLETS[wallet].connector)}>
+      <Paper elevation={2} sx={{ px: 3 }}>
+        <Box sx={{ px: 5, pb: 3, pt: 7 }}>
+          <Image src={imgSrc} width="100" height="100" />
+        </Box>
+        <Typography color="primary.main">{SUPPORTED_WALLETS[wallet].name}</Typography>
+        <Typography color="textAdvanced.dark">{SUPPORTED_WALLETS[wallet].description}</Typography>
+      </Paper>
+    </ButtonBase>
+  );
 };
 
 export default function WalletModal({ open, setOpen }: Props) {
@@ -82,19 +105,64 @@ export default function WalletModal({ open, setOpen }: Props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <DialogTitle>Connect to a wallet</DialogTitle>
-        <List sx={{ pt: 0 }}>
-          {Object.entries(SUPPORTED_WALLETS).map(([walletKey, wallet]) => (
-            <ListItem button key={wallet.name} onClick={() => handleConnect(wallet.connector)}>
-              <ListItemAvatar>
-                <Avatar>
-                  <PersonIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={wallet.name} />
-            </ListItem>
-          ))}
-        </List>
+        <DialogTitle>
+          <Typography color="primary.main" variant="h5">
+            Connect to a wallet
+          </Typography>
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme: Theme) => theme.palette.textAdvanced.dark,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers sx={{ py: 4 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <WalletButton
+                wallet={SUPPORTED_WALLETS.METAMASK.id}
+                handleConnect={handleConnect}
+                imgSrc="/Metamask.png"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <WalletButton
+                wallet={SUPPORTED_WALLETS.WALLET_CONNECT.id}
+                handleConnect={handleConnect}
+                imgSrc="/Walletconnect.svg"
+              />
+            </Grid>
+          </Grid>
+          <Typography component="p" color="textAdvanced.dark" align="center" variant="normal" pt={4}>
+            Need help connecting a wallet?
+            <Typography component="a" href="./" color="secondary.main" variant="link">
+              Read our documentation
+            </Typography>
+          </Typography>
+          <Typography component="p" color="textAdvanced.dark" align="center" variant="normal">
+            By connecting a wallet, you agree to our
+            <Typography component="a" href="./" color="secondary.main" variant="link">
+              Terms and Conditions
+            </Typography>
+          </Typography>
+          {/* <List sx={{ pt: 0 }}>
+            {Object.entries(SUPPORTED_WALLETS).map(([walletKey, wallet]) => (
+              <ListItem button key={wallet.name} onClick={() => handleConnect(wallet.connector)}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <PersonIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={wallet.name} />
+              </ListItem>
+            ))}
+          </List> */}
+        </DialogContent>
       </Dialog>
     </div>
   );
