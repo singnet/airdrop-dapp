@@ -1,8 +1,8 @@
-import { createStyles } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 
-export const styles = (MUITheme: Theme): any =>
-  createStyles({
+export const styles = (MUITheme: Theme): any => {
+  console.log("mui theme", MUITheme);
+  return {
     header: {
       //position: "fixed",
       right: 0,
@@ -21,8 +21,8 @@ export const styles = (MUITheme: Theme): any =>
       "@media(max-width: 1023px)": { padding: "15px 12px" },
     },
     addBgColor: {
-      background:"linear-gradient(180deg, #061753 0%, #184FA7 100%)",
-      backgroundColor:"#4086FF" ,
+      background: "linear-gradient(180deg, #061753 0%, #184FA7 100%)",
+      backgroundColor: "#4086FF",
       boxShadow: "0 2px 6px 0 rgba(0,0,0,0.3)",
     },
     logoSection: {
@@ -332,4 +332,5 @@ export const styles = (MUITheme: Theme): any =>
         "@media(max-width:768px)": { display: "none" },
       },
     },
-  });
+  };
+};

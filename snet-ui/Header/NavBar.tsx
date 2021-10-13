@@ -4,7 +4,7 @@ import { WithStyles, withStyles } from "@mui/styles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { styles } from "./styles";
-import { Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 type NavbarProps = WithStyles<typeof styles> & {
   type?: string;
@@ -48,8 +48,10 @@ const NavBar = ({ navigationData, classes, type, onConnectWallet }: NavbarProps)
                 id="navLink"
                 onClick={() => onMenuClick(navItem.id)}
               >
-                {navItem.name}
-                {navItem.sections ? <ArrowDropDownIcon /> : null}
+                <Typography variant="menu">
+                  {navItem.name}
+                  {navItem.sections ? <ArrowDropDownIcon /> : null}
+                </Typography>
               </a>
             )}
             <div
@@ -129,9 +131,6 @@ const NavBar = ({ navigationData, classes, type, onConnectWallet }: NavbarProps)
           </li>
         ))}
       </ul>
-      <Button onClick={onConnectWallet} color="info" variant="contained">
-        Connect Wallet
-      </Button>
     </nav>
   );
 };

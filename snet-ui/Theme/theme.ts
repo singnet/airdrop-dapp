@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import colors from "./colors";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -22,6 +23,7 @@ declare module "@mui/material/styles" {
     bgGradientHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
+    textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
   }
 }
 
@@ -59,39 +61,24 @@ declare module "@mui/material/Typography/Typography" {
 
 export const lightTheme = createTheme({
   palette: {
-    common: {
-      black: "#000",
-      white: "#fff",
+    common: { black: colors.BLACK, white: colors.WHITE },
+    primary: { main: colors.DARK_BLUE },
+    secondary: { main: colors.LIGHT_TEAL },
+    bgHighlight: { main: colors.WHITE_2 },
+    bgGradient: { main: colors.GRADIENT_1 },
+    bgGradientHighlight: { main: colors.GRADIENT_2 },
+    background: { default: colors.WHITE, paper: colors.WHITE },
+    text: { primary: colors.WHITE, secondary: colors.WHITE_2 },
+    textAdvanced: {
+      primary: colors.BLACK,
+      secondary: colors.WHITE_2,
+      tertiary: colors.PURPLE,
+      dark: colors.DARK_GREY,
+      grey: colors.LIGHT_GREY,
+      white: colors.WHITE,
     },
-    primary: {
-      main: "#0052cc",
-    },
-    secondary: {
-      main: "#01A79E",
-    },
-    bgHighlight: {
-      main: "#f2f6fe",
-    },
-    bgGradient: {
-      main: "linear-gradient(180deg, #061753 0%, #184fa7 100%)",
-    },
-    bgGradientHighlight: {
-      main: "radial-gradient(circle, rgba(29,91,189,0.5) 0%, rgba(0,0,0,0) 100%), radial-gradient(circle, #B03FC3 0%, rgba(0,0,0,0) 100%), radial-gradient(circle, #184FA7 0%, #103884 41.67%, #061753 100%)",
-    },
-    background: {
-      default: "#fff",
-      paper: "#fff",
-    },
-    text: {
-      secondary: "#F4F8FF",
-      primary: "#000",
-    },
-    bgBox: {
-      main: "#603E95",
-    },
-    bgtext: {
-      main: "#062362",
-    },
+    bgBox: { main: colors.PURPLE },
+    bgtext: { main: colors.DARK_BLUE },
   },
   typography: {
     h1: {
@@ -118,6 +105,12 @@ export const lightTheme = createTheme({
       lineHeight: "24px",
       letterSpacing: 0,
     },
+    h5: {
+      fontSize: "18px",
+      fontWeight: 600,
+      lineHeight: "24px",
+      letterSpacing: 0,
+    },
     priority: {
       fontSize: "18px",
       lineHeight: "29px",
@@ -133,6 +126,35 @@ export const lightTheme = createTheme({
       lineHeight: "13px",
       fontWeight: 500,
       letterSpacing: 0,
+    },
+    link: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      fontWeight: 600,
+      letterSpacing: 0,
+    },
+    label: {
+      fontSize: "14px",
+      lineHeight: "24px",
+      letterSpacing: 0,
+    },
+    menu: {
+      fontSize: "16px",
+      lineHeight: "19px",
+      fontWeight: 500,
+      letterSpacing: 0,
+    },
+  },
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: {
+            color: colors.WHITE,
+          },
+        },
+      ],
     },
   },
 });

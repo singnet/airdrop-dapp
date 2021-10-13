@@ -12,7 +12,7 @@ export default function Airdropinfo({ blogLink }: Props) {
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
         Airdrop Information : Lorem ipsum dolor sit amet, consectetur.
       </Typography>
-      <Typography color="text.primary" variant="normal" sx={{ mt: 3, display: "block", textAlign: "left" }}>
+      <Typography color="textAdvanced.dark" variant="normal" sx={{ mt: 3, display: "block", textAlign: "left" }}>
         Lorem Ipsum is simply dummy text of the printing and type industry. Lorem Ipsum has been the industry's standard
         dummy text eve since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
         specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining

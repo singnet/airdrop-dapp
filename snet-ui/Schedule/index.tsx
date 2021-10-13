@@ -48,7 +48,9 @@ export default function Schedule({ title, events, blogLink }: Props) {
                   <Typography variant="priority" color="primary" component="p">
                     {event.title}
                   </Typography>
-                  <Typography variant="normal">{event.description}</Typography>
+                  <Typography variant="normal" color="textAdvanced.dark">
+                    {event.description}
+                  </Typography>
                 </Grid>
               </Grid>
             </TimelineContent>

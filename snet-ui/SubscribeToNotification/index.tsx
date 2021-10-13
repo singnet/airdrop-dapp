@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import GradientBox from "snet-ui/GradientBox";
-import { TextField } from "@mui/material";
+import MuiTextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EmailIcon from "@mui/icons-material/Email";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
+
+const TextField = styled(MuiTextField)`
+  & svg,
+  input {
+    color: ${({ theme }) => theme.palette.textAdvanced.dark};
+  }
+`;
 
 export default function SubscribeToNotification() {
   return (
@@ -22,6 +30,7 @@ export default function SubscribeToNotification() {
               InputProps={{ startAdornment: <EmailIcon /> }}
               placeholder="Please enter your email address"
               sx={{ bgcolor: "bgHighlight.main", borderRadius: 1, width: "100%" }}
+              color="secondary"
             />
           </Grid>
           <Grid item xs={12} md={4} sx={{ display: "flex", alignItems: "center" }}>
