@@ -9,13 +9,13 @@ import Grid from "@mui/material/Grid";
 
 export default function SubscribeToNotification() {
   return (
-    <GradientBox sx={{ py: 8 }}>
+    <GradientBox $background="bgGradient" sx={{ py: 8 }}>
       <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
         Get Notification Updates
       </Typography>
       <Box sx={{ mt: 5, px: 4 }}>
         <Grid container component="form" spacing={2}>
-          <Grid item md={3} display={{ xs: "none", sm:"block" }} />
+          <Grid item md={3} display={{ xs: "none", sm: "block" }} />
           <Grid item xs={12} md={5}>
             <TextField
               name="EMAIL"

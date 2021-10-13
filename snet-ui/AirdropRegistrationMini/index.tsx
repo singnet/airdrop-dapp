@@ -23,7 +23,7 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
 export default function AirdropRegistrationMini({ startDate }: AirdropRegistrationMiniProps) {
   const formattedDate = useMemo(() => DateFormatter.format(startDate), [startDate]);
   return (
-    <GradientBox sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+    <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
         Airdrop registration window starts {formattedDate}
       </Typography>

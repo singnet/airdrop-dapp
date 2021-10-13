@@ -19,6 +19,7 @@ declare module "@mui/material/styles" {
   interface PaletteOptions {
     bgHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgGradient?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgGradientHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
   }
@@ -71,7 +72,12 @@ export const lightTheme = createTheme({
     bgHighlight: {
       main: "#f2f6fe",
     },
-
+    bgGradient: {
+      main: "linear-gradient(180deg, #061753 0%, #184fa7 100%)",
+    },
+    bgGradientHighlight: {
+      main: "radial-gradient(circle, rgba(29,91,189,0.5) 0%, rgba(0,0,0,0) 100%), radial-gradient(circle, #B03FC3 0%, rgba(0,0,0,0) 100%), radial-gradient(circle, #184FA7 0%, #103884 41.67%, #061753 100%)",
+    },
     background: {
       default: "#fff",
       paper: "#fff",
