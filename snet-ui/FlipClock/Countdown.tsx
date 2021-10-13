@@ -68,7 +68,7 @@ export default class FlipCountdown extends React.Component<FlipClockProps, FlipC
 
     // on day change, update hours and shuffle state
     if (days !== this.state.days) {
-      this.setState((prevState) => ({ hours, daysShuffle: !prevState.daysShuffle }));
+      this.setState((prevState) => ({ days, daysShuffle: !prevState.daysShuffle }));
     }
     // on hour change, update hours and shuffle state
     if (hours !== this.state.hours) {
