@@ -77,7 +77,6 @@ export const styles = (MUITheme: Theme) =>
           listStyle: "none",
           "& > span": {
             color: MUITheme.palette?.text?.primary,
-            fontFamily: MUITheme.palette?.primary?.main,
           },
         },
       },
