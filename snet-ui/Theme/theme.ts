@@ -81,6 +81,7 @@ export const lightTheme = createTheme({
     bgtext: { main: colors.DARK_BLUE },
   },
   typography: {
+    fontFamily: "Montserrat",
     h1: {
       fontSize: "48px",
       fontWeight: 500,

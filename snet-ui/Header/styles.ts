@@ -60,7 +60,6 @@ export const styles = (MUITheme: Theme): any => {
               alignItems: "center",
               color: "#FAFAFA",
               fontSize: 16,
-              fontFamily: "blue",
               lineHeight: "20px",
               textDecoration: "none",
             },
@@ -138,7 +137,7 @@ export const styles = (MUITheme: Theme): any => {
         margin: 0,
         color: "black",
         fontSize: 14,
-        fontFamily: "blue",
+
         fontWeight: 600,
         lineHeight: "18px",
         textTransform: "uppercase",
@@ -176,7 +175,7 @@ export const styles = (MUITheme: Theme): any => {
         margin: 0,
         color: "black",
         fontSize: 16,
-        fontFamily: "blue",
+
         fontWeight: 500,
         letterSpacing: 0.5,
         lineHeight: "20px",
@@ -184,7 +183,7 @@ export const styles = (MUITheme: Theme): any => {
       "& span": {
         color: "black",
         fontSize: 12,
-        fontFamily: "blue",
+
         letterSpacing: 0.38,
         lineHeight: "16px",
       },
@@ -198,7 +197,7 @@ export const styles = (MUITheme: Theme): any => {
           width: "auto !important",
           padding: 0,
           fontSize: 16,
-          fontFamily: "blue",
+
           letterSpacing: 0.5,
           lineHeight: "28px",
           listStyle: "none",
@@ -248,7 +247,7 @@ export const styles = (MUITheme: Theme): any => {
         margin: 0,
         color: "black",
         fontSize: 14,
-        fontFamily: "blue",
+
         fontWeight: 600,
         lineHeight: "18px",
         textTransform: "uppercase",
@@ -276,14 +275,13 @@ export const styles = (MUITheme: Theme): any => {
                 margin: 0,
                 color: "black",
                 fontSize: 16,
-                fontFamily: "blue",
+
                 letterSpacing: 0.5,
                 lineHeight: "20px",
               },
               "& > span": {
                 color: "black",
                 fontSize: 12,
-                fontFamily: "blue",
                 letterSpacing: 0.38,
                 lineHeight: "16px",
               },
