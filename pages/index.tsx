@@ -11,7 +11,7 @@ import HowItWorks from "snet-ui/HowItWorks";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
-import Rules from "snet-ui/Rules";
+import Airdroprules from "snet-ui/Airdroprules";
 import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
@@ -21,6 +21,8 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import FAQPage from "snet-ui/FAQ";
 import Notqualified from "snet-ui/Noteligible";
 import Success from "snet-ui/Registrationsuccess";
+import Learn from "snet-ui/LearnandConnect";
+import Register from "snet-ui/AirdropRegistration";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -61,16 +63,18 @@ const Home: NextPage = () => {
       />
       <SubscribeToNotification />
       <Airdrop />
-      <Rules
+      <Airdroprules
         title="Airdrop Rules"
-        rules={HowItWorksSampleData}
+        steps={RulesData}
         blogLink="www.google.com"
       />
-      ;<Box sx={{ p: 10 }}>Airdrop Rules</Box>
+
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
       <FAQPage />
+      <Learn />
       <Notqualified />
+      <Register />
     </>
   );
 };
