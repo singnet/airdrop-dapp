@@ -26,8 +26,6 @@ declare module "@mui/material/styles" {
     note?: { light?: string; main: string; dark?: string; contrastText?: string };
     redtext?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgcolor?: { light?: string; main: string; dark?: string; contrastText?: string };
-    teal?: { light?: string; main: string; dark?: string; contrastText?: string };
-    bordercolor?: { light?: string; main: string; dark?: string; contrastText?: string };
     textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
   }
 
@@ -85,7 +83,7 @@ export const lightTheme = createTheme({
     },
     bgBox: { main: colors.PURPLE },
     bgtext: { main: colors.DARK_BLUE },
-    teal:{main:colors.LIGHT_TEAL},
+  
     note:{
      
      main:colors.ARC_LIGHT,
