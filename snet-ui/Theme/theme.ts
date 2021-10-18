@@ -99,6 +99,7 @@ export const lightTheme = createTheme({
   
   },
   typography: {
+    fontFamily: "Montserrat",
     h1: {
       fontSize: "48px",
       fontWeight: 500,
