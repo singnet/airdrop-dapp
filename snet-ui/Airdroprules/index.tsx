@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Divider from "@mui/material/Divider";
 
 type Step = {
   title: string;
@@ -18,43 +19,34 @@ type Props = {
 export default function Airdroprules({ title, steps, blogLink }: Props) {
   return (
     <Box
-    //   sx={{
-    //     bgcolor: "bgHighlight.main",
+      sx={{
+        bgcolor: "bgHighlight.main",
 
-    //     height: "788px",
-    //     width: "1440px",
-    //     m: 8,
-    //   }}
+        m: 5,
+        py: 3,
+      }}
     >
-      <Typography
-        align="center"
-        fontWeight="bold"
-        color="bgtext.main"
-        variant="h4"
-      >
+      <Typography align="center" color="bgtext.main" variant="h3">
         {title}
       </Typography>
-      <Box
-      //sx={{ height: "660px", width: "963px" }}
-      >
+      <Box sx={{ m: 4 }}>
         <Grid container spacing={1} mt={4} justifyContent="center">
-          {steps.map((step) => (
+          {steps.map((step, index) => (
             <Grid item xs={9} sm={10} md={8}>
               <Box sx={{ display: "flex", p: 0.7, pr: 0 }}>
                 <Box color="success" sx={{ mr: 1 }}>
                   <StarsOutlinedIcon color="primary" />
                 </Box>
-                <Typography
-                  fontWeight="bold"
-                  color="bgtext.main"
-                  fontFamily="Montserrat"
-                  variant="h6"
-                >
+                <Typography color="bgtext.main" variant="h4">
                   {step.title}
                 </Typography>
               </Box>
-              <Typography>{step.description}</Typography>
-              <hr />
+              <Typography color="textAdvanced.primary">
+                {step.description}
+              </Typography>
+              {index !== steps.length - 1 ? (
+                <Divider variant="inset" component="li" />
+              ) : null}
             </Grid>
           ))}
         </Grid>

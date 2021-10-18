@@ -65,7 +65,7 @@ const Home: NextPage = () => {
       <Airdrop />
       <Airdroprules
         title="Airdrop Rules"
-        steps={RulesData}
+        steps={RulesSampleData}
         blogLink="www.google.com"
       />
 
@@ -147,7 +147,7 @@ const ScheduleSampleData = [
   },
 ];
 
-const RulesData = [
+const RulesSampleData = [
   {
     title: "Early Deposits Get Better Rewards",
     description:
