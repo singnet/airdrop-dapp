@@ -8,16 +8,22 @@ export enum SupportedChainId {
   KOVAN = 42,
 }
 
+// export enum NetworkName {
+//   mainnet = SupportedChainId.MAINNET,
+//   ropsten = SupportedChainId.ROPSTEN,
+//   kovan = SupportedChainId.KOVAN,
+// }
+
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
   SupportedChainId.ROPSTEN,
   SupportedChainId.KOVAN,
 ];
 
-const INFURA_KEY = process.env.REACT_APP_INFURA_KEY || "";
+const INFURA_KEY =  process.env.NEXT_PUBLIC_INFURA_KEY || "";
 
 if (typeof INFURA_KEY === "undefined") {
-  throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`);
+  throw new Error(`NEXT_PUBLIC_INFURA_KEY must be a defined environment variable`);
 }
 
 const NETWORK_URLS: { [key in SupportedChainId]: string } = {

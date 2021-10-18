@@ -6,10 +6,8 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as s3deploy from "@aws-cdk/aws-s3-deployment";
 import * as acm from "@aws-cdk/aws-certificatemanager";
-// import * as route53 from "@aws-cdk/aws-route53";
-// import * as acm from "@aws-cdk/aws-certificatemanager";
-// import * as r53 from "@aws-cdk/aws-route53";
-
+import * as route53 from "@aws-cdk/aws-route53";
+import * as route53Targets from "@aws-cdk/aws-route53-targets";
 import * as path from "path";
 import { buildOutputDir } from "../../bin/cdk";
 import config, { appEnv } from "../../config";
@@ -130,6 +128,7 @@ export class AirdropStack extends cdk.Stack {
       ],
       cachePolicy: imageCachePolicy,
     });
+
     // Upload deployment bucket
     new s3deploy.BucketDeployment(this, "nextJsAssets", {
       sources: [s3deploy.Source.asset(path.join(buildOutputDir, "assets"))],
@@ -139,6 +138,19 @@ export class AirdropStack extends cdk.Stack {
 
     this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
       value: `https://${distribution.distributionDomainName}`,
+    });
+
+    // ROUTE53 MAPPING
+    // We are using a Zone that already exists so we can use a lookup on the Zone name.
+    const zone = route53.HostedZone.fromLookup(this, "baseZone", {
+      domainName: zoneName,
+    });
+
+    // Create the wildcard DNS entry in route53 as an alias to the new CloudFront Distribution.
+    new route53.ARecord(this, "AliasRecord", {
+      zone,
+      recordName: domainName,
+      target: route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(distribution)),
     });
 
     // console.log("Airdrop stack inside: urloutput", this.urlOutput.toString());
