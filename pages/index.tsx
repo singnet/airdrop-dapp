@@ -6,18 +6,15 @@ import { useTranslation } from "next-i18next";
 import nextI18NextConfig from "next-i18next.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import Header from "snet-ui/Header";
 import HowItWorks from "snet-ui/HowItWorks";
-import { setShowConnectionModal } from "utils/store/features/walletSlice";
-import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/material/Box";
 import Rules from "snet-ui/Rules";
 import SubscribeToNotification from "snet-ui/SubscribeToNotification";
-import Falsemessage from "snet-ui/Flasemessage";
 import Ecosystem from "snet-ui/Ecosystem";
 import Airdropinfo from "snet-ui/Airdropinfo";
 import Grid from "@mui/material/Grid";
 import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
+import CommonLayout from "layout/CommonLayout";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -30,15 +27,12 @@ next10Days.setDate(next10Days.getDate() + 10);
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
-  const dispatch = useAppDispatch();
 
   return (
-    <>
+    <CommonLayout>
       <Head>
         <title>Airdrop</title>
       </Head>
-      <Falsemessage />
-      <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
       <Box px={4} mt={3}>
         <EligibilityBanner />
       </Box>
@@ -54,11 +48,10 @@ const Home: NextPage = () => {
       <SubscribeToNotification />
       <Airdrop />
       <Rules title="Airdrop Rules" rules={HowItWorksSampleData} blogLink="www.google.com" />;
-      
       <Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
-    </>
+    </CommonLayout>
   );
 };
 
