@@ -37,8 +37,8 @@ export default function contactus() {
           fullWidth
         />
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="feedback-category-select-label"
+          id="feedback-category-select"
           value={category}
           label="Category"
           onChange={handleChange}
