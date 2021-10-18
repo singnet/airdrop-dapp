@@ -30,7 +30,12 @@ const Header = ({ classes, onConnectWallet }: HeaderProps) => {
           <Grid item md={6} className={classes.navigationSection}>
             <NavBar navigationData={navData} onConnectWallet={onConnectWallet} />
           </Grid>
-          <Grid item md={3} className={classes.navigationSection} sx={{ justifyContent: "right" }}>
+          <Grid
+            item
+            md={3}
+            // className={classes.navigationSection}
+            sx={{ justifyContent: "right" }}
+          >
             <Button onClick={onConnectWallet} color="secondary" variant="contained">
               Connect Wallet
             </Button>
