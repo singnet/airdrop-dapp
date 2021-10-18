@@ -39,7 +39,11 @@ export default function Notqualified() {
             }}
           >
             <Box sx={{ m: 2 }}>
-              <Typography align="center" variant="h5" color="redtext.main">
+              <Typography
+                align="center"
+                variant="h5"
+                color="error.contrastText"
+              >
                 Sorry You are Not Qualified for this Airdrop Window
               </Typography>
             </Box>
@@ -52,8 +56,8 @@ export default function Notqualified() {
 
                 py: 1,
 
-                bgcolor: "bgcolor.main",
-                borderColor: "redtext.main",
+                bgcolor: "error.main",
+                borderColor: "error.contrastText",
               }}
             >
               <Box sx={{ display: "flex", p: 0.6, pr: 6, m: 3 }}>
