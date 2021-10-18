@@ -41,11 +41,14 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
             item
             md={3}
             // className={classes.navigationSection}
-            sx={{ justifyContent: "right" }}
+            sx={{ justifyContent: "right", color: "common.white" }}
           >
             {account ? (
               <>
-                <AccountCircleIcon /> <Typography component="span">{truncatedAddress}</Typography>
+                <AccountCircleIcon />
+                <Typography color="textAdvanced.secondary" component="span">
+                  {truncatedAddress}
+                </Typography>
               </>
             ) : (
               <Button onClick={onConnectWallet} color="secondary" variant="contained">

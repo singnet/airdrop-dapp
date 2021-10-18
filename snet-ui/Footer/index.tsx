@@ -9,7 +9,7 @@ import { ListItem } from "@mui/material";
 
 export default function Footer() {
   return (
-    <Box sx={{ bgcolor: "primary.main", py: 5, px: 5 }}>
+    <Box sx={{ bgcolor: "primary.main", py: 5, px: 5, color: "textAdvanced.secondary" }}>
       <Grid container spacing={2}>
         <Grid
           item
