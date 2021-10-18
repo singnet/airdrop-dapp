@@ -1,8 +1,8 @@
 on: 
-push:
-  branches:
-    - master
-    - development
+  push:
+    branches:
+      - master
+      - development
 
 name: Sonar Analysis Workflow
 jobs:
