@@ -10,15 +10,16 @@ export default function Notqualified() {
   return (
     <Box
       sx={{
-        height: "1150px",
-        width: "1440px",
+        my: 2,
+        py: 5,
       }}
     >
       <Box
         sx={{
           bgcolor: "bgHighlight.main",
-          height: "932px",
-          width: "1160px",
+
+          my: 2,
+          py: 8,
           m: 11,
           pb: 2,
         }}
@@ -31,36 +32,32 @@ export default function Notqualified() {
             pb: 3,
           }}
         >
-          <Box sx={{ height: "311px", width: "765px" }}>
+          <Box
+            sx={{
+              my: 2,
+              py: 1,
+            }}
+          >
             <Box sx={{ m: 2 }}>
-              <Typography
-                align="center"
-                fontWeight="bold"
-                variant="h5"
-                color="redtext.main"
-                fontFamily="Montserrat"
-              >
+              <Typography align="center" variant="h5" color="redtext.main">
                 Sorry You are Not Qualified for this Airdrop Window
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
-                //justifyContent: "center",
+
                 border: 1,
-                my: 3,
-                height: "199px",
-                width: "765px",
+                my: 1,
+
+                py: 1,
+
                 bgcolor: "bgcolor.main",
                 borderColor: "redtext.main",
               }}
             >
               <Box sx={{ display: "flex", p: 0.6, pr: 6, m: 3 }}>
-                <Typography
-                  variant="body1"
-                  color="textAdvanced.primary"
-                  fontFamily="Montserrat"
-                >
+                <Typography variant="body1" color="textAdvanced.primary">
                   You didn’t meet the following conditions
                   <Typography sx={{ p: 2 }}>
                     1, Maintain 1,000 AGIX balance in your wallet.
@@ -73,41 +70,17 @@ export default function Notqualified() {
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
               <Box textAlign="center">
-                <Stack spacing={3} direction="row">
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      height: "40px",
-                      width: "186px",
-                    }}
-                  >
-                    <Typography
-                      color="secondary.main"
-                      fontSize="13px"
-                      //variant="body1"
-                      sx={{
-                        height: "24px",
-                        width: "138px",
-                      }}
-                    >
+                <Stack spacing={2} direction="row">
+                  <Button variant="outlined" size="large">
+                    <Typography color="secondary.main" fontSize="13px">
                       View Airdrop Rules
                     </Typography>
                   </Button>
 
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      height: "40px",
-                      width: "168px",
-                    }}
-                  >
-                    <Typography
-                      color="secondary.main"
-                      fontSize="13px"
-                      variant="body1"
-                    >
+                  <Button variant="outlined" size="large">
+                    <Typography color="secondary.main" fontSize="13px">
                       Contact us
                     </Typography>
                   </Button>

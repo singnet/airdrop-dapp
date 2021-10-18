@@ -12,13 +12,19 @@ import { CardActionArea } from "@mui/material";
 import Telegram from "public/images/Telegram.png";
 import Documentation from "public/images/Documentation.png";
 
-export default function AutoGrid() {
+export default function Learn() {
   return (
-    <Box sx={{ height: "512px", width: "1440px", bgcolor: "bgHighlight.main" }}>
+    <Box
+      sx={{
+        my: 2,
+        py: 2,
+        bgcolor: "bgHighlight.main",
+      }}
+    >
       <Box
         sx={{
-          height: "384px",
-          width: "1158px",
+          my: 2,
+          py: 2,
           justifyContent: "center",
           m: 8,
         }}
@@ -28,7 +34,12 @@ export default function AutoGrid() {
         </Typography>
         <Grid container columnSpacing={{ xs: 4 }}>
           <Grid item xs={4}>
-            <Card sx={{ height: "288px", width: "370px" }}>
+            <Card
+              sx={{
+                my: 2,
+                py: 2,
+              }}
+            >
               <CardActionArea>
                 <CardContent>
                   <Box
@@ -45,13 +56,11 @@ export default function AutoGrid() {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-
-                      //pb: 3,
                     }}
                   >
                     <Box>
-                      <Box sx={{ height: "112px", width: "322.28px" }}>
-                        <Box sx={{ height: "24px", width: "316px" }}>
+                      <Box>
+                        <Box>
                           <Typography
                             align="center"
                             variant="h4"
@@ -60,12 +69,17 @@ export default function AutoGrid() {
                             Whitepaper
                           </Typography>
                         </Box>
-                        <Box sx={{ height: "72px", width: "316.18px", m: 2 }}>
+                        <Box
+                          sx={{
+                            m: 2,
+                            my: 1,
+                            py: 1,
+                          }}
+                        >
                           <Typography
                             align="center"
                             variant="body1"
                             color="bgtext.main"
-                            //mb={5}
                           >
                             Go through the whitepaper to understand the
                             technical information, concept and roadmap of the
@@ -80,7 +94,12 @@ export default function AutoGrid() {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card sx={{ height: "288px", width: "370px" }}>
+            <Card
+              sx={{
+                my: 2,
+                py: 2,
+              }}
+            >
               <CardActionArea>
                 <CardContent>
                   <Box
@@ -97,13 +116,11 @@ export default function AutoGrid() {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-
-                      //pb: 3,
                     }}
                   >
                     <Box>
-                      <Box sx={{ height: "112px", width: "322.28px" }}>
-                        <Box sx={{ height: "24px", width: "316px" }}>
+                      <Box>
+                        <Box>
                           <Typography
                             align="center"
                             variant="h4"
@@ -112,12 +129,16 @@ export default function AutoGrid() {
                             Telegram Community
                           </Typography>
                         </Box>
-                        <Box sx={{ height: "72px", width: "316.18px", m: 2 }}>
+                        <Box
+                          sx={{
+                            my: 1,
+                            py: 1,
+                          }}
+                        >
                           <Typography
                             align="center"
                             variant="body1"
                             color="bgtext.main"
-                            //mb={5}
                           >
                             Did not find the answers you were looking for? Reach
                             out to us and we will response to your questions as
@@ -132,7 +153,7 @@ export default function AutoGrid() {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card sx={{ height: "288px", width: "370px" }}>
+            <Card sx={{ my: 2, py: 2 }}>
               <CardActionArea>
                 <CardContent>
                   <Box
@@ -149,13 +170,11 @@ export default function AutoGrid() {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-
-                      //pb: 3,
                     }}
                   >
                     <Box>
-                      <Box sx={{ height: "112px", width: "322.28px" }}>
-                        <Box sx={{ height: "24px", width: "316px" }}>
+                      <Box>
+                        <Box>
                           <Typography
                             align="center"
                             variant="h4"
@@ -164,12 +183,11 @@ export default function AutoGrid() {
                             View Documentation
                           </Typography>
                         </Box>
-                        <Box sx={{ height: "72px", width: "316.18px", m: 2 }}>
+                        <Box sx={{ my: 1, py: 1 }}>
                           <Typography
                             align="center"
                             variant="body1"
                             color="bgtext.main"
-                            //mb={5}
                           >
                             Learn more about the stages of the airdrop process
                             and how the airdrop rewards are calculated.
