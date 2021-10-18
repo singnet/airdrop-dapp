@@ -2,10 +2,10 @@ import React from "react";
 import { WithStyles, withStyles } from "@mui/styles";
 
 import Grid from "@mui/material/Grid";
-import Image from "next/image";
+// import Image from "next/image";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
-import AirdropLogo from "snet-ui/images/AirdropLogo.png";
+// import AirdropLogo from "snet-ui/images/AirdropLogo.png";
 import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
 import Button from "@mui/material/Button";
@@ -23,7 +23,7 @@ const Header = ({ classes, onConnectWallet }: HeaderProps) => {
             <MobileHeader navigationData={navData} userActions={userActions} />
             <h1>
               <a href="/" className={classes.logoAnchor}>
-                <Image src={AirdropLogo} alt="SingularityNET" />
+                <img src="/AirdropLogo.png" alt="SingularityNET" />
               </a>
             </h1>
           </Grid>
