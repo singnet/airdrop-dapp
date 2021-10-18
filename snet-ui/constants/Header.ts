@@ -1,5 +1,4 @@
 export const navData = [
-  
   {
     id: 2,
     name: "Nunet Site",
@@ -9,17 +8,14 @@ export const navData = [
     id: 3,
     name: "SingularityNET Airdrops",
     url: "#",
-   },
-
+  },
 
   {
     id: 4,
     name: "Contact us",
-    url: "https://singularitynet.io/contact/",
-    
+    url: "/contactus",
   },
 ];
-
 
 export const userActions = [
   {
