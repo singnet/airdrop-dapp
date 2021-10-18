@@ -8,7 +8,7 @@ import TextField from "snet-ui/TextField";
 
 const categories = ["Airdrop Enquiry"];
 
-export default function contactus() {
+export default function ContactUs() {
   const [category, setCategory] = useState("Airdrop Enquiry");
 
   const handleChange = (event: SelectChangeEvent) => {
