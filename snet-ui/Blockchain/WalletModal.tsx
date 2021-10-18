@@ -21,7 +21,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
-import Image from "next/image";
+// import Image from "next/image";
 
 const style: SxProps<Theme> = {
   position: "absolute",
@@ -45,7 +45,7 @@ const WalletButton = ({ wallet, handleConnect, imgSrc }) => {
     <ButtonBase onClick={() => handleConnect(SUPPORTED_WALLETS[wallet].connector)}>
       <Paper elevation={2} sx={{ px: 3 }}>
         <Box sx={{ px: 5, pb: 3, pt: 7 }}>
-          <Image src={imgSrc} width="100" height="100" />
+          <img src={imgSrc} width="100" height="100" />
         </Box>
         <Typography color="primary.main">{SUPPORTED_WALLETS[wallet].name}</Typography>
         <Typography color="textAdvanced.dark">{SUPPORTED_WALLETS[wallet].description}</Typography>
