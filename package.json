@@ -19,6 +19,8 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@ethersproject/providers": "^5.4.5",
+    "@material-ui/core": "^4.12.3",
+    "@mui-treasury/components": "^1.10.1",
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.0",
@@ -38,6 +40,7 @@
     "react-dom": "17.0.2",
     "react-redux": "^7.2.5",
     "storybook-addon-material-ui": "^0.9.0-alpha.24",
+    "stylis": "^4.0.10",
     "tiny-invariant": "^1.1.0",
     "ua-parser-js": "^0.7.28",
     "usehooks-ts": "^1.0.4"
