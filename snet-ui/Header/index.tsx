@@ -5,11 +5,7 @@ import Grid from "@mui/material/Grid";
 // import Image from "next/image";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
-<<<<<<< HEAD
 import AirdropLogo from "public/images/AirdropLogo.png";
-=======
-// import AirdropLogo from "snet-ui/images/AirdropLogo.png";
->>>>>>> 4ebd92cfff04a25a36f74445e73cdef8322abfb8
 import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
 import Button from "@mui/material/Button";
@@ -47,18 +43,6 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
           <Grid
             item
             md={3}
-<<<<<<< HEAD
-            className={classes.navigationSection}
-            sx={{ justifyContent: "right" }}
-          >
-            <Button
-              onClick={onConnectWallet}
-              color="secondary"
-              variant="contained"
-            >
-              Connect Wallet
-            </Button>
-=======
             // className={classes.navigationSection}
             sx={{ justifyContent: "right", color: "common.white" }}
           >
@@ -70,11 +54,14 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
                 </Typography>
               </>
             ) : (
-              <Button onClick={onConnectWallet} color="secondary" variant="contained">
+              <Button
+                onClick={onConnectWallet}
+                color="secondary"
+                variant="contained"
+              >
                 Connect Wallet
               </Button>
             )}
->>>>>>> 4ebd92cfff04a25a36f74445e73cdef8322abfb8
           </Grid>
         </Grid>
       </div>

@@ -22,7 +22,14 @@ type Props = {
 
 export default function Rules({ title, rules, blogLink }: Props) {
   return (
-    <Box>
+    <Box
+      sx={{
+        bgcolor: "bgHighlight.main",
+
+        m: 5,
+        py: 3,
+      }}
+    >
       <Typography textAlign="center" fontWeight="bold" color="primary.main">
         {title}
       </Typography>
@@ -34,19 +41,31 @@ export default function Rules({ title, rules, blogLink }: Props) {
                 primary={
                   <Box alignItems="flex-start">
                     <StarsIcon color="primary" />
-                    <Typography sx={{ display: "inline" }} component="p" variant="body2" color="primary">
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="p"
+                      variant="body2"
+                      color="primary"
+                    >
                       {rule.title}
                     </Typography>
                   </Box>
                 }
                 secondary={
-                  <Typography sx={{ display: "inline" }} component="span" variant="body2" color="textAdvanced.dark">
+                  <Typography
+                    sx={{ display: "inline" }}
+                    component="span"
+                    variant="body2"
+                    color="textAdvanced.dark"
+                  >
                     {rule.description}
                   </Typography>
                 }
               />
             </ListItem>
-            {index !== rules.length - 1 ? <Divider variant="inset" component="li" /> : null}
+            {index !== rules.length - 1 ? (
+              <Divider variant="inset" component="li" />
+            ) : null}
           </Fragment>
         ))}
       </List>
