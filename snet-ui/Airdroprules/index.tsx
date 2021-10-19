@@ -32,7 +32,7 @@ export default function Airdroprules({ title, steps, blogLink }: Props) {
       <Box sx={{ m: 4 }}>
         <Grid container spacing={1} mt={4} justifyContent="center">
           {steps.map((step, index) => (
-            <Grid item xs={9} sm={10} md={8}>
+            <Grid item xs={9} sm={10} md={8} key={step.title}>
               <Box sx={{ display: "flex", p: 0.7, pr: 0 }}>
                 <Box color="success" sx={{ mr: 1 }}>
                   <StarsOutlinedIcon color="primary" />
@@ -41,12 +41,8 @@ export default function Airdroprules({ title, steps, blogLink }: Props) {
                   {step.title}
                 </Typography>
               </Box>
-              <Typography color="textAdvanced.primary">
-                {step.description}
-              </Typography>
-              {index !== steps.length - 1 ? (
-                <Divider variant="inset" component="li" />
-              ) : null}
+              <Typography color="textAdvanced.primary">{step.description}</Typography>
+              {index !== steps.length - 1 ? <Divider variant="inset" component="li" /> : null}
             </Grid>
           ))}
         </Grid>

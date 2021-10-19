@@ -1,7 +1,6 @@
 import { Theme } from "@mui/material/styles";
 
 export const styles = (MUITheme: Theme): any => {
-  console.log("mui theme", MUITheme);
   return {
     header: {
       //position: "fixed",

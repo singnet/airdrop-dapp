@@ -1,4 +1,4 @@
-import Airdrop from "components/Airdrop/Airdrop";
+// import Airdrop from "components/Airdrop/Airdrop";
 import AirdropSchedules from "components/AirdropSchedule";
 import EligibilityBanner from "components/EligibilityBanner";
 import type { NextPage } from "next";
@@ -11,11 +11,8 @@ import Box from "@mui/material/Box";
 import Airdroprules from "snet-ui/Airdroprules";
 import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Ecosystem from "snet-ui/Ecosystem";
-import Airdropinfo from "snet-ui/Airdropinfo";
-import Grid from "@mui/material/Grid";
-import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import CommonLayout from "layout/CommonLayout";
-import Success from "snet-ui/Registrationsuccess";
+import Registration from "components/Registration";
 import Notqualified from "snet-ui/Noteligible";
 
 export const getStaticProps = async ({ locale }) => ({
@@ -24,15 +21,15 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
-const airdropOpensIn = new Date();
-airdropOpensIn.setSeconds(airdropOpensIn.getSeconds() + 5);
-
-const airdropClosesIn = new Date();
-airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
-airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
-
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
+
+  // useInterval(() => {
+  //   const now = new Date();
+  //   if (now.getTime() >= airdropOpensIn.getTime() && !userRegistered) {
+  //     setUserRegistered(true);
+  //   }
+  // }, 500);
 
   return (
     <CommonLayout>
@@ -41,29 +38,13 @@ const Home: NextPage = () => {
       </Head>
       <Box px={4} mt={3}>
         <EligibilityBanner />
-        <Success />
       </Box>
-      <Grid container spacing={2} px={4} mt={2} mb={8}>
-        <Grid item xs={12} sm={6}>
-          <Airdropinfo blogLink="www.google.com" />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <AirdropRegistrationMini startDate={airdropOpensIn} />
-        </Grid>
-      </Grid>
-      <HowItWorks
-        title="How Airdrop Works"
-        steps={HowItWorksSampleData}
-        blogLink="www.google.com"
-      />
+      <Registration />
+      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification />
-      <Airdrop />
-      <Airdroprules
-        title="Airdrop Rules"
-        steps={HowItWorksSampleData}
-        blogLink="www.google.com"
-      />
-      ;<Box sx={{ p: 10 }}>Airdrop Rules</Box>
+      {/* Refer the commented component below for Registration API integration */}
+      {/* <Airdrop /> */}
+      <Airdroprules title="Airdrop Rules" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
       <Notqualified />
