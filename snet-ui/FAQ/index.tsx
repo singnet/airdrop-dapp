@@ -36,14 +36,14 @@ export default function FAQPage() {
       <Box sx={{ m: 6 }}>
         <AccordionContainer sx={{ m: 15 }}>
           {faqSampleData.map((faq) => (
-            <Accordion>
+            <Accordion key={faq.question}>
               <AccordionSummary
                 expandIcon={<AddSharpIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 sx={{
                   "&:hover": {
-                    bgcolor: "grey.50",
+                    bgcolor: "bgFocus.main",
                   },
                 }}
               >
@@ -75,9 +75,7 @@ export default function FAQPage() {
             size="large"
             sx={{ justifyContent: "center" }}
           >
-            <Typography color="secondary.main" fontSize="13px">
-              Contact us
-            </Typography>
+            <Typography color="secondary.main">Contact us</Typography>
           </Button>
         </Box>
       </Box>
