@@ -43,7 +43,7 @@
     "stylis": "^4.0.10",
     "tiny-invariant": "^1.1.0",
     "ua-parser-js": "^0.7.28",
-    "usehooks-ts": "^1.0.4"
+    "usehooks-ts": "^1.0.6"
   },
   "devDependencies": {
     "@types/react": "17.0.22",
