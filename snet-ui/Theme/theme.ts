@@ -23,8 +23,11 @@ declare module "@mui/material/styles" {
     bgGradientHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
+    note?: { light?: string; main: string; dark?: string; contrastText?: string };
+    
     textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
   }
+
 }
 
 declare module "@mui/material/styles/createTypography" {
@@ -68,7 +71,13 @@ export const lightTheme = createTheme({
     bgGradient: { main: colors.GRADIENT_1 },
     bgGradientHighlight: { main: colors.GRADIENT_2 },
     background: { default: colors.WHITE, paper: colors.WHITE },
+<<<<<<< HEAD
+    text: { primary: colors.WHITE, secondary: colors.WHITE_2 },
+      
+      error:{main:colors.LIGHT_RED,contrastText:colors.DARK_RED},
+=======
     text: { primary: colors.BLACK, secondary: colors.WHITE_2 },
+>>>>>>> 4ebd92cfff04a25a36f74445e73cdef8322abfb8
     textAdvanced: {
       primary: colors.BLACK,
       secondary: colors.WHITE_2,
@@ -79,6 +88,13 @@ export const lightTheme = createTheme({
     },
     bgBox: { main: colors.PURPLE },
     bgtext: { main: colors.DARK_BLUE },
+  
+    note:{
+     
+     main:colors.ARC_LIGHT,
+    },
+   
+  
   },
   typography: {
     fontFamily: "Montserrat",
