@@ -17,6 +17,7 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import CommonLayout from "layout/CommonLayout";
 import Success from "snet-ui/Registrationsuccess";
 import Notqualified from "snet-ui/Noteligible";
+import FAQPage from "snet-ui/FAQ";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -67,6 +68,7 @@ const Home: NextPage = () => {
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
       <Notqualified />
+      <FAQPage />
     </CommonLayout>
   );
 };
