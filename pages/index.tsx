@@ -1,4 +1,4 @@
-import Airdrop from "components/Airdrop/Airdrop";
+// import Airdrop from "components/Airdrop/Airdrop";
 import AirdropSchedules from "components/AirdropSchedule";
 import EligibilityBanner from "components/EligibilityBanner";
 import type { NextPage } from "next";
@@ -27,7 +27,7 @@ export const getStaticProps = async ({ locale }) => ({
 });
 
 const airdropOpensIn = new Date();
-airdropOpensIn.setSeconds(airdropOpensIn.getSeconds() + 10);
+airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 1);
 
 const airdropClosesIn = new Date();
 airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
