@@ -24,8 +24,12 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
-const next10Days = new Date();
-next10Days.setDate(next10Days.getDate() + 10);
+const airdropOpensIn = new Date();
+airdropOpensIn.setSeconds(airdropOpensIn.getSeconds() + 5);
+
+const airdropClosesIn = new Date();
+airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
+airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
@@ -44,7 +48,7 @@ const Home: NextPage = () => {
           <Airdropinfo blogLink="www.google.com" />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AirdropRegistrationMini startDate={next10Days} />
+          <AirdropRegistrationMini startDate={airdropOpensIn} />
         </Grid>
       </Grid>
       <HowItWorks

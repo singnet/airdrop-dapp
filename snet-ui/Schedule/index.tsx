@@ -34,18 +34,31 @@ export default function Schedule({ title, events, blogLink }: Props) {
           <TimelineItem key={event.time.toDateString()}>
             <TimelineOppositeContent sx={{ display: "none" }} />
             <TimelineSeparator>
-              <TimelineDot />
-              {index !== events.length - 1 ? <TimelineConnector /> : null}
+              <TimelineDot color={index === 0 ? "secondary" : undefined} />
+              {index !== events.length - 1 ? (
+                <TimelineConnector>
+                  {index === 0 ? (
+                    <Typography sx={{ position: "absolute", bottom: 0, left: 0, bgcolor: "bgHighlight.main" }}>
+                      Upcoming<span></span>
+                    </Typography>
+                  ) : null}
+                </TimelineConnector>
+              ) : null}
+              {/* {index === 0 ? (
+                <TimelineContent>
+                  <Typography>Upcoming</Typography>{" "}
+                </TimelineContent>
+              ) : null} */}
             </TimelineSeparator>
             <TimelineContent>
               <Grid container spacing={4}>
                 <Grid item xs={3}>
-                  <Typography variant="priority" color="primary">
+                  <Typography variant="priority" color={index === 0 ? "secondary" : "primary"}>
                     {event.time.toDateString()}
                   </Typography>
                 </Grid>
                 <Grid item xs={9}>
-                  <Typography variant="priority" color="primary" component="p">
+                  <Typography variant="priority" color={index === 0 ? "secondary" : "primary"} component="p">
                     {event.title}
                   </Typography>
                   <Typography variant="normal" color="textAdvanced.dark">
