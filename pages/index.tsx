@@ -13,6 +13,7 @@ import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
+import Notqualified from "snet-ui/Noteligible";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -46,6 +47,7 @@ const Home: NextPage = () => {
       <Airdroprules title="Airdrop Rules" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
+      <Notqualified />
     </CommonLayout>
   );
 };

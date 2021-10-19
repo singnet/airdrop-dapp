@@ -54,7 +54,11 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
                 </Typography>
               </>
             ) : (
-              <Button onClick={onConnectWallet} color="secondary" variant="contained">
+              <Button
+                onClick={onConnectWallet}
+                color="secondary"
+                variant="contained"
+              >
                 Connect Wallet
               </Button>
             )}
