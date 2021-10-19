@@ -4,16 +4,13 @@ import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-
-import { useTheme } from "@mui/styles";
 import GradientBox from "snet-ui/GradientBox";
+
 type Props = {
   blogLink?: string;
 };
 
 export default function Ecosystem({ blogLink }: Props) {
-  const theme = useTheme();
-  console.log("theme", theme);
   return (
     <GradientBox $background="bgGradient" sx={{ my: 2, py: 8 }}>
       <Typography align="center" variant="h2" color="text.secondary" component="p" mb={5}>
