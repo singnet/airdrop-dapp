@@ -22,7 +22,7 @@ interface RegistrationProps {
 }
 
 const airdropOpensIn = new Date();
-airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 2);
+airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const airdropClosesIn = new Date();
 airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
