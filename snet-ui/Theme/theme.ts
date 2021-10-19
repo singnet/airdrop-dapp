@@ -71,12 +71,8 @@ export const lightTheme = createTheme({
     bgGradientHighlight: { main: colors.GRADIENT_2 },
     background: { default: colors.WHITE, paper: colors.WHITE },
     text: { primary: colors.BLACK, secondary: colors.WHITE_2 },
-<<<<<<< HEAD
-    error: { main: colors.LIGHT_RED, contrastText: colors.DARK_RED },
-    grey:{50: colors.OFF_WHITE},
-=======
     error:{main:colors.LIGHT_RED,contrastText:colors.DARK_RED},
->>>>>>> 1360741376edfcb985c6731091c09a06f23aa99a
+    grey:{50: colors.OFF_WHITE},
     textAdvanced: {
       primary: colors.BLACK,
       secondary: colors.WHITE_2,
