@@ -79,6 +79,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, on
       router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
       console.log(error);
+      // TODO: delete the below code once the error case is properly handled
+      setUserRegistered(true);
+      // router.push(`airdrop/${airdrop.airdrop_window_id}`);
       setErrors(error.toString());
     }
   };
