@@ -16,7 +16,10 @@ import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
 
-interface RegistrationProps {}
+interface RegistrationProps {
+  onViewSchedule: () => void;
+  onViewRules: () => void;
+}
 
 const airdropOpensIn = new Date();
 airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 2);
@@ -25,7 +28,7 @@ const airdropClosesIn = new Date();
 airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
 airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
-const Registration: FunctionComponent<RegistrationProps> = () => {
+const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, onViewRules }) => {
   const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
@@ -134,8 +137,8 @@ const Registration: FunctionComponent<RegistrationProps> = () => {
       <AirdropRegistration
         endDate={airdropClosesIn}
         onRegister={airdropRegistration}
-        onViewRules={console.log}
-        onViewSchedule={console.log}
+        onViewRules={onViewRules}
+        onViewSchedule={onViewSchedule}
       />
     </Box>
   ) : (
