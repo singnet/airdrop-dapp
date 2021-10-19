@@ -36,7 +36,7 @@ export default function FAQPage() {
       <Box sx={{ m: 6 }}>
         <AccordionContainer sx={{ m: 15 }}>
           {faqSampleData.map((faq) => (
-            <Accordion key={faq.question}>
+            <Accordion>
               <AccordionSummary
                 expandIcon={<AddSharpIcon />}
                 aria-controls="panel1a-content"

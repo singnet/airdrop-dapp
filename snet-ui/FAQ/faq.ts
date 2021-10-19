@@ -3,9 +3,9 @@ type FAQ = {
     answer: string;
   };
   export const faqSampleData: FAQ[] = [
-    { question: "loremm ipsumm 1", answer: "lorem ipsum" },
-    { question: "loremm ipsumm 2", answer: "lorem ipsum" },
-    { question: "loremm ipsumm 2", answer: "lorem ipsum" },
-    { question: "loremm ipsumm 2", answer: "lorem ipsum" },
-    { question: "loremm ipsumm 2", answer: "lorem ipsum" },
+    { question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.", answer: "lorem ipsum" },
+    { question: "Ornare suspendisse sed nisi lacus sed viverra.", answer: "lorem ipsum" },
+    { question: "Ut morbi tincidunt augue interdum. Id aliquet risus feugiat in ante metus dictum at.", answer: "lorem ipsum" },
+    { question: "Mollis aliquam ut porttitor leo a. Ullamcorper dignissim cras tincidunt lobortis", answer: "lorem ipsum" },
+  
   ];
