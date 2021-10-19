@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import CommonLayout from "layout/CommonLayout";
 import Success from "snet-ui/Registrationsuccess";
+import Notqualified from "snet-ui/Noteligible";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -65,6 +66,7 @@ const Home: NextPage = () => {
       ;<Box sx={{ p: 10 }}>Airdrop Rules</Box>
       <AirdropSchedules />
       <Ecosystem blogLink="www.google.com" />
+      <Notqualified />
     </CommonLayout>
   );
 };
