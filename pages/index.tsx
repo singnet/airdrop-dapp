@@ -14,6 +14,7 @@ import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
 import Notqualified from "snet-ui/Noteligible";
+import { useRef } from "react";
 import FAQPage from "snet-ui/FAQ";
 
 export const getStaticProps = async ({ locale }) => ({
@@ -24,13 +25,20 @@ export const getStaticProps = async ({ locale }) => ({
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
+  const rulesRef = useRef<HTMLDivElement>(null);
+  const scheduleRef = useRef(null);
 
-  // useInterval(() => {
-  //   const now = new Date();
-  //   if (now.getTime() >= airdropOpensIn.getTime() && !userRegistered) {
-  //     setUserRegistered(true);
-  //   }
-  // }, 500);
+  const handleScrollToRules = () => {
+    if (rulesRef) {
+      rulesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleScrollToSchedule = () => {
+    if (scheduleRef) {
+      scheduleRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <CommonLayout>
@@ -40,13 +48,11 @@ const Home: NextPage = () => {
       <Box px={4} mt={3}>
         <EligibilityBanner />
       </Box>
-      <Registration />
+      <Registration onViewRules={handleScrollToRules} onViewSchedule={handleScrollToSchedule} />
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification />
-      {/* Refer the commented component below for Registration API integration */}
-      {/* <Airdrop /> */}
-      <Airdroprules title="Airdrop Rules" steps={HowItWorksSampleData} blogLink="www.google.com" />
-      <AirdropSchedules />
+      <Airdroprules title="Airdrop Rules" steps={HowItWorksSampleData} blogLink="www.google.com" ref={rulesRef} />
+      <AirdropSchedules ref={scheduleRef} />
       <Ecosystem blogLink="www.google.com" />
       <Notqualified />
       <FAQPage />

@@ -34,8 +34,6 @@ export default function AirdropRegistration({
 
   const handleRegistrationClick = async () => {
     setRegistrationLoader(true);
-    // wait for 3 seconds. remove this once the API is integrated
-    await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
     await onRegister();
     setRegistrationLoader(false);
   };
@@ -59,12 +57,12 @@ export default function AirdropRegistration({
           </LoadingButton>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }}>
+          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
             View Schedule
           </LoadingButton>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }}>
+          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
             View Rules
           </LoadingButton>
         </Box>

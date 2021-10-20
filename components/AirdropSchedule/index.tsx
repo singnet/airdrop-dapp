@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import axios from "utils/Axios";
 import Schedule from "snet-ui/Schedule";
 import Box from "@mui/material/Box";
 
-const AirdropSchedules = () => {
+const AirdropSchedules = ({}, ref) => {
   const [schedules, setSchedule] = useState([]);
 
   useEffect(() => {
@@ -31,14 +31,10 @@ const AirdropSchedules = () => {
   }));
 
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main" }}>
-      <Schedule
-        title="Airdrop Schedule"
-        events={events}
-        blogLink="www.google.com"
-      />
+    <Box sx={{ bgcolor: "bgHighlight.main" }} ref={ref}>
+      <Schedule title="Airdrop Schedule" events={events} blogLink="www.google.com" />
     </Box>
   );
 };
 
-export default AirdropSchedules;
+export default forwardRef(AirdropSchedules);

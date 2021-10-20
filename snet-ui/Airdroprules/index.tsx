@@ -1,3 +1,4 @@
+import React from "react";
 import StarsOutlinedIcon from "@mui/icons-material/StarsOutlined";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
@@ -16,7 +17,7 @@ type Props = {
   blogLink?: string;
 };
 
-export default function Airdroprules({ title, steps, blogLink }: Props) {
+function Airdroprules({ title, steps, blogLink }: Props, ref) {
   return (
     <Box
       sx={{
@@ -25,6 +26,7 @@ export default function Airdroprules({ title, steps, blogLink }: Props) {
         m: 5,
         py: 3,
       }}
+      ref={ref}
     >
       <Typography align="center" color="bgtext.main" variant="h3">
         {title}
@@ -66,3 +68,5 @@ export default function Airdroprules({ title, steps, blogLink }: Props) {
     </Box>
   );
 }
+
+export default React.forwardRef(Airdroprules);
