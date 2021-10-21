@@ -11,6 +11,7 @@ const categories = ["Airdrop Enquiry"];
 export default function ContactUs() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const [error, setError] = useState({ email: "", message: "" });
   const [category, setCategory] = useState("Airdrop Enquiry");
@@ -18,10 +19,13 @@ export default function ContactUs() {
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
   };
-  const validateEmail = () => {
+  const handleEmailChange = () => {
     setEmail(event.target.value);
   };
-  const validateMessage = () => {
+  const handleNameChange = () => {
+    setName(event.target.value);
+  };
+  const handleMessageChange = () => {
     setMessage(event.target.value);
   };
 
@@ -34,7 +38,7 @@ export default function ContactUs() {
         message: "Message should not be empty",
       }));
     }
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
     if (!email) {
       setError((prevError) => ({
         ...prevError,
@@ -56,7 +60,8 @@ export default function ContactUs() {
               color="primary"
               required
               label="Your Name (Optional)"
-              placeholder="Hello World"
+              placeholder="Crypto User"
+              onChange={handleNameChange}
               fullWidth
             />
           </Grid>
@@ -66,8 +71,8 @@ export default function ContactUs() {
               color="primary"
               required
               label="Email"
-              placeholder="Hello World"
-              onChange={validateEmail}
+              placeholder="cryptouser@email.com"
+              onChange={handleEmailChange}
               helperText={error.email}
               fullWidth
             />
@@ -76,7 +81,7 @@ export default function ContactUs() {
         <TextField
           color="primary"
           label="Wallet Address (Optional)"
-          placeholder="Hello World"
+          placeholder="0xCCc466vgg667y78vyybhy78787Fgh678"
           sx={{ my: 3 }}
           fullWidth
         />
@@ -105,7 +110,7 @@ export default function ContactUs() {
           fullWidth
           multiline
           rows={4}
-          onChange={validateMessage}
+          onChange={handleMessageChange}
           helperText={error.message}
         />
         <Box display="flex" justifyContent="center">
