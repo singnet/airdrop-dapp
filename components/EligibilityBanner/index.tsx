@@ -24,7 +24,7 @@ export default function EligibilityBanner({ userEligibility }: EligibilityBanner
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return <Notqualified />;
+    return <Notqualified account={account} network={network} />;
   }
 
   return (

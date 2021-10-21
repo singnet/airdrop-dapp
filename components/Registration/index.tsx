@@ -15,8 +15,10 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
+import { UserEligibility } from "utils/constants/CustomTypes";
 
 interface RegistrationProps {
+  userEligibility: UserEligibility;
   onViewSchedule: () => void;
   onViewRules: () => void;
   airdropId?: number;
@@ -31,6 +33,7 @@ airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
 airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
+  userEligibility,
   onViewSchedule,
   onViewRules,
   airdropId,
@@ -45,30 +48,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   fetchAirdrop();
-  // }, []);
-
   useInterval(() => {
     const now = new Date();
     if (now.getTime() >= airdropOpensIn.getTime()) {
       setAirdropOpen(true);
     }
   }, 500);
-
-  // const fetchAirdrop = async () => {
-  //   try {
-  //     const payload: any = {
-  //       limit: "100",
-  //       skip: "0",
-  //     };
-  //     const { data } = await axios.post("airdrops", payload);
-  //     const [airdropData] = data.data.airdrops;
-  //     setAirdrop(airdropData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const airdropRegistration = async () => {
     try {
@@ -122,7 +107,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     }
   };
 
-  
+  if (userEligibility === UserEligibility.PENDING) {
+    return <Typography>Loading Eligibility</Typography>;
+  }
+  if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return null;
+  }
 
   return userRegistered ? (
     <Registrationsuccess />

@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
-
-import { Box } from "@mui/system";
-
+import Box from "@mui/material/Box";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Grid from "@mui/material/Grid";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 
-export default function Notqualified() {
+type NotqualifiedProps = {
+  account: string;
+  network: string;
+};
+
+export default function Notqualified({ account, network }: NotqualifiedProps) {
   return (
     <Box
       sx={{
@@ -17,37 +23,39 @@ export default function Notqualified() {
         pb: 2,
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
+      <Grid container spacing={2} px={3}>
+        <Grid item xs={12} md={6}>
+          <Typography variant="normal">Airdrop Eligibility</Typography>
 
-          pb: 3,
-        }}
-      >
-        <Box
-          sx={{
-            my: 2,
-            py: 1,
-          }}
-        >
+          <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
+            <Box color="success" sx={{ mr: 1 }}>
+              <CancelIcon color="error" />
+            </Box>
+
+            <Typography variant="h5" color="primary.main">
+              Not Qualified
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography>Connected Wallet Address</Typography>
+          <Typography noWrap variant="priority" component="p">
+            {account}
+          </Typography>
+          <Typography sx={{ textTransform: "capitalize" }} variant="priority">
+            Ethereum {network?.toLowerCase()}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Box sx={{ display: "flex", justifyContent: "center", pb: 3 }}>
+        <Box sx={{ my: 2, py: 1 }}>
           <Box sx={{ m: 2 }}>
             <Typography align="center" variant="h5" color="error.contrastText">
               Sorry You are Not Qualified for this Airdrop Window
             </Typography>
           </Box>
           <Box
-            sx={{
-              display: "flex",
-
-              border: 1,
-              my: 1,
-
-              py: 1,
-
-              bgcolor: "error.main",
-              borderColor: "error.contrastText",
-            }}
+            sx={{ display: "flex", border: 1, my: 1, py: 1, bgcolor: "error.light", borderColor: "error.contrastText" }}
           >
             <Box sx={{ display: "flex", p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">

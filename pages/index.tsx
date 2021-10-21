@@ -113,6 +113,7 @@ const Home: NextPage = () => {
         <EligibilityBanner userEligibility={userEligibility} />
       </Box>
       <Registration
+        userEligibility={userEligibility}
         onViewRules={handleScrollToRules}
         onViewSchedule={handleScrollToSchedule}
         airdropId={activeWindow?.airdrop_id}
@@ -123,7 +124,7 @@ const Home: NextPage = () => {
       <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
-      
+
       <FAQPage />
     </CommonLayout>
   );
