@@ -13,12 +13,14 @@ import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
-import Notqualified from "snet-ui/Noteligible";
+// import Notqualified from "snet-ui/Noteligible";
 import { useEffect, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 import { API_PATHS } from "utils/ApiPaths";
 import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdrop_windows";
+import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
+import { UserEligibility } from "utils/constants/CustomTypes";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -28,14 +30,20 @@ export const getStaticProps = async ({ locale }) => ({
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
+  const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
+  const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
 
   useEffect(() => {
     getAirdropSchedule();
   }, []);
+
+  useEffect(() => {
+    getUserEligibility();
+  }, [activeWindow, account]);
 
   const getAirdropSchedule = async () => {
     try {
@@ -74,13 +82,35 @@ const Home: NextPage = () => {
     }
   };
 
+  const getUserEligibility = async () => {
+    try {
+      if (
+        typeof activeWindow?.airdrop_id === "undefined" ||
+        typeof activeWindow?.airdrop_window_id === "undefined" ||
+        !account
+      )
+        return;
+      const payload: any = {
+        signature: "",
+        address: account,
+        airdrop_id: activeWindow.airdrop_id,
+        airdrop_window_id: activeWindow.airdrop_window_id,
+      };
+      const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
+      const isEligible = response.data.data.is_eligible;
+      setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+    } catch (error: any) {
+      console.log("eligibility check error");
+    }
+  };
+
   return (
     <CommonLayout>
       <Head>
         <title>Airdrop</title>
       </Head>
       <Box px={[0, 4]} mt={3}>
-        <EligibilityBanner />
+        <EligibilityBanner userEligibility={userEligibility} />
       </Box>
       <Registration
         onViewRules={handleScrollToRules}
@@ -93,7 +123,7 @@ const Home: NextPage = () => {
       <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
-      <Notqualified />
+      
       <FAQPage />
     </CommonLayout>
   );

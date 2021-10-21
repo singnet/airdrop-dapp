@@ -5,13 +5,27 @@ import React, { useMemo } from "react";
 import { SupportedChainId } from "snet-ui/Blockchain/connectors";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { UserEligibility } from "utils/constants/CustomTypes";
+import Notqualified from "snet-ui/Noteligible";
 
-export default function EligibilityBanner() {
+type EligibilityBannerProps = {
+  userEligibility: UserEligibility;
+};
+
+export default function EligibilityBanner({ userEligibility }: EligibilityBannerProps) {
   const { account, chainId } = useActiveWeb3React();
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
   if (!account) return null;
+
+  if (userEligibility === UserEligibility.PENDING) {
+    return <Typography variant="normal">Loading Eligibility</Typography>;
+  }
+
+  if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return <Notqualified />;
+  }
 
   return (
     <Box sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">

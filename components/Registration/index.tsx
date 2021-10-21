@@ -78,6 +78,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
 
       // TODO: Wait until metamask is connected
+      debugger;
       const signature = await signTransaction(account);
       if (signature) {
         await airdropEligibilityCheck(account, signature);
@@ -114,33 +115,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const airdropUserRegistration = async (address: string, signature: string) => {
     try {
-      const { airdrop_id, airdrop_window_id } = airdrop;
-      const payload = {
-        signature,
-        address,
-        airdrop_id,
-        airdrop_window_id,
-      };
+      const payload = { signature, address, airdrop_id: airdropId, airdrop_window_id: airdropWindowId };
       await axios.post("airdrop/registration", payload);
     } catch (error: any) {
       throw new Error(error);
     }
   };
 
-  const airdropEligibilityCheck = async (address: string, signature: string) => {
-    try {
-      const { airdrop_id, airdrop_window_id } = airdrop;
-      const payload = {
-        signature,
-        address,
-        airdrop_id,
-        airdrop_window_id,
-      };
-      await axios.post("airdrop/user-eligibility", payload);
-    } catch (error: any) {
-      throw new Error(error);
-    }
-  };
+  
 
   return userRegistered ? (
     <Registrationsuccess />
