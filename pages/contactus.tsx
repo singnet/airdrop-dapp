@@ -60,7 +60,7 @@ export default function ContactUs() {
               color="primary"
               required
               label="Your Name (Optional)"
-              placeholder="Crypto User"
+              placeholder="Firstname Lastname"
               onChange={handleNameChange}
               fullWidth
             />
@@ -71,7 +71,7 @@ export default function ContactUs() {
               color="primary"
               required
               label="Email"
-              placeholder="cryptouser@email.com"
+              placeholder="Enter your email here"
               onChange={handleEmailChange}
               helperText={error.email}
               fullWidth
@@ -81,7 +81,7 @@ export default function ContactUs() {
         <TextField
           color="primary"
           label="Wallet Address (Optional)"
-          placeholder="0xCCc466vgg667y78vyybhy78787Fgh678"
+          placeholder="connect your wallet"
           sx={{ my: 3 }}
           fullWidth
         />
