@@ -9,10 +9,11 @@ import { UserEligibility } from "utils/constants/CustomTypes";
 import Notqualified from "snet-ui/Noteligible";
 
 type EligibilityBannerProps = {
+  onViewRules: () => void;
   userEligibility: UserEligibility;
 };
 
-export default function EligibilityBanner({ userEligibility }: EligibilityBannerProps) {
+export default function EligibilityBanner({ userEligibility, onViewRules }: EligibilityBannerProps) {
   const { account, chainId } = useActiveWeb3React();
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
@@ -24,7 +25,7 @@ export default function EligibilityBanner({ userEligibility }: EligibilityBanner
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return <Notqualified account={account} network={network} />;
+    return <Notqualified account={account} network={network} onViewRules={onViewRules} />;
   }
 
   return (

@@ -110,7 +110,7 @@ const Home: NextPage = () => {
         <title>Airdrop</title>
       </Head>
       <Box px={[0, 4]} mt={3}>
-        <EligibilityBanner userEligibility={userEligibility} />
+        <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
       </Box>
       <Registration
         userEligibility={userEligibility}

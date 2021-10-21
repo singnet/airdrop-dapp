@@ -10,9 +10,10 @@ import Button from "@mui/material/Button";
 type NotqualifiedProps = {
   account: string;
   network: string;
+  onViewRules: () => void;
 };
 
-export default function Notqualified({ account, network }: NotqualifiedProps) {
+export default function Notqualified({ account, network, onViewRules }: NotqualifiedProps) {
   return (
     <Box
       sx={{
@@ -73,7 +74,7 @@ export default function Notqualified({ account, network }: NotqualifiedProps) {
           <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
             <Box textAlign="center">
               <Stack spacing={2} direction="row">
-                <Button variant="outlined" size="large">
+                <Button variant="outlined" size="large" onClick={onViewRules}>
                   <Typography color="secondary.main" fontSize="13px">
                     View Airdrop Rules
                   </Typography>
