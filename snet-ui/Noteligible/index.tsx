@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Grid from "@mui/material/Grid";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 
 type NotqualifiedProps = {
@@ -58,16 +58,16 @@ export default function Notqualified({ account, network, onViewRules }: Notquali
           <Box
             sx={{ display: "flex", border: 1, my: 1, py: 1, bgcolor: "error.light", borderColor: "error.contrastText" }}
           >
-            <Box sx={{ display: "flex", p: 0.6, pr: 6, m: 3 }}>
+            <Box sx={{ p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">
                 You didn’t meet the following conditions
-                <Typography sx={{ p: 2 }}>
-                  1, Maintain 1,000 AGIX balance in your wallet.
-                  <hr />
-                  2, Deposit 1,000 SDAO into any liquidity pools.
-                  <hr />
-                  3, Make atleast 3 transactions between 1 March 2021 and 30 July 2021
-                </Typography>
+              </Typography>
+              <Typography sx={{ p: 2 }}>1, Maintain 1,000 AGIX balance in your wallet.</Typography>
+              <Divider component="p" />
+              <Typography sx={{ p: 2 }}>2, Deposit 1,000 SDAO into any liquidity pools.</Typography>
+              <Divider />
+              <Typography sx={{ p: 2 }}>
+                3, Make atleast 3 transactions between 1 March 2021 and 30 July 2021
               </Typography>
             </Box>
           </Box>

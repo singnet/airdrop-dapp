@@ -63,10 +63,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
 
       // TODO: Wait until metamask is connected
-      debugger;
       const signature = await signTransaction(account);
       if (signature) {
-        await airdropEligibilityCheck(account, signature);
         await airdropUserRegistration(account, signature);
         setUserRegistered(true);
       } else {

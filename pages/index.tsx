@@ -13,14 +13,21 @@ import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
+
 // import Notqualified from "snet-ui/Noteligible";
 import { useEffect, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
-import { API_PATHS } from "utils/ApiPaths";
+import { API_PATHS } from "utils/constants/ApiPaths";
 import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdrop_windows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { UserEligibility } from "utils/constants/CustomTypes";
+import { Button } from "@mui/material";
+import { ethers } from "ethers";
+import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
+import AirdropContractABI from "contract/abi/SingularityAirdrop.json";
+import { splitSignature } from "ethers/lib/utils";
+import { fromFraction, getGasPrice, parseEthersError } from "utils/ethereum";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -30,7 +37,7 @@ export const getStaticProps = async ({ locale }) => ({
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
-  const { account } = useActiveWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
@@ -82,6 +89,77 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleClaim = async () => {
+    if (
+      typeof activeWindow?.airdrop_id === "undefined" ||
+      typeof activeWindow?.airdrop_window_id === "undefined" ||
+      !account ||
+      !library ||
+      !chainId
+    )
+      return;
+
+    const getClaimDetails = async () => {
+      const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
+        address: account,
+        airdrop_id: `${activeWindow.airdrop_id}`,
+        airdrop_window_id: `${activeWindow.airdrop_window_id}`,
+      });
+
+      console.log("response", response);
+      return response.data.data;
+    };
+
+    const executeClaimMethod = async (signature: string, claimAmount: number) => {
+      try {
+        const signatureParts = splitSignature(signature);
+        const signer = await library.getSigner(account);
+
+        const address = AirdropContractNetworks[chainId].address;
+        console.log("addresss", address);
+        const airdropContract = new ethers.Contract(address, AirdropContractABI, signer);
+
+        // TODO: Don't hardcode it, use it from the API or env
+        // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
+        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
+        console.log("claim amount", claimAmount);
+        const args = [
+          tokenAddress,
+          claimAmount, // claimAmount,
+          activeWindow.airdrop_id,
+          activeWindow.airdrop_window_id,
+          signatureParts.v,
+          signatureParts.r,
+          signatureParts.s,
+        ];
+
+        console.log("args", args);
+        const gasPrice = await getGasPrice();
+        const gasLimit = await airdropContract.estimateGas.claim(...args);
+        console.log("gasLimit estimated", gasLimit);
+        console.log("gasPrice", gasPrice);
+        const txn = await airdropContract.claim(...args, { gasLimit: gasLimit, gasPrice });
+
+        console.log("txn submitted", txn.hash);
+        const receipt = await txn.wait();
+        console.log("receipt", receipt);
+      } catch (error: any) {
+        console.log("errrrrrrr", error);
+        const ethersError = parseEthersError(error);
+        if (ethersError) {
+          alert(ethersError);
+        }
+      }
+    };
+
+    // Retreiving Claim Signature from the backend signer service
+    const claimDetails = await getClaimDetails();
+
+    // Using the claim signature and calling the Ethereum Airdrop Contract.
+
+    await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
+  };
+
   const getUserEligibility = async () => {
     try {
       if (
@@ -110,6 +188,9 @@ const Home: NextPage = () => {
         <title>Airdrop</title>
       </Head>
       <Box px={[0, 4]} mt={3}>
+        <Button onClick={handleClaim} variant="contained" color="secondary">
+          Temporary Claim
+        </Button>
         <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
       </Box>
       <Registration
