@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, SliderTrack, Typography } from "@mui/material";
 import CommonLayout from "layout/CommonLayout";
 import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,10 +9,38 @@ import TextField from "snet-ui/TextField";
 const categories = ["Airdrop Enquiry"];
 
 export default function ContactUs() {
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [error, setError] = useState({ email: "", message: "" });
   const [category, setCategory] = useState("Airdrop Enquiry");
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
+  };
+  const validateEmail = () => {
+    setEmail(event.target.value);
+  };
+  const validateMessage = () => {
+    setMessage(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    setError({});
+
+    if (message === "") {
+      setError((prevError) => ({
+        ...prevError,
+        message: "Message should not be empty",
+      }));
+    }
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!email) {
+      setError((prevError) => ({
+        ...prevError,
+        email: "Enter the valid email",
+      }));
+    }
   };
 
   return (
@@ -21,12 +49,28 @@ export default function ContactUs() {
         <Typography align="center" color="primary" variant="h3">
           Contact Us
         </Typography>
+
         <Grid container sx={{ my: 3 }} spacing={2}>
           <Grid item xs={12} sm={6}>
-            <TextField color="primary" label="Your Name (Optional)" placeholder="Hello World" fullWidth />
+            <TextField
+              color="primary"
+              required
+              label="Your Name (Optional)"
+              placeholder="Hello World"
+              fullWidth
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField color="primary" required label="Email" placeholder="Hello World" fullWidth />
+            <TextField
+              error={error.email}
+              color="primary"
+              required
+              label="Email"
+              placeholder="Hello World"
+              onChange={validateEmail}
+              helperText={error.email}
+              fullWidth
+            />
           </Grid>
         </Grid>
         <TextField
@@ -52,6 +96,7 @@ export default function ContactUs() {
           ))}
         </Select>
         <TextField
+          error={error.message}
           color="primary"
           required
           label="Message"
@@ -60,9 +105,11 @@ export default function ContactUs() {
           fullWidth
           multiline
           rows={4}
+          onChange={validateMessage}
+          helperText={error.message}
         />
         <Box display="flex" justifyContent="center">
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Contact
           </Button>
         </Box>
