@@ -14,8 +14,11 @@ import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
 import Notqualified from "snet-ui/Noteligible";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
+import axios from "utils/Axios";
+import { API_PATHS } from "utils/ApiPaths";
+import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdrop_windows";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -26,17 +29,48 @@ export const getStaticProps = async ({ locale }) => ({
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
   const rulesRef = useRef<HTMLDivElement>(null);
-  const scheduleRef = useRef(null);
+  const scheduleRef = useRef<HTMLDivElement>(null);
+  const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
+  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
+
+  useEffect(() => {
+    getAirdropSchedule();
+  }, []);
+
+  const getAirdropSchedule = async () => {
+    try {
+      const tokenName = "AGIX";
+      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${tokenName}`);
+      const airdrop = data.data.data;
+      const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
+
+      const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
+        time: new Date(timeline.airdrop_window_timeline_date),
+        title: timeline.airdrop_window_timeline_info,
+        description: timeline.airdrop_window_timeline_description,
+      }));
+
+      let activeWindow = findActiveWindow(airdrop.airdrop_windows);
+      if (!activeWindow) {
+        activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
+      }
+      setActiveWindow(activeWindow);
+      setSchedules(airdropSchedules);
+    } catch (e) {
+      console.log("schedule error", e);
+      // TODO: Implement error handling
+    }
+  };
 
   const handleScrollToRules = () => {
     if (rulesRef) {
-      rulesRef.current.scrollIntoView({ behavior: "smooth" });
+      rulesRef?.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const handleScrollToSchedule = () => {
     if (scheduleRef) {
-      scheduleRef.current.scrollIntoView({ behavior: "smooth" });
+      scheduleRef?.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -45,14 +79,19 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
-      <Box px={4} mt={3}>
+      <Box px={[0, 4]} mt={3}>
         <EligibilityBanner />
       </Box>
-      <Registration onViewRules={handleScrollToRules} onViewSchedule={handleScrollToSchedule} />
+      <Registration
+        onViewRules={handleScrollToRules}
+        onViewSchedule={handleScrollToSchedule}
+        airdropId={activeWindow?.airdrop_id}
+        airdropWindowId={activeWindow?.airdrop_window_id}
+      />
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification />
-      <Airdroprules title="Airdrop Rules" steps={HowItWorksSampleData} blogLink="www.google.com" ref={rulesRef} />
-      <AirdropSchedules ref={scheduleRef} />
+      <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
+      <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
       <Notqualified />
       <FAQPage />
@@ -92,39 +131,6 @@ const HowItWorksSampleData = [
     title: "atise Ipsum is simply dummy text of the printing an",
     description:
       "there are many variations in the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised",
-  },
-];
-
-const ScheduleSampleData = [
-  {
-    time: new Date(+new Date() - Math.floor(Math.random() * 10000000000)),
-    title: "Lorem Ipsum is simply dummy text of the printing an",
-    description:
-      "typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised",
-  },
-  {
-    time: new Date(+new Date() - Math.floor(Math.random() * 10000000000)),
-    title: "It is a long established fact that a",
-    description:
-      " is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions ",
-  },
-  {
-    time: new Date(+new Date() - Math.floor(Math.random() * 10000000000)),
-    title: "Contrary to popular belief, Lorem Ipsum is not si",
-    description:
-      "andom text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem I",
-  },
-  {
-    time: new Date(+new Date() - Math.floor(Math.random() * 10000000000)),
-    title: "Where can I get some?",
-    description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generat",
-  },
-  {
-    time: new Date(+new Date() - Math.floor(Math.random() * 10000000000)),
-    title: "atise on the theory of ethics, very popu",
-    description:
-      "ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, c",
   },
 ];
 

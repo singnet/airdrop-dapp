@@ -14,17 +14,7 @@ export default function EligibilityBanner() {
   if (!account) return null;
 
   return (
-    <Box
-      sx={{
-        bgcolor: "bgHighlight.main",
-        my: 8,
-        p: 4,
-        py: 2,
-        m: 11,
-        borderRadius: 2,
-      }}
-      color="textAdvanced.dark"
-    >
+    <Box sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
