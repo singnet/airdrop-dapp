@@ -2,8 +2,6 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { arrayify, solidityKeccak256 } from "ethers/lib/utils";
-import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
@@ -18,6 +16,7 @@ import AirdropRegistration from "snet-ui/AirdropRegistration";
 import { UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { WindowStatus } from "utils/airdropWindows";
+import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -25,7 +24,7 @@ interface RegistrationProps {
   onViewRules: () => void;
   airdropId?: number;
   airdropWindowId?: number;
-  airdrooWindowStatus?: WindowStatus;
+  airdropWindowStatus?: WindowStatus;
 }
 
 const airdropOpensIn = new Date();
@@ -41,19 +40,19 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   onViewRules,
   airdropId,
   airdropWindowId,
-  airdrooWindowStatus,
+  airdropWindowStatus,
 }) => {
   const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
   const [claimHistory, setClaimHistory] = useState([]);
-
   const { account, library } = useActiveWeb3React();
-  const router = useRouter();
+  const ethSign = useEthSign();
+
   const dispatch = useAppDispatch();
 
-  console.log("airdrooWindowStatus", airdrooWindowStatus);
+  console.log("airdrooWindowStatus", airdropWindowStatus);
 
   useInterval(() => {
     const now = new Date();
@@ -73,8 +72,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         return;
       }
 
-      // TODO: Wait until metamask is connected
-      const signature = await signTransaction(account);
+      const signature = await ethSign.sign(
+        ["uint8", "uint8", "address"],
+        [Number(airdropId), Number(airdropWindowId), account]
+      );
       if (signature) {
         await airdropUserRegistration(account, signature);
         setUserRegistered(true);
@@ -113,21 +114,27 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     setClaimHistory(history.flat());
   };
 
-  const signTransaction = async (account: string) => {
-    if (!library) return;
+  // REFERENCE: Working Signature code. Delete it once the new signature logic is working
+  // const signTransaction = async (account: string) => {
+  //   // if (!library || !account) return;
 
-    const message = solidityKeccak256(
-      ["uint8", "uint8", "address"],
-      [Number(airdropId), Number(airdropWindowId), account]
-    );
+  //   // const message = solidityKeccak256(
+  //   //   ["uint8", "uint8", "address"],
+  //   //   [Number(airdropId), Number(airdropWindowId), account]
+  //   // );
 
-    const bytesDataHash = arrayify(message);
+  //   // const bytesDataHash = arrayify(message);
 
-    const signer = await library.getSigner();
-    const signature = await signer.signMessage(bytesDataHash);
+  //   // const signer = await library.getSigner(account);
+  //   // const signature = await signer.signMessage(bytesDataHash);
 
-    return signature;
-  };
+  //   const signature = await ethSign.sign(
+  //     ["uint8", "uint8", "address"],
+  //     [Number(airdropId), Number(airdropWindowId), account]
+  //   );
+
+  //   return signature;
+  // };
 
   const airdropUserRegistration = async (address: string, signature: string) => {
     try {
