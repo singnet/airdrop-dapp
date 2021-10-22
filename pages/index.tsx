@@ -80,8 +80,6 @@ const Home: NextPage = () => {
     }
   };
 
-  
-
   const handleScrollToRules = () => {
     if (rulesRef) {
       rulesRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -205,6 +203,7 @@ const Home: NextPage = () => {
         onViewSchedule={handleScrollToSchedule}
         airdropId={activeWindow?.airdrop_id}
         airdropWindowId={activeWindow?.airdrop_window_id}
+        airdrooWindowStatus={activeWindow?.airdrop_window_status}
       />
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification />

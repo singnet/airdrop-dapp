@@ -17,6 +17,7 @@ import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
 import { UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
+import { WindowStatus } from "utils/airdropWindows";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -24,6 +25,7 @@ interface RegistrationProps {
   onViewRules: () => void;
   airdropId?: number;
   airdropWindowId?: number;
+  airdrooWindowStatus?: WindowStatus;
 }
 
 const airdropOpensIn = new Date();
@@ -39,6 +41,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   onViewRules,
   airdropId,
   airdropWindowId,
+  airdrooWindowStatus,
 }) => {
   const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
@@ -49,6 +52,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const { account, library } = useActiveWeb3React();
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  console.log("airdrooWindowStatus", airdrooWindowStatus);
 
   useInterval(() => {
     const now = new Date();
