@@ -25,7 +25,6 @@ declare module "@mui/material/styles" {
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
     note?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgFocus?: { light?: string; main: string; dark?: string; contrastText?: string };
-    
 
     textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
   }
@@ -73,11 +72,9 @@ export const lightTheme = createTheme({
     bgGradientHighlight: { main: colors.GRADIENT_2 },
     background: { default: colors.WHITE, paper: colors.WHITE },
     text: { primary: colors.BLACK, secondary: colors.WHITE_2 },
-    error:{main:colors.LIGHT_RED,contrastText:colors.DARK_RED},
+    error: { light: colors.LIGHT_RED, main: colors.DARK_RED, contrastText: colors.DARK_RED },
 
-    bgFocus:{main: colors.OFF_WHITE},
-
-  
+    bgFocus: { main: colors.OFF_WHITE },
 
     textAdvanced: {
       primary: colors.BLACK,

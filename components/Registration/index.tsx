@@ -15,10 +15,14 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
+import { UserEligibility } from "utils/constants/CustomTypes";
 
 interface RegistrationProps {
+  userEligibility: UserEligibility;
   onViewSchedule: () => void;
   onViewRules: () => void;
+  airdropId?: number;
+  airdropWindowId?: number;
 }
 
 const airdropOpensIn = new Date();
@@ -28,7 +32,13 @@ const airdropClosesIn = new Date();
 airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
 airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
-const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, onViewRules }) => {
+const Registration: FunctionComponent<RegistrationProps> = ({
+  userEligibility,
+  onViewSchedule,
+  onViewRules,
+  airdropId,
+  airdropWindowId,
+}) => {
   const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
@@ -38,30 +48,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, on
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    fetchAirdrop();
-  }, []);
-
   useInterval(() => {
     const now = new Date();
     if (now.getTime() >= airdropOpensIn.getTime()) {
       setAirdropOpen(true);
     }
   }, 500);
-
-  const fetchAirdrop = async () => {
-    try {
-      const payload: any = {
-        limit: "100",
-        skip: "0",
-      };
-      const { data } = await axios.post("airdrops", payload);
-      const [airdropData] = data.data.airdrops;
-      setAirdrop(airdropData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const airdropRegistration = async () => {
     try {
@@ -73,14 +65,16 @@ const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, on
       // TODO: Wait until metamask is connected
       const signature = await signTransaction(account);
       if (signature) {
-        await airdropEligibilityCheck(account, signature);
         await airdropUserRegistration(account, signature);
+        setUserRegistered(true);
+      } else {
+        console.log("unable to generate signature");
       }
-      router.push(`airdrop/${airdrop.airdrop_window_id}`);
+      // router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
       console.log(error);
       // TODO: delete the below code once the error case is properly handled
-      setUserRegistered(true);
+      // setUserRegistered(true);
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
       setErrors(error.toString());
     }
@@ -88,11 +82,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, on
 
   const signTransaction = async (account: string) => {
     if (!library) return;
-    const { airdrop_id, airdrop_window_id } = airdrop;
 
     const message = solidityKeccak256(
       ["uint8", "uint8", "address"],
-      [Number(airdrop_id), Number(airdrop_window_id), account]
+      [Number(airdropId), Number(airdropWindowId), account]
     );
 
     const bytesDataHash = arrayify(message);
@@ -105,38 +98,24 @@ const Registration: FunctionComponent<RegistrationProps> = ({ onViewSchedule, on
 
   const airdropUserRegistration = async (address: string, signature: string) => {
     try {
-      const { airdrop_id, airdrop_window_id } = airdrop;
-      const payload = {
-        signature,
-        address,
-        airdrop_id,
-        airdrop_window_id,
-      };
+      const payload = { signature, address, airdrop_id: airdropId, airdrop_window_id: airdropWindowId };
       await axios.post("airdrop/registration", payload);
     } catch (error: any) {
       throw new Error(error);
     }
   };
 
-  const airdropEligibilityCheck = async (address: string, signature: string) => {
-    try {
-      const { airdrop_id, airdrop_window_id } = airdrop;
-      const payload = {
-        signature,
-        address,
-        airdrop_id,
-        airdrop_window_id,
-      };
-      await axios.post("airdrop/user-eligibility", payload);
-    } catch (error: any) {
-      throw new Error(error);
-    }
-  };
+  if (userEligibility === UserEligibility.PENDING) {
+    return <Typography>Loading Eligibility</Typography>;
+  }
+  if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return null;
+  }
 
   return userRegistered ? (
     <Registrationsuccess />
   ) : airdropOpen ? (
-    <Box sx={{ px: [0, 15] }}>
+    <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
         endDate={airdropClosesIn}
         onRegister={airdropRegistration}

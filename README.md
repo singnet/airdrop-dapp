@@ -27,7 +27,7 @@ Two potential ways to deploy the application
    You can refer to the same storybook component as the above point.
 
 - To fetch the user details use the hook `useActiveWeb3React`  
-  `import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks.ts"`
+  `import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks"`
 
 -
 
