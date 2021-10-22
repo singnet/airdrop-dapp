@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
-import { ListItem } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 
 export default function Footer() {
   return (

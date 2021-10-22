@@ -16,6 +16,7 @@ import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
 import { UserEligibility } from "utils/constants/CustomTypes";
+import { API_PATHS } from "utils/constants/ApiPaths";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -43,6 +44,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
+  const [claimHistory, setClaimHistory] = useState([]);
 
   const { account, library } = useActiveWeb3React();
   const router = useRouter();
@@ -54,6 +56,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       setAirdropOpen(true);
     }
   }, 500);
+
+  useEffect(() => {
+    getClaimHistory();
+  }, [airdropId, airdropWindowId, account]);
 
   const airdropRegistration = async () => {
     try {
@@ -78,6 +84,28 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
       setErrors(error.toString());
     }
+  };
+
+  const getClaimHistory = async () => {
+    if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account) return;
+    const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
+      address: account,
+      airdrop_id: `${airdropId}`,
+      airdrop_window_id: `${airdropWindowId}`,
+    });
+    console.log("response.data", response.data.data.claim_history);
+    const history = response.data.data.claim_history.map((el) => [
+      {
+        label: `Window ${airdropWindowId} Rewards`,
+        value: `${el.claimable_amount} SDAO`,
+      },
+      {
+        label: `Window ${airdropWindowId} Claimed`,
+        value: `${el.txn_status}`,
+      },
+    ]);
+
+    setClaimHistory(history.flat());
   };
 
   const signTransaction = async (account: string) => {
@@ -121,6 +149,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onRegister={airdropRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
+        history={claimHistory}
       />
     </Box>
   ) : (

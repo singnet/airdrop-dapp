@@ -5,12 +5,19 @@ import FlipCountdown from "snet-ui/FlipClock/Countdown";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
+import History from "snet-ui/History";
+
+type HistoryEvent = {
+  label: string;
+  value: string;
+};
 
 type AirdropRegistrationProps = {
   endDate: Date;
   onRegister: () => void;
   onViewSchedule: () => void;
   onViewRules: () => void;
+  history: HistoryEvent[];
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -28,6 +35,7 @@ export default function AirdropRegistration({
   onRegister,
   onViewRules,
   onViewSchedule,
+  history,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
@@ -66,6 +74,12 @@ export default function AirdropRegistration({
             View Rules
           </LoadingButton>
         </Box>
+      </Box>
+      <Box>
+        <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
+          Your Airdrop History
+        </Typography>
+        <History events={history} />
       </Box>
     </GradientBox>
   );

@@ -45,7 +45,6 @@ const Home: NextPage = () => {
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
   const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
-  const [claimHistory, setClaimHistory] = useState([]);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -53,7 +52,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getUserEligibility();
-    getClaimHistory();
+    // getClaimHistory();
   }, [activeWindow, account]);
 
   const getAirdropSchedule = async () => {
@@ -81,20 +80,7 @@ const Home: NextPage = () => {
     }
   };
 
-  const getClaimHistory = async () => {
-    if (
-      typeof activeWindow?.airdrop_id === "undefined" ||
-      typeof activeWindow?.airdrop_window_id === "undefined" ||
-      !account
-    )
-      return;
-    const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
-      address: account,
-      airdrop_id: `${activeWindow.airdrop_id}`,
-      airdrop_window_id: `${activeWindow.airdrop_window_id}`,
-    });
-    console.log("response.data", response.data.data.claim_history);
-  };
+  
 
   const handleScrollToRules = () => {
     if (rulesRef) {
