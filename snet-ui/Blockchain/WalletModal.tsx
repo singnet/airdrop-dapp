@@ -102,8 +102,6 @@ export default function WalletModal({ open, setOpen }: Props) {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <DialogTitle>
           <Typography color="primary.main" variant="h5">

@@ -56,8 +56,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const dispatch = useAppDispatch();
 
-  console.log("airdrooWindowStatus", airdropWindowStatus);
-
   useInterval(() => {
     const now = new Date();
     if (now.getTime() >= airdropOpensIn.getTime()) {

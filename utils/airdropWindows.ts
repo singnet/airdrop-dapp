@@ -28,7 +28,6 @@ export enum WindowStatus {
 
 export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | undefined => {
   const now = new Date();
-  console.log("windows", windows);
   //   windows.forEach((window) => {
   //     console.log(
   //       isDateBetween(window.airdrop_window_registration_start_period, window.airdrop_window_registration_end_period, now)
