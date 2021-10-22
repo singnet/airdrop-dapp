@@ -45,6 +45,7 @@ const Home: NextPage = () => {
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
   const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
+  const [claimHistory, setClaimHistory] = useState([]);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -52,6 +53,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getUserEligibility();
+    getClaimHistory();
   }, [activeWindow, account]);
 
   const getAirdropSchedule = async () => {
@@ -77,6 +79,21 @@ const Home: NextPage = () => {
       console.log("schedule error", e);
       // TODO: Implement error handling
     }
+  };
+
+  const getClaimHistory = async () => {
+    if (
+      typeof activeWindow?.airdrop_id === "undefined" ||
+      typeof activeWindow?.airdrop_window_id === "undefined" ||
+      !account
+    )
+      return;
+    const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
+      address: account,
+      airdrop_id: `${activeWindow.airdrop_id}`,
+      airdrop_window_id: `${activeWindow.airdrop_window_id}`,
+    });
+    console.log("response.data", response.data.data.claim_history);
   };
 
   const handleScrollToRules = () => {
@@ -125,30 +142,6 @@ const Home: NextPage = () => {
           activeWindow.airdrop_window_id.toString(),
           signature
         );
-        // const signatureParts = splitSignature(signature);
-        // const signer = await library.getSigner(account);
-
-        // const address = AirdropContractNetworks[chainId].address;
-        // console.log("addresss", address);
-        // // const airdropContract = new ethers.Contract(address, AirdropContractABI, signer);
-
-        // console.log("claim amount", claimAmount);
-        // const args = [
-        //   tokenAddress,
-        //   claimAmount, // claimAmount,
-        //   activeWindow.airdrop_id,
-        //   activeWindow.airdrop_window_id,
-        //   signatureParts.v,
-        //   signatureParts.r,
-        //   signatureParts.s,
-        // ];
-
-        // console.log("args", args);
-        // const gasPrice = await getGasPrice();
-        // const gasLimit = await airdropContract.estimateGas.claim(...args);
-        // console.log("gasLimit estimated", gasLimit);
-        // console.log("gasPrice", gasPrice);
-        // const txn = await airdropContract.claim(...args, { gasLimit: gasLimit, gasPrice });
         return txn;
       } catch (error: any) {
         console.log("errrrrrrr", error);
@@ -183,7 +176,7 @@ const Home: NextPage = () => {
       txn?.hash ?? "0x54990b02618bb025e91f66bd253baa77522aff4b0140440f5aecdd463c24b2fc",
       claimDetails.claimable_amount
     );
-    const receipt = await txn.wait();
+    const receipt = await txn?.wait();
     console.log("receipt", receipt);
   };
 

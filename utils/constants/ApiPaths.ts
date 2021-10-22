@@ -3,4 +3,5 @@ export const API_PATHS = {
   AIRDROP_USER_ELIGIBILITY: "/airdrop/user-eligibility",
   CLAIM_SIGNATURE: "/airdrop/claim",
   CLAIM_SAVE_TXN: "/airdrop/claim-txn",
+  CLAIM_HISTORY: "/airdrop/claim-history",
 };
