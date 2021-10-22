@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdrop_windows";
+import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { UserEligibility } from "utils/constants/CustomTypes";
 import { Button } from "@mui/material";

@@ -17,11 +17,14 @@ export type AirdropWindow = {
   airdrop_window_schedule_description: string;
   airdrop_window_timeline: AirdropWindowTimeline[];
   airdrop_window_total_tokens: number;
+  airdrop_window_status?: WindowStatus;
 };
 
-// export type WindowStatus = {
-
-// }
+export enum WindowStatus {
+  UPCOMING = "UPCOMING",
+  REGISTRATION = "REGISTRATION",
+  CLAIM = "CLAIM",
+}
 
 export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | undefined => {
   const now = new Date();
@@ -39,6 +42,20 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
       airdrop_window_claim_end_period: claimEnd,
     }) => isDateBetween(registrationStart, registrationEnd, now) || isDateBetween(claimStart, claimEnd, now)
   );
+  if (activeWindow) {
+    if (
+      isDateBetween(
+        activeWindow.airdrop_window_registration_start_period,
+        activeWindow.airdrop_window_registration_end_period,
+        now
+      )
+    ) {
+      activeWindow.airdrop_window_status = WindowStatus.REGISTRATION;
+    } else {
+      activeWindow.airdrop_window_status = WindowStatus.CLAIM;
+    }
+  }
+
   return activeWindow;
 };
 
@@ -53,5 +70,8 @@ export const findFirstUpcomingWindow = (windows: AirdropWindow[]): AirdropWindow
   const firstUpcomingWindow = sortedWindows.find((window) =>
     isDateGreaterThan(window.airdrop_window_registration_start_period, now)
   );
+  if (firstUpcomingWindow) {
+    firstUpcomingWindow.airdrop_window_status = WindowStatus.UPCOMING;
+  }
   return firstUpcomingWindow;
 };
