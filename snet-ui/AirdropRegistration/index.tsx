@@ -47,40 +47,47 @@ export default function AirdropRegistration({
   };
 
   return (
-    <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
-      <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Airdrop registration window closes {formattedDate}
-      </Typography>
-      <FlipCountdown endDate={endDate} />
-      <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-          <LoadingButton
-            variant="contained"
-            color="secondary"
-            sx={{ width: 170 }}
-            onClick={handleRegistrationClick}
-            loading={registrationLoader}
-          >
-            Register Now
-          </LoadingButton>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
-            View Schedule
-          </LoadingButton>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-          <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
-            View Rules
-          </LoadingButton>
-        </Box>
-      </Box>
-      <Box>
-        <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
-          Your Airdrop History
+    <Box>
+      <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+        <Typography color="text.secondary" variant="h4" align="center" mb={6}>
+          Airdrop registration window closes {formattedDate}
         </Typography>
-        <History events={history} />
-      </Box>
-    </GradientBox>
+        <FlipCountdown endDate={endDate} />
+        <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+            <LoadingButton
+              variant="contained"
+              color="secondary"
+              sx={{ width: 170 }}
+              onClick={handleRegistrationClick}
+              loading={registrationLoader}
+            >
+              Register Now
+            </LoadingButton>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+            <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
+              View Schedule
+            </LoadingButton>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+            <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
+              View Rules
+            </LoadingButton>
+          </Box>
+        </Box>
+        <Box>
+          <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
+            Your Airdrop History
+          </Typography>
+          <History events={history} />
+        </Box>
+      </GradientBox>
+      {/* <Box sx={{ bgcolor: "secondary.main", position: "relative", top: 0, left: 0 }}>
+        <Typography color="text.secondary" variant="h4" align="center" mb={6}>
+          Registration Open
+        </Typography>
+      </Box> */}
+    </Box>
   );
 }
