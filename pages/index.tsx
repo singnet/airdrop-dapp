@@ -44,7 +44,6 @@ const Home: NextPage = () => {
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
-  const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -92,78 +91,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleClaim = async () => {
-    if (
-      typeof activeWindow?.airdrop_id === "undefined" ||
-      typeof activeWindow?.airdrop_window_id === "undefined" ||
-      !account ||
-      !library ||
-      !chainId
-    )
-      return;
-
-    const getClaimDetails = async () => {
-      const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
-        address: account,
-        airdrop_id: `${activeWindow.airdrop_id}`,
-        airdrop_window_id: `${activeWindow.airdrop_window_id}`,
-      });
-
-      console.log("response", response);
-      return response.data.data;
-    };
-
-    const executeClaimMethod = async (signature: string, claimAmount: number) => {
-      try {
-        // TODO: Don't hardcode it, use it from the API or env
-        // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
-        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
-
-        const txn = await airdropContract.claim(
-          tokenAddress,
-          claimAmount.toString(),
-          activeWindow.airdrop_id.toString(),
-          activeWindow.airdrop_window_id.toString(),
-          signature
-        );
-        return txn;
-      } catch (error: any) {
-        console.log("errrrrrrr", error);
-        const ethersError = parseEthersError(error);
-        if (ethersError) {
-          alert(ethersError);
-        }
-      }
-    };
-
-    const saveClaimTxn = async (txnHash: string, claimAmount) => {
-      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
-        address: account,
-        txn_hash: txnHash,
-        amount: claimAmount.toString(),
-        airdrop_id: `${activeWindow.airdrop_id}`,
-        airdrop_window_id: `${activeWindow.airdrop_window_id}`,
-        txn_status: "PENDING",
-      });
-      console.log("response.dat", response.data);
-    };
-
-    // Retreiving Claim Signature from the backend signer service
-    const claimDetails = await getClaimDetails();
-
-    // Using the claim signature and calling the Ethereum Airdrop Contract.
-
-    const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
-
-    await saveClaimTxn(
-      // Temporary value for testing
-      txn?.hash ?? "0x54990b02618bb025e91f66bd253baa77522aff4b0140440f5aecdd463c24b2fc",
-      claimDetails.claimable_amount
-    );
-    const receipt = await txn?.wait();
-    console.log("receipt", receipt);
-  };
-
   const getUserEligibility = async () => {
     try {
       if (
@@ -192,9 +119,6 @@ const Home: NextPage = () => {
         <title>Airdrop</title>
       </Head>
       <Box px={[0, 4]} mt={3}>
-        <Button onClick={handleClaim} variant="contained" color="secondary">
-          Temporary Claim
-        </Button>
         <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
       </Box>
       <Registration

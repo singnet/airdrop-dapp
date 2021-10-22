@@ -18,6 +18,7 @@ type AirdropRegistrationProps = {
   onViewSchedule: () => void;
   onViewRules: () => void;
   history: HistoryEvent[];
+  onClaim: () => void;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -36,14 +37,28 @@ export default function AirdropRegistration({
   onViewRules,
   onViewSchedule,
   history,
+  onClaim,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
+  const [claimLoader, setClaimLoader] = useState(false);
   const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
 
   const handleRegistrationClick = async () => {
-    setRegistrationLoader(true);
-    await onRegister();
-    setRegistrationLoader(false);
+    try {
+      setRegistrationLoader(true);
+      await onRegister();
+    } finally {
+      setRegistrationLoader(false);
+    }
+  };
+
+  const handleClaimClick = async () => {
+    try {
+      setClaimLoader(true);
+      await onClaim();
+    } finally {
+      setClaimLoader(false);
+    }
   };
 
   return (
@@ -53,6 +68,17 @@ export default function AirdropRegistration({
           Airdrop registration window closes {formattedDate}
         </Typography>
         <FlipCountdown endDate={endDate} />
+        <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}>
+          <LoadingButton
+            variant="contained"
+            color="secondary"
+            sx={{ width: 170 }}
+            onClick={handleClaimClick}
+            loading={claimLoader}
+          >
+            Temporary Claim
+          </LoadingButton>
+        </Box>
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
             <LoadingButton

@@ -17,6 +17,9 @@ import { UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { WindowStatus } from "utils/airdropWindows";
 import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
+import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
+import { parseEthersError } from "utils/ethereum";
+import { useAirdropContract } from "utils/AirdropContract";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -42,13 +45,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropWindowId,
   airdropWindowStatus,
 }) => {
-  const [airdrop, setAirdrop] = useState<any>(null);
+  // const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
   const [claimHistory, setClaimHistory] = useState([]);
-  const { account, library } = useActiveWeb3React();
+  const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
+  const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
 
   const dispatch = useAppDispatch();
 
@@ -114,6 +118,70 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     setClaimHistory(history.flat());
   };
 
+  const handleClaim = async () => {
+    if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account || !library) return;
+
+    const getClaimDetails = async () => {
+      const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
+        address: account,
+        airdrop_id: airdropId.toString(),
+        airdrop_window_id: airdropWindowId.toString(),
+      });
+
+      console.log("response", response);
+      return response.data.data;
+    };
+
+    const executeClaimMethod = async (signature: string, claimAmount: number) => {
+      try {
+        // TODO: Don't hardcode it, use it from the API or env
+        // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
+        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
+
+        const txn = await airdropContract.claim(
+          tokenAddress,
+          claimAmount.toString(),
+          airdropId?.toString(),
+          airdropWindowId?.toString(),
+          signature
+        );
+        return txn;
+      } catch (error: any) {
+        console.log("errrrrrrr", error);
+        const ethersError = parseEthersError(error);
+        if (ethersError) {
+          alert(ethersError);
+        }
+      }
+    };
+
+    const saveClaimTxn = async (txnHash: string, claimAmount) => {
+      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
+        address: account,
+        txn_hash: txnHash,
+        amount: claimAmount.toString(),
+        airdrop_id: airdropId?.toString(),
+        airdrop_window_id: airdropWindowId?.toString(),
+        txn_status: "PENDING",
+      });
+      console.log("response.dat", response.data);
+    };
+
+    // Retreiving Claim Signature from the backend signer service
+    const claimDetails = await getClaimDetails();
+
+    // Using the claim signature and calling the Ethereum Airdrop Contract.
+    const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
+
+    await saveClaimTxn(
+      // Temporary value for testing
+      txn?.hash ?? "0x54990b02618bb025e91f66bd253baa77522aff4b0140440f5aecdd463c24b2fc",
+      claimDetails.claimable_amount
+    );
+    const receipt = await txn?.wait();
+    console.log("receipt", receipt);
+  };
+
   // REFERENCE: Working Signature code. Delete it once the new signature logic is working
   // const signTransaction = async (account: string) => {
   //   // if (!library || !account) return;
@@ -162,6 +230,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         history={claimHistory}
+        onClaim={handleClaim}
       />
     </Box>
   ) : (
@@ -175,23 +244,23 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     </Grid>
   );
 
-  return airdrop !== null ? (
-    <>
-      <Box
-        sx={{
-          padding: "4rem",
-        }}
-      >
-        <Typography variant="h3" align="center">
-          {airdrop.airdrop_window_name}
-        </Typography>
-        <Button onClick={airdropRegistration} variant="contained">
-          Register
-        </Button>
-        {error !== null ? <Alert severity="error">{error}</Alert> : null}
-      </Box>
-    </>
-  ) : null;
+  // return airdrop !== null ? (
+  //   <>
+  //     <Box
+  //       sx={{
+  //         padding: "4rem",
+  //       }}
+  //     >
+  //       <Typography variant="h3" align="center">
+  //         {airdrop.airdrop_window_name}
+  //       </Typography>
+  //       <Button onClick={airdropRegistration} variant="contained">
+  //         Register
+  //       </Button>
+  //       {error !== null ? <Alert severity="error">{error}</Alert> : null}
+  //     </Box>
+  //   </>
+  // ) : null;
 };
 
 export default Registration;
