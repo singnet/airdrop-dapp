@@ -28,6 +28,7 @@ import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
 import AirdropContractABI from "contract/abi/SingularityAirdrop.json";
 import { splitSignature } from "ethers/lib/utils";
 import { fromFraction, getGasPrice, parseEthersError } from "utils/ethereum";
+import { useAirdropContract } from "utils/AirdropContract";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -43,6 +44,7 @@ const Home: NextPage = () => {
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -112,37 +114,42 @@ const Home: NextPage = () => {
 
     const executeClaimMethod = async (signature: string, claimAmount: number) => {
       try {
-        const signatureParts = splitSignature(signature);
-        const signer = await library.getSigner(account);
-
-        const address = AirdropContractNetworks[chainId].address;
-        console.log("addresss", address);
-        const airdropContract = new ethers.Contract(address, AirdropContractABI, signer);
-
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
         const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
-        console.log("claim amount", claimAmount);
-        const args = [
+
+        const txn = await airdropContract.claim(
           tokenAddress,
-          claimAmount, // claimAmount,
-          activeWindow.airdrop_id,
-          activeWindow.airdrop_window_id,
-          signatureParts.v,
-          signatureParts.r,
-          signatureParts.s,
-        ];
+          claimAmount.toString(),
+          activeWindow.airdrop_id.toString(),
+          activeWindow.airdrop_window_id.toString(),
+          signature
+        );
+        // const signatureParts = splitSignature(signature);
+        // const signer = await library.getSigner(account);
 
-        console.log("args", args);
-        const gasPrice = await getGasPrice();
-        const gasLimit = await airdropContract.estimateGas.claim(...args);
-        console.log("gasLimit estimated", gasLimit);
-        console.log("gasPrice", gasPrice);
-        const txn = await airdropContract.claim(...args, { gasLimit: gasLimit, gasPrice });
+        // const address = AirdropContractNetworks[chainId].address;
+        // console.log("addresss", address);
+        // // const airdropContract = new ethers.Contract(address, AirdropContractABI, signer);
 
-        console.log("txn submitted", txn.hash);
-        const receipt = await txn.wait();
-        console.log("receipt", receipt);
+        // console.log("claim amount", claimAmount);
+        // const args = [
+        //   tokenAddress,
+        //   claimAmount, // claimAmount,
+        //   activeWindow.airdrop_id,
+        //   activeWindow.airdrop_window_id,
+        //   signatureParts.v,
+        //   signatureParts.r,
+        //   signatureParts.s,
+        // ];
+
+        // console.log("args", args);
+        // const gasPrice = await getGasPrice();
+        // const gasLimit = await airdropContract.estimateGas.claim(...args);
+        // console.log("gasLimit estimated", gasLimit);
+        // console.log("gasPrice", gasPrice);
+        // const txn = await airdropContract.claim(...args, { gasLimit: gasLimit, gasPrice });
+        return txn;
       } catch (error: any) {
         console.log("errrrrrrr", error);
         const ethersError = parseEthersError(error);
@@ -152,12 +159,32 @@ const Home: NextPage = () => {
       }
     };
 
+    const saveClaimTxn = async (txnHash: string, claimAmount) => {
+      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
+        address: account,
+        txn_hash: txnHash,
+        amount: claimAmount.toString(),
+        airdrop_id: `${activeWindow.airdrop_id}`,
+        airdrop_window_id: `${activeWindow.airdrop_window_id}`,
+        txn_status: "PENDING",
+      });
+      console.log("response.dat", response.data);
+    };
+
     // Retreiving Claim Signature from the backend signer service
     const claimDetails = await getClaimDetails();
 
     // Using the claim signature and calling the Ethereum Airdrop Contract.
 
-    await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
+    const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
+
+    await saveClaimTxn(
+      // Temporary value for testing
+      txn?.hash ?? "0x54990b02618bb025e91f66bd253baa77522aff4b0140440f5aecdd463c24b2fc",
+      claimDetails.claimable_amount
+    );
+    const receipt = await txn.wait();
+    console.log("receipt", receipt);
   };
 
   const getUserEligibility = async () => {
