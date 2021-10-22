@@ -32,7 +32,11 @@ const AirdropSchedules = ({}, ref) => {
 
   return (
     <Box sx={{ bgcolor: "bgHighlight.main" }} ref={ref}>
-      <Schedule title="Airdrop Schedule" events={events} blogLink="www.google.com" />
+      <Schedule
+        title="Airdrop Schedule"
+        events={events}
+        blogLink="www.google.com"
+      />
     </Box>
   );
 };
