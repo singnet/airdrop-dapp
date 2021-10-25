@@ -20,6 +20,7 @@ import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
 import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
 import { parseEthersError } from "utils/ethereum";
 import { useAirdropContract } from "utils/AirdropContract";
+import { TransactionResponse } from "@ethersproject/abstract-provider";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -130,7 +131,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       return response.data.data;
     };
 
-    const executeClaimMethod = async (signature: string, claimAmount: number) => {
+    const executeClaimMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
       try {
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
@@ -150,6 +151,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         if (ethersError) {
           alert(ethersError);
         }
+        throw error;
       }
     };
 
@@ -165,19 +167,19 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       console.log("response.dat", response.data);
     };
 
-    // Retreiving Claim Signature from the backend signer service
-    const claimDetails = await getClaimDetails();
+    try {
+      // Retreiving Claim Signature from the backend signer service
+      const claimDetails = await getClaimDetails();
 
-    // Using the claim signature and calling the Ethereum Airdrop Contract.
-    const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
+      // Using the claim signature and calling the Ethereum Airdrop Contract.
+      const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
 
-    await saveClaimTxn(
-      // Temporary value for testing
-      txn?.hash ?? "0x54990b02618bb025e91f66bd253baa77522aff4b0140440f5aecdd463c24b2fc",
-      claimDetails.claimable_amount
-    );
-    const receipt = await txn?.wait();
-    console.log("receipt", receipt);
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
+      const receipt = await txn.wait();
+      console.log("receipt", receipt);
+    } catch (error) {
+      console.log("signature error", error);
+    }
   };
 
   // REFERENCE: Working Signature code. Delete it once the new signature logic is working
