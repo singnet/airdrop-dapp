@@ -13,7 +13,7 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
-import { UserEligibility } from "utils/constants/CustomTypes";
+import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { WindowStatus } from "utils/airdropWindows";
 import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
@@ -29,6 +29,7 @@ interface RegistrationProps {
   airdropId?: number;
   airdropWindowId?: number;
   airdropWindowStatus?: WindowStatus;
+  claimStatus: ClaimStatus;
 }
 
 const airdropOpensIn = new Date();
@@ -45,6 +46,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropId,
   airdropWindowId,
   airdropWindowStatus,
+  claimStatus,
 }) => {
   // const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
@@ -68,7 +70,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     getClaimHistory();
   }, [airdropId, airdropWindowId, account]);
 
-  const airdropRegistration = async () => {
+  const handleRegistration = async () => {
     try {
       if (!account) {
         dispatch(setShowConnectionModal(true));
@@ -119,6 +121,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const handleClaim = async () => {
     if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account || !library) return;
+
+    if (claimStatus === ClaimStatus.PENDING) {
+      return alert("There is already a pending claim transaction. Please wait for it to get completed");
+    } else if (claimStatus === ClaimStatus.SUCCESS) {
+      return alert("You have already Claimed");
+    }
 
     const getClaimDetails = async () => {
       const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
@@ -226,7 +234,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
         endDate={airdropClosesIn}
-        onRegister={airdropRegistration}
+        onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         history={claimHistory}

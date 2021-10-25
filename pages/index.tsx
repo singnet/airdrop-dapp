@@ -22,7 +22,7 @@ import axios from "utils/Axios";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import { UserEligibility } from "utils/constants/CustomTypes";
+import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { Button } from "@mui/material";
 import { ethers } from "ethers";
 import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
@@ -45,6 +45,7 @@ const Home: NextPage = () => {
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -108,7 +109,9 @@ const Home: NextPage = () => {
       };
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
       const isEligible = response.data.data.is_eligible;
+      const claimStatus = response.data.data.airdrop_window_claim_status;
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
       console.log("eligibility check error");
     }
@@ -131,6 +134,7 @@ const Home: NextPage = () => {
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
+            claimStatus={userClaimStatus}
           />
         </>
       ) : (
