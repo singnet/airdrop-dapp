@@ -21,6 +21,7 @@ import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
 import { parseEthersError } from "utils/ethereum";
 import { useAirdropContract } from "utils/AirdropContract";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
+import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -222,7 +223,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   };
 
   if (userEligibility === UserEligibility.PENDING) {
-    return <Typography>Loading Eligibility...</Typography>;
+    return (
+      <Box sx={{ px: [0, 4, 15] }}>
+        <AirdropRegistrationLoader />
+      </Box>
+    );
   }
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
     return null;

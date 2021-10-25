@@ -15,7 +15,7 @@ type EligibilityBannerProps = {
 };
 
 export default function EligibilityBanner({ userEligibility, onViewRules }: EligibilityBannerProps) {
-  const { account, chainId } = useActiveWeb3React();
+  const { account, chainId, library } = useActiveWeb3React();
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
