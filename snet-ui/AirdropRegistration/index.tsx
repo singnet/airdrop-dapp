@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
 import History from "snet-ui/History";
+import { WindowStatus } from "utils/airdropWindows";
 
 type HistoryEvent = {
   label: string;
@@ -19,6 +20,7 @@ type AirdropRegistrationProps = {
   onViewRules: () => void;
   history: HistoryEvent[];
   onClaim: () => void;
+  airdropWindowStatus?: WindowStatus;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -38,6 +40,7 @@ export default function AirdropRegistration({
   onViewSchedule,
   history,
   onClaim,
+  airdropWindowStatus,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
@@ -68,28 +71,30 @@ export default function AirdropRegistration({
           Airdrop registration window closes {formattedDate}
         </Typography>
         <FlipCountdown endDate={endDate} />
-        <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}>
-          <LoadingButton
-            variant="contained"
-            color="secondary"
-            sx={{ width: 170 }}
-            onClick={handleClaimClick}
-            loading={claimLoader}
-          >
-            Temporary Claim
-          </LoadingButton>
-        </Box>
+        <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}></Box>
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            <LoadingButton
-              variant="contained"
-              color="secondary"
-              sx={{ width: 170 }}
-              onClick={handleRegistrationClick}
-              loading={registrationLoader}
-            >
-              Register Now
-            </LoadingButton>
+            {airdropWindowStatus === WindowStatus.CLAIM ? (
+              <LoadingButton
+                variant="contained"
+                color="secondary"
+                sx={{ width: 170 }}
+                onClick={handleClaimClick}
+                loading={claimLoader}
+              >
+                Temporary Claim
+              </LoadingButton>
+            ) : airdropWindowStatus === WindowStatus.REGISTRATION ? (
+              <LoadingButton
+                variant="contained"
+                color="secondary"
+                sx={{ width: 170 }}
+                onClick={handleRegistrationClick}
+                loading={registrationLoader}
+              >
+                Register Now
+              </LoadingButton>
+            ) : null}
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
             <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>

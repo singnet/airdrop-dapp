@@ -244,6 +244,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewSchedule={onViewSchedule}
         history={claimHistory}
         onClaim={handleClaim}
+        airdropWindowStatus={airdropWindowStatus}
       />
     </Box>
   ) : (
@@ -256,24 +257,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
     </Grid>
   );
-
-  // return airdrop !== null ? (
-  //   <>
-  //     <Box
-  //       sx={{
-  //         padding: "4rem",
-  //       }}
-  //     >
-  //       <Typography variant="h3" align="center">
-  //         {airdrop.airdrop_window_name}
-  //       </Typography>
-  //       <Button onClick={airdropRegistration} variant="contained">
-  //         Register
-  //       </Button>
-  //       {error !== null ? <Alert severity="error">{error}</Alert> : null}
-  //     </Box>
-  //   </>
-  // ) : null;
 };
 
 export default Registration;
