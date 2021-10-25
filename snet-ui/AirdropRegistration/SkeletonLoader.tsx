@@ -7,16 +7,16 @@ import Skeleton from "@mui/material/Skeleton";
 
 export default function SkeletonLoader() {
   return (
-    <GradientBox>
-      <Skeleton />
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Skeleton variant="rectangular" width={210} height={118} />
-        <Skeleton variant="rectangular" width={210} height={118} />
-        <Skeleton variant="rectangular" width={210} height={118} />
+    <GradientBox sx={{ p: 3 }}>
+      <Skeleton sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
+        <Skeleton variant="rectangular" width={120} height={118} sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
+        <Skeleton variant="rectangular" width={120} height={118} sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
+        <Skeleton variant="rectangular" width={120} height={118} sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
       </Box>
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
+      <Skeleton sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
+      <Skeleton sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
+      <Skeleton sx={{ bgcolor: "bgHighlight.main", my: 1 }} />
     </GradientBox>
   );
 }
