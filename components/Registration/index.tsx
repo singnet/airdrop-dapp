@@ -214,7 +214,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   };
 
   if (userEligibility === UserEligibility.PENDING) {
-    return <Typography>Loading Eligibility</Typography>;
+    return <Typography>Loading Eligibility...</Typography>;
   }
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
     return null;

@@ -33,7 +33,7 @@ export default function Footer() {
             </ListItemButton>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="/contactus"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}

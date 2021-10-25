@@ -13,6 +13,7 @@ import SubscribeToNotification from "snet-ui/SubscribeToNotification";
 import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
+import Typography from "@mui/material/Typography";
 
 // import Notqualified from "snet-ui/Noteligible";
 import { useEffect, useRef, useState } from "react";
@@ -118,17 +119,24 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
-      <Box px={[0, 4]} mt={3}>
-        <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
-      </Box>
-      <Registration
-        userEligibility={userEligibility}
-        onViewRules={handleScrollToRules}
-        onViewSchedule={handleScrollToSchedule}
-        airdropId={activeWindow?.airdrop_id}
-        airdropWindowId={activeWindow?.airdrop_window_id}
-        airdropWindowStatus={activeWindow?.airdrop_window_status}
-      />
+      {account ? (
+        <>
+          <Box px={[0, 4]} mt={3}>
+            <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
+          </Box>
+          <Registration
+            userEligibility={userEligibility}
+            onViewRules={handleScrollToRules}
+            onViewSchedule={handleScrollToSchedule}
+            airdropId={activeWindow?.airdrop_id}
+            airdropWindowId={activeWindow?.airdrop_window_id}
+            airdropWindowStatus={activeWindow?.airdrop_window_status}
+          />
+        </>
+      ) : (
+        <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>
+      )}
+
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification />
       <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
