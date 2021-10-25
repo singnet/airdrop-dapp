@@ -110,6 +110,7 @@ const Home: NextPage = () => {
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
       const isEligible = response.data.data.is_eligible;
       const claimStatus = response.data.data.airdrop_window_claim_status;
+      // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
