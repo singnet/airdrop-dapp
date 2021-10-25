@@ -16,11 +16,11 @@ import Registration from "components/Registration";
 import Typography from "@mui/material/Typography";
 
 // import Notqualified from "snet-ui/Noteligible";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdropWindows";
+import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { Button } from "@mui/material";
@@ -118,6 +118,16 @@ const Home: NextPage = () => {
     }
   };
 
+  const airdropWindowClosingTime = useMemo(
+    () =>
+      activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+        ? activeWindow.airdrop_window_claim_end_period
+        : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
+        ? activeWindow.airdrop_window_registration_end_period
+        : "",
+    [activeWindow]
+  );
+
   return (
     <CommonLayout>
       <Head>
@@ -135,6 +145,7 @@ const Home: NextPage = () => {
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
+            airdropWindowClosingTime={airdropWindowClosingTime}
             claimStatus={userClaimStatus}
           />
         </>

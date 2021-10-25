@@ -1,8 +1,5 @@
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
@@ -31,14 +28,11 @@ interface RegistrationProps {
   airdropWindowId?: number;
   airdropWindowStatus?: WindowStatus;
   claimStatus: ClaimStatus;
+  airdropWindowClosingTime: string;
 }
 
 const airdropOpensIn = new Date();
 airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
-
-const airdropClosesIn = new Date();
-airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
-airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
   userEligibility,
@@ -47,9 +41,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropId,
   airdropWindowId,
   airdropWindowStatus,
+  airdropWindowClosingTime,
   claimStatus,
 }) => {
-  // const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
@@ -70,6 +64,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   useEffect(() => {
     getClaimHistory();
   }, [airdropId, airdropWindowId, account]);
+
+  const endDate = useMemo(() => new Date(airdropWindowClosingTime), [airdropWindowClosingTime]);
 
   const handleRegistration = async () => {
     try {
@@ -238,7 +234,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : airdropOpen ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        endDate={airdropClosesIn}
+        endDate={endDate}
         onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
