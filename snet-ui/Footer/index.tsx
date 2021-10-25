@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
-import { ListItem } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 
 export default function Footer() {
   return (
@@ -33,7 +33,7 @@ export default function Footer() {
             </ListItemButton>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="/contactus"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}

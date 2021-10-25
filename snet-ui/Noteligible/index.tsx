@@ -80,7 +80,7 @@ export default function Notqualified({ account, network, onViewRules }: Notquali
                   </Typography>
                 </Button>
 
-                <Button variant="outlined" size="large">
+                <Button variant="outlined" size="large" href="/contactus">
                   <Typography color="secondary.main" fontSize="13px">
                     Contact us
                   </Typography>
