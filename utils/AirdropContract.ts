@@ -43,8 +43,9 @@ export const useAirdropContract = (contractAddress: string) => {
     ];
 
     const gasPrice = await getGasPrice();
-    // const gasLimit = await airdropContract.estimateGas.claim(...args);
-    const txn = await airdropContract.claim(...args, { gasLimit: "24000000", gasPrice });
+    const gasLimit = await airdropContract.estimateGas.claim(...args);
+    console.log("estimated gas limit", gasLimit);
+    const txn = await airdropContract.claim(...args, { gasLimit: gasLimit, gasPrice });
     console.log("Claim txn submitted", txn.hash);
     return txn;
   };

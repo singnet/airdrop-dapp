@@ -58,7 +58,7 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const tokenName = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d";
+      const tokenName = "0x5e94577b949a56279637ff74dfcff2c28408f049";
       const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${tokenName}`);
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);

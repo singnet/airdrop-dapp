@@ -19,6 +19,7 @@ import { parseEthersError } from "utils/ethereum";
 import { useAirdropContract } from "utils/AirdropContract";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
+import { APIError } from "utils/errors";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -126,14 +127,22 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     }
 
     const getClaimDetails = async () => {
-      const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
-        address: account,
-        airdrop_id: airdropId.toString(),
-        airdrop_window_id: airdropWindowId.toString(),
-      });
+      try {
+        const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
+          address: account,
+          airdrop_id: airdropId.toString(),
+          airdrop_window_id: airdropWindowId.toString(),
+        });
 
-      console.log("response", response);
-      return response.data.data;
+        console.log("response", response);
+        return response.data.data;
+      } catch (error: any) {
+        const backendErrorMessage = error?.errorText?.error?.message;
+        if (backendErrorMessage) {
+          throw new APIError(backendErrorMessage);
+        }
+        throw error;
+      }
     };
 
     const executeClaimMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
@@ -183,6 +192,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       const receipt = await txn.wait();
       console.log("receipt", receipt);
     } catch (error) {
+      if (error instanceof APIError) {
+        alert(error.message);
+      }
       console.log("signature error", error);
     }
   };
