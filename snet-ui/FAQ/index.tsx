@@ -33,8 +33,8 @@ export default function FAQPage() {
       <Typography align="center" color="bgtext.main" variant="h4">
         Frequently Asked Questions
       </Typography>
-      <Box sx={{ m: 6 }}>
-        <AccordionContainer sx={{ m: 15 }}>
+      <Box sx={{ mx: [0, 3, 6] }}>
+        <AccordionContainer>
           {faqSampleData.map((faq) => (
             <Accordion key={faq.question}>
               <AccordionSummary
@@ -70,11 +70,7 @@ export default function FAQPage() {
           Still Have Questions?
         </Typography>
         <Box textAlign="center">
-          <Button
-            variant="outlined"
-            size="large"
-            sx={{ justifyContent: "center" }}
-          >
+          <Button variant="outlined" size="large" sx={{ justifyContent: "center" }}>
             <Typography color="secondary.main">Contact us</Typography>
           </Button>
         </Box>
