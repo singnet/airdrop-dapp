@@ -8,6 +8,8 @@ const ethersToWei = "1000000000000000000";
 const ethersToGwei = "1000000000";
 
 export const getGasPrice = async () => {
+  // TEMPORARY:
+  // return toGwei("80");
   const url = "https://gasprice.poa.network/";
   var priceString: any = await axios.get(url);
   const priceJSON = priceString.data;

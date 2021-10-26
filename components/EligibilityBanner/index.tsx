@@ -7,6 +7,7 @@ import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { UserEligibility } from "utils/constants/CustomTypes";
 import Notqualified from "snet-ui/Noteligible";
+import SkeletonLoader from "./SkeletonLoader";
 
 type EligibilityBannerProps = {
   onViewRules: () => void;
@@ -14,14 +15,14 @@ type EligibilityBannerProps = {
 };
 
 export default function EligibilityBanner({ userEligibility, onViewRules }: EligibilityBannerProps) {
-  const { account, chainId } = useActiveWeb3React();
+  const { account, chainId, library } = useActiveWeb3React();
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
   if (!account) return <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>;
 
   if (userEligibility === UserEligibility.PENDING) {
-    return <Typography variant="normal">Loading Eligibility...</Typography>;
+    return <SkeletonLoader />;
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
