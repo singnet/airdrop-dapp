@@ -8,6 +8,7 @@ import TextField from "snet-ui/TextField";
 import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
 import { API_PATHS } from "utils/constants/ApiPaths";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const categories = ["Airdrop Enquiry"];
 const alertTypes: any = {
@@ -20,10 +21,13 @@ export default function ContactUs() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-
-  const [emailerror, setEmailerror] = useState({ email: "" });
-  const [messageerror, setMessageerror] = useState({ message: "" });
-  const [alert, setAlert] = useState({ alert: alertTypes.INFO });
+  const [submittingForm, setSubmittingForm] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [alertMessage, setAlertMessage] = useState({
+    severity: alertTypes.INFO,
+    value: "",
+  });
   const [category, setCategory] = useState("Airdrop Enquiry");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -45,7 +49,7 @@ export default function ContactUs() {
     setMessage(event.target.value);
   };
 
-  const sendEnquiry = async () => {
+  const sendEmail = async () => {
     try {
       const query = ` Message : ${message} . From ${email}`;
       const EMAIL_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
@@ -56,42 +60,67 @@ export default function ContactUs() {
         notification_type: "support",
       };
       await axios.post(API_PATHS.CONTACT_US, payload);
+      setAlertMessage({
+        severity: alertTypes.SUCCESS,
+        value: "Your Feedback has been submitted successfully",
+      });
     } catch (error: any) {
-      setMessageerror({ message: error });
-      setAlert({ alert: alertTypes.ERROR });
+      setAlertMessage({
+        severity: alertTypes.ERROR,
+        value: "Unable to submit your feedback",
+      });
     }
   };
 
-  const handleSubmit = () => {
-    setMessageerror({});
-    setAlert({});
-    sendEnquiry();
-
-    if (!message) {
-      setMessageerror((prevMessageerror) => ({
-        ...prevMessageerror,
-        message: "Message should not be empty",
-      }));
+  const handleSubmit = async () => {
+    try {
+      setSubmittingForm(true);
+      setMessageError("");
+      setEmailError("");
+      setAlertMessage({ severity: alertTypes.ERROR, value: "" });
+      if (!message) {
+        setMessageError("Message should not be empty");
+      }
+      if (!email) {
+        setEmailError("Enter a valid email");
+      }
+      if (!message || !email) {
+        return;
+      }
+      await sendEmail();
+    } finally {
+      setSubmittingForm(false);
     }
+    //   setMessageerror({});
+    //   setAlert({});
+    //   sendEnquiry();
 
-    if (!email) {
-      setEmailerror((prevEmailerror) => ({
-        ...prevEmailerror,
-        email: "Enter the valid email",
-      }));
-    }
+    //   if (!message) {
+    //     setMessageerror((prevMessageerror) => ({
+    //       ...prevMessageerror,
+    //       message: "Message should not be empty",
+    //     }));
+    //   }
 
-    if (message !== "" && email !== "") {
-      setAlert((prevAlert) => ({
-        ...prevAlert,
-        alert: "Message successfully send",
-      }));
-    } else {
-      setAlert((prevAlert) => ({
-        ...prevAlert,
-        alert: "Error state message",
-      }));
-    }
+    //   if (!email) {
+    //     setEmailerror((prevEmailerror) => ({
+    //       ...prevEmailerror,
+    //       email: "Enter the valid email",
+    //     }));
+    //   }
+
+    //   if (message !== "" && email !== "") {
+    //     setAlertMessage((prevAlertMessage) => ({
+    //       ...prevAlertMessage,
+    //       value: "Message successfully send",
+    //       severity:alertTypes.SUCCESS,
+    //     }));
+    //   } else {
+    //     setAlertMessage((prevAlertMessage) => ({
+    //       ...prevAlertMessage,
+    //       value: "Error state message",
+    //     }));
+    //   }
   };
 
   return (
@@ -106,6 +135,7 @@ export default function ContactUs() {
             <TextField
               color="primary"
               required
+              value={username}
               label="Your username (Optional)"
               placeholder="Firstusername Lastusername"
               onChange={handleusernameChange}
@@ -114,14 +144,15 @@ export default function ContactUs() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={emailerror.email}
+              error={emailError}
               color="primary"
               required
+              value={email}
               label="Email"
               placeholder="Enter your email here"
               onChange={handleEmailChange}
               fullWidth
-              helperText={emailerror.email}
+              helperText={emailError}
             />
           </Grid>
         </Grid>
@@ -148,9 +179,10 @@ export default function ContactUs() {
           ))}
         </Select>
         <TextField
-          error={messageerror.message}
+          error={messageError}
           color="primary"
           required
+          value={message}
           label="Message"
           placeholder="Please enter your comments here"
           sx={{ my: 3 }}
@@ -158,15 +190,20 @@ export default function ContactUs() {
           multiline
           rows={4}
           onChange={handleMessageChange}
-          helperText={messageerror.message}
+          helperText={messageError}
         />
-        {messageerror.message !== "" && emailerror.email !== "" ? (
-          <Alert severity={`info`}>{alert.alert}</Alert>
+        {alertMessage.value.trim() ? (
+          <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
         ) : null}
         <Box display="flex" justifyContent="center">
-          <Button variant="contained" color="secondary" onClick={handleSubmit}>
+          <LoadingButton
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit}
+            loading={submittingForm}
+          >
             Contact
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </CommonLayout>
