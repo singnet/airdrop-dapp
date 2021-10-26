@@ -16,13 +16,13 @@ import Registration from "components/Registration";
 import Typography from "@mui/material/Typography";
 
 // import Notqualified from "snet-ui/Noteligible";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow } from "utils/airdropWindows";
+import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import { UserEligibility } from "utils/constants/CustomTypes";
+import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { Button } from "@mui/material";
 import { ethers } from "ethers";
 import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
@@ -39,12 +39,13 @@ export const getStaticProps = async ({ locale }) => ({
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
-  const { account, library, chainId } = useActiveWeb3React();
+  const { account, library } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -57,7 +58,7 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const tokenName = "AGIX";
+      const tokenName = "0x5e94577b949a56279637ff74dfcff2c28408f049";
       const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${tokenName}`);
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
@@ -108,11 +109,24 @@ const Home: NextPage = () => {
       };
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
       const isEligible = response.data.data.is_eligible;
+      const claimStatus = response.data.data.airdrop_window_claim_status;
+      // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
       console.log("eligibility check error");
     }
   };
+
+  const airdropWindowClosingTime = useMemo(
+    () =>
+      activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+        ? activeWindow.airdrop_window_claim_end_period
+        : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
+        ? activeWindow.airdrop_window_registration_end_period
+        : "",
+    [activeWindow]
+  );
 
   return (
     <CommonLayout>
@@ -131,6 +145,8 @@ const Home: NextPage = () => {
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
+            airdropWindowClosingTime={airdropWindowClosingTime}
+            claimStatus={userClaimStatus}
           />
         </>
       ) : (

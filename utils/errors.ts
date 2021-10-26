@@ -4,3 +4,11 @@ export class WalletNotConnectedError extends Error {
     this.name = "WalletNotConnectedError";
   }
 }
+
+
+export class APIError extends Error {
+  constructor(public message: string = "API Failed") {
+    super(message);
+    this.name = "APIError";
+  }
+}

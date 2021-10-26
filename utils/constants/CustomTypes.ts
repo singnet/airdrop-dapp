@@ -3,3 +3,10 @@ export enum UserEligibility {
   ELIGIBLE = "ELIGIBLE",
   NOT_ELIGIBLE = "NOT_ELIGIBLE",
 }
+
+export enum ClaimStatus {
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIl",
+  NOT_STARTED = "NOT_STARTED",
+}

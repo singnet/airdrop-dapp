@@ -1,8 +1,5 @@
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
@@ -13,7 +10,7 @@ import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
 import Registrationsuccess from "snet-ui/Registrationsuccess";
 import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
-import { UserEligibility } from "utils/constants/CustomTypes";
+import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { WindowStatus } from "utils/airdropWindows";
 import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
@@ -21,6 +18,8 @@ import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
 import { parseEthersError } from "utils/ethereum";
 import { useAirdropContract } from "utils/AirdropContract";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
+import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
+import { APIError } from "utils/errors";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -29,14 +28,12 @@ interface RegistrationProps {
   airdropId?: number;
   airdropWindowId?: number;
   airdropWindowStatus?: WindowStatus;
+  claimStatus: ClaimStatus;
+  airdropWindowClosingTime: string;
 }
 
 const airdropOpensIn = new Date();
 airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
-
-const airdropClosesIn = new Date();
-airdropClosesIn.setMinutes(airdropClosesIn.getMinutes() + 135);
-airdropClosesIn.setDate(airdropClosesIn.getDate() + 3);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
   userEligibility,
@@ -45,8 +42,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropId,
   airdropWindowId,
   airdropWindowStatus,
+  airdropWindowClosingTime,
+  claimStatus,
 }) => {
-  // const [airdrop, setAirdrop] = useState<any>(null);
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
@@ -68,7 +66,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     getClaimHistory();
   }, [airdropId, airdropWindowId, account]);
 
-  const airdropRegistration = async () => {
+  const endDate = useMemo(() => new Date(airdropWindowClosingTime), [airdropWindowClosingTime]);
+
+  const handleRegistration = async () => {
     try {
       if (!account) {
         dispatch(setShowConnectionModal(true));
@@ -120,15 +120,29 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const handleClaim = async () => {
     if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account || !library) return;
 
-    const getClaimDetails = async () => {
-      const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
-        address: account,
-        airdrop_id: airdropId.toString(),
-        airdrop_window_id: airdropWindowId.toString(),
-      });
+    if (claimStatus === ClaimStatus.PENDING) {
+      return alert("There is already a pending claim transaction. Please wait for it to get completed");
+    } else if (claimStatus === ClaimStatus.SUCCESS) {
+      return alert("You have already Claimed");
+    }
 
-      console.log("response", response);
-      return response.data.data;
+    const getClaimDetails = async () => {
+      try {
+        const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
+          address: account,
+          airdrop_id: airdropId.toString(),
+          airdrop_window_id: airdropWindowId.toString(),
+        });
+
+        console.log("response", response);
+        return response.data.data;
+      } catch (error: any) {
+        const backendErrorMessage = error?.errorText?.error?.message;
+        if (backendErrorMessage) {
+          throw new APIError(backendErrorMessage);
+        }
+        throw error;
+      }
     };
 
     const executeClaimMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
@@ -178,6 +192,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       const receipt = await txn.wait();
       console.log("receipt", receipt);
     } catch (error) {
+      if (error instanceof APIError) {
+        alert(error.message);
+      }
       console.log("signature error", error);
     }
   };
@@ -214,7 +231,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   };
 
   if (userEligibility === UserEligibility.PENDING) {
-    return <Typography>Loading Eligibility...</Typography>;
+    return (
+      <Box sx={{ px: [0, 4, 15] }}>
+        <AirdropRegistrationLoader />
+      </Box>
+    );
   }
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
     return null;
@@ -225,12 +246,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : airdropOpen ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        endDate={airdropClosesIn}
-        onRegister={airdropRegistration}
+        endDate={endDate}
+        onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         history={claimHistory}
         onClaim={handleClaim}
+        airdropWindowStatus={airdropWindowStatus}
       />
     </Box>
   ) : (
@@ -243,24 +265,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
     </Grid>
   );
-
-  // return airdrop !== null ? (
-  //   <>
-  //     <Box
-  //       sx={{
-  //         padding: "4rem",
-  //       }}
-  //     >
-  //       <Typography variant="h3" align="center">
-  //         {airdrop.airdrop_window_name}
-  //       </Typography>
-  //       <Button onClick={airdropRegistration} variant="contained">
-  //         Register
-  //       </Button>
-  //       {error !== null ? <Alert severity="error">{error}</Alert> : null}
-  //     </Box>
-  //   </>
-  // ) : null;
 };
 
 export default Registration;
