@@ -23,7 +23,7 @@ export default function ContactUs() {
 
   const [emailerror, setEmailerror] = useState({ email: "" });
   const [messageerror, setMessageerror] = useState({ message: "" });
-  const [alerterror, setAlerterror] = useState({ alert: alertTypes.INFO });
+  const [alert, setAlert] = useState({ alert: alertTypes.INFO });
   const [category, setCategory] = useState("Airdrop Enquiry");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -48,9 +48,9 @@ export default function ContactUs() {
   const sendEnquiry = async () => {
     try {
       const query = ` Message : ${message} . From ${email}`;
-      const API_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
+      const EMAIL_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
       const payload = {
-        recipient: API_HOST,
+        recipient: EMAIL_HOST,
         message: query,
         subject: "General enquiry ",
         notification_type: "support",
@@ -58,16 +58,16 @@ export default function ContactUs() {
       await axios.post(API_PATHS.CONTACT_US, payload);
     } catch (error: any) {
       setMessageerror({ message: error });
-      setAlerterror({ alert: alertTypes.ERROR });
+      setAlert({ alert: alertTypes.ERROR });
     }
   };
 
   const handleSubmit = () => {
     setMessageerror({});
-    setAlerterror({});
+    setAlert({});
     sendEnquiry();
 
-    if (message === "") {
+    if (!message) {
       setMessageerror((prevMessageerror) => ({
         ...prevMessageerror,
         message: "Message should not be empty",
@@ -82,13 +82,13 @@ export default function ContactUs() {
     }
 
     if (message !== "" && email !== "") {
-      setAlerterror((prevAlerterror) => ({
-        ...prevAlerterror,
+      setAlert((prevAlert) => ({
+        ...prevAlert,
         alert: "Message successfully send",
       }));
     } else {
-      setAlerterror((prevAlerterror) => ({
-        ...prevAlerterror,
+      setAlert((prevAlert) => ({
+        ...prevAlert,
         alert: "Error state message",
       }));
     }
@@ -160,8 +160,8 @@ export default function ContactUs() {
           onChange={handleMessageChange}
           helperText={messageerror.message}
         />
-        {messageerror.message !== "" ? (
-          <Alert severity={`info`}>{alerterror.alert}</Alert>
+        {messageerror.message !== "" && emailerror.email !== "" ? (
+          <Alert severity={`info`}>{alert.alert}</Alert>
         ) : null}
         <Box display="flex" justifyContent="center">
           <Button variant="contained" color="secondary" onClick={handleSubmit}>
