@@ -1,4 +1,4 @@
-import { Button, Grid, SliderTrack, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import CommonLayout from "layout/CommonLayout";
 import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
@@ -91,36 +91,6 @@ export default function ContactUs() {
     } finally {
       setSubmittingForm(false);
     }
-    //   setMessageerror({});
-    //   setAlert({});
-    //   sendEnquiry();
-
-    //   if (!message) {
-    //     setMessageerror((prevMessageerror) => ({
-    //       ...prevMessageerror,
-    //       message: "Message should not be empty",
-    //     }));
-    //   }
-
-    //   if (!email) {
-    //     setEmailerror((prevEmailerror) => ({
-    //       ...prevEmailerror,
-    //       email: "Enter the valid email",
-    //     }));
-    //   }
-
-    //   if (message !== "" && email !== "") {
-    //     setAlertMessage((prevAlertMessage) => ({
-    //       ...prevAlertMessage,
-    //       value: "Message successfully send",
-    //       severity:alertTypes.SUCCESS,
-    //     }));
-    //   } else {
-    //     setAlertMessage((prevAlertMessage) => ({
-    //       ...prevAlertMessage,
-    //       value: "Error state message",
-    //     }));
-    //   }
   };
 
   return (
