@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import TextField from "snet-ui/TextField";
 import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
+import { API_PATHS } from "utils/constants/ApiPaths";
 
 const categories = ["Airdrop Enquiry"];
 const alertTypes: any = {
@@ -18,13 +19,11 @@ const alertTypes: any = {
 export default function ContactUs() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
 
-  const [info, setInfo] = useState({
-    email: "",
-    message: "",
-    alert: alertTypes.INFO,
-  });
+  const [emailerror, setEmailerror] = useState({ email: "" });
+  const [messageerror, setMessageerror] = useState({ message: "" });
+  const [alerterror, setAlerterror] = useState({ alert: alertTypes.INFO });
   const [category, setCategory] = useState("Airdrop Enquiry");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -35,10 +34,10 @@ export default function ContactUs() {
   }) => {
     setEmail(event.target.value);
   };
-  const handleNameChange = (event: {
+  const handleusernameChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setName(event.target.value);
+    setUsername(event.target.value);
   };
   const handleMessageChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -48,48 +47,48 @@ export default function ContactUs() {
 
   const sendEnquiry = async () => {
     try {
-      const query = ` Message : ${message} . Email ${email}`;
+      const query = ` Message : ${message} . From ${email}`;
+      const API_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
       const payload = {
-        recipient: "info@singularitynet.io",
+        recipient: API_HOST,
         message: query,
         subject: "General enquiry ",
         notification_type: "support",
       };
-      await axios.post(
-        "https://li8mklzc0h.execute-api.us-east-1.amazonaws.com/mt-v2/email",
-        payload
-      );
+      await axios.post(API_PATHS.CONTACT_US, payload);
     } catch (error: any) {
-      setInfo({ message: error, alert: alertTypes.ERROR });
+      setMessageerror({ message: error });
+      setAlerterror({ alert: alertTypes.ERROR });
     }
   };
 
   const handleSubmit = () => {
-    setInfo({});
+    setMessageerror({});
+    setAlerterror({});
     sendEnquiry();
 
     if (message === "") {
-      setInfo((prevError) => ({
-        ...prevError,
+      setMessageerror((prevMessageerror) => ({
+        ...prevMessageerror,
         message: "Message should not be empty",
       }));
     }
 
     if (!email) {
-      setInfo((prevError) => ({
-        ...prevError,
+      setEmailerror((prevEmailerror) => ({
+        ...prevEmailerror,
         email: "Enter the valid email",
       }));
     }
 
     if (message !== "" && email !== "") {
-      setInfo((prevError) => ({
-        ...prevError,
+      setAlerterror((prevAlerterror) => ({
+        ...prevAlerterror,
         alert: "Message successfully send",
       }));
     } else {
-      setInfo((prevError) => ({
-        ...prevError,
+      setAlerterror((prevAlerterror) => ({
+        ...prevAlerterror,
         alert: "Error state message",
       }));
     }
@@ -107,22 +106,22 @@ export default function ContactUs() {
             <TextField
               color="primary"
               required
-              label="Your Name (Optional)"
-              placeholder="Firstname Lastname"
-              onChange={handleNameChange}
+              label="Your username (Optional)"
+              placeholder="Firstusername Lastusername"
+              onChange={handleusernameChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={info.email}
+              error={emailerror.email}
               color="primary"
               required
               label="Email"
               placeholder="Enter your email here"
               onChange={handleEmailChange}
               fullWidth
-              helperText={info.email}
+              helperText={emailerror.email}
             />
           </Grid>
         </Grid>
@@ -149,7 +148,7 @@ export default function ContactUs() {
           ))}
         </Select>
         <TextField
-          error={info.message}
+          error={messageerror.message}
           color="primary"
           required
           label="Message"
@@ -159,10 +158,10 @@ export default function ContactUs() {
           multiline
           rows={4}
           onChange={handleMessageChange}
-          helperText={info.message}
+          helperText={messageerror.message}
         />
-        {info.message !== "" ? (
-          <Alert severity={`info`}>{info.alert}</Alert>
+        {messageerror.message !== "" ? (
+          <Alert severity={`info`}>{alerterror.alert}</Alert>
         ) : null}
         <Box display="flex" justifyContent="center">
           <Button variant="contained" color="secondary" onClick={handleSubmit}>
