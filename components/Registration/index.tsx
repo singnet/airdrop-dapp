@@ -23,8 +23,11 @@ import { APIError } from "utils/errors";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
+  userRegistered: boolean;
+  setUserRegistered: (value: boolean) => void;
   onViewSchedule: () => void;
   onViewRules: () => void;
+  onViewNotification: () => void;
   airdropId?: number;
   airdropWindowId?: number;
   airdropWindowStatus?: WindowStatus;
@@ -37,8 +40,11 @@ airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
   userEligibility,
+  userRegistered,
+  setUserRegistered,
   onViewSchedule,
   onViewRules,
+  onViewNotification,
   airdropId,
   airdropWindowId,
   airdropWindowStatus,
@@ -47,7 +53,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 }) => {
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
-  const [userRegistered, setUserRegistered] = useState(false);
+
   const [claimHistory, setClaimHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
@@ -230,6 +236,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     }
   };
 
+  const showRegistrationSuccess = useMemo(() => userRegistered && airdropWindowStatus === WindowStatus.REGISTRATION, [
+    userRegistered,
+    airdropWindowStatus,
+  ]);
+
   if (userEligibility === UserEligibility.PENDING) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
@@ -241,8 +252,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  return userRegistered ? (
-    <Registrationsuccess />
+  return showRegistrationSuccess ? (
+    <Box sx={{ px: [0, 4, 15] }}>
+      <Registrationsuccess onViewRules={onViewRules} onViewSchedule={onViewSchedule}
+      onViewNotification={onViewNotification}
+      
+      />
+    </Box>
   ) : airdropOpen ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
