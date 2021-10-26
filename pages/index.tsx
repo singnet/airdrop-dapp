@@ -1,4 +1,3 @@
-// import Airdrop from "components/Airdrop/Airdrop";
 import AirdropSchedules from "components/AirdropSchedule";
 import EligibilityBanner from "components/EligibilityBanner";
 import type { NextPage } from "next";
@@ -23,13 +22,6 @@ import { API_PATHS } from "utils/constants/ApiPaths";
 import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
-import { Button } from "@mui/material";
-import { ethers } from "ethers";
-import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
-import AirdropContractABI from "contract/abi/SingularityAirdrop.json";
-import { splitSignature } from "ethers/lib/utils";
-import { fromFraction, getGasPrice, parseEthersError } from "utils/ethereum";
-import { useAirdropContract } from "utils/AirdropContract";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -42,9 +34,11 @@ const Home: NextPage = () => {
   const { account, library } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
+  const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [userRegistered, setUserRegistered] = useState(false);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
 
   useEffect(() => {
@@ -93,6 +87,12 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleScrollToGetNotification = () => {
+    if (getNotificationRef) {
+      getNotificationRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const getUserEligibility = async () => {
     try {
       if (
@@ -110,8 +110,11 @@ const Home: NextPage = () => {
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
       const isEligible = response.data.data.is_eligible;
       const claimStatus = response.data.data.airdrop_window_claim_status;
+      const isRegistered = response.data.data.is_already_registered;
+
       // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
       console.log("eligibility check error");
@@ -135,13 +138,16 @@ const Home: NextPage = () => {
       </Head>
       {account ? (
         <>
-          <Box px={[0, 4]} mt={3}>
+          <Box px={[0, 4, 15]} mt={3}>
             <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
           </Box>
           <Registration
             userEligibility={userEligibility}
+            userRegistered={userRegistered}
+            setUserRegistered={setUserRegistered}
             onViewRules={handleScrollToRules}
             onViewSchedule={handleScrollToSchedule}
+            onViewNotification={handleScrollToGetNotification}
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
@@ -154,7 +160,7 @@ const Home: NextPage = () => {
       )}
 
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
-      <SubscribeToNotification />
+      <SubscribeToNotification ref={getNotificationRef} />
       <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { forwardRef } from "react";
 import Typography from "@mui/material/Typography";
 import GradientBox from "snet-ui/GradientBox";
 import MuiTextField from "@mui/material/TextField";
@@ -15,9 +15,9 @@ const TextField = styled(MuiTextField)`
   }
 `;
 
-export default function SubscribeToNotification() {
+function SubscribeToNotification(_, ref) {
   return (
-    <GradientBox $background="bgGradient" sx={{ py: 8 }}>
+    <GradientBox $background="bgGradient" sx={{ py: 8 }} ref={ref}>
       <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
         Get Notification Updates
       </Typography>
@@ -44,4 +44,4 @@ export default function SubscribeToNotification() {
   );
 }
 
-//export default withStyles(styles)(HowItWorks);
+export default forwardRef(SubscribeToNotification);
