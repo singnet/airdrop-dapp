@@ -135,7 +135,7 @@ const Home: NextPage = () => {
       </Head>
       {account ? (
         <>
-          <Box px={[0, 4]} mt={3}>
+          <Box px={[0, 4, 15]} mt={3}>
             <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
           </Box>
           <Registration
