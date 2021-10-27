@@ -1,4 +1,3 @@
-// import Airdrop from "components/Airdrop/Airdrop";
 import AirdropSchedules from "components/AirdropSchedule";
 import EligibilityBanner from "components/EligibilityBanner";
 import type { NextPage } from "next";
@@ -28,13 +27,6 @@ import {
 } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
-import { Button } from "@mui/material";
-import { ethers } from "ethers";
-import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
-import AirdropContractABI from "contract/abi/SingularityAirdrop.json";
-import { splitSignature } from "ethers/lib/utils";
-import { fromFraction, getGasPrice, parseEthersError } from "utils/ethereum";
-import { useAirdropContract } from "utils/AirdropContract";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -47,7 +39,9 @@ const Home: NextPage = () => {
   const { account, library } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
+  const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
+<<<<<<< HEAD
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(
     undefined
   );
@@ -57,6 +51,12 @@ const Home: NextPage = () => {
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
     ClaimStatus.NOT_STARTED
   );
+=======
+  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
+  const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [userRegistered, setUserRegistered] = useState(false);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
+>>>>>>> 5316568fbb4d0f7e65272e115c653854cb539ee2
 
   useEffect(() => {
     getAirdropSchedule();
@@ -108,6 +108,12 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleScrollToGetNotification = () => {
+    if (getNotificationRef) {
+      getNotificationRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const getUserEligibility = async () => {
     try {
       if (
@@ -128,10 +134,17 @@ const Home: NextPage = () => {
       );
       const isEligible = response.data.data.is_eligible;
       const claimStatus = response.data.data.airdrop_window_claim_status;
+      const isRegistered = response.data.data.is_already_registered;
+
       // TODO: Uncomment the below line
+<<<<<<< HEAD
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
       );
+=======
+      setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserRegistered(isRegistered);
+>>>>>>> 5316568fbb4d0f7e65272e115c653854cb539ee2
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
       console.log("eligibility check error");
@@ -155,16 +168,24 @@ const Home: NextPage = () => {
       </Head>
       {account ? (
         <>
+<<<<<<< HEAD
           <Box px={[0, 4]} mt={3}>
             <EligibilityBanner
               userEligibility={userEligibility}
               onViewRules={handleScrollToRules}
             />
+=======
+          <Box px={[0, 4, 15]} mt={3}>
+            <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
+>>>>>>> 5316568fbb4d0f7e65272e115c653854cb539ee2
           </Box>
           <Registration
             userEligibility={userEligibility}
+            userRegistered={userRegistered}
+            setUserRegistered={setUserRegistered}
             onViewRules={handleScrollToRules}
             onViewSchedule={handleScrollToSchedule}
+            onViewNotification={handleScrollToGetNotification}
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
@@ -178,6 +199,7 @@ const Home: NextPage = () => {
         </Typography>
       )}
 
+<<<<<<< HEAD
       <HowItWorks
         title="How Airdrop Works"
         steps={HowItWorksSampleData}
@@ -190,6 +212,11 @@ const Home: NextPage = () => {
         blogLink="www.google.com"
         ref={rulesRef}
       />
+=======
+      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <SubscribeToNotification ref={getNotificationRef} />
+      <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
+>>>>>>> 5316568fbb4d0f7e65272e115c653854cb539ee2
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
