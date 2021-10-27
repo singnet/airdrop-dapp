@@ -16,7 +16,6 @@ export default function Learn() {
   return (
     <Box
       sx={{
-        m: 5,
         py: 3,
         bgcolor: "bgHighlight.main",
       }}
@@ -38,10 +37,10 @@ export default function Learn() {
         <Grid container spacing={{ xs: 4 }}>
           <Grid item md={4}>
             <Card
-              sx={{
-                my: 2,
-                py: 2,
-              }}
+            // sx={{
+            //   my: 2,
+            //   py: 2,
+            // }}
             >
               <CardActionArea>
                 <CardContent>
@@ -102,10 +101,10 @@ export default function Learn() {
           </Grid>
           <Grid item md={4}>
             <Card
-              sx={{
-                my: 2,
-                py: 2,
-              }}
+            // sx={{
+            //   my: 2,
+            //   py: 2,
+            // }}
             >
               <CardActionArea>
                 <CardContent>
@@ -160,11 +159,11 @@ export default function Learn() {
             </Card>
           </Grid>
           <Grid item md={4}>
-            <Card sx={{ my: 2, py: 2 }}>
+            <Card>
               <CardActionArea>
                 <CardContent>
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 3.5 }}
+                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
                   >
                     <Image
                       src={Documentation}
