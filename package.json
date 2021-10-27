@@ -44,12 +44,13 @@
     "storybook-addon-material-ui": "^0.9.0-alpha.24",
     "stylis": "^4.0.10",
     "tiny-invariant": "^1.1.0",
-    "ua-parser-js": "^0.7.28",
+    "ua-parser-js": "^0.7.30",
     "usehooks-ts": "^1.0.6"
   },
   "devDependencies": {
     "@types/react": "17.0.22",
     "@types/react-redux": "^7.1.18",
+    "@types/ua-parser-js": "^0.7.36",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "typescript": "4.4.3"
