@@ -21,7 +21,7 @@ export default function Success({ onViewSchedule, onViewRules, onViewNotificatio
       <GradientBox sx={{ py: 2, pb: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center", m: 4 }}>
           <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
-            <img src={success} alt="SingularityNET" height="137px" width="137px" />
+            <img src="/images/success.png" alt="SingularityNET" height="137px" width="137px" />
           </Box>
         </Box>
 
