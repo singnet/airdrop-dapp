@@ -13,13 +13,19 @@ import Ecosystem from "snet-ui/Ecosystem";
 import CommonLayout from "layout/CommonLayout";
 import Registration from "components/Registration";
 import Typography from "@mui/material/Typography";
-
+import Learn from "snet-ui/LearnandConnect";
 // import Notqualified from "snet-ui/Noteligible";
 import { useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
+
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
+import {
+  AirdropWindow,
+  findActiveWindow,
+  findFirstUpcomingWindow,
+  WindowStatus,
+} from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 
@@ -36,10 +42,16 @@ const Home: NextPage = () => {
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
-  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
-  const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(
+    undefined
+  );
+  const [userEligibility, setUserEligibility] = useState<UserEligibility>(
+    UserEligibility.PENDING
+  );
   const [userRegistered, setUserRegistered] = useState(false);
-  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
+    ClaimStatus.NOT_STARTED
+  );
   const [airdropRules, setAirdropRules] = useState([]);
 
   useEffect(() => {
@@ -54,9 +66,13 @@ const Home: NextPage = () => {
   const getAirdropSchedule = async () => {
     try {
       const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
-      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`);
+      const data: any = await axios.get(
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
+      );
       const airdrop = data.data.data;
-      const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
+      const airdropTimelines = airdrop.airdrop_windows.map(
+        (el) => el.airdrop_window_timeline
+      );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
         time: new Date(timeline.airdrop_window_timeline_date),
@@ -110,7 +126,10 @@ const Home: NextPage = () => {
         airdrop_id: activeWindow.airdrop_id,
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
-      const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
+      const response = await axios.post(
+        API_PATHS.AIRDROP_USER_ELIGIBILITY,
+        payload
+      );
 
       const data = response.data.data;
       const isEligible = data.is_eligible;
@@ -118,7 +137,9 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const rules = data.airdrop_rules;
       // TODO: Uncomment the below line
-      setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserEligibility(
+        isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
+      );
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
@@ -144,7 +165,10 @@ const Home: NextPage = () => {
       {account ? (
         <>
           <Box px={[0, 4, 15]} mt={3}>
-            <EligibilityBanner userEligibility={userEligibility} onViewRules={handleScrollToRules} />
+            <EligibilityBanner
+              userEligibility={userEligibility}
+              onViewRules={handleScrollToRules}
+            />
           </Box>
           <Registration
             userEligibility={userEligibility}
@@ -178,13 +202,23 @@ const Home: NextPage = () => {
         </Box>
       )}
 
-      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <HowItWorks
+        title="How Airdrop Works"
+        steps={HowItWorksSampleData}
+        blogLink="www.google.com"
+      />
       <SubscribeToNotification ref={getNotificationRef} />
-      <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
+      <Airdroprules
+        title="Airdrop Rules"
+        steps={airdropRules}
+        blogLink="www.google.com"
+        ref={rulesRef}
+      />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
       <FAQPage />
+      <Learn />
     </CommonLayout>
   );
 };
