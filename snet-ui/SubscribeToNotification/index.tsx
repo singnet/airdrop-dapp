@@ -24,7 +24,7 @@ function SubscribeToNotification(_, ref) {
         variant="h2"
         color="text.secondary"
       >
-        Get Notification Updates
+        Get Update Notification
       </Typography>
       <Box sx={{ mt: 5, px: 4 }}>
         <Grid container component="form" spacing={2}>
