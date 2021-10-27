@@ -17,7 +17,7 @@ type Props = {
 
 export default function HowItWorks({ title, steps, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", px: 4, py: 8 }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], py: 8 }}>
       <Typography align="center" fontWeight="bold" color="bgtext.main" variant="h3">
         {title}
       </Typography>

@@ -22,15 +22,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
     return null;
   }
   return (
-    <Box
-      sx={{
-        bgcolor: "bgHighlight.main",
-
-        m: 5,
-        py: 3,
-      }}
-      ref={ref}
-    >
+    <Box sx={{ bgcolor: "bgHighlight.main", m: 5, py: 3 }} ref={ref}>
       <Typography align="center" color="bgtext.main" variant="h3">
         {title}
       </Typography>
