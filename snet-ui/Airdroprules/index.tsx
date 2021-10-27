@@ -22,11 +22,11 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
     return null;
   }
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", m: 5, py: 3 }} ref={ref}>
+    <Box sx={{ bgcolor: "bgHighlight.main", mx: [0, 4, 15], mt: [0, 2], py: 3 }} ref={ref}>
       <Typography align="center" color="bgtext.main" variant="h3">
         {title}
       </Typography>
-      <Box sx={{ m: 4 }}>
+      <Box sx={{ mt: 4 }}>
         <Grid container spacing={1} mt={4} justifyContent="center">
           {steps.map((step, index) => (
             <Grid item xs={9} sm={10} md={8} key={step.title}>
@@ -39,7 +39,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
                 </Typography>
               </Box>
               <Typography color="textAdvanced.primary">{step.description}</Typography>
-              {index !== steps.length - 1 ? <Divider variant="inset" component="li" /> : null}
+              {index !== steps.length - 1 ? <Divider sx={{ my: 1 }} /> : null}
             </Grid>
           ))}
         </Grid>

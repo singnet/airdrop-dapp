@@ -24,7 +24,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
 
       <Grid container spacing={4} mt={1}>
         {steps.map((step, index) => (
-          <Grid item container xs={12} md={6} key={step.title} spacing={2}>
+          <Grid item container xs={12} md={6} key={step.title}>
             <Grid item xs={2} sm={1} md={2}>
               <Box
                 sx={{
