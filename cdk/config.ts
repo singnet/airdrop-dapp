@@ -46,6 +46,7 @@ type Config = {
   zoneName: string;
   domainName: string;
   certificateARN: string;
+  basicAuthLambdaARNWithVersion?: string;
 };
 
 const config = new Map<appEnv, Config>();
@@ -67,6 +68,9 @@ const createConfig = (stage: appEnv): Config => ({
   domainName: domainNames[stage],
   zoneName,
   certificateARN: <string>process.env.CERTIFICATE_ARN,
+  // Add this ARN if you need to attach a basic authentication to your app
+  // before the actual release date
+  basicAuthLambdaARNWithVersion: process.env.BASIC_AUTH_LAMBDA_ARN,
 });
 
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
