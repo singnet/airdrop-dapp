@@ -5461,6 +5461,11 @@ better-opn@^2.1.1:
   dependencies:
     open "^7.0.3"
 
+big-number@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/big-number/-/big-number-2.0.0.tgz#98548eda9393b445791670a213aed6f6dcd66ee3"
+  integrity sha512-C67Su0g+XsmXADX/UM9L/+xSbqqwq0D/qGJs2ky6Noy2FDuCZnC38ZSXODiaBvqWma2VYRZEXgm4H74PS6tCDg==
+
 big.js@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
@@ -10873,7 +10878,7 @@ next-i18next@^8.8.0:
     i18next-fs-backend "^1.0.7"
     react-i18next "^11.8.13"
 
-next@11.1.2, next@^11.1.2:
+next@^11.1.2:
   version "11.1.2"
   resolved "https://registry.yarnpkg.com/next/-/next-11.1.2.tgz#527475787a9a362f1bc916962b0c0655cc05bc91"
   integrity sha512-azEYL0L+wFjv8lstLru3bgvrzPvK0P7/bz6B/4EJ9sYkXeW8r5Bjh78D/Ol7VOg0EIPz0CXoe72hzAlSAXo9hw==
@@ -12228,7 +12233,7 @@ react-docgen@^5.0.0:
     node-dir "^0.1.10"
     strip-indent "^3.0.0"
 
-react-dom@17.0.2:
+react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -12372,7 +12377,7 @@ react-transition-group@^4.4.0, react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@17.0.2:
+react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
