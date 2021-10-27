@@ -40,6 +40,7 @@ const Home: NextPage = () => {
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
   const [userRegistered, setUserRegistered] = useState(false);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
+  const [airdropRules, setAirdropRules] = useState([]);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -52,8 +53,8 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const tokenName = "0x5e94577b949a56279637ff74dfcff2c28408f049";
-      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${tokenName}`);
+      const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
+      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`);
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
 
@@ -67,8 +68,10 @@ const Home: NextPage = () => {
       if (!activeWindow) {
         activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
       }
+
       setActiveWindow(activeWindow);
       setSchedules(airdropSchedules);
+      setAirdropRules(airdrop.airdrop_rules);
     } catch (e) {
       console.log("schedule error", e);
       // TODO: Implement error handling
@@ -108,10 +111,12 @@ const Home: NextPage = () => {
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
-      const isEligible = response.data.data.is_eligible;
-      const claimStatus = response.data.data.airdrop_window_claim_status;
-      const isRegistered = response.data.data.is_already_registered;
 
+      const data = response.data.data;
+      const isEligible = data.is_eligible;
+      const claimStatus = data.airdrop_window_claim_status;
+      const isRegistered = data.is_already_registered;
+      const rules = data.airdrop_rules;
       // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
@@ -156,12 +161,26 @@ const Home: NextPage = () => {
           />
         </>
       ) : (
-        <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>
+        <Box
+          sx={{
+            bgcolor: "bgHighlight.main",
+            borderColor: "info.light",
+            mx: [0, 4, 15],
+            my: 2,
+            py: 4,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h5" textAlign="center">
+            Please connect your wallet to proceed
+          </Typography>
+        </Box>
       )}
 
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification ref={getNotificationRef} />
-      <Airdroprules title="Airdrop Rules" steps={RulesSampleData} blogLink="www.google.com" ref={rulesRef} />
+      <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 

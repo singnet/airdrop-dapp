@@ -17,14 +17,14 @@ type Props = {
 
 export default function HowItWorks({ title, steps, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", px: 4, py: 8 }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], py: 8 }}>
       <Typography align="center" fontWeight="bold" color="bgtext.main" variant="h3">
         {title}
       </Typography>
 
       <Grid container spacing={4} mt={1}>
         {steps.map((step, index) => (
-          <Grid item container xs={12} md={6} key={step.title} spacing={2}>
+          <Grid item container xs={12} md={6} key={step.title}>
             <Grid item xs={2} sm={1} md={2}>
               <Box
                 sx={{

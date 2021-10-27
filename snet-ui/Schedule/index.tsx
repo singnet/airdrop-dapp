@@ -25,7 +25,7 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", p: 3 }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], p: 3 }}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>

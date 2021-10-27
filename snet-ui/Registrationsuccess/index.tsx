@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import GradientBox from "snet-ui/GradientBox";
 import { Box } from "@mui/system";
-import Image from "next/image";
-import success from "public/images/success.png";
+// import Image from "next/image";
+// import success from "public/images/success.png";
 
 import InfoIcon from "@mui/icons-material/Info";
 import { Stack } from "@mui/material";
@@ -21,7 +21,7 @@ export default function Success({ onViewSchedule, onViewRules, onViewNotificatio
       <GradientBox sx={{ py: 2, pb: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center", m: 4 }}>
           <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
-            <Image src={success} alt="SingularityNET" height="137px" width="137px" />
+            <img src="/images/success.png" alt="SingularityNET" height="137px" width="137px" />
           </Box>
         </Box>
 

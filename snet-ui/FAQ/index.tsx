@@ -13,7 +13,7 @@ import { Button } from "@mui/material";
 import { faqSampleData } from "./faq";
 
 const AccordionContainer = styled(Paper)`
-  margin: 20px 20px 0 20px;
+  margin: 20px 0px 0 0px;
 `;
 
 // const Accordion = styled(MUIAccordion)`
@@ -33,7 +33,7 @@ export default function FAQPage() {
       <Typography align="center" color="bgtext.main" variant="h4">
         Frequently Asked Questions
       </Typography>
-      <Box sx={{ mx: [0, 3, 6] }}>
+      <Box sx={{ mx: [0, 4, 15] }}>
         <AccordionContainer>
           {faqSampleData.map((faq) => (
             <Accordion key={faq.question}>
