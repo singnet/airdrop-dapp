@@ -4,7 +4,7 @@ import GradientBox from "snet-ui/GradientBox";
 import MuiTextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import EmailIcon from "@mui/icons-material/Email";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 
@@ -18,7 +18,12 @@ const TextField = styled(MuiTextField)`
 function SubscribeToNotification(_, ref) {
   return (
     <GradientBox $background="bgGradient" sx={{ py: 8 }} ref={ref}>
-      <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
+      <Typography
+        align="center"
+        fontWeight="bold"
+        variant="h2"
+        color="text.secondary"
+      >
         Get Notification Updates
       </Typography>
       <Box sx={{ mt: 5, px: 4 }}>
@@ -27,13 +32,22 @@ function SubscribeToNotification(_, ref) {
           <Grid item xs={12} md={5}>
             <TextField
               name="EMAIL"
-              InputProps={{ startAdornment: <EmailIcon /> }}
+              InputProps={{ startAdornment: <EmailOutlinedIcon /> }}
               placeholder="Please enter your email address"
-              sx={{ bgcolor: "bgHighlight.main", borderRadius: 1, width: "100%" }}
+              sx={{
+                bgcolor: "bgHighlight.main",
+                borderRadius: 1,
+                width: "100%",
+              }}
               color="secondary"
             />
           </Grid>
-          <Grid item xs={12} md={4} sx={{ display: "flex", alignItems: "center" }}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <Button type="submit" color="secondary" variant="contained">
               Subscribe
             </Button>
