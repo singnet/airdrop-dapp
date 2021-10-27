@@ -10,13 +10,34 @@ import { navData, userActions } from "snet-ui/constants/Header";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import AccountModal from "../Blockchain/AccountModal";
 
 type HeaderProps = WithStyles<typeof styles> & {
   account?: string;
   onConnectWallet: () => void;
+  onDisconnect: () => void;
 };
 
-const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
+const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDisconnectWallet = () => {
+    onDisconnect();
+    handleUserMenuClose();
+  };
+
   const truncatedAddress = useMemo(() => {
     if (!account) return "";
     return account.slice(0, 4) + "..." + account.slice(-4);
@@ -34,10 +55,7 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
             </h1>
           </Grid>
           <Grid item md={6} className={classes.navigationSection}>
-            <NavBar
-              navigationData={navData}
-              onConnectWallet={onConnectWallet}
-            />
+            <NavBar navigationData={navData} onConnectWallet={onConnectWallet} />
           </Grid>
           <Grid
             item
@@ -47,17 +65,19 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
           >
             {account ? (
               <>
-                <AccountCircleIcon />
-                <Typography color="textAdvanced.secondary" component="span">
-                  {truncatedAddress}
-                </Typography>
+                <Button aria-expanded={open ? "true" : undefined} onClick={handleOpenUserMenu}>
+                  <AccountCircleIcon />
+                  <Typography color="textAdvanced.secondary" component="span">
+                    {truncatedAddress}
+                  </Typography>
+                </Button>
+                {/* <Menu anchorEl={anchorEl} open={open}>
+                  <MenuItem onClick={handleDisconnectWallet}>Signout</MenuItem>
+                </Menu> */}
+                <AccountModal account={account} open={open} setOpen={handleUserMenuClose} />
               </>
             ) : (
-              <Button
-                onClick={onConnectWallet}
-                color="secondary"
-                variant="contained"
-              >
+              <Button onClick={onConnectWallet} color="secondary" variant="contained">
                 Connect Wallet
               </Button>
             )}
