@@ -16,8 +16,8 @@ export default function Learn() {
   return (
     <Box
       sx={{
-        my: 2,
-        py: 2,
+        m: 5,
+        py: 3,
         bgcolor: "bgHighlight.main",
       }}
     >
@@ -27,13 +27,16 @@ export default function Learn() {
           py: 2,
           justifyContent: "center",
           m: 8,
+          //mx: [0, 3, 6],
+          //px: [1, 3, 6],
+          //mt: 5,
         }}
       >
         <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
           Learn and Connect with the Community
         </Typography>
-        <Grid container columnSpacing={{ xs: 4 }}>
-          <Grid item xs={4}>
+        <Grid container spacing={{ xs: 4 }}>
+          <Grid item md={4}>
             <Card
               sx={{
                 my: 2,
@@ -43,7 +46,11 @@ export default function Learn() {
               <CardActionArea>
                 <CardContent>
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      my: 2,
+                    }}
                   >
                     <Image
                       src={Whitepaper}
@@ -93,7 +100,7 @@ export default function Learn() {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={4}>
             <Card
               sx={{
                 my: 2,
@@ -152,12 +159,12 @@ export default function Learn() {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={4}>
             <Card sx={{ my: 2, py: 2 }}>
               <CardActionArea>
                 <CardContent>
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
+                    sx={{ display: "flex", justifyContent: "center", my: 3.5 }}
                   >
                     <Image
                       src={Documentation}
