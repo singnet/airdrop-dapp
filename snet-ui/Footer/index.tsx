@@ -21,7 +21,7 @@ export default function Footer() {
             borderRightColor: "common.white",
           }}
         >
-          <List subheader={<img src="AirdropLogo.png" />}>
+          <List subheader={<img src="AppLogo.png" />}>
             <ListItemButton
               component="a"
               href="www.google.com"

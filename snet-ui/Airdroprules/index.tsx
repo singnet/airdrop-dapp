@@ -18,6 +18,9 @@ type Props = {
 };
 
 function Airdroprules({ title, steps, blogLink }: Props, ref) {
+  if (!steps || !(steps.length > 0)) {
+    return null;
+  }
   return (
     <Box
       sx={{

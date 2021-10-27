@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 // import Image from "next/image";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
-import AirdropLogo from "public/images/AirdropLogo.png";
 import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
 import Button from "@mui/material/Button";
@@ -30,7 +29,7 @@ const Header = ({ classes, onConnectWallet, account }: HeaderProps) => {
             <MobileHeader navigationData={navData} userActions={userActions} />
             <h1>
               <a href="/" className={classes.logoAnchor}>
-                <img src="/AirdropLogo.png" alt="SingularityNET" />
+                <img src="/AppLogo.png" alt="SingularityNET" />
               </a>
             </h1>
           </Grid>
