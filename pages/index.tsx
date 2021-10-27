@@ -161,7 +161,21 @@ const Home: NextPage = () => {
           />
         </>
       ) : (
-        <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>
+        <Box
+          sx={{
+            bgcolor: "bgHighlight.main",
+            borderColor: "info.light",
+            mx: [0, 4, 15],
+            my: 2,
+            py: 4,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h5" textAlign="center">
+            Please connect your wallet to proceed
+          </Typography>
+        </Box>
       )}
 
       <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />

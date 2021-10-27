@@ -15,15 +15,7 @@ type NotqualifiedProps = {
 
 export default function Notqualified({ account, network, onViewRules }: NotqualifiedProps) {
   return (
-    <Box
-      sx={{
-        bgcolor: "bgHighlight.main",
-
-        my: 2,
-        py: 8,
-        pb: 2,
-      }}
-    >
+    <Box sx={{ bgcolor: "bgHighlight.main",  my: 2, py: 8, pb: 2 }}>
       <Grid container spacing={2} px={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>

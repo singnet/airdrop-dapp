@@ -19,7 +19,12 @@ export default function EligibilityBanner({ userEligibility, onViewRules }: Elig
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
-  if (!account) return <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>;
+  if (!account)
+    return (
+      <Box sx={{ bgcolor: "info.light", borderColor: "info.main" }}>
+        <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>
+      </Box>
+    );
 
   if (userEligibility === UserEligibility.PENDING) {
     return <SkeletonLoader />;
