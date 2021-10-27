@@ -18,6 +18,7 @@ import Learn from "snet-ui/LearnandConnect";
 import { useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
+
 import { API_PATHS } from "utils/constants/ApiPaths";
 import {
   AirdropWindow,
@@ -51,6 +52,7 @@ const Home: NextPage = () => {
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
     ClaimStatus.NOT_STARTED
   );
+  const [airdropRules, setAirdropRules] = useState([]);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -63,9 +65,9 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const tokenName = "0x5e94577b949a56279637ff74dfcff2c28408f049";
+      const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
       const data: any = await axios.get(
-        `${API_PATHS.AIRDROP_SCHEDULE}/${tokenName}`
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
       );
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map(
@@ -82,8 +84,10 @@ const Home: NextPage = () => {
       if (!activeWindow) {
         activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
       }
+
       setActiveWindow(activeWindow);
       setSchedules(airdropSchedules);
+      setAirdropRules(airdrop.airdrop_rules);
     } catch (e) {
       console.log("schedule error", e);
       // TODO: Implement error handling
@@ -126,10 +130,12 @@ const Home: NextPage = () => {
         API_PATHS.AIRDROP_USER_ELIGIBILITY,
         payload
       );
-      const isEligible = response.data.data.is_eligible;
-      const claimStatus = response.data.data.airdrop_window_claim_status;
-      const isRegistered = response.data.data.is_already_registered;
 
+      const data = response.data.data;
+      const isEligible = data.is_eligible;
+      const claimStatus = data.airdrop_window_claim_status;
+      const isRegistered = data.is_already_registered;
+      const rules = data.airdrop_rules;
       // TODO: Uncomment the below line
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
@@ -179,9 +185,21 @@ const Home: NextPage = () => {
           />
         </>
       ) : (
-        <Typography variant="normal">
-          Please connect your wallet to check the eligibility
-        </Typography>
+        <Box
+          sx={{
+            bgcolor: "bgHighlight.main",
+            borderColor: "info.light",
+            mx: [0, 4, 15],
+            my: 2,
+            py: 4,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h5" textAlign="center">
+            Please connect your wallet to proceed
+          </Typography>
+        </Box>
       )}
 
       <HowItWorks
@@ -192,7 +210,7 @@ const Home: NextPage = () => {
       <SubscribeToNotification ref={getNotificationRef} />
       <Airdroprules
         title="Airdrop Rules"
-        steps={RulesSampleData}
+        steps={airdropRules}
         blogLink="www.google.com"
         ref={rulesRef}
       />

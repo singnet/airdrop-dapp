@@ -106,16 +106,15 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
       address: account,
       airdrop_id: `${airdropId}`,
-      airdrop_window_id: `${airdropWindowId}`,
     });
-    console.log("response.data", response.data.data.claim_history);
+    console.log("claim response.data", response.data.data.claim_history);
     const history = response.data.data.claim_history.map((el) => [
       {
-        label: `Window ${airdropWindowId} Rewards`,
+        label: `Window ${el.airdrop_window_id} Rewards`,
         value: `${el.claimable_amount} SDAO`,
       },
       {
-        label: `Window ${airdropWindowId} Claimed`,
+        label: `Window ${el.airdrop_window_id} Claimed`,
         value: `${el.txn_status}`,
       },
     ]);
@@ -252,11 +251,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  return showRegistrationSuccess ? (
+  return false && showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
-      <Registrationsuccess onViewRules={onViewRules} onViewSchedule={onViewSchedule}
-      onViewNotification={onViewNotification}
-      
+      <Registrationsuccess
+        onViewRules={onViewRules}
+        onViewSchedule={onViewSchedule}
+        onViewNotification={onViewNotification}
       />
     </Box>
   ) : airdropOpen ? (

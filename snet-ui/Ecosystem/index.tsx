@@ -12,12 +12,12 @@ type Props = {
 
 export default function Ecosystem({ blogLink }: Props) {
   return (
-    <GradientBox $background="bgGradient" sx={{ my: 2, py: 8 }}>
+    <GradientBox $background="bgGradient" sx={{ my: 2, py: 8, px: [0, 4, 15] }}>
       <Typography align="center" variant="h2" color="text.secondary" component="p" mb={5}>
         SingularityNet Ecosystem
       </Typography>
 
-      <Typography color="text.secondary" align="left" px={8}>
+      <Typography color="text.secondary" align="left" textAlign="justify">
         Lorem Ipsum is simply dummy text of the printing and type industry. Lorem Ipsum has been the industry's standard
         dummy text eve since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
         specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
