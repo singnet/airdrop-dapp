@@ -107,12 +107,14 @@ export default function AirdropRegistration({
             </LoadingButton>
           </Box>
         </Box>
-        <Box>
-          <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
-            Your Airdrop History
-          </Typography>
-          <History events={history} />
-        </Box>
+        {history && history.length > 0 ? (
+          <Box>
+            <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
+              Your Airdrop History
+            </Typography>
+            <History events={history} />
+          </Box>
+        ) : null}
       </GradientBox>
       {/* <Box sx={{ bgcolor: "secondary.main", position: "relative", top: 0, left: 0 }}>
         <Typography color="text.secondary" variant="h4" align="center" mb={6}>
