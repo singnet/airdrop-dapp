@@ -10,11 +10,11 @@ const ethersToGwei = "1000000000";
 export const getGasPrice = async () => {
   // TEMPORARY:
   // return toGwei("80");
-  const url = "https://gasprice.poa.network/";
+  const url = "https://blockscout.com/eth/mainnet/api/v1/gas-price-oracle";
   var priceString: any = await axios.get(url);
   const priceJSON = priceString.data;
-  console.log("PRICE INSTANT:", priceJSON.instant);
-  const instantGasPrice = priceJSON.instant.toFixed().toString();
+  console.log("PRICE FAST:", priceJSON.fast);
+  const instantGasPrice = priceJSON.fast.toFixed().toString();
 
   return toGwei(instantGasPrice);
 };

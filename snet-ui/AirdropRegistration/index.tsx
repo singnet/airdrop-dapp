@@ -74,7 +74,7 @@ export default function AirdropRegistration({
         <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}></Box>
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            {airdropWindowStatus === WindowStatus.CLAIM ? (
+            {true || airdropWindowStatus === WindowStatus.CLAIM ? (
               <LoadingButton
                 variant="contained"
                 color="secondary"
