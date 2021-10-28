@@ -41,6 +41,7 @@ const Home: NextPage = () => {
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
   const [airdropRules, setAirdropRules] = useState([]);
@@ -121,11 +122,13 @@ const Home: NextPage = () => {
       const isEligible = data.is_eligible;
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
+      const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
       // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
+      setRejectReasons(reasonForRejection);
     } catch (error: any) {
       console.log("eligibility check error", error);
     }
@@ -154,6 +157,7 @@ const Home: NextPage = () => {
               totalWindows={totalWindows}
               userEligibility={userEligibility}
               onViewRules={handleScrollToRules}
+              rejectReasons={rejectReasons}
             />
           </Box>
           <Registration
