@@ -23,13 +23,13 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
   }
   return (
     <Box sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
-      <Typography align="center" color="bgtext.main" variant="h3">
+      <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
-      <Box sx={{ mt: 4 }}>
-        <Grid container spacing={1} mt={4} >
+      <Box sx={{ mt: 3, mx: 12 }}>
+        <Grid container spacing={1} mt={4}>
           {steps.map((step, index) => (
-            <Grid item  key={step.title}>
+            <Grid item key={step.title}>
               <Box sx={{ display: "flex" }}>
                 <Box color="success" sx={{ mr: 1 }}>
                   <StarsOutlinedIcon color="primary" />
@@ -38,26 +38,27 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
                   {step.title}
                 </Typography>
               </Box>
-              <Typography color="textAdvanced.primary" textAlign="justify">{step.description}</Typography>
+              <Typography color="textAdvanced.primary" textAlign="justify">
+                {step.description}
+              </Typography>
               {index !== steps.length - 1 ? <Divider sx={{ my: 1 }} /> : null}
             </Grid>
           ))}
         </Grid>
-        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-          <Box textAlign="center">
-            {blogLink ? (
-              <Button
-                variant="outlined"
-                color="info"
-                endIcon={<OpenInNewIcon />}
-                href={blogLink}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Visit SingularityNet
-              </Button>
-            ) : null}
-          </Box>
+
+        <Box textAlign="center" mt={5}>
+          {blogLink ? (
+            <Button
+              variant="outlined"
+              color="secondary"
+              endIcon={<OpenInNewIcon />}
+              href={blogLink}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Read Blog Post
+            </Button>
+          ) : null}
         </Box>
       </Box>
     </Box>
