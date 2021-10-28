@@ -6,6 +6,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
+import AppLogo from "public/AppLogo.png";
 
 export default function Footer() {
   return (

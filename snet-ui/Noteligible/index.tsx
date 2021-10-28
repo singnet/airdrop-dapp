@@ -7,12 +7,16 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { Divider, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 
+const defaultRejectReason = "You're not eligible for the airdrop";
+
 type NotqualifiedProps = {
   account: string;
   network: string;
   onViewRules: () => void;
+  rejectReasons?: string;
 };
 
+<<<<<<< HEAD
 export default function Notqualified({
   account,
   network,
@@ -28,6 +32,11 @@ export default function Notqualified({
         borderRadius: 1.5,
       }}
     >
+=======
+export default function Notqualified({ account, network, onViewRules, rejectReasons }: NotqualifiedProps) {
+  return (
+    <Box sx={{ bgcolor: "bgHighlight.main", my: 2, py: 8, pb: 2 }}>
+>>>>>>> c5da51cbdc5c205a6a1987d67500ecefe809559f
       <Grid container spacing={2} px={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
@@ -72,6 +81,9 @@ export default function Notqualified({
           >
             <Box sx={{ p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">
+                {rejectReasons ?? defaultRejectReason}
+              </Typography>
+              {/* <Typography variant="body1" color="textAdvanced.primary">
                 You didn’t meet the following conditions
               </Typography>
               <Typography sx={{ p: 2 }}>
@@ -83,9 +95,14 @@ export default function Notqualified({
               </Typography>
               <Divider />
               <Typography sx={{ p: 2 }}>
+<<<<<<< HEAD
                 3, Make atleast 3 transactions between 1 March 2021 and 30 July
                 2021
               </Typography>
+=======
+                3, Make atleast 3 transactions between 1 March 2021 and 30 July 2021
+              </Typography> */}
+>>>>>>> c5da51cbdc5c205a6a1987d67500ecefe809559f
             </Box>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
