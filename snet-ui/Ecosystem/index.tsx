@@ -13,23 +13,32 @@ type Props = {
 export default function Ecosystem({ blogLink }: Props) {
   return (
     <GradientBox $background="bgGradient" sx={{ my: 2, py: 8, px: [0, 4, 15] }}>
-      <Typography align="center" variant="h2" color="text.secondary" component="p" mb={5}>
-        SingularityNet Ecosystem
+      <Typography
+        align="center"
+        variant="h2"
+        color="text.secondary"
+        component="p"
+        mb={3}
+      >
+        SingularityNET Ecosystem
       </Typography>
-
-      <Typography color="text.secondary" align="left" textAlign="justify">
-        Lorem Ipsum is simply dummy text of the printing and type industry. Lorem Ipsum has been the industry's standard
-        dummy text eve since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-        specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets co
-      </Typography>
+      <Box sx={{ m: 16, mt: 3, mb: 6 }}>
+        <Typography color="text.secondary" align="left" textAlign="justify">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <Box textAlign="center">
           <Stack spacing={2} direction="row">
             {blogLink ? (
               <Button
                 variant="contained"
-                color="info"
+                color="secondary"
                 endIcon={<OpenInNewIcon />}
                 href={blogLink}
                 target="_blank"
@@ -42,6 +51,7 @@ export default function Ecosystem({ blogLink }: Props) {
               <Button
                 variant="outlined"
                 color="secondary"
+                style={{ color: "textAdvanced.white" }}
                 endIcon={<OpenInNewIcon />}
                 href={blogLink}
                 target="_blank"
