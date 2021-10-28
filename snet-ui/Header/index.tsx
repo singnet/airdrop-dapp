@@ -97,6 +97,7 @@ const Header = ({
                   account={account}
                   open={open}
                   setOpen={handleUserMenuClose}
+                  changeAccount={onConnectWallet}
                 />
               </>
             ) : (

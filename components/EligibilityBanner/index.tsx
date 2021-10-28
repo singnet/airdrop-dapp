@@ -10,11 +10,18 @@ import Notqualified from "snet-ui/Noteligible";
 import SkeletonLoader from "./SkeletonLoader";
 
 type EligibilityBannerProps = {
+  currentWindowId: number;
+  totalWindows: number;
   onViewRules: () => void;
   userEligibility: UserEligibility;
 };
 
-export default function EligibilityBanner({ userEligibility, onViewRules }: EligibilityBannerProps) {
+export default function EligibilityBanner({
+  currentWindowId,
+  totalWindows,
+  userEligibility,
+  onViewRules,
+}: EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
@@ -46,7 +53,7 @@ export default function EligibilityBanner({ userEligibility, onViewRules }: Elig
             </Box>
 
             <Typography variant="priority" color="primary.main">
-              Qualified for Airdrop Window 2/2
+              Qualified for Airdrop Window {currentWindowId} / {totalWindows}
             </Typography>
           </Box>
 
