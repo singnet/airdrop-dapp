@@ -91,8 +91,7 @@ export default function AirdropRegistration({
                 color="secondary"
                 sx={{ width: 170 }}
                 onClick={handleClaimClick}
-                // loading={claimLoader}
-                loading
+                loading={claimLoader}
               >
                 Claim
               </LoadingButton>
