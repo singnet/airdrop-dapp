@@ -142,9 +142,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account || !library) return;
 
     if (claimStatus === ClaimStatus.PENDING) {
-      return alert("There is already a pending claim transaction. Please wait for it to get completed");
+      setUiAlert({
+        type: AlertTypes.error,
+        message: "There is already a pending claim transaction. Please wait for it to get completed",
+      });
+      return;
     } else if (claimStatus === ClaimStatus.SUCCESS) {
-      return alert("You have already Claimed");
+      setUiAlert({ type: AlertTypes.error, message: "You have already Claimed" });
+      return;
     }
 
     const getClaimDetails = async () => {
