@@ -20,6 +20,7 @@ import { useAirdropContract } from "utils/AirdropContract";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
 import { APIError } from "utils/errors";
+import { SettingsOverscanOutlined } from "@mui/icons-material";
 
 interface RegistrationProps {
   userEligibility: UserEligibility;
@@ -32,6 +33,7 @@ interface RegistrationProps {
   airdropWindowId?: number;
   airdropWindowStatus?: WindowStatus;
   claimStatus: ClaimStatus;
+  setClaimStatus: (value: ClaimStatus) => void;
   airdropWindowClosingTime: string;
 }
 
@@ -50,6 +52,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropWindowStatus,
   airdropWindowClosingTime,
   claimStatus,
+  setClaimStatus,
 }) => {
   const [error, setErrors] = useState<any>(null);
   const [airdropOpen, setAirdropOpen] = useState(false);
@@ -194,8 +197,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       const txn = await executeClaimMethod(claimDetails.signature, claimDetails.claimable_amount);
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
+      setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
+      if (receipt.status) {
+        setUserRegistered(true);
+        setClaimStatus(ClaimStatus.SUCCESS);
+      }
     } catch (error) {
       if (error instanceof APIError) {
         alert(error.message);

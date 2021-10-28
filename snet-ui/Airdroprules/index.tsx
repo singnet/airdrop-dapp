@@ -22,15 +22,15 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
     return null;
   }
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", mx: [0, 4, 15], my: [0, 2], py: 3 }} ref={ref}>
+    <Box sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
       <Typography align="center" color="bgtext.main" variant="h3">
         {title}
       </Typography>
       <Box sx={{ mt: 4 }}>
-        <Grid container spacing={1} mt={4} justifyContent="center">
+        <Grid container spacing={1} mt={4} >
           {steps.map((step, index) => (
-            <Grid item xs={9} sm={10} md={8} key={step.title}>
-              <Box sx={{ display: "flex", p: 0.7, pr: 0 }}>
+            <Grid item  key={step.title}>
+              <Box sx={{ display: "flex" }}>
                 <Box color="success" sx={{ mr: 1 }}>
                   <StarsOutlinedIcon color="primary" />
                 </Box>
@@ -38,7 +38,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
                   {step.title}
                 </Typography>
               </Box>
-              <Typography color="textAdvanced.primary">{step.description}</Typography>
+              <Typography color="textAdvanced.primary" textAlign="justify">{step.description}</Typography>
               {index !== steps.length - 1 ? <Divider sx={{ my: 1 }} /> : null}
             </Grid>
           ))}
