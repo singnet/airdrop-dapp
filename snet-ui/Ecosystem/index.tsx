@@ -13,22 +13,14 @@ type Props = {
 export default function Ecosystem({ blogLink }: Props) {
   return (
     <GradientBox $background="bgGradient" sx={{ my: 2, py: 8, px: [0, 4, 15] }}>
-      <Typography
-        align="center"
-        variant="h2"
-        color="text.secondary"
-        component="p"
-        mb={3}
-      >
+      <Typography align="center" variant="h2" color="text.secondary" component="p" mb={3}>
         SingularityNET Ecosystem
       </Typography>
-      <Box sx={{ m: 16, mt: 3, mb: 6 }}>
+      <Box sx={{ mt: 3, mb: 6 }}>
         <Typography color="text.secondary" align="left" textAlign="justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident
         </Typography>
       </Box>

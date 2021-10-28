@@ -96,7 +96,9 @@ export default function AccountModal({ account, open, setOpen, changeAccount }: 
               </Grid>
             </Grid>
             <Box sx={{ display: "flex", flexDirection: "row-reverse", mt: 3 }}>
-              <Button onClick={changeAccount}>change</Button>
+              <Button onClick={changeAccount} variant="outlined" color="secondary">
+                change
+              </Button>
             </Box>
           </Box>
         </DialogContent>
