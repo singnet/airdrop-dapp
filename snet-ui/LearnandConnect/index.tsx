@@ -5,12 +5,10 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Whitepaper from "public/images/Whitepaper.png";
+
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { CardActionArea } from "@mui/material";
-import Telegram from "public/images/Telegram.png";
-import Documentation from "public/images/Documentation.png";
 
 export default function Learn() {
   return (
@@ -51,8 +49,8 @@ export default function Learn() {
                       my: 2,
                     }}
                   >
-                    <Image
-                      src={Whitepaper}
+                    <img
+                      src="/images/Whitepaper.png"
                       alt="SingularityNET"
                       height="88px"
                       width="98px"
@@ -111,8 +109,8 @@ export default function Learn() {
                   <Box
                     sx={{ display: "flex", justifyContent: "center", my: 2 }}
                   >
-                    <Image
-                      src={Telegram}
+                    <img
+                      src="/images/Telegram.png"
                       alt="SingularityNET"
                       height="88px"
                       width="98px"
@@ -165,8 +163,8 @@ export default function Learn() {
                   <Box
                     sx={{ display: "flex", justifyContent: "center", my: 2 }}
                   >
-                    <Image
-                      src={Documentation}
+                    <img
+                      src="/images/Documentation.png"
                       alt="SingularityNET"
                       height="88px"
                       width="98px"

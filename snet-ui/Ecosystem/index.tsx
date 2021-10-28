@@ -42,8 +42,7 @@ export default function Ecosystem({ blogLink }: Props) {
             {blogLink ? (
               <Button
                 variant="outlined"
-                color="secondary"
-                style={{ color: "textAdvanced.white" }}
+                color="bgHighlight"
                 endIcon={<OpenInNewIcon />}
                 href={blogLink}
                 target="_blank"
