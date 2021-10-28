@@ -23,6 +23,8 @@ import { API_PATHS } from "utils/constants/ApiPaths";
 import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
+import { useAppSelector } from "utils/store/hooks";
+import { Alert } from "@mui/material";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -32,7 +34,7 @@ export const getStaticProps = async ({ locale }) => ({
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
-  const { account, library } = useActiveWeb3React();
+  const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
@@ -43,6 +45,7 @@ const Home: NextPage = () => {
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
   const [airdropRules, setAirdropRules] = useState([]);
   const [totalWindows, setTotalWindows] = useState(0);
+  const { error: walletError } = useAppSelector((state) => state.wallet);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -124,7 +127,7 @@ const Home: NextPage = () => {
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
     } catch (error: any) {
-      console.log("eligibility check error");
+      console.log("eligibility check error", error);
     }
   };
 
@@ -155,7 +158,7 @@ const Home: NextPage = () => {
           </Box>
           <Registration
             currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-            totalWindows={totalWindows} 
+            totalWindows={totalWindows}
             userEligibility={userEligibility}
             userRegistered={userRegistered}
             setUserRegistered={setUserRegistered}
@@ -176,15 +179,15 @@ const Home: NextPage = () => {
             bgcolor: "bgHighlight.main",
             borderColor: "info.light",
             mx: [0, 4, 15],
+            px: [1, 4, 15],
             my: 2,
             py: 4,
-            display: "flex",
-            justifyContent: "center",
           }}
         >
-          <Typography variant="h5" textAlign="center">
+          <Typography variant="h5" textAlign="center" mb={2}>
             Please connect your wallet to proceed
           </Typography>
+          {walletError ? <Alert severity="error">{walletError}</Alert> : null}
         </Box>
       )}
 

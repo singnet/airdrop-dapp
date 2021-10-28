@@ -115,7 +115,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       address: account,
       airdrop_id: `${airdropId}`,
     });
-    console.log("claim response.data", response.data.data.claim_history);
+
     const history = response.data.data.claim_history.map((el) => [
       {
         label: `Window ${el.airdrop_window_id} Qualified`,

@@ -56,11 +56,10 @@ const WalletButton = ({ wallet, handleConnect, imgSrc }) => {
 
 export default function WalletModal({ open, setOpen }: Props) {
   const handleClose = () => setOpen(false);
-  const { active, account, connector, activate, error, library } = useWeb3React();
+  const { active, account, connector, activate, error, setError, library } = useWeb3React();
   useEagerConnect();
 
   const handleConnect = async (connector: AbstractConnector | undefined) => {
-    console.log("inside handle connect");
     let name = "";
     Object.keys(SUPPORTED_WALLETS).map((key) => {
       if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -87,6 +86,7 @@ export default function WalletModal({ open, setOpen }: Props) {
             activate(connector); // a little janky...can't use setError because the connector isn't set
           } else {
             console.log("connection error", error);
+            setError(error);
             // setPendingError(true)
           }
         });
@@ -99,10 +99,7 @@ export default function WalletModal({ open, setOpen }: Props) {
 
   return (
     <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <Typography color="primary.main" variant="h5">
             Connect to a wallet
