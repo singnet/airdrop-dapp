@@ -5,9 +5,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import { CardActionArea } from "@mui/material";
 
 export default function Learn() {
@@ -49,12 +47,7 @@ export default function Learn() {
                       my: 2,
                     }}
                   >
-                    <img
-                      src="/images/Whitepaper.png"
-                      alt="SingularityNET"
-                      height="88px"
-                      width="98px"
-                    />
+                    <img src="/images/Whitepaper.png" alt="SingularityNET" height="88px" width="98px" />
                   </Box>
                   <Box
                     sx={{
@@ -65,11 +58,7 @@ export default function Learn() {
                     <Box>
                       <Box>
                         <Box>
-                          <Typography
-                            align="center"
-                            variant="h4"
-                            color="bgtext.main"
-                          >
+                          <Typography align="center" variant="h4" color="bgtext.main">
                             Whitepaper
                           </Typography>
                         </Box>
@@ -80,14 +69,9 @@ export default function Learn() {
                             py: 1,
                           }}
                         >
-                          <Typography
-                            align="center"
-                            variant="body1"
-                            color="bgtext.main"
-                          >
-                            Go through the whitepaper to understand the
-                            technical information, concept and roadmap of the
-                            project.
+                          <Typography align="center" variant="body1" color="bgtext.main">
+                            Go through the whitepaper to understand the technical information, concept and roadmap of
+                            the project.
                           </Typography>
                         </Box>
                       </Box>
@@ -106,15 +90,8 @@ export default function Learn() {
             >
               <CardActionArea>
                 <CardContent>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
-                  >
-                    <img
-                      src="/images/Telegram.png"
-                      alt="SingularityNET"
-                      height="88px"
-                      width="98px"
-                    />
+                  <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+                    <img src="/images/Telegram.png" alt="SingularityNET" height="88px" width="98px" />
                   </Box>
                   <Box
                     sx={{
@@ -125,11 +102,7 @@ export default function Learn() {
                     <Box>
                       <Box>
                         <Box>
-                          <Typography
-                            align="center"
-                            variant="h4"
-                            color="bgtext.main"
-                          >
+                          <Typography align="center" variant="h4" color="bgtext.main">
                             Telegram Community
                           </Typography>
                         </Box>
@@ -139,14 +112,9 @@ export default function Learn() {
                             py: 1,
                           }}
                         >
-                          <Typography
-                            align="center"
-                            variant="body1"
-                            color="bgtext.main"
-                          >
-                            Did not find the answers you were looking for? Reach
-                            out to us and we will response to your questions as
-                            soon as possible.
+                          <Typography align="center" variant="body1" color="bgtext.main">
+                            Did not find the answers you were looking for? Reach out to us and we will response to your
+                            questions as soon as possible.
                           </Typography>
                         </Box>
                       </Box>
@@ -160,15 +128,8 @@ export default function Learn() {
             <Card>
               <CardActionArea>
                 <CardContent>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
-                  >
-                    <img
-                      src="/images/Documentation.png"
-                      alt="SingularityNET"
-                      height="88px"
-                      width="98px"
-                    />
+                  <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+                    <img src="/images/Documentation.png" alt="SingularityNET" height="88px" width="98px" />
                   </Box>
                   <Box
                     sx={{
@@ -179,22 +140,14 @@ export default function Learn() {
                     <Box>
                       <Box>
                         <Box>
-                          <Typography
-                            align="center"
-                            variant="h4"
-                            color="bgtext.main"
-                          >
+                          <Typography align="center" variant="h4" color="bgtext.main">
                             View Documentation
                           </Typography>
                         </Box>
                         <Box sx={{ my: 1, py: 1 }}>
-                          <Typography
-                            align="center"
-                            variant="body1"
-                            color="bgtext.main"
-                          >
-                            Learn more about the stages of the airdrop process
-                            and how the airdrop rewards are calculated.
+                          <Typography align="center" variant="body1" color="bgtext.main">
+                            Learn more about the stages of the airdrop process and how the airdrop rewards are
+                            calculated.
                           </Typography>
                         </Box>
                       </Box>

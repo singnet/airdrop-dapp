@@ -21,6 +21,14 @@ import { setShowConnectionModal, setWalletError } from "utils/store/features/wal
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import UnsupportedNetworkModal from "snet-ui/Blockchain/UnsupportedNetworkModal";
+import Image from "next/image";
+
+console.log(
+  `Don't remove this console. 
+It is mandatory to import the Image from "next/image"
+for @sls-next/serverless-component to build the Image lambda properly`,
+  typeof Image
+);
 
 const BlockChainProvider = dynamic(() => import("snet-ui/Blockchain/Provider"), { ssr: false });
 
