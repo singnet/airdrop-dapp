@@ -8,7 +8,7 @@ import TextField from "snet-ui/TextField";
 import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
 import { API_PATHS } from "utils/constants/ApiPaths";
-import LoadingButton from "@mui/lab/LoadingButton";
+import LoadingButton from "snet-ui/LoadingButton";
 
 const categories = ["Airdrop Enquiry"];
 const alertTypes: any = {

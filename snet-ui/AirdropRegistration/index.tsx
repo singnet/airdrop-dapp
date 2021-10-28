@@ -4,10 +4,11 @@ import Typography from "@mui/material/Typography";
 import FlipCountdown from "snet-ui/FlipClock/Countdown";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
-import LoadingButton from "@mui/lab/LoadingButton";
+
 import History from "snet-ui/History";
 import { WindowStatus } from "utils/airdropWindows";
 import Alert, { AlertColor } from "@mui/material/Alert";
+import LoadingButton from "snet-ui/LoadingButton";
 
 type HistoryEvent = {
   label: string;
@@ -90,7 +91,8 @@ export default function AirdropRegistration({
                 color="secondary"
                 sx={{ width: 170 }}
                 onClick={handleClaimClick}
-                loading={claimLoader}
+                // loading={claimLoader}
+                loading
               >
                 Claim
               </LoadingButton>
@@ -107,14 +109,14 @@ export default function AirdropRegistration({
             ) : null}
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
+            <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
               View Schedule
-            </LoadingButton>
+            </Button>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            <LoadingButton variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
+            <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
               View Rules
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
         <Box sx={{ px: 2 }}>
