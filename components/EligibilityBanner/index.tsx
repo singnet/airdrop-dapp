@@ -14,6 +14,7 @@ type EligibilityBannerProps = {
   totalWindows: number;
   onViewRules: () => void;
   userEligibility: UserEligibility;
+  rejectReasons?: string;
 };
 
 export default function EligibilityBanner({
@@ -21,6 +22,7 @@ export default function EligibilityBanner({
   totalWindows,
   userEligibility,
   onViewRules,
+  rejectReasons,
 }: EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
 
@@ -38,7 +40,7 @@ export default function EligibilityBanner({
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return <Notqualified account={account} network={network} onViewRules={onViewRules} />;
+    return <Notqualified account={account} network={network} onViewRules={onViewRules} rejectReasons={rejectReasons} />;
   }
 
   return (

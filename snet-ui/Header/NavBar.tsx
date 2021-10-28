@@ -47,6 +47,8 @@ const NavBar = ({ navigationData, classes, type, onConnectWallet }: NavbarProps)
                 className={classes.dropDown}
                 id="navLink"
                 onClick={() => onMenuClick(navItem.id)}
+                target={navItem.external ? "_blank" : ""}
+                rel={navItem.external ? "noreferrer noopener" : ""}
               >
                 <Typography variant="menu">
                   {navItem.name}
