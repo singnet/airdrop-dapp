@@ -65,7 +65,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
   const [airdropOpen, setAirdropOpen] = useState(false);
 
-  const [claimHistory, setClaimHistory] = useState([]);
+  const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
@@ -111,12 +111,20 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const getClaimHistory = async () => {
     if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account) return;
-    const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
+    const response: any = await axios.post(API_PATHS.AIRDROP_HISTORY, {
       address: account,
       airdrop_id: `${airdropId}`,
     });
     console.log("claim response.data", response.data.data.claim_history);
     const history = response.data.data.claim_history.map((el) => [
+      {
+        label: `Window ${el.airdrop_window_id} Qualified`,
+        value: el.is_eligible ? "YES" : "NO",
+      },
+      {
+        label: `Window ${el.airdrop_window_id} Registration`,
+        value: el.registered_at,
+      },
       {
         label: `Window ${el.airdrop_window_id} Rewards`,
         value: `${el.claimable_amount} SDAO`,
@@ -127,7 +135,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       },
     ]);
 
-    setClaimHistory(history.flat());
+    setAirdropHistory(history.flat());
   };
 
   const handleClaim = async () => {
@@ -281,7 +289,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
-        history={claimHistory}
+        history={airdropHistory}
         onClaim={handleClaim}
         airdropWindowStatus={airdropWindowStatus}
         uiAlert={uiAlert}
