@@ -23,6 +23,8 @@ import { APIError } from "utils/errors";
 import { SettingsOverscanOutlined } from "@mui/icons-material";
 
 interface RegistrationProps {
+  currentWindowId: number;
+  totalWindows: number;
   userEligibility: UserEligibility;
   userRegistered: boolean;
   setUserRegistered: (value: boolean) => void;
@@ -41,6 +43,8 @@ const airdropOpensIn = new Date();
 airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
+  currentWindowId,
+  totalWindows,
   userEligibility,
   userRegistered,
   setUserRegistered,
@@ -270,6 +274,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : airdropOpen ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
+        currentWindowId={currentWindowId}
+        totalWindows={totalWindows}
         endDate={endDate}
         onRegister={handleRegistration}
         onViewRules={onViewRules}

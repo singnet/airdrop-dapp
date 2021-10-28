@@ -14,6 +14,8 @@ type HistoryEvent = {
 };
 
 type AirdropRegistrationProps = {
+  currentWindowId: number;
+  totalWindows: number;
   endDate: Date;
   onRegister: () => void;
   onViewSchedule: () => void;
@@ -34,6 +36,8 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
 });
 
 export default function AirdropRegistration({
+  currentWindowId,
+  totalWindows,
   endDate,
   onRegister,
   onViewRules,
@@ -67,8 +71,11 @@ export default function AirdropRegistration({
   return (
     <Box>
       <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+        <Typography color="text.secondary" variant="h4" align="center" mb={1}>
+          Airdrop registration window {currentWindowId} / {totalWindows} closes:
+        </Typography>
         <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-          Airdrop registration window closes {formattedDate}
+          {formattedDate}
         </Typography>
         <FlipCountdown endDate={endDate} />
         <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}></Box>
