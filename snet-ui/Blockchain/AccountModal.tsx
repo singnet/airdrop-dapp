@@ -19,11 +19,12 @@ type AccountModalProps = {
   account: string;
   open: boolean;
   setOpen: (open: boolean) => void;
+  changeAccount: () => void;
 };
 
 let copiedStateTimeout;
 
-export default function AccountModal({ account, open, setOpen }: AccountModalProps) {
+export default function AccountModal({ account, open, setOpen, changeAccount }: AccountModalProps) {
   const [copied, setCopied] = useState(false);
 
   const theme = useTheme();
@@ -81,7 +82,7 @@ export default function AccountModal({ account, open, setOpen }: AccountModalPro
                 {matchesSmallDevices ? account : `${account.slice(0, 16)}...`}
               </Typography>
             </Box>
-            <Grid container>
+            <Grid container sx={{ mt: 2 }}>
               <Grid item xs={12} sm={6}>
                 <Button sx={{ textTransform: "lowercase" }} onClick={handleViewOnExplorer}>
                   <Typography component="span"> open in explorer &nbsp; </Typography> <OpenInNewIcon />
@@ -94,6 +95,9 @@ export default function AccountModal({ account, open, setOpen }: AccountModalPro
                 </Button>
               </Grid>
             </Grid>
+            <Box sx={{ display: "flex", flexDirection: "row-reverse", mt: 3 }}>
+              <Button onClick={changeAccount}>change</Button>
+            </Box>
           </Box>
         </DialogContent>
       </Dialog>
