@@ -155,7 +155,7 @@ const Home: NextPage = () => {
           </Box>
           <Registration
             currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-            totalWindows={totalWindows}
+            totalWindows={totalWindows} 
             userEligibility={userEligibility}
             userRegistered={userRegistered}
             setUserRegistered={setUserRegistered}

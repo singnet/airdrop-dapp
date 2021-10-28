@@ -21,6 +21,9 @@ import { TransactionResponse } from "@ethersproject/abstract-provider";
 import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
 import { APIError } from "utils/errors";
 import { SettingsOverscanOutlined } from "@mui/icons-material";
+import { AlertTypes } from "utils/constants/alert";
+import { AlertColor } from "@mui/material";
+import Success from "snet-ui/Registrationsuccess";
 
 interface RegistrationProps {
   currentWindowId: number;
@@ -59,6 +62,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   setClaimStatus,
 }) => {
   const [error, setErrors] = useState<any>(null);
+  const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
   const [airdropOpen, setAirdropOpen] = useState(false);
 
   const [claimHistory, setClaimHistory] = useState([]);
@@ -94,17 +98,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
+        setUiAlert({ type: AlertTypes.success, message: "Registered successfully" });
         setUserRegistered(true);
       } else {
-        console.log("unable to generate signature");
+        setUiAlert({ type: AlertTypes.error, message: `Failed Registration: unable to generate signature` });
       }
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
-      console.log(error);
-      // TODO: delete the below code once the error case is properly handled
-      // setUserRegistered(true);
-      // router.push(`airdrop/${airdrop.airdrop_window_id}`);
-      setErrors(error.toString());
+      setUiAlert({ type: AlertTypes.error, message: `Failed Registration: ${error.message}` });
     }
   };
 
@@ -283,6 +284,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         history={claimHistory}
         onClaim={handleClaim}
         airdropWindowStatus={airdropWindowStatus}
+        uiAlert={uiAlert}
       />
     </Box>
   ) : (

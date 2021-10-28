@@ -7,6 +7,7 @@ import Box from "@mui/system/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
 import History from "snet-ui/History";
 import { WindowStatus } from "utils/airdropWindows";
+import Alert, { AlertColor } from "@mui/material/Alert";
 
 type HistoryEvent = {
   label: string;
@@ -23,6 +24,7 @@ type AirdropRegistrationProps = {
   history: HistoryEvent[];
   onClaim: () => void;
   airdropWindowStatus?: WindowStatus;
+  uiAlert: { type: AlertColor; message: string };
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -45,6 +47,7 @@ export default function AirdropRegistration({
   history,
   onClaim,
   airdropWindowStatus,
+  uiAlert,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
@@ -114,6 +117,13 @@ export default function AirdropRegistration({
             </LoadingButton>
           </Box>
         </Box>
+        <Box sx={{ px: 2 }}>
+          {uiAlert.message ? (
+            <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
+              {uiAlert.message}
+            </Alert>
+          ) : null}
+        </Box>
         {history && history.length > 0 ? (
           <Box>
             <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
@@ -123,11 +133,6 @@ export default function AirdropRegistration({
           </Box>
         ) : null}
       </GradientBox>
-      {/* <Box sx={{ bgcolor: "secondary.main", position: "relative", top: 0, left: 0 }}>
-        <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-          Registration Open
-        </Typography>
-      </Box> */}
     </Box>
   );
 }
