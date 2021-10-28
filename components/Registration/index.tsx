@@ -21,8 +21,13 @@ import { TransactionResponse } from "@ethersproject/abstract-provider";
 import AirdropRegistrationLoader from "snet-ui/AirdropRegistration/SkeletonLoader";
 import { APIError } from "utils/errors";
 import { SettingsOverscanOutlined } from "@mui/icons-material";
+import { AlertTypes } from "utils/constants/alert";
+import { AlertColor } from "@mui/material";
+import Success from "snet-ui/Registrationsuccess";
 
 interface RegistrationProps {
+  currentWindowId: number;
+  totalWindows: number;
   userEligibility: UserEligibility;
   userRegistered: boolean;
   setUserRegistered: (value: boolean) => void;
@@ -41,6 +46,8 @@ const airdropOpensIn = new Date();
 airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
+  currentWindowId,
+  totalWindows,
   userEligibility,
   userRegistered,
   setUserRegistered,
@@ -55,9 +62,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   setClaimStatus,
 }) => {
   const [error, setErrors] = useState<any>(null);
+  const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
   const [airdropOpen, setAirdropOpen] = useState(false);
 
-  const [claimHistory, setClaimHistory] = useState([]);
+  const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
@@ -90,28 +98,33 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
+        setUiAlert({ type: AlertTypes.success, message: "Registered successfully" });
         setUserRegistered(true);
       } else {
-        console.log("unable to generate signature");
+        setUiAlert({ type: AlertTypes.error, message: `Failed Registration: unable to generate signature` });
       }
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
-      console.log(error);
-      // TODO: delete the below code once the error case is properly handled
-      // setUserRegistered(true);
-      // router.push(`airdrop/${airdrop.airdrop_window_id}`);
-      setErrors(error.toString());
+      setUiAlert({ type: AlertTypes.error, message: `Failed Registration: ${error.message}` });
     }
   };
 
   const getClaimHistory = async () => {
     if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account) return;
-    const response: any = await axios.post(API_PATHS.CLAIM_HISTORY, {
+    const response: any = await axios.post(API_PATHS.AIRDROP_HISTORY, {
       address: account,
       airdrop_id: `${airdropId}`,
     });
     console.log("claim response.data", response.data.data.claim_history);
     const history = response.data.data.claim_history.map((el) => [
+      {
+        label: `Window ${el.airdrop_window_id} Qualified`,
+        value: el.is_eligible ? "YES" : "NO",
+      },
+      {
+        label: `Window ${el.airdrop_window_id} Registration`,
+        value: el.registered_at,
+      },
       {
         label: `Window ${el.airdrop_window_id} Rewards`,
         value: `${el.claimable_amount} SDAO`,
@@ -122,7 +135,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       },
     ]);
 
-    setClaimHistory(history.flat());
+    setAirdropHistory(history.flat());
   };
 
   const handleClaim = async () => {
@@ -168,11 +181,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         );
         return txn;
       } catch (error: any) {
-        console.log("errrrrrrr", error);
-        const ethersError = parseEthersError(error);
-        if (ethersError) {
-          alert(ethersError);
-        }
+        console.log("contract error", error);
+
         throw error;
       }
     };
@@ -203,12 +213,20 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       if (receipt.status) {
         setUserRegistered(true);
         setClaimStatus(ClaimStatus.SUCCESS);
+        setUiAlert({ type: AlertTypes.success, message: "Claimed successfully" });
       }
-    } catch (error) {
-      if (error instanceof APIError) {
-        alert(error.message);
-      }
+    } catch (error: any) {
       console.log("signature error", error);
+      if (error instanceof APIError) {
+        setUiAlert({ type: AlertTypes.error, message: error.message });
+        return;
+      }
+      const ethersError = parseEthersError(error);
+      if (ethersError) {
+        setUiAlert({ type: AlertTypes.error, message: `Failed Contract: ${ethersError}` });
+        return;
+      }
+      setUiAlert({ type: AlertTypes.error, message: `Failed Uncaught: ${error.message}` });
     }
   };
 
@@ -270,13 +288,16 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : airdropOpen ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
+        currentWindowId={currentWindowId}
+        totalWindows={totalWindows}
         endDate={endDate}
         onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
-        history={claimHistory}
+        history={airdropHistory}
         onClaim={handleClaim}
         airdropWindowStatus={airdropWindowStatus}
+        uiAlert={uiAlert}
       />
     </Box>
   ) : (

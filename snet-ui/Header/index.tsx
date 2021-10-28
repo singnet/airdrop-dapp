@@ -74,7 +74,12 @@ const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps
                 {/* <Menu anchorEl={anchorEl} open={open}>
                   <MenuItem onClick={handleDisconnectWallet}>Signout</MenuItem>
                 </Menu> */}
-                <AccountModal account={account} open={open} setOpen={handleUserMenuClose} />
+                <AccountModal
+                  account={account}
+                  open={open}
+                  setOpen={handleUserMenuClose}
+                  changeAccount={onConnectWallet}
+                />
               </>
             ) : (
               <Button onClick={onConnectWallet} color="secondary" variant="contained">
