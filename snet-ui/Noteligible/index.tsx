@@ -13,9 +13,21 @@ type NotqualifiedProps = {
   onViewRules: () => void;
 };
 
-export default function Notqualified({ account, network, onViewRules }: NotqualifiedProps) {
+export default function Notqualified({
+  account,
+  network,
+  onViewRules,
+}: NotqualifiedProps) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main",  my: 2, py: 8, pb: 2 }}>
+    <Box
+      sx={{
+        bgcolor: "bgHighlight.main",
+        my: 2,
+        py: 8,
+        pb: 2,
+        borderRadius: 1.5,
+      }}
+    >
       <Grid container spacing={2} px={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
@@ -48,32 +60,55 @@ export default function Notqualified({ account, network, onViewRules }: Notquali
             </Typography>
           </Box>
           <Box
-            sx={{ display: "flex", border: 1, my: 1, py: 1, bgcolor: "error.light", borderColor: "error.contrastText" }}
+            sx={{
+              display: "flex",
+              border: 1,
+              my: 1,
+              py: 1,
+              bgcolor: "error.light",
+              borderRadius: 1.5,
+              borderColor: "error.contrastText",
+            }}
           >
             <Box sx={{ p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">
                 You didn’t meet the following conditions
               </Typography>
-              <Typography sx={{ p: 2 }}>1, Maintain 1,000 AGIX balance in your wallet.</Typography>
+              <Typography sx={{ p: 2 }}>
+                1, Maintain 1,000 AGIX balance in your wallet.
+              </Typography>
               <Divider component="p" />
-              <Typography sx={{ p: 2 }}>2, Deposit 1,000 SDAO into any liquidity pools.</Typography>
+              <Typography sx={{ p: 2 }}>
+                2, Deposit 1,000 SDAO into any liquidity pools.
+              </Typography>
               <Divider />
               <Typography sx={{ p: 2 }}>
-                3, Make atleast 3 transactions between 1 March 2021 and 30 July 2021
+                3, Make atleast 3 transactions between 1 March 2021 and 30 July
+                2021
               </Typography>
             </Box>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
             <Box textAlign="center">
               <Stack spacing={2} direction="row">
-                <Button variant="outlined" size="large" onClick={onViewRules}>
-                  <Typography color="secondary.main" fontSize="13px">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={onViewRules}
+                >
+                  <Typography color="secondary.main" variant="subtitle2">
                     View Airdrop Rules
                   </Typography>
                 </Button>
 
-                <Button variant="outlined" size="large" href="/contactus">
-                  <Typography color="secondary.main" fontSize="13px">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color="secondary"
+                  href="/contactus"
+                >
+                  <Typography color="secondary.main" variant="subtitle2">
                     Contact us
                   </Typography>
                 </Button>
