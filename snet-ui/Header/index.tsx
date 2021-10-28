@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { WithStyles, withStyles } from "@mui/styles";
-
+import ListSubheader from "@mui/material/ListSubheader";
 import Grid from "@mui/material/Grid";
 // import Image from "next/image";
 import MobileHeader from "./MobileHeader";
@@ -9,6 +9,7 @@ import { styles } from "./styles";
 import { navData, userActions } from "snet-ui/constants/Header";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,7 +22,12 @@ type HeaderProps = WithStyles<typeof styles> & {
   onDisconnect: () => void;
 };
 
-const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps) => {
+const Header = ({
+  classes,
+  onConnectWallet,
+  onDisconnect,
+  account,
+}: HeaderProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -55,7 +61,10 @@ const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps
             </h1>
           </Grid>
           <Grid item md={6} className={classes.navigationSection}>
-            <NavBar navigationData={navData} onConnectWallet={onConnectWallet} />
+            <NavBar
+              navigationData={navData}
+              onConnectWallet={onConnectWallet}
+            />
           </Grid>
           <Grid
             item
@@ -65,9 +74,19 @@ const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps
           >
             {account ? (
               <>
-                <Button aria-expanded={open ? "true" : undefined} onClick={handleOpenUserMenu}>
-                  <AccountCircleIcon />
-                  <Typography color="textAdvanced.secondary" component="span">
+                <Button
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleOpenUserMenu}
+                >
+                  <AccountCircleIcon
+                    fontSize="large"
+                    sx={{ color: "common.white" }}
+                  />
+                  <Typography
+                    color="textAdvanced.secondary"
+                    component="span"
+                    sx={{ m: 1 }}
+                  >
                     {truncatedAddress}
                   </Typography>
                 </Button>
@@ -82,7 +101,11 @@ const Header = ({ classes, onConnectWallet, onDisconnect, account }: HeaderProps
                 />
               </>
             ) : (
-              <Button onClick={onConnectWallet} color="secondary" variant="contained">
+              <Button
+                onClick={onConnectWallet}
+                color="secondary"
+                variant="contained"
+              >
                 Connect Wallet
               </Button>
             )}
