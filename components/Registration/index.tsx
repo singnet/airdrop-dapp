@@ -181,11 +181,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         );
         return txn;
       } catch (error: any) {
-        console.log("errrrrrrr", error);
-        const ethersError = parseEthersError(error);
-        if (ethersError) {
-          alert(ethersError);
-        }
+        console.log("contract error", error);
+
         throw error;
       }
     };
@@ -216,12 +213,20 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       if (receipt.status) {
         setUserRegistered(true);
         setClaimStatus(ClaimStatus.SUCCESS);
+        setUiAlert({ type: AlertTypes.success, message: "Claimed successfully" });
       }
-    } catch (error) {
-      if (error instanceof APIError) {
-        alert(error.message);
-      }
+    } catch (error: any) {
       console.log("signature error", error);
+      if (error instanceof APIError) {
+        setUiAlert({ type: AlertTypes.error, message: error.message });
+        return;
+      }
+      const ethersError = parseEthersError(error);
+      if (ethersError) {
+        setUiAlert({ type: AlertTypes.error, message: `Failed Contract: ${ethersError}` });
+        return;
+      }
+      setUiAlert({ type: AlertTypes.error, message: `Failed Uncaught: ${error.message}` });
     }
   };
 
