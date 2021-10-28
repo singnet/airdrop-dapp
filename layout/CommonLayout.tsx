@@ -6,6 +6,7 @@ import Footer from "snet-ui/Footer";
 import Header from "snet-ui/Header";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
+import Box from "@mui/system/Box";
 
 export default function CommonLayout({
   children,
@@ -15,16 +16,23 @@ export default function CommonLayout({
   const { account, deactivate } = useActiveWeb3React();
   return (
     <>
-      <ListSubheader sx={{ px: 0 }}>
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
+
+          zIndex: 2,
+        }}
+      >
         <Falsemessage />
         <Header
           onConnectWallet={() => dispatch(setShowConnectionModal(true))}
           onDisconnect={deactivate}
           account={account as string}
         />
-      </ListSubheader>
-      {children}
-
+      </Box>
+      <Box sx={{ mt: 23 }}>{children}</Box>
       <Footer />
     </>
   );
