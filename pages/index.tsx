@@ -195,7 +195,7 @@ const Home: NextPage = () => {
         </Box>
       )}
 
-      <HowItWorks title="How Airdrop Works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <HowItWorks title="How NuNet Airdrop works" steps={HowItWorksSampleData} blogLink="www.google.com" />
       <SubscribeToNotification ref={getNotificationRef} />
       <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
@@ -211,33 +211,33 @@ export default Home;
 
 const HowItWorksSampleData = [
   {
-    title: "Lorem Ipsum is simply dummy text of the printing an",
+    title: "About the NuNet Airdrop",
     description:
-      "typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised",
+      "NuNet is giving away 5% of its total supply of one billion NTX tokens, i.e. 50 million NTX, for free to loyal backers and members of the SingularityNET and NuNet communities. This airdrop comes with certain requirements for particpation, detailed below.",
   },
   {
-    title: "It is a long established fact that a",
+    title: "Schedule of the NuNet airdrop",
     description:
-      " is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions ",
+      "The airdrop will take place in four monthly segments, starting from DATE-TIME-TIMEZONE. Only participants who have registered in advance will be able to participate. The deadline for completing your registration is DATE-TIME-TIMEZONE.",
   },
   {
-    title: "Contrary to popular belief, Lorem Ipsum is not si",
+    title: "Requirements for participating in the airdrop",
     description:
-      "andom text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem I",
+      "Users will be eligible to register for the airdrop if they have held a minimum of xxxx AGIX tokens or xxxx SDAO in their wallets since DATE-TIME-TIMEZONE. We will take a snapshot of the blcokchain at that time to verify token balances. You must register your wallet address in this portal to be eligible.",
   },
   {
-    title: "Where can I get some?",
+    title: "NTX Allocation for the Airdrops",
     description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generat",
+      "A total of 50,000,000 NTX will be distributed across the four airdrops. These will be distributed in four increasing monthly amounts: 17.5% of the tokens (8,750,000) the first month, 22.5% of the tokens (11,250,000) the second month, 27.5% of the tokens (13,750,000) the third month, and 32.5% of the tokens (16,250,000) the fourth and final month.",
   },
   {
-    title: "atise on the theory of ethics, very popu",
+    title: "Schedule of airdrop registration and distribution",
     description:
-      "ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, c",
+      "The registration period has started and runs until DATE-TIME-TIMEZONE. You must register below before then or you will not be able to participate in the airdrop. Following that is the snapshot at DATE-TIME-TIMEZONE, used to verify token balances to check eligibility. If you need to move tokens to your wallet from an exchange, you must do it before then.",
   },
   {
-    title: "atise Ipsum is simply dummy text of the printing an",
+    title: "Claiming schedule",
     description:
-      "there are many variations in the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised",
+      "You can claim your NTX tokens as they become available in the monthly tranches, or you can opt to leave them until the end of the fourth airdrop. You must claim your tokens before DATE-TIME-TIMEZONE; any tokens not claimed by then will be returned to NuNet and used to fund ongoing development.",
   },
 ];
