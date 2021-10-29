@@ -202,7 +202,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         amount: claimAmount.toString(),
         airdrop_id: airdropId?.toString(),
         airdrop_window_id: airdropWindowId?.toString(),
-        txn_status: "PENDING",
       });
       console.log("response.dat", response.data);
     };
