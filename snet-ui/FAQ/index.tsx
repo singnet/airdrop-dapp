@@ -20,60 +20,58 @@ const Accordion = styled((props: AccordionProps) => (
 
 export default function FAQPage() {
   return (
-    <div>
-      <Box>
-        <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
-          Frequently Asked Questions
-        </Typography>
-        <Box sx={{ mx: [0, 7, 20], mt: 3 }}>
-          {faqSampleData.map((faq) => (
-            <Accordion key={faq.question}>
-              <AccordionSummary
-                expandIcon={<AddSharpIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+    <Box>
+      <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
+        Frequently Asked Questions
+      </Typography>
+      <Box sx={{ mx: [0, 7, 20], mt: 3 }}>
+        {faqSampleData.map((faq) => (
+          <Accordion key={faq.question}>
+            <AccordionSummary
+              expandIcon={<AddSharpIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+              sx={{
+                "&:hover": {
+                  bgcolor: "bgFocus.main",
+                },
+              }}
+            >
+              <Typography
+                color="bgtext.main"
+                variant="h5"
                 sx={{
                   "&:hover": {
-                    bgcolor: "bgFocus.main",
+                    color: "secondary.main",
                   },
                 }}
               >
-                <Typography
-                  color="bgtext.main"
-                  variant="h5"
-                  sx={{
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  {faq.question}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Box>
-        <Box sx={{ p: 3 }}>
-          <Typography align="center" color="textAdvanced.main" variant="body1">
-            Still Have Questions?
-          </Typography>
-          <Box textAlign="center" sx={{ mt: 1 }}>
-            <Button
-              variant="outlined"
-              size="large"
-              color="secondary"
-              href="/contactus"
-            >
-              <Typography color="secondary.main" variant="subtitle2">
-                Contact us
+                {faq.question}
               </Typography>
-            </Button>
-          </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{faq.answer}</Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Box>
+      <Box sx={{ p: 3 }}>
+        <Typography align="center" color="textAdvanced.main" variant="body1">
+          Still Have Questions?
+        </Typography>
+        <Box textAlign="center" sx={{ mt: 1 }}>
+          <Button
+            variant="outlined"
+            size="large"
+            color="secondary"
+            href="/contactus"
+          >
+            <Typography color="secondary.main" variant="subtitle2">
+              Contact us
+            </Typography>
+          </Button>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 }
