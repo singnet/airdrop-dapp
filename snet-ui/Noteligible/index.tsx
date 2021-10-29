@@ -16,27 +16,14 @@ type NotqualifiedProps = {
   rejectReasons?: string;
 };
 
-<<<<<<< HEAD
 export default function Notqualified({
   account,
   network,
   onViewRules,
+  rejectReasons,
 }: NotqualifiedProps) {
   return (
-    <Box
-      sx={{
-        bgcolor: "bgHighlight.main",
-        my: 2,
-        py: 8,
-        pb: 2,
-        borderRadius: 1.5,
-      }}
-    >
-=======
-export default function Notqualified({ account, network, onViewRules, rejectReasons }: NotqualifiedProps) {
-  return (
     <Box sx={{ bgcolor: "bgHighlight.main", my: 2, py: 8, pb: 2 }}>
->>>>>>> c5da51cbdc5c205a6a1987d67500ecefe809559f
       <Grid container spacing={2} px={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
@@ -95,14 +82,8 @@ export default function Notqualified({ account, network, onViewRules, rejectReas
               </Typography>
               <Divider />
               <Typography sx={{ p: 2 }}>
-<<<<<<< HEAD
-                3, Make atleast 3 transactions between 1 March 2021 and 30 July
-                2021
-              </Typography>
-=======
                 3, Make atleast 3 transactions between 1 March 2021 and 30 July 2021
               </Typography> */}
->>>>>>> c5da51cbdc5c205a6a1987d67500ecefe809559f
             </Box>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
