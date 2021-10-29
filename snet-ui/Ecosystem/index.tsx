@@ -18,10 +18,10 @@ export default function Ecosystem({ blogLink }: Props) {
       </Typography>
       <Box sx={{ mt: 3, mb: 6 }}>
         <Typography color="text.secondary" align="left" textAlign="justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident
+          SingularityNET hosts an ecosystem of different technology projects in different areas with the common theme of
+          accelerating to the future and to the Technological Singularity in a beneficial way under decentralized
+          democratic control. Click here to read more about our other ecosystem projects, including Rejuve, Mindplex,
+          SingularityDAO, and TrueAGI.
         </Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
