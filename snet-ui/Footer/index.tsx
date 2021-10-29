@@ -10,7 +10,14 @@ import AppLogo from "public/AppLogo.png";
 
 export default function Footer() {
   return (
-    <Box sx={{ bgcolor: "primary.main", py: 5, px: 5, color: "textAdvanced.secondary" }}>
+    <Box
+      sx={{
+        bgcolor: "primary.main",
+        py: 5,
+        px: 5,
+        color: "textAdvanced.secondary",
+      }}
+    >
       <Grid container spacing={2}>
         <Grid
           item
@@ -22,7 +29,10 @@ export default function Footer() {
             borderRightColor: "common.white",
           }}
         >
-          <List subheader={<img src="AppLogo.png" />}>
+          <List subheader>
+            <ListItem sx={{ justifyContent: "right" }}>
+              <img src="NuNet Logo.png" width="171.5px" height="52.27px" />
+            </ListItem>
             <ListItemButton
               component="a"
               href="www.google.com"
@@ -56,7 +66,7 @@ export default function Footer() {
           <Grid item xs={12} sm={3} key={linkItem.header}>
             <List
               subheader={
-                <Typography variant="h3" pl={2}>
+                <Typography variant="h3" pl={2} sx={{ m: 2 }}>
                   {linkItem.header}
                 </Typography>
               }
@@ -69,7 +79,9 @@ export default function Footer() {
                   rel={link.external ? "noreferrer noopener" : ""}
                   key={link.text}
                 >
-                  <Typography variant="link">{link.text}</Typography>
+                  <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
+                    {link.text}
+                  </Typography>
                 </ListItemButton>
               ))}
             </List>
@@ -77,7 +89,7 @@ export default function Footer() {
         ))}
       </Grid>
       <Divider sx={{ bgcolor: "common.white", my: 3 }} />
-      <Typography align="center">Copyright c 2021 Nunet</Typography>
+      <Typography align="center">Copyright © 2021 Nunet</Typography>
     </Box>
   );
 }
