@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import FlipCountdown from "snet-ui/FlipClock/Countdown";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
-
+import InfoIcon from "@mui/icons-material/Info";
 import History from "snet-ui/History";
 import { WindowStatus } from "utils/airdropWindows";
 import Alert, { AlertColor } from "@mui/material/Alert";
@@ -18,6 +18,7 @@ type HistoryEvent = {
 type AirdropRegistrationProps = {
   currentWindowId: number;
   totalWindows: number;
+  airdropWindowTotalTokens?: number;
   endDate: Date;
   onRegister: () => void;
   onViewSchedule: () => void;
@@ -41,6 +42,7 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
 export default function AirdropRegistration({
   currentWindowId,
   totalWindows,
+  airdropWindowTotalTokens,
   endDate,
   onRegister,
   onViewRules,
@@ -82,7 +84,36 @@ export default function AirdropRegistration({
           {formattedDate}
         </Typography>
         <FlipCountdown endDate={endDate} />
-        <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}></Box>
+        {airdropWindowStatus === WindowStatus.CLAIM ? (
+          <>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="label" align="center" component="p">
+                Airdrop window {currentWindowId} / {totalWindows} rewards
+              </Typography>
+              <Typography variant="h5" color="textAdvanced.secondary" align="center">
+                {airdropWindowTotalTokens}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                my: 4,
+
+                bgcolor: "note.main",
+              }}
+            >
+              <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
+                <InfoIcon color="primary" />
+                <Typography variant="body1" color="textAdvanced.primary">
+                  You can start claiming your tokens now. It is possible to claim all tokens with the last airdrop
+                  window which allow you save on the gas cost fees. However we recommend you claim your tokens at each
+                  window claim time.
+                </Typography>
+              </Box>
+            </Box>
+          </>
+        ) : null}
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
           {airdropWindowStatus === WindowStatus.CLAIM ? (
             <LoadingButton

@@ -7,6 +7,6 @@ export enum UserEligibility {
 export enum ClaimStatus {
   PENDING = "PENDING",
   SUCCESS = "SUCCESS",
-  FAIL = "FAIl",
+  FAIL = "FAIlED",
   NOT_STARTED = "NOT_STARTED",
 }

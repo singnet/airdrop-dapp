@@ -110,6 +110,7 @@ const Home: NextPage = () => {
         !account
       )
         return;
+      setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
         signature: "",
         address: account,
@@ -173,6 +174,7 @@ const Home: NextPage = () => {
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
             airdropWindowClosingTime={airdropWindowClosingTime}
+            airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
             claimStatus={userClaimStatus}
             setClaimStatus={setUserClaimStatus}
           />
