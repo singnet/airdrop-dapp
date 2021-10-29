@@ -84,39 +84,43 @@ export default function AirdropRegistration({
         <FlipCountdown endDate={endDate} />
         <Box sx={{ display: "flex", mt: 2, justifyContent: "center" }}></Box>
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            {airdropWindowStatus === WindowStatus.CLAIM ? (
-              <LoadingButton
-                variant="contained"
-                color="secondary"
-                sx={{ width: 170 }}
-                onClick={handleClaimClick}
-                loading={claimLoader}
-              >
-                Claim
-              </LoadingButton>
-            ) : airdropWindowStatus === WindowStatus.REGISTRATION ? (
-              <LoadingButton
-                variant="contained"
-                color="secondary"
-                sx={{ width: 170 }}
-                onClick={handleRegistrationClick}
-                loading={registrationLoader}
-              >
-                Register Now
-              </LoadingButton>
-            ) : null}
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
-              View Schedule
-            </Button>
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-            <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
-              View Rules
-            </Button>
-          </Box>
+          {airdropWindowStatus === WindowStatus.CLAIM ? (
+            <LoadingButton
+              variant="contained"
+              color="secondary"
+              sx={{ width: 170 }}
+              onClick={handleClaimClick}
+              loading={claimLoader}
+            >
+              Claim Now
+            </LoadingButton>
+          ) : (
+            <>
+              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+                {airdropWindowStatus === WindowStatus.REGISTRATION ? (
+                  <LoadingButton
+                    variant="contained"
+                    color="secondary"
+                    sx={{ width: 170 }}
+                    onClick={handleRegistrationClick}
+                    loading={registrationLoader}
+                  >
+                    Register Now
+                  </LoadingButton>
+                ) : null}
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+                <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
+                  View Schedule
+                </Button>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+                <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
+                  View Rules
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
         <Box sx={{ px: 2 }}>
           {uiAlert.message ? (
