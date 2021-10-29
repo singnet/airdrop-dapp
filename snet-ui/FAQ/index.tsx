@@ -1,77 +1,74 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
-import { styled } from "@mui/material/styles";
-import { Grid } from "@mui/material";
-import { Box } from "@mui/system";
-import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 //import { faqSampleData } from "sample-data/faq";
 import { faqSampleData } from "./faq";
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import { Box } from "@mui/system";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
 
-const AccordionContainer = styled(Paper)`
-  margin: 20px 0px 0 0px;
-`;
-
-// const Accordion = styled(MUIAccordion)`
-//   flex: none;
-//   transition: fill 0.25s;
-//   width: 48px;
-//   height: 48px;
-
-//   &:hover {
-//     fill: rebeccapurple;
-//   }
-// `;
+const Accordion = styled((props: AccordionProps) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))({
+  borderTop: 0,
+  borderRight: 0,
+  borderLeft: 0,
+});
 
 export default function FAQPage() {
   return (
     <Box>
-      <Typography align="center" color="bgtext.main" variant="h4">
+      <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
         Frequently Asked Questions
       </Typography>
-      <Box sx={{ mx: [0, 4, 15] }}>
-        <AccordionContainer>
-          {faqSampleData.map((faq) => (
-            <Accordion key={faq.question}>
-              <AccordionSummary
-                expandIcon={<AddSharpIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+      <Box sx={{ mx: [0, 7, 20], mt: 3 }}>
+        {faqSampleData.map((faq) => (
+          <Accordion key={faq.question}>
+            <AccordionSummary
+              expandIcon={<AddSharpIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+              sx={{
+                "&:hover": {
+                  bgcolor: "bgFocus.main",
+                },
+              }}
+            >
+              <Typography
+                color="bgtext.main"
+                variant="h5"
                 sx={{
                   "&:hover": {
-                    bgcolor: "bgFocus.main",
+                    color: "secondary.main",
                   },
                 }}
               >
-                <Typography
-                  color="textAdvanced.main"
-                  sx={{
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  {faq.question}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </AccordionContainer>
+                {faq.question}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{faq.answer}</Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Box>
       <Box sx={{ p: 3 }}>
-        <Typography align="center" color="textAdvanced.main">
+        <Typography align="center" color="textAdvanced.main" variant="body1">
           Still Have Questions?
         </Typography>
-        <Box textAlign="center">
-          <Button variant="outlined" size="large" sx={{ justifyContent: "center" }}>
-            <Typography color="secondary.main">Contact us</Typography>
+        <Box textAlign="center" sx={{ mt: 1 }}>
+          <Button
+            variant="outlined"
+            size="large"
+            color="secondary"
+            href="/contactus"
+          >
+            <Typography color="secondary.main" variant="subtitle2">
+              Contact us
+            </Typography>
           </Button>
         </Box>
       </Box>
