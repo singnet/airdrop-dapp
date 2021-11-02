@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Divider from "@mui/material/Divider";
+import { isDateBetween } from "utils/date";
+import ScheduleEvent from "./ScheduleEvent";
 
 type Event = {
   time: Date;
@@ -23,6 +25,7 @@ type Props = {
   events: Event[];
   blogLink?: string;
 };
+
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
@@ -39,61 +42,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
       >
         <Timeline>
           {events.map((event, index) => (
-            <TimelineItem
-              sx={{ bgcolor: "textAdvanced.main" }}
-              key={event.time.toDateString()}
-            >
-              <TimelineOppositeContent sx={{ display: "none" }} />
-              <TimelineSeparator>
-                <TimelineDot color={index === 0 ? "success" : undefined} />
-                {index !== events.length - 1 ? (
-                  <TimelineConnector>
-                    {index === 0 ? (
-                      <Typography
-                        sx={{
-                          position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          bgcolor: "bgHighlight.main",
-                        }}
-                      >
-                        Upcoming
-                        <span></span>
-                      </Typography>
-                    ) : null}
-                  </TimelineConnector>
-                ) : null}
-                {/* {index === 0 ? (
-                <TimelineContent>
-                  <Typography>Upcoming</Typography>{" "}
-                </TimelineContent>
-              ) : null} */}
-              </TimelineSeparator>
-              <TimelineContent>
-                <Grid container spacing={4}>
-                  <Grid item xs={3}>
-                    <Typography
-                      variant="priority"
-                      color={index === 0 ? "secondary" : "primary"}
-                    >
-                      {event.time.toDateString()}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={9}>
-                    <Typography
-                      variant="priority"
-                      color={index === 0 ? "secondary" : "primary"}
-                      component="p"
-                    >
-                      {event.title}
-                    </Typography>
-                    <Typography variant="normal" color="textAdvanced.primary">
-                      {event.description}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </TimelineContent>
-            </TimelineItem>
+            <ScheduleEvent key={event.time.toString()} event={event} nextEventTime={events[index + 1]?.time} />
           ))}
         </Timeline>
         <Box textAlign="center">

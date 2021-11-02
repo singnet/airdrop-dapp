@@ -20,7 +20,13 @@ import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { AirdropWindow, findActiveWindow, findFirstUpcomingWindow, WindowStatus } from "utils/airdropWindows";
+import {
+  AirdropWindow,
+  findActiveWindow,
+  findFirstUpcomingWindow,
+  findNextAirdropWindow,
+  WindowStatus,
+} from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { useAppSelector } from "utils/store/hooks";
@@ -46,6 +52,7 @@ const Home: NextPage = () => {
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
   const [airdropRules, setAirdropRules] = useState([]);
   const [totalWindows, setTotalWindows] = useState(0);
+  const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(undefined);
   const { error: walletError } = useAppSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -73,6 +80,9 @@ const Home: NextPage = () => {
       if (!activeWindow) {
         activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
       }
+
+      const nextAirdropWindow = findNextAirdropWindow(airdrop.airdrop_windows, activeWindow);
+      setNextWindow(nextAirdropWindow);
 
       setActiveWindow(activeWindow);
       setSchedules(airdropSchedules);
@@ -110,6 +120,7 @@ const Home: NextPage = () => {
         !account
       )
         return;
+      setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
         signature: "",
         address: account,
@@ -140,9 +151,13 @@ const Home: NextPage = () => {
         ? activeWindow.airdrop_window_claim_end_period
         : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
         ? activeWindow.airdrop_window_registration_end_period
+        : activeWindow?.airdrop_window_status === WindowStatus.UPCOMING
+        ? activeWindow.airdrop_window_registration_start_period
         : "",
     [activeWindow]
   );
+
+  console.log("activeWindow", activeWindow, airdropWindowClosingTime);
 
   return (
     <CommonLayout>
@@ -173,6 +188,7 @@ const Home: NextPage = () => {
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
             airdropWindowClosingTime={airdropWindowClosingTime}
+            airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
             claimStatus={userClaimStatus}
             setClaimStatus={setUserClaimStatus}
           />
