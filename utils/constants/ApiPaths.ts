@@ -5,4 +5,5 @@ export const API_PATHS = {
   CLAIM_SAVE_TXN: "/airdrop/claim-txn",
   AIRDROP_HISTORY: "/airdrop-history",
   CONTACT_US: "https://li8mklzc0h.execute-api.us-east-1.amazonaws.com/mt-v2/email",
+  SUBSCRIBE_NOTIFACTION: "/airdrop-notifications",
 };

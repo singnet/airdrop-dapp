@@ -31,6 +31,7 @@ import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { useAppSelector } from "utils/store/hooks";
 import { Alert } from "@mui/material";
+import { APIError } from "utils/errors";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -145,6 +146,18 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleNotificationSubscription = async (email: string) => {
+    try {
+      await axios.post(API_PATHS.SUBSCRIBE_NOTIFACTION, { email });
+    } catch (error: any) {
+      const backendErrorMessage = error?.errorText?.error?.message;
+      if (backendErrorMessage) {
+        throw new APIError(backendErrorMessage);
+      }
+      throw error;
+    }
+  };
+
   const airdropWindowClosingTime = useMemo(
     () =>
       activeWindow?.airdrop_window_status === WindowStatus.CLAIM
@@ -212,7 +225,7 @@ const Home: NextPage = () => {
       )}
 
       <HowItWorks title="How NuNet Airdrop works" steps={HowItWorksSampleData} blogLink="www.google.com" />
-      <SubscribeToNotification ref={getNotificationRef} />
+      <SubscribeToNotification ref={getNotificationRef} onSubscribe={handleNotificationSubscription} />
       <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
