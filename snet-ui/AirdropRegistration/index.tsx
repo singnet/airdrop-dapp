@@ -54,6 +54,7 @@ export default function AirdropRegistration({
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
+  console.log("endDate", endDate);
   const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
 
   const handleRegistrationClick = async () => {
@@ -78,7 +79,8 @@ export default function AirdropRegistration({
     <Box>
       <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
         <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-          Airdrop registration window {currentWindowId} / {totalWindows} closes:
+          Airdrop registration window {currentWindowId} / {totalWindows}{" "}
+          {airdropWindowStatus === WindowStatus.UPCOMING ? "opens" : "closes"}:
         </Typography>
         <Typography color="text.secondary" variant="h4" align="center" mb={6}>
           {formattedDate}

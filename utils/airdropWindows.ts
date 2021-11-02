@@ -26,6 +26,13 @@ export enum WindowStatus {
   CLAIM = "CLAIM",
 }
 
+const sortWindows = (windows: AirdropWindow[]): AirdropWindow[] =>
+  windows.sort((windowA, windowB) => {
+    const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
+    const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
+    return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
+  });
+
 export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | undefined => {
   const now = new Date();
   //   windows.forEach((window) => {
@@ -60,11 +67,13 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
 
 export const findFirstUpcomingWindow = (windows: AirdropWindow[]): AirdropWindow | undefined => {
   const now = new Date();
-  const sortedWindows = windows.sort((windowA, windowB) => {
-    const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
-    const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
-    return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
-  });
+  // const sortedWindows = windows.sort((windowA, windowB) => {
+  //   const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
+  //   const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
+  //   return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
+  // });
+
+  const sortedWindows = sortWindows(windows);
 
   const firstUpcomingWindow = sortedWindows.find((window) =>
     isDateGreaterThan(window.airdrop_window_registration_start_period, now)
@@ -73,4 +82,16 @@ export const findFirstUpcomingWindow = (windows: AirdropWindow[]): AirdropWindow
     firstUpcomingWindow.airdrop_window_status = WindowStatus.UPCOMING;
   }
   return firstUpcomingWindow;
+};
+
+export const findNextAirdropWindow = (
+  windows: AirdropWindow[],
+  currentWindow: AirdropWindow | undefined
+): AirdropWindow | undefined => {
+  if (!currentWindow) return;
+  const sortedWindows = sortWindows(windows);
+  const nextWindow = sortedWindows.find((window) =>
+    isDateGreaterThan(window.airdrop_window_registration_start_period, currentWindow.airdrop_window_claim_end_period)
+  );
+  return nextWindow;
 };

@@ -85,8 +85,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   useEffect(() => {
     getClaimHistory();
   }, [airdropId, airdropWindowId, account]);
-
-  const endDate = useMemo(() => new Date(airdropWindowClosingTime), [airdropWindowClosingTime]);
+  const endDate = useMemo(() => new Date(`${airdropWindowClosingTime} UTC`), [airdropWindowClosingTime]);
 
   const handleRegistration = async () => {
     try {
