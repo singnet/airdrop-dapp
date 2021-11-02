@@ -24,7 +24,7 @@ export default function FAQPage() {
       <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
         Frequently Asked Questions
       </Typography>
-      <Box sx={{ mx: [0, 7, 20], mt: 3 }}>
+      <Box sx={{ mx: [0, 19, 28], mt: 3 }}>
         {faqSampleData.map((faq) => (
           <Accordion key={faq.question}>
             <AccordionSummary
