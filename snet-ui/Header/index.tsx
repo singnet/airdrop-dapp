@@ -51,9 +51,10 @@ const Header = ({
   return (
     <div className={`${classes.header} ${classes.addBgColor}`}>
       <div className={classes.wrapper}>
-        <Grid container>
+        <Grid container sx={{ m: 8.5, mt: 0, mb: 0 }}>
           <Grid item md={3} className={classes.logoSection}>
             <MobileHeader navigationData={navData} userActions={userActions} />
+
             <h1>
               <a href="/" className={classes.logoAnchor}>
                 <img src="/AppLogo.png" alt="SingularityNET" />
