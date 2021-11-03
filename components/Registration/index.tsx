@@ -44,8 +44,8 @@ interface RegistrationProps {
   airdropWindowTotalTokens?: number;
 }
 
-const airdropOpensIn = new Date();
-airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
+// const airdropOpensIn = new Date();
+// airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
   currentWindowId,
@@ -75,12 +75,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const dispatch = useAppDispatch();
 
-  useInterval(() => {
-    const now = new Date();
-    if (now.getTime() >= airdropOpensIn.getTime()) {
-      setAirdropOpen(true);
-    }
-  }, 500);
+  // useInterval(() => {
+  //   const now = new Date();
+  //   if (now.getTime() >= airdropOpensIn.getTime()) {
+  //     setAirdropOpen(true);
+  //   }
+  // }, 500);
 
   useEffect(() => {
     getClaimHistory();
@@ -297,6 +297,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     );
   }
 
+  const showMini = airdropWindowStatus == WindowStatus.UPCOMING && airdropWindowId === 1;
+
   return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <Registrationsuccess
@@ -305,7 +307,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewNotification={onViewNotification}
       />
     </Box>
-  ) : airdropOpen ? (
+  ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
         currentWindowId={currentWindowId}
@@ -327,7 +329,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         <Airdropinfo blogLink="www.google.com" />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <AirdropRegistrationMini startDate={airdropOpensIn} />
+        <AirdropRegistrationMini startDate={new Date(`${airdropWindowClosingTime} UTC`)} />
       </Grid>
     </Grid>
   );
