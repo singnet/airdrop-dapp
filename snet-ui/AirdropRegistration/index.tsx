@@ -9,6 +9,8 @@ import History from "snet-ui/History";
 import { WindowStatus } from "utils/airdropWindows";
 import Alert, { AlertColor } from "@mui/material/Alert";
 import LoadingButton from "snet-ui/LoadingButton";
+import styles from "./style.module.css";
+import StatusBadge from "./StatusBadge";
 
 type HistoryEvent = {
   label: string;
@@ -77,7 +79,12 @@ export default function AirdropRegistration({
 
   return (
     <Box>
-      <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+      <GradientBox
+        $background="bgGradientHighlight"
+        className={styles.contentWrapper}
+        sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+      >
+        <StatusBadge label="Hello" />
         <Typography color="text.secondary" variant="h4" align="center" mb={1}>
           Airdrop registration window {currentWindowId} / {totalWindows}{" "}
           {airdropWindowStatus === WindowStatus.UPCOMING ? "opens" : "closes"}:
