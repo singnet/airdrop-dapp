@@ -6,7 +6,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { isDateBetween } from "utils/date";
+import { isDateBetween } from "../../utils/date";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
@@ -33,12 +33,21 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   timeZoneName: "short",
 });
 
-export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventProps) {
-  const isActiveEvent = nextEventTime && isDateBetween(event?.time, nextEventTime, now);
-  const formattedDate = useMemo(() => DateFormatter.format(event.time), [event]);
+export default function ScheduleEvent({
+  event,
+  nextEventTime,
+}: ScheduleEventProps) {
+  const isActiveEvent =
+    nextEventTime && isDateBetween(event?.time, nextEventTime, now);
+  const formattedDate = useMemo(() => DateFormatter.format(event.time), [
+    event,
+  ]);
   console.log("isActiveEvent", event.time.toDateString());
   return (
-    <TimelineItem sx={{ bgcolor: "textAdvanced.main" }} key={event.time.toDateString()}>
+    <TimelineItem
+      sx={{ bgcolor: "textAdvanced.main" }}
+      key={event.time.toDateString()}
+    >
       <TimelineOppositeContent sx={{ display: "none" }} />
       <TimelineSeparator>
         <TimelineDot color={isActiveEvent ? "success" : undefined} />
@@ -63,15 +72,27 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
       <TimelineContent>
         <Grid container spacing={4}>
           <Grid item xs={4}>
-            <Typography variant="priority" color={isActiveEvent ? "secondary" : "primary"} component="p">
+            <Typography
+              variant="priority"
+              color={isActiveEvent ? "secondary" : "primary"}
+              component="p"
+            >
               {formattedDate.split(",")[0]}
             </Typography>
-            <Typography variant="priority" color={isActiveEvent ? "secondary" : "primary"}  component="p">
+            <Typography
+              variant="priority"
+              color={isActiveEvent ? "secondary" : "primary"}
+              component="p"
+            >
               {formattedDate.split(",")[1]}
             </Typography>
           </Grid>
           <Grid item xs={8}>
-            <Typography variant="priority" color={isActiveEvent ? "secondary" : "primary"} component="p">
+            <Typography
+              variant="priority"
+              color={isActiveEvent ? "secondary" : "primary"}
+              component="p"
+            >
               {event.title}
             </Typography>
             <Typography variant="normal" color="textAdvanced.primary">
