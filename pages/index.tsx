@@ -15,7 +15,7 @@ import Registration from "components/Registration";
 import Typography from "@mui/material/Typography";
 import Learn from "snet-ui/LearnandConnect";
 // import Notqualified from "snet-ui/Noteligible";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 
@@ -38,6 +38,8 @@ export const getStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
   },
 });
+
+const headerOffset = 82;
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
@@ -95,22 +97,11 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleScrollToRules = () => {
-    if (rulesRef) {
-      rulesRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleScrollToSchedule = () => {
-    if (scheduleRef) {
-      scheduleRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleScrollToGetNotification = () => {
-    if (getNotificationRef) {
-      getNotificationRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
+    if (!elemRef) return;
+    const elemPosition = elemRef.current?.getBoundingClientRect().top as number;
+    const offsetPosition = elemPosition - headerOffset;
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
 
   const getUserEligibility = async () => {
@@ -184,7 +175,7 @@ const Home: NextPage = () => {
               currentWindowId={activeWindow?.airdrop_window_id ?? 0}
               totalWindows={totalWindows}
               userEligibility={userEligibility}
-              onViewRules={handleScrollToRules}
+              onViewRules={() => handleScrollToView(rulesRef)}
               rejectReasons={rejectReasons}
             />
           </Box>
@@ -194,9 +185,9 @@ const Home: NextPage = () => {
             userEligibility={userEligibility}
             userRegistered={userRegistered}
             setUserRegistered={setUserRegistered}
-            onViewRules={handleScrollToRules}
-            onViewSchedule={handleScrollToSchedule}
-            onViewNotification={handleScrollToGetNotification}
+            onViewRules={() => handleScrollToView(rulesRef)}
+            onViewSchedule={() => handleScrollToView(scheduleRef)}
+            onViewNotification={() => handleScrollToView(getNotificationRef)}
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}

@@ -46,6 +46,7 @@ const Triangle = styled(Box)(
 );
 
 export default function StatusBadge({ label }: StatusBadgeProps) {
+  if (!label) return null;
   return (
     <BadgeWrapper>
       <TopRow>
