@@ -74,6 +74,7 @@ export const lightTheme = createTheme({
     text: { primary: colors.BLACK, secondary: colors.WHITE_2 },
     error: { light: colors.LIGHT_RED, main: colors.DARK_RED, contrastText: colors.DARK_RED },
     info: { light: colors.LIGHT_BLUE, main: colors.DARK_BLUE, contrastText: colors.DARK_BLUE },
+    success: { main: colors.GREEN },
     bgFocus: { main: colors.OFF_WHITE },
     textAdvanced: {
       primary: colors.BLACK,

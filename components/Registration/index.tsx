@@ -24,6 +24,7 @@ import { SettingsOverscanOutlined } from "@mui/icons-material";
 import { AlertTypes } from "utils/constants/alert";
 import { AlertColor } from "@mui/material";
 import Success from "snet-ui/Registrationsuccess";
+import ClaimSuccess from "snet-ui/ClaimSuccess";
 
 interface RegistrationProps {
   currentWindowId: number;
@@ -40,6 +41,7 @@ interface RegistrationProps {
   claimStatus: ClaimStatus;
   setClaimStatus: (value: ClaimStatus) => void;
   airdropWindowClosingTime: string;
+  airdropWindowTotalTokens?: number;
 }
 
 const airdropOpensIn = new Date();
@@ -60,6 +62,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropWindowClosingTime,
   claimStatus,
   setClaimStatus,
+  airdropWindowTotalTokens,
 }) => {
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
@@ -82,8 +85,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   useEffect(() => {
     getClaimHistory();
   }, [airdropId, airdropWindowId, account]);
-
-  const endDate = useMemo(() => new Date(airdropWindowClosingTime), [airdropWindowClosingTime]);
+  const endDate = useMemo(() => new Date(`${airdropWindowClosingTime} UTC`), [airdropWindowClosingTime]);
 
   const handleRegistration = async () => {
     try {
@@ -199,7 +201,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         amount: claimAmount.toString(),
         airdrop_id: airdropId?.toString(),
         airdrop_window_id: airdropWindowId?.toString(),
-        txn_status: "PENDING",
       });
       console.log("response.dat", response.data);
     };
@@ -282,7 +283,21 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  return false && showRegistrationSuccess ? (
+  if (claimStatus === ClaimStatus.SUCCESS && airdropWindowStatus === WindowStatus.CLAIM) {
+    return (
+      <Box sx={{ px: [0, 4, 15] }}>
+        <ClaimSuccess
+          onViewRules={onViewRules}
+          onViewSchedule={onViewSchedule}
+          onViewNotification={onViewNotification}
+          currentWindowId={currentWindowId}
+          totalWindows={totalWindows}
+        />
+      </Box>
+    );
+  }
+
+  return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <Registrationsuccess
         onViewRules={onViewRules}
@@ -295,6 +310,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       <AirdropRegistration
         currentWindowId={currentWindowId}
         totalWindows={totalWindows}
+        airdropWindowTotalTokens={airdropWindowTotalTokens}
         endDate={endDate}
         onRegister={handleRegistration}
         onViewRules={onViewRules}

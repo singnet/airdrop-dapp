@@ -26,8 +26,8 @@ import Image from "next/image";
 console.log(
   `Don't remove this console. 
 It is mandatory to import the Image from "next/image"
-for @sls-next/serverless-component to build the Image lambda properly`,
-  typeof Image
+for @sls-next/serverless-component to build the Image lambda properly.`,
+  Image.name
 );
 
 const BlockChainProvider = dynamic(() => import("snet-ui/Blockchain/Provider"), { ssr: false });
