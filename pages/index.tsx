@@ -56,7 +56,11 @@ const Home: NextPage = () => {
   const [airdropRules, setAirdropRules] = useState([]);
   const [totalWindows, setTotalWindows] = useState(0);
   const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(undefined);
+  const [airdropTotalTokens, setAirdropTotalTokens] = useState({ value: 0, name: "" });
   const { error: walletError } = useAppSelector((state) => state.wallet);
+  const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
+
+  console.log("airdropTotalTokens", airdropTotalTokens);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -91,6 +95,7 @@ const Home: NextPage = () => {
       setSchedules(airdropSchedules);
       setAirdropRules(airdrop.airdrop_rules);
       setTotalWindows(airdrop.airdrop_windows.length);
+      setAirdropTotalTokens({ value: airdrop.airdrop_total_tokens, name: airdrop.token_name });
     } catch (e) {
       console.log("schedule error", e);
       // TODO: Implement error handling
@@ -105,6 +110,7 @@ const Home: NextPage = () => {
   };
 
   const getUserEligibility = async () => {
+    console.log("activeWindow eligibility", activeWindow);
     try {
       if (
         typeof activeWindow?.airdrop_id === "undefined" ||
@@ -127,11 +133,13 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
+      console.log("airdropTotalTokens data", data);
       // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
+      setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
       console.log("eligibility check error", error);
     }
@@ -192,8 +200,10 @@ const Home: NextPage = () => {
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
             airdropWindowClosingTime={airdropWindowClosingTime}
-            airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
+            airdropWindowTotalTokens={currentWindowRewards}
+            airdropTotalTokens={airdropTotalTokens}
             claimStatus={userClaimStatus}
+            activeWindow={activeWindow}
             setClaimStatus={setUserClaimStatus}
           />
         </>
