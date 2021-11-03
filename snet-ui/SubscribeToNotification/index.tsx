@@ -79,6 +79,7 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
               color="secondary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={subscriptionLoader}
             />
           </Grid>
           <Grid item xs={12} md={4} sx={{ display: "flex", alignItems: "center" }}>
