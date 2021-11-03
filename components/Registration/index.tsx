@@ -12,7 +12,7 @@ import { useInterval } from "usehooks-ts";
 import AirdropRegistration from "snet-ui/AirdropRegistration";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
-import { WindowStatus } from "utils/airdropWindows";
+import { AirdropWindow, WindowStatus } from "utils/airdropWindows";
 import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
 import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
 import { parseEthersError } from "utils/ethereum";
@@ -25,6 +25,17 @@ import { AlertTypes } from "utils/constants/alert";
 import { AlertColor } from "@mui/material";
 import Success from "snet-ui/Registrationsuccess";
 import ClaimSuccess from "snet-ui/ClaimSuccess";
+import { isDateGreaterThan } from "utils/date";
+
+const DateFormatter = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  timeZone: "UTC",
+  timeZoneName: "short",
+});
 
 interface RegistrationProps {
   currentWindowId: number;
@@ -42,10 +53,12 @@ interface RegistrationProps {
   setClaimStatus: (value: ClaimStatus) => void;
   airdropWindowClosingTime: string;
   airdropWindowTotalTokens?: number;
+  airdropTotalTokens: { value: number; name: string };
+  activeWindow?: AirdropWindow;
 }
 
-const airdropOpensIn = new Date();
-airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
+// const airdropOpensIn = new Date();
+// airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
   currentWindowId,
@@ -63,6 +76,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   claimStatus,
   setClaimStatus,
   airdropWindowTotalTokens,
+  airdropTotalTokens,
+  activeWindow,
 }) => {
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
@@ -75,12 +90,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const dispatch = useAppDispatch();
 
-  useInterval(() => {
-    const now = new Date();
-    if (now.getTime() >= airdropOpensIn.getTime()) {
-      setAirdropOpen(true);
-    }
-  }, 500);
+  // useInterval(() => {
+  //   const now = new Date();
+  //   if (now.getTime() >= airdropOpensIn.getTime()) {
+  //     setAirdropOpen(true);
+  //   }
+  // }, 500);
 
   useEffect(() => {
     getClaimHistory();
@@ -297,15 +312,23 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     );
   }
 
+  const showMini =
+    airdropWindowStatus == WindowStatus.UPCOMING &&
+    airdropWindowId === 1 &&
+    !isDateGreaterThan(activeWindow?.airdrop_window_registration_start_period ?? "", new Date());
+
   return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <Registrationsuccess
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         onViewNotification={onViewNotification}
+        windowId={currentWindowId}
+        totalWindows={totalWindows}
+        claimStartDate={DateFormatter.format(new Date(`${activeWindow?.airdrop_window_claim_start_period ?? ""} UTC`))}
       />
     </Box>
-  ) : airdropOpen ? (
+  ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
         currentWindowId={currentWindowId}
@@ -319,6 +342,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onClaim={handleClaim}
         airdropWindowStatus={airdropWindowStatus}
         uiAlert={uiAlert}
+        activeWindow={activeWindow}
       />
     </Box>
   ) : (
@@ -327,7 +351,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         <Airdropinfo blogLink="www.google.com" />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <AirdropRegistrationMini startDate={airdropOpensIn} />
+        <AirdropRegistrationMini
+          startDate={new Date(`${airdropWindowClosingTime} UTC`)}
+          tokenName={airdropTotalTokens.name}
+          totalTokens={airdropTotalTokens.value}
+        />
       </Grid>
     </Grid>
   );

@@ -13,9 +13,19 @@ type RegistrationSuccessProps = {
   onViewSchedule: () => void;
   onViewRules: () => void;
   onViewNotification: () => void;
+  windowId: number;
+  totalWindows: number;
+  claimStartDate: string;
 };
 
-export default function Success({ onViewSchedule, onViewRules, onViewNotification }: RegistrationSuccessProps) {
+export default function Success({
+  onViewSchedule,
+  onViewRules,
+  onViewNotification,
+  windowId,
+  totalWindows,
+  claimStartDate,
+}: RegistrationSuccessProps) {
   return (
     <Box>
       <GradientBox sx={{ py: 2, pb: 2 }}>
@@ -32,7 +42,7 @@ export default function Success({ onViewSchedule, onViewRules, onViewNotificatio
             </Typography>
             <Box>
               <Typography align="center" fontWeight="bold" variant="h5" color="text.secondary">
-                Successfully Registered for Airdrop Window 1/2
+                Successfully Registered for Airdrop Window {windowId} / {totalWindows}
               </Typography>
             </Box>
             <Box
@@ -48,9 +58,9 @@ export default function Success({ onViewSchedule, onViewRules, onViewNotificatio
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
                 <Typography variant="body1" color="textAdvanced.primary">
-                  You can start claiming your tokens for Airdrop 1 from 23 Oct 2021. It is possible to claim all tokens
-                  with the last airdrop window which allow you save on the gas cost fees. However we recommend you claim
-                  your tokens at each window claim time.
+                  You can start claiming your tokens for Airdrop from {claimStartDate}. It is possible to claim all
+                  tokens with the last airdrop window which allow you save on the gas cost fees. However we recommend
+                  you claim your tokens at each window claim time.
                 </Typography>
               </Box>
             </Box>

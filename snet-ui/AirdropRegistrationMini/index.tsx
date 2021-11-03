@@ -9,6 +9,8 @@ import Box from "@mui/system/Box";
 
 type AirdropRegistrationMiniProps = {
   startDate: Date;
+  totalTokens: number;
+  tokenName: string;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -20,7 +22,7 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
   timeZoneName: "short",
 });
-export default function AirdropRegistrationMini({ startDate }: AirdropRegistrationMiniProps) {
+export default function AirdropRegistrationMini({ startDate, totalTokens, tokenName }: AirdropRegistrationMiniProps) {
   const formattedDate = useMemo(() => DateFormatter.format(startDate), [startDate]);
   return (
     <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
@@ -35,7 +37,7 @@ export default function AirdropRegistrationMini({ startDate }: AirdropRegistrati
             Airdrop
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            2
+            1
           </Typography>
         </Grid>
         <Grid item xs={6} textAlign="center">
@@ -43,7 +45,7 @@ export default function AirdropRegistrationMini({ startDate }: AirdropRegistrati
             Total Token Worth
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            100000 AGIX
+            {totalTokens} {tokenName}
           </Typography>
         </Grid>
       </Grid>

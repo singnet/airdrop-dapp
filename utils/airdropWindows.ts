@@ -46,7 +46,7 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
       airdrop_window_registration_end_period: registrationEnd,
       airdrop_window_claim_start_period: claimStart,
       airdrop_window_claim_end_period: claimEnd,
-    }) => isDateBetween(registrationStart, registrationEnd, now) || isDateBetween(claimStart, claimEnd, now)
+    }) => isDateBetween(registrationStart, claimEnd, now) || isDateBetween(claimStart, claimEnd, now)
   );
   if (activeWindow) {
     if (

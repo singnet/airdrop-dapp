@@ -6,11 +6,12 @@ import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
 import InfoIcon from "@mui/icons-material/Info";
 import History from "snet-ui/History";
-import { WindowStatus } from "utils/airdropWindows";
+import { AirdropWindow, WindowStatus } from "utils/airdropWindows";
 import Alert, { AlertColor } from "@mui/material/Alert";
 import LoadingButton from "snet-ui/LoadingButton";
 import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
+import { isDateBetween, isDateGreaterThan } from "utils/date";
 
 type HistoryEvent = {
   label: string;
@@ -29,6 +30,7 @@ type AirdropRegistrationProps = {
   onClaim: () => void;
   airdropWindowStatus?: WindowStatus;
   uiAlert: { type: AlertColor; message: string };
+  activeWindow?: AirdropWindow;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -59,6 +61,7 @@ export default function AirdropRegistration({
   onClaim,
   airdropWindowStatus,
   uiAlert,
+  activeWindow,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
@@ -83,6 +86,33 @@ export default function AirdropRegistration({
     }
   };
 
+  // const isUpcomingClaim = isDateBetween(
+  //   `${activeWindow?.airdrop_window_registration_end_period} UTC`,
+  //   `${activeWindow?.airdrop_window_claim_start_period} UTC`,
+  //   new Date()
+  // );
+
+  const isUpcomingRegistration = isDateGreaterThan(
+    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
+    new Date()
+  );
+
+  const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
+
+  const isClaimActive = isDateBetween(
+    `${activeWindow?.airdrop_window_claim_start_period} UTC`,
+    `${activeWindow?.airdrop_window_claim_end_period} UTC`,
+    new Date()
+  );
+
+  const isRegistrationActive = isDateBetween(
+    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
+    `${activeWindow?.airdrop_window_registration_end_period} UTC`,
+    new Date()
+  );
+
+  console.log(new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`).toString());
+
   return (
     <Box>
       <GradientBox
@@ -90,16 +120,17 @@ export default function AirdropRegistration({
         className={styles.contentWrapper}
         sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
       >
-        <StatusBadge label={statusLabelMap[airdropWindowStatus ?? ""]} />
+        <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ""] : ""} />
         <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-          Airdrop registration window {currentWindowId} / {totalWindows}{" "}
+          Airdrop {isUpcomingRegistration ? "registration" : isUpcomingClaim ? "claim" : "registration"} window
+          {currentWindowId} / {totalWindows} &nbsp;
           {airdropWindowStatus === WindowStatus.UPCOMING ? "opens" : "closes"}:
         </Typography>
         <Typography color="text.secondary" variant="h4" align="center" mb={6}>
           {formattedDate}
         </Typography>
         <FlipCountdown endDate={endDate} />
-        {airdropWindowStatus === WindowStatus.CLAIM ? (
+        {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
           <>
             <Box sx={{ mt: 2 }}>
               <Typography variant="label" align="center" component="p">
@@ -130,7 +161,7 @@ export default function AirdropRegistration({
           </>
         ) : null}
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
-          {airdropWindowStatus === WindowStatus.CLAIM ? (
+          {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <LoadingButton
               variant="contained"
               color="secondary"

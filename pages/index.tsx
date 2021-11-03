@@ -15,7 +15,7 @@ import Registration from "components/Registration";
 import Typography from "@mui/material/Typography";
 import Learn from "snet-ui/LearnandConnect";
 // import Notqualified from "snet-ui/Noteligible";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 
@@ -39,6 +39,8 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
+const headerOffset = 82;
+
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
   const { account } = useActiveWeb3React();
@@ -54,7 +56,11 @@ const Home: NextPage = () => {
   const [airdropRules, setAirdropRules] = useState([]);
   const [totalWindows, setTotalWindows] = useState(0);
   const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(undefined);
+  const [airdropTotalTokens, setAirdropTotalTokens] = useState({ value: 0, name: "" });
   const { error: walletError } = useAppSelector((state) => state.wallet);
+  const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
+
+  console.log("airdropTotalTokens", airdropTotalTokens);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -89,31 +95,22 @@ const Home: NextPage = () => {
       setSchedules(airdropSchedules);
       setAirdropRules(airdrop.airdrop_rules);
       setTotalWindows(airdrop.airdrop_windows.length);
+      setAirdropTotalTokens({ value: airdrop.airdrop_total_tokens, name: airdrop.token_name });
     } catch (e) {
       console.log("schedule error", e);
       // TODO: Implement error handling
     }
   };
 
-  const handleScrollToRules = () => {
-    if (rulesRef) {
-      rulesRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleScrollToSchedule = () => {
-    if (scheduleRef) {
-      scheduleRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleScrollToGetNotification = () => {
-    if (getNotificationRef) {
-      getNotificationRef?.current?.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
+    if (!elemRef) return;
+    const elemPosition = elemRef.current?.getBoundingClientRect().top as number;
+    const offsetPosition = elemPosition - headerOffset;
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
 
   const getUserEligibility = async () => {
+    console.log("activeWindow eligibility", activeWindow);
     try {
       if (
         typeof activeWindow?.airdrop_id === "undefined" ||
@@ -136,11 +133,13 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
+      console.log("airdropTotalTokens data", data);
       // TODO: Uncomment the below line
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
+      setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
       console.log("eligibility check error", error);
     }
@@ -184,7 +183,7 @@ const Home: NextPage = () => {
               currentWindowId={activeWindow?.airdrop_window_id ?? 0}
               totalWindows={totalWindows}
               userEligibility={userEligibility}
-              onViewRules={handleScrollToRules}
+              onViewRules={() => handleScrollToView(rulesRef)}
               rejectReasons={rejectReasons}
             />
           </Box>
@@ -194,15 +193,17 @@ const Home: NextPage = () => {
             userEligibility={userEligibility}
             userRegistered={userRegistered}
             setUserRegistered={setUserRegistered}
-            onViewRules={handleScrollToRules}
-            onViewSchedule={handleScrollToSchedule}
-            onViewNotification={handleScrollToGetNotification}
+            onViewRules={() => handleScrollToView(rulesRef)}
+            onViewSchedule={() => handleScrollToView(scheduleRef)}
+            onViewNotification={() => handleScrollToView(getNotificationRef)}
             airdropId={activeWindow?.airdrop_id}
             airdropWindowId={activeWindow?.airdrop_window_id}
             airdropWindowStatus={activeWindow?.airdrop_window_status}
             airdropWindowClosingTime={airdropWindowClosingTime}
-            airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
+            airdropWindowTotalTokens={currentWindowRewards}
+            airdropTotalTokens={airdropTotalTokens}
             claimStatus={userClaimStatus}
+            activeWindow={activeWindow}
             setClaimStatus={setUserClaimStatus}
           />
         </>
