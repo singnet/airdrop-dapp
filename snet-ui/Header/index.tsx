@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
 import { styles } from "./styles";
-import { navData, userActions } from "snet-ui/constants/Header";
+import { navData, userActions } from "../../snet-ui/constants/Header";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 

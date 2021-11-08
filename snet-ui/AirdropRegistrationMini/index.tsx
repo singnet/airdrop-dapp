@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import GradientBox from "snet-ui/GradientBox";
+import GradientBox from "../../snet-ui/GradientBox";
 import Typography from "@mui/material/Typography";
-import FlipCountdown from "snet-ui/FlipClock/Countdown";
+import FlipCountdown from "../../snet-ui/FlipClock/Countdown";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -22,10 +22,19 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
   timeZoneName: "short",
 });
-export default function AirdropRegistrationMini({ startDate, totalTokens, tokenName }: AirdropRegistrationMiniProps) {
-  const formattedDate = useMemo(() => DateFormatter.format(startDate), [startDate]);
+export default function AirdropRegistrationMini({
+  startDate,
+  totalTokens,
+  tokenName,
+}: AirdropRegistrationMiniProps) {
+  const formattedDate = useMemo(() => DateFormatter.format(startDate), [
+    startDate,
+  ]);
   return (
-    <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+    <GradientBox
+      $background="bgGradientHighlight"
+      sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+    >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
         Airdrop registration window starts {formattedDate}
       </Typography>

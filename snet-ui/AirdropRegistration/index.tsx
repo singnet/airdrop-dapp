@@ -1,17 +1,17 @@
 import React, { useMemo, useState } from "react";
-import GradientBox from "snet-ui/GradientBox";
+import GradientBox from "../../snet-ui/GradientBox";
 import Typography from "@mui/material/Typography";
-import FlipCountdown from "snet-ui/FlipClock/Countdown";
+import FlipCountdown from "../../snet-ui/FlipClock/Countdown";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
 import InfoIcon from "@mui/icons-material/Info";
-import History from "snet-ui/History";
-import { AirdropWindow, WindowStatus } from "utils/airdropWindows";
+import History from "../../snet-ui/History";
+import { AirdropWindow, WindowStatus } from "../../utils/airdropWindows";
 import Alert, { AlertColor } from "@mui/material/Alert";
-import LoadingButton from "snet-ui/LoadingButton";
+import LoadingButton from "../../snet-ui/LoadingButton";
 import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
-import { isDateBetween, isDateGreaterThan } from "utils/date";
+import { isDateBetween, isDateGreaterThan } from "../../utils/date";
 
 type HistoryEvent = {
   label: string;
@@ -97,7 +97,10 @@ export default function AirdropRegistration({
     new Date()
   );
 
-  const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
+  const isUpcomingClaim = isDateGreaterThan(
+    `${activeWindow?.airdrop_window_claim_start_period} UTC`,
+    new Date()
+  );
 
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
@@ -111,7 +114,11 @@ export default function AirdropRegistration({
     new Date()
   );
 
-  console.log(new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`).toString());
+  console.log(
+    new Date(
+      `${activeWindow?.airdrop_window_claim_start_period} UTC`
+    ).toString()
+  );
 
   return (
     <Box>
@@ -120,9 +127,21 @@ export default function AirdropRegistration({
         className={styles.contentWrapper}
         sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
       >
-        <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ""] : ""} />
+        <StatusBadge
+          label={
+            isRegistrationActive || isClaimActive
+              ? statusLabelMap[airdropWindowStatus ?? ""]
+              : ""
+          }
+        />
         <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-          Airdrop {isUpcomingRegistration ? "registration" : isUpcomingClaim ? "claim" : "registration"} window
+          Airdrop{" "}
+          {isUpcomingRegistration
+            ? "registration"
+            : isUpcomingClaim
+            ? "claim"
+            : "registration"}{" "}
+          window
           {currentWindowId} / {totalWindows} &nbsp;
           {airdropWindowStatus === WindowStatus.UPCOMING ? "opens" : "closes"}:
         </Typography>
@@ -136,7 +155,11 @@ export default function AirdropRegistration({
               <Typography variant="label" align="center" component="p">
                 Airdrop window {currentWindowId} / {totalWindows} rewards
               </Typography>
-              <Typography variant="h5" color="textAdvanced.secondary" align="center">
+              <Typography
+                variant="h5"
+                color="textAdvanced.secondary"
+                align="center"
+              >
                 {airdropWindowTotalTokens}
               </Typography>
             </Box>
@@ -152,15 +175,24 @@ export default function AirdropRegistration({
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
                 <Typography variant="body1" color="textAdvanced.primary">
-                  You can start claiming your tokens now. It is possible to claim all tokens with the last airdrop
-                  window which allow you save on the gas cost fees. However we recommend you claim your tokens at each
-                  window claim time.
+                  You can start claiming your tokens now. It is possible to
+                  claim all tokens with the last airdrop window which allow you
+                  save on the gas cost fees. However we recommend you claim your
+                  tokens at each window claim time.
                 </Typography>
               </Box>
             </Box>
           </>
         ) : null}
-        <Box sx={{ mt: 6, display: "flex", justifyContent: "center", flexDirection: ["column", "row"], gap: [0, 2] }}>
+        <Box
+          sx={{
+            mt: 6,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: ["column", "row"],
+            gap: [0, 2],
+          }}
+        >
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <LoadingButton
               variant="contained"
@@ -173,7 +205,9 @@ export default function AirdropRegistration({
             </LoadingButton>
           ) : (
             <>
-              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
+              >
                 {airdropWindowStatus === WindowStatus.REGISTRATION ? (
                   <LoadingButton
                     variant="contained"
@@ -186,13 +220,27 @@ export default function AirdropRegistration({
                   </LoadingButton>
                 ) : null}
               </Box>
-              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-                <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewSchedule}>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ width: 170 }}
+                  onClick={onViewSchedule}
+                >
                   View Schedule
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}>
-                <Button variant="contained" color="secondary" sx={{ width: 170 }} onClick={onViewRules}>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ width: 170 }}
+                  onClick={onViewRules}
+                >
                   View Rules
                 </Button>
               </Box>
@@ -208,7 +256,12 @@ export default function AirdropRegistration({
         </Box>
         {history && history.length > 0 ? (
           <Box>
-            <Typography align="center" color="textAdvanced.secondary" variant="h5" mt={6}>
+            <Typography
+              align="center"
+              color="textAdvanced.secondary"
+              variant="h5"
+              mt={6}
+            >
               Your Airdrop History
             </Typography>
             <History events={history} />
