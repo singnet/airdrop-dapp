@@ -24,6 +24,7 @@ export type AirdropWindow = {
 export enum WindowStatus {
   UPCOMING = "UPCOMING",
   REGISTRATION = "REGISTRATION",
+  IDLE = "IDLE", // Between registration and the claim period
   CLAIM = "CLAIM",
 }
 
@@ -61,6 +62,14 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.REGISTRATION;
+    } else if (
+      isDateBetween(
+        `${activeWindow.airdrop_window_registration_end_period} UTC`,
+        `${activeWindow.airdrop_window_claim_start_period} UTC`,
+        now
+      )
+    ) {
+      activeWindow.airdrop_window_status = WindowStatus.IDLE;
     } else {
       activeWindow.airdrop_window_status = WindowStatus.CLAIM;
     }

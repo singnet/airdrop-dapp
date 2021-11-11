@@ -90,6 +90,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     () =>
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
         ? new Date(`${activeWindow?.airdrop_window_registration_end_period} UTC`)
+        : activeWindow?.airdrop_window_status === WindowStatus.IDLE
+        ? new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`)
         : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
         ? new Date(`${activeWindow?.airdrop_window_claim_end_period} UTC`)
         : new Date(),
