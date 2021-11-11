@@ -54,7 +54,7 @@ const Home: NextPage = () => {
   const { error: walletError } = useAppSelector((state) => state.wallet);
   const { window: activeWindow } = useAppSelector(selectActiveWindow);
   const dispatch = useAppDispatch();
-  const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
+  // const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
 
   console.log("airdropTotalTokens", airdropTotalTokens);
 
@@ -138,7 +138,7 @@ const Home: NextPage = () => {
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
-      setCurrentWindowRewards(data.airdrop_window_rewards);
+      // setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
       console.log("eligibility check error", error);
     }

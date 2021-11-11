@@ -50,8 +50,6 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
     );
   });
 
-  console.log("sorted windows", sortedWindows);
-
   if (activeWindow) {
     if (isDateGreaterThan(`${activeWindow.airdrop_window_registration_start_period} UTC`, now)) {
       activeWindow.airdrop_window_status = WindowStatus.UPCOMING;

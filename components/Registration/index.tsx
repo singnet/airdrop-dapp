@@ -316,9 +316,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   const showMini =
-    activeWindow.airdrop_window_status == WindowStatus.UPCOMING &&
-    activeWindow.airdrop_window_order === 1 &&
-    !isDateGreaterThan(activeWindow.airdrop_window_registration_start_period ?? "", new Date());
+    activeWindow.airdrop_window_status == WindowStatus.UPCOMING && activeWindow.airdrop_window_order === 1;
+
+  console.log("show mini", showMini);
 
   return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
