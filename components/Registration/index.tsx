@@ -140,7 +140,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       },
       {
         label: `Window ${el.airdrop_window_id} Rewards`,
-        value: `${el.claimable_amount} SDAO`,
+        value: `${el.claimable_amount} ${airdropTotalTokens.name}`,
       },
       {
         label: `Window ${el.airdrop_window_id} Claimed`,
