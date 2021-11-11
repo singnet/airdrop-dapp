@@ -9,6 +9,7 @@ export type AirdropWindowTimeline = {
 export type AirdropWindow = {
   airdrop_id: number;
   airdrop_window_id: number;
+  airdrop_window_order: number;
   airdrop_window_name: string;
   airdrop_window_registration_start_period: string;
   airdrop_window_registration_end_period: string;
@@ -26,33 +27,38 @@ export enum WindowStatus {
   CLAIM = "CLAIM",
 }
 
-const sortWindows = (windows: AirdropWindow[]): AirdropWindow[] =>
-  windows.sort((windowA, windowB) => {
-    const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
-    const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
-    return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
-  });
+// const sortWindows = (windows: AirdropWindow[]): AirdropWindow[] =>
+//   windows.sort((windowA, windowB) => {
+//     const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
+//     const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
+//     return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
+//   });
 
 export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | undefined => {
   const now = new Date();
-  //   windows.forEach((window) => {
-  //     console.log(
-  //       isDateBetween(window.airdrop_window_registration_start_period, window.airdrop_window_registration_end_period, now)
-  //     );
-  //   });
-  const activeWindow = windows.find(
-    ({
-      airdrop_window_registration_start_period: registrationStart,
-      airdrop_window_registration_end_period: registrationEnd,
-      airdrop_window_claim_start_period: claimStart,
-      airdrop_window_claim_end_period: claimEnd,
-    }) => isDateBetween(registrationStart, claimEnd, now) || isDateBetween(claimStart, claimEnd, now)
-  );
+
+  const sortedWindows = windows
+    .slice()
+    .sort((windowA, windowB) => windowA.airdrop_window_id - windowB.airdrop_window_id);
+
+  const activeWindow = sortedWindows.find((windowA) => {
+    return (
+      isDateGreaterThan(`${windowA.airdrop_window_registration_start_period} UTC`, now) ||
+      isDateGreaterThan(`${windowA.airdrop_window_registration_end_period} UTC`, now) ||
+      isDateGreaterThan(`${windowA.airdrop_window_claim_start_period} UTC`, now) ||
+      isDateGreaterThan(`${windowA.airdrop_window_claim_end_period} UTC`, now)
+    );
+  });
+
+  console.log("sorted windows", sortedWindows);
+
   if (activeWindow) {
-    if (
+    if (isDateGreaterThan(`${activeWindow.airdrop_window_registration_start_period} UTC`, now)) {
+      activeWindow.airdrop_window_status = WindowStatus.UPCOMING;
+    } else if (
       isDateBetween(
-        activeWindow.airdrop_window_registration_start_period,
-        activeWindow.airdrop_window_registration_end_period,
+        `${activeWindow.airdrop_window_registration_start_period} UTC`,
+        `${activeWindow.airdrop_window_registration_end_period} UTC`,
         now
       )
     ) {
@@ -73,7 +79,7 @@ export const findFirstUpcomingWindow = (windows: AirdropWindow[]): AirdropWindow
   //   return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
   // });
 
-  const sortedWindows = sortWindows(windows);
+  const sortedWindows = windows;
 
   const firstUpcomingWindow = sortedWindows.find((window) =>
     isDateGreaterThan(window.airdrop_window_registration_start_period, now)
@@ -84,14 +90,10 @@ export const findFirstUpcomingWindow = (windows: AirdropWindow[]): AirdropWindow
   return firstUpcomingWindow;
 };
 
-export const findNextAirdropWindow = (
-  windows: AirdropWindow[],
-  currentWindow: AirdropWindow | undefined
-): AirdropWindow | undefined => {
-  if (!currentWindow) return;
-  const sortedWindows = sortWindows(windows);
-  const nextWindow = sortedWindows.find((window) =>
-    isDateGreaterThan(window.airdrop_window_registration_start_period, currentWindow.airdrop_window_claim_end_period)
-  );
-  return nextWindow;
-};
+// export const findNextAirdropWindow = (
+//   windows: AirdropWindow[],
+//   currentWindowOrder: number
+// ): AirdropWindow | undefined => {
+//   const nextWindow = windows.find((windowA) => windowA.airdrop_window_order === currentWindowOrder + 1);
+//   return nextWindow;
+// };

@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import axios from "utils/Axios";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
-import { useAppDispatch } from "utils/store/hooks";
+import { useAppDispatch, useAppSelector } from "utils/store/hooks";
 import Airdropinfo from "snet-ui/Airdropinfo";
 import Grid from "@mui/material/Grid";
 import AirdropRegistrationMini from "snet-ui/AirdropRegistrationMini";
@@ -26,6 +26,7 @@ import { AlertColor } from "@mui/material";
 import Success from "snet-ui/Registrationsuccess";
 import ClaimSuccess from "snet-ui/ClaimSuccess";
 import { isDateGreaterThan } from "utils/date";
+import { selectActiveWindow } from "utils/store/features/activeWindowSlice";
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -38,46 +39,30 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
 });
 
 interface RegistrationProps {
-  currentWindowId: number;
-  totalWindows: number;
   userEligibility: UserEligibility;
   userRegistered: boolean;
   setUserRegistered: (value: boolean) => void;
   onViewSchedule: () => void;
   onViewRules: () => void;
   onViewNotification: () => void;
-  airdropId?: number;
-  airdropWindowId?: number;
-  airdropWindowStatus?: WindowStatus;
   claimStatus: ClaimStatus;
   setClaimStatus: (value: ClaimStatus) => void;
-  airdropWindowClosingTime: string;
-  airdropWindowTotalTokens?: number;
   airdropTotalTokens: { value: number; name: string };
-  activeWindow?: AirdropWindow;
 }
 
 // const airdropOpensIn = new Date();
 // airdropOpensIn.setMinutes(airdropOpensIn.getMinutes() + 0);
 
 const Registration: FunctionComponent<RegistrationProps> = ({
-  currentWindowId,
-  totalWindows,
   userEligibility,
   userRegistered,
   setUserRegistered,
   onViewSchedule,
   onViewRules,
   onViewNotification,
-  airdropId,
-  airdropWindowId,
-  airdropWindowStatus,
-  airdropWindowClosingTime,
   claimStatus,
   setClaimStatus,
-  airdropWindowTotalTokens,
   airdropTotalTokens,
-  activeWindow,
 }) => {
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: "" });
@@ -87,6 +72,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(AirdropContractNetworks[chainId ?? 0]?.address);
+  const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
   const dispatch = useAppDispatch();
 
@@ -99,8 +85,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   useEffect(() => {
     getClaimHistory();
-  }, [airdropId, airdropWindowId, account]);
-  const endDate = useMemo(() => new Date(`${airdropWindowClosingTime} UTC`), [airdropWindowClosingTime]);
+  }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
+  const endDate = useMemo(() => new Date(`${activeWindow?.airdrop_window_registration_end_period} UTC`), [
+    activeWindow?.airdrop_window_registration_end_period,
+  ]);
 
   const handleRegistration = async () => {
     try {
@@ -111,7 +99,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
       const signature = await ethSign.sign(
         ["uint8", "uint8", "address"],
-        [Number(airdropId), Number(airdropWindowId), account]
+        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account]
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
@@ -127,10 +115,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   };
 
   const getClaimHistory = async () => {
-    if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account) return;
+    if (!activeWindow || !account) return;
     const response: any = await axios.post(API_PATHS.AIRDROP_HISTORY, {
       address: account,
-      airdrop_id: `${airdropId}`,
+      airdrop_id: `${activeWindow.airdrop_id}`,
     });
 
     const history = response.data.data.claim_history.map((el) => [
@@ -156,7 +144,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   };
 
   const handleClaim = async () => {
-    if (typeof airdropId === "undefined" || typeof airdropWindowId === "undefined" || !account || !library) return;
+    if (
+      typeof activeWindow?.airdrop_id === "undefined" ||
+      typeof activeWindow.airdrop_window_id === "undefined" ||
+      !account ||
+      !library
+    )
+      return;
 
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
@@ -173,8 +167,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       try {
         const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
           address: account,
-          airdrop_id: airdropId.toString(),
-          airdrop_window_id: airdropWindowId.toString(),
+          airdrop_id: activeWindow.airdrop_id.toString(),
+          airdrop_window_id: activeWindow.airdrop_window_id.toString(),
         });
 
         console.log("response", response);
@@ -197,8 +191,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         const txn = await airdropContract.claim(
           tokenAddress,
           claimAmount.toString(),
-          airdropId?.toString(),
-          airdropWindowId?.toString(),
+          activeWindow.airdrop_id?.toString(),
+          activeWindow.airdrop_window_id?.toString(),
           signature
         );
         return txn;
@@ -214,8 +208,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         address: account,
         txn_hash: txnHash,
         amount: claimAmount.toString(),
-        airdrop_id: airdropId?.toString(),
-        airdrop_window_id: airdropWindowId?.toString(),
+        airdrop_id: activeWindow?.airdrop_id?.toString(),
+        airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
       });
       console.log("response.dat", response.data);
     };
@@ -275,17 +269,22 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const airdropUserRegistration = async (address: string, signature: string) => {
     try {
-      const payload = { signature, address, airdrop_id: airdropId, airdrop_window_id: airdropWindowId };
+      const payload = {
+        signature,
+        address,
+        airdrop_id: activeWindow?.airdrop_id,
+        airdrop_window_id: activeWindow?.airdrop_window_id,
+      };
       await axios.post("airdrop/registration", payload);
     } catch (error: any) {
       throw new Error(error);
     }
   };
 
-  const showRegistrationSuccess = useMemo(() => userRegistered && airdropWindowStatus === WindowStatus.REGISTRATION, [
-    userRegistered,
-    airdropWindowStatus,
-  ]);
+  const showRegistrationSuccess = useMemo(
+    () => userRegistered && activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
+    [userRegistered, activeWindow]
+  );
 
   if (userEligibility === UserEligibility.PENDING) {
     return (
@@ -298,14 +297,18 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  if (claimStatus === ClaimStatus.SUCCESS && airdropWindowStatus === WindowStatus.CLAIM) {
+  if (!activeWindow) {
+    return null;
+  }
+
+  if (claimStatus === ClaimStatus.SUCCESS && activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
         <ClaimSuccess
           onViewRules={onViewRules}
           onViewSchedule={onViewSchedule}
           onViewNotification={onViewNotification}
-          currentWindowId={currentWindowId}
+          currentWindowId={activeWindow?.airdrop_window_order}
           totalWindows={totalWindows}
         />
       </Box>
@@ -313,9 +316,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   const showMini =
-    airdropWindowStatus == WindowStatus.UPCOMING &&
-    airdropWindowId === 1 &&
-    !isDateGreaterThan(activeWindow?.airdrop_window_registration_start_period ?? "", new Date());
+    activeWindow.airdrop_window_status == WindowStatus.UPCOMING &&
+    activeWindow.airdrop_window_order === 1 &&
+    !isDateGreaterThan(activeWindow.airdrop_window_registration_start_period ?? "", new Date());
 
   return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>
@@ -323,7 +326,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         onViewNotification={onViewNotification}
-        windowId={currentWindowId}
+        windowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
         claimStartDate={DateFormatter.format(new Date(`${activeWindow?.airdrop_window_claim_start_period ?? ""} UTC`))}
       />
@@ -331,16 +334,16 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        currentWindowId={currentWindowId}
+        currentWindowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
-        airdropWindowTotalTokens={airdropWindowTotalTokens}
+        airdropWindowTotalTokens={activeWindow.airdrop_window_total_tokens}
         endDate={endDate}
         onRegister={handleRegistration}
         onViewRules={onViewRules}
         onViewSchedule={onViewSchedule}
         history={airdropHistory}
         onClaim={handleClaim}
-        airdropWindowStatus={airdropWindowStatus}
+        airdropWindowStatus={activeWindow.airdrop_window_status}
         uiAlert={uiAlert}
         activeWindow={activeWindow}
       />
@@ -352,7 +355,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini
-          startDate={new Date(`${airdropWindowClosingTime} UTC`)}
+          startDate={new Date(`${activeWindow.airdrop_window_registration_start_period} UTC`)}
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
         />
