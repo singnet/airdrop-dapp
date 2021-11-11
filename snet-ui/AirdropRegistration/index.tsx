@@ -39,7 +39,7 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
   hour: "numeric",
   minute: "numeric",
-  timeZone: "UTC",
+  // timeZone: "UTC",
   timeZoneName: "short",
 });
 
