@@ -20,18 +20,13 @@ import FAQPage from "snet-ui/FAQ";
 import axios from "utils/Axios";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
-import {
-  AirdropWindow,
-  findActiveWindow,
-  findFirstUpcomingWindow,
-  findNextAirdropWindow,
-  WindowStatus,
-} from "utils/airdropWindows";
+import { findActiveWindow, WindowStatus } from "utils/airdropWindows";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
-import { useAppSelector } from "utils/store/hooks";
+import { useAppDispatch, useAppSelector } from "utils/store/hooks";
 import { Alert } from "@mui/material";
 import { APIError } from "utils/errors";
+import { selectActiveWindow, setActiveWindowState } from "utils/store/features/activeWindowSlice";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -48,17 +43,18 @@ const Home: NextPage = () => {
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
-  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
+  // const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
   const [airdropRules, setAirdropRules] = useState([]);
-  const [totalWindows, setTotalWindows] = useState(0);
-  const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(undefined);
+
   const [airdropTotalTokens, setAirdropTotalTokens] = useState({ value: 0, name: "" });
   const { error: walletError } = useAppSelector((state) => state.wallet);
-  const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
+  const { window: activeWindow } = useAppSelector(selectActiveWindow);
+  const dispatch = useAppDispatch();
+  // const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
 
   console.log("airdropTotalTokens", airdropTotalTokens);
 
@@ -83,18 +79,22 @@ const Home: NextPage = () => {
         description: timeline.airdrop_window_timeline_description,
       }));
 
-      let activeWindow = findActiveWindow(airdrop.airdrop_windows);
-      if (!activeWindow) {
-        activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
-      }
+      // let activeWindow = findActiveWindow(airdrop.airdrop_windows);
+      // if (!activeWindow) {
+      //   activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
+      // }
 
-      const nextAirdropWindow = findNextAirdropWindow(airdrop.airdrop_windows, activeWindow);
-      setNextWindow(nextAirdropWindow);
+      // const nextAirdropWindow = findNextAirdropWindow(airdrop.airdrop_windows, activeWindow);
+      // setNextWindow(nextAirdropWindow);
 
-      setActiveWindow(activeWindow);
+      // setActiveWindow(activeWindow);
+      const activeAirdropWindow = findActiveWindow(airdrop.airdrop_windows);
+
+      dispatch(setActiveWindowState({ totalWindows: airdrop.airdrop_windows.length, window: activeAirdropWindow }));
+
       setSchedules(airdropSchedules);
       setAirdropRules(airdrop.airdrop_rules);
-      setTotalWindows(airdrop.airdrop_windows.length);
+
       setAirdropTotalTokens({ value: airdrop.airdrop_total_tokens, name: airdrop.token_name });
     } catch (e) {
       console.log("schedule error", e);
@@ -133,13 +133,12 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
-      console.log("airdropTotalTokens data", data);
-      // TODO: Uncomment the below line
+
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
-      setCurrentWindowRewards(data.airdrop_window_rewards);
+      // setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
       console.log("eligibility check error", error);
     }
@@ -180,43 +179,26 @@ const Home: NextPage = () => {
         <>
           <Box px={[0, 4, 15]} mt={3}>
             <EligibilityBanner
-              currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-              totalWindows={totalWindows}
               userEligibility={userEligibility}
               onViewRules={() => handleScrollToView(rulesRef)}
               rejectReasons={rejectReasons}
             />
           </Box>
           <Registration
-            currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-            totalWindows={totalWindows}
             userEligibility={userEligibility}
             userRegistered={userRegistered}
             setUserRegistered={setUserRegistered}
             onViewRules={() => handleScrollToView(rulesRef)}
             onViewSchedule={() => handleScrollToView(scheduleRef)}
             onViewNotification={() => handleScrollToView(getNotificationRef)}
-            airdropId={activeWindow?.airdrop_id}
-            airdropWindowId={activeWindow?.airdrop_window_id}
-            airdropWindowStatus={activeWindow?.airdrop_window_status}
-            airdropWindowClosingTime={airdropWindowClosingTime}
-            airdropWindowTotalTokens={currentWindowRewards}
             airdropTotalTokens={airdropTotalTokens}
             claimStatus={userClaimStatus}
-            activeWindow={activeWindow}
             setClaimStatus={setUserClaimStatus}
           />
         </>
       ) : (
         <Box
-          sx={{
-            bgcolor: "bgHighlight.main",
-            borderColor: "info.light",
-            mx: [0, 4, 15],
-            px: [1, 4, 15],
-            my: 2,
-            py: 4,
-          }}
+          sx={{ bgcolor: "bgHighlight.main", borderColor: "info.light", mx: [0, 4, 15], px: [1, 4, 15], my: 2, py: 4 }}
         >
           <Typography variant="h5" textAlign="center" mb={2}>
             Please connect your wallet to proceed

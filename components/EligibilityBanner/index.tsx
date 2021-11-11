@@ -8,23 +8,18 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { UserEligibility } from "utils/constants/CustomTypes";
 import Notqualified from "snet-ui/Noteligible";
 import SkeletonLoader from "./SkeletonLoader";
+import { useAppSelector } from "utils/store/hooks";
+import { selectActiveWindow } from "utils/store/features/activeWindowSlice";
 
 type EligibilityBannerProps = {
-  currentWindowId: number;
-  totalWindows: number;
   onViewRules: () => void;
   userEligibility: UserEligibility;
   rejectReasons?: string;
 };
 
-export default function EligibilityBanner({
-  currentWindowId,
-  totalWindows,
-  userEligibility,
-  onViewRules,
-  rejectReasons,
-}: EligibilityBannerProps) {
+export default function EligibilityBanner({ userEligibility, onViewRules, rejectReasons }: EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
+  const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
@@ -43,6 +38,10 @@ export default function EligibilityBanner({
     return <Notqualified account={account} network={network} onViewRules={onViewRules} rejectReasons={rejectReasons} />;
   }
 
+  if (!activeWindow) {
+    return null;
+  }
+
   return (
     <Box sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">
       <Grid container spacing={2}>
@@ -55,7 +54,7 @@ export default function EligibilityBanner({
             </Box>
 
             <Typography variant="priority" color="primary.main">
-              Qualified for Airdrop Window {currentWindowId} / {totalWindows}
+              Qualified for Airdrop Window {activeWindow.airdrop_window_order} / {totalWindows}
             </Typography>
           </Box>
 

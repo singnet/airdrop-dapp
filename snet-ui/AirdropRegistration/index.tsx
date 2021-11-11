@@ -39,9 +39,23 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
   hour: "numeric",
   minute: "numeric",
-  timeZone: "UTC",
+  // timeZone: "UTC",
   timeZoneName: "short",
 });
+
+const windowStatusLabelMap = {
+  [WindowStatus.UPCOMING]: "registration",
+  [WindowStatus.REGISTRATION]: "registration",
+  [WindowStatus.IDLE]: "claim",
+  [WindowStatus.CLAIM]: "claim",
+};
+
+const windowStatusActionMap = {
+  [WindowStatus.UPCOMING]: "opens",
+  [WindowStatus.REGISTRATION]: "closes",
+  [WindowStatus.IDLE]: "opens",
+  [WindowStatus.CLAIM]: "claim",
+};
 
 const statusLabelMap = {
   [WindowStatus.CLAIM]: "claim open",
@@ -92,12 +106,16 @@ export default function AirdropRegistration({
   //   new Date()
   // );
 
+  if (!activeWindow) {
+    return null;
+  }
+
   const isUpcomingRegistration = isDateGreaterThan(
     `${activeWindow?.airdrop_window_registration_start_period} UTC`,
     new Date()
   );
 
-  const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
+  // const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
 
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
@@ -111,7 +129,9 @@ export default function AirdropRegistration({
     new Date()
   );
 
-  console.log(new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`).toString());
+  const windowName = windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ""];
+
+  const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
 
   return (
     <Box>
@@ -122,9 +142,9 @@ export default function AirdropRegistration({
       >
         <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ""] : ""} />
         <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-          Airdrop {isUpcomingRegistration ? "registration" : isUpcomingClaim ? "claim" : "registration"} window
+          Airdrop {windowName} window &nbsp;
           {currentWindowId} / {totalWindows} &nbsp;
-          {airdropWindowStatus === WindowStatus.UPCOMING ? "opens" : "closes"}:
+          {windowAction}:
         </Typography>
         <Typography color="text.secondary" variant="h4" align="center" mb={6}>
           {formattedDate}
