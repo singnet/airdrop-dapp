@@ -27,7 +27,6 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
   });
 
   const dispatch = useAppDispatch();
-
   const router = useRouter();
   const { airdropwindow } = router.query;
   const { account } = useActiveWeb3React();
