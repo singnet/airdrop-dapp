@@ -45,14 +45,22 @@ const Home: NextPage = () => {
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
-  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
-  const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(
+    undefined
+  );
+  const [userEligibility, setUserEligibility] = useState<UserEligibility>(
+    UserEligibility.PENDING
+  );
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
-  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
+    ClaimStatus.NOT_STARTED
+  );
   const [airdropRules, setAirdropRules] = useState([]);
   const [totalWindows, setTotalWindows] = useState(0);
-  const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(undefined);
+  const [nextWindow, setNextWindow] = useState<AirdropWindow | undefined>(
+    undefined
+  );
   const { error: walletError } = useAppSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -66,9 +74,13 @@ const Home: NextPage = () => {
   const getAirdropSchedule = async () => {
     try {
       const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
-      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`);
+      const data: any = await axios.get(
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
+      );
       const airdrop = data.data.data;
-      const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
+      const airdropTimelines = airdrop.airdrop_windows.map(
+        (el) => el.airdrop_window_timeline
+      );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
         time: new Date(timeline.airdrop_window_timeline_date),
@@ -81,7 +93,10 @@ const Home: NextPage = () => {
         activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
       }
 
-      const nextAirdropWindow = findNextAirdropWindow(airdrop.airdrop_windows, activeWindow);
+      const nextAirdropWindow = findNextAirdropWindow(
+        airdrop.airdrop_windows,
+        activeWindow
+      );
       setNextWindow(nextAirdropWindow);
 
       setActiveWindow(activeWindow);
@@ -127,7 +142,10 @@ const Home: NextPage = () => {
         airdrop_id: activeWindow.airdrop_id,
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
-      const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
+      const response = await axios.post(
+        API_PATHS.AIRDROP_USER_ELIGIBILITY,
+        payload
+      );
 
       const data = response.data.data;
       const isEligible = data.is_eligible;
@@ -136,7 +154,9 @@ const Home: NextPage = () => {
       const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
       // TODO: Uncomment the below line
-      setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserEligibility(
+        isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
+      );
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
@@ -164,56 +184,44 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
-      {account ? (
-        <>
-          <Box px={[0, 4, 15]} mt={3}>
-            <EligibilityBanner
-              currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-              totalWindows={totalWindows}
-              userEligibility={userEligibility}
-              onViewRules={handleScrollToRules}
-              rejectReasons={rejectReasons}
-            />
-          </Box>
-          <Registration
-            currentWindowId={activeWindow?.airdrop_window_id ?? 0}
-            totalWindows={totalWindows}
-            userEligibility={userEligibility}
-            userRegistered={userRegistered}
-            setUserRegistered={setUserRegistered}
-            onViewRules={handleScrollToRules}
-            onViewSchedule={handleScrollToSchedule}
-            onViewNotification={handleScrollToGetNotification}
-            airdropId={activeWindow?.airdrop_id}
-            airdropWindowId={activeWindow?.airdrop_window_id}
-            airdropWindowStatus={activeWindow?.airdrop_window_status}
-            airdropWindowClosingTime={airdropWindowClosingTime}
-            airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
-            claimStatus={userClaimStatus}
-            setClaimStatus={setUserClaimStatus}
-          />
-        </>
-      ) : (
-        <Box
-          sx={{
-            bgcolor: "bgHighlight.main",
-            borderColor: "info.light",
-            mx: [0, 4, 15],
-            px: [1, 4, 15],
-            my: 2,
-            py: 4,
-          }}
-        >
-          <Typography variant="h5" textAlign="center" mb={2}>
-            Please connect your wallet to proceed
-          </Typography>
-          {walletError ? <Alert severity="error">{walletError}</Alert> : null}
-        </Box>
-      )}
-
-      <HowItWorks title="How NuNet Airdrop works" steps={HowItWorksSampleData} blogLink="www.google.com" />
+      <Box px={[0, 4, 15]} mt={3}>
+        <EligibilityBanner
+          currentWindowId={activeWindow?.airdrop_window_id ?? 0}
+          totalWindows={totalWindows}
+          userEligibility={userEligibility}
+          onViewRules={handleScrollToRules}
+          rejectReasons={rejectReasons}
+        />
+      </Box>
+      <Registration
+        currentWindowId={activeWindow?.airdrop_window_id ?? 0}
+        totalWindows={totalWindows}
+        userEligibility={userEligibility}
+        userRegistered={userRegistered}
+        setUserRegistered={setUserRegistered}
+        onViewRules={handleScrollToRules}
+        onViewSchedule={handleScrollToSchedule}
+        onViewNotification={handleScrollToGetNotification}
+        airdropId={activeWindow?.airdrop_id}
+        airdropWindowId={activeWindow?.airdrop_window_id}
+        airdropWindowStatus={activeWindow?.airdrop_window_status}
+        airdropWindowClosingTime={airdropWindowClosingTime}
+        airdropWindowTotalTokens={activeWindow?.airdrop_window_total_tokens}
+        claimStatus={userClaimStatus}
+        setClaimStatus={setUserClaimStatus}
+      />
+      <HowItWorks
+        title="How NuNet Airdrop works"
+        steps={HowItWorksSampleData}
+        blogLink="www.google.com"
+      />
       <SubscribeToNotification ref={getNotificationRef} />
-      <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
+      <Airdroprules
+        title="Airdrop Rules"
+        steps={airdropRules}
+        blogLink="www.google.com"
+        ref={rulesRef}
+      />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 

@@ -28,23 +28,28 @@ export default function EligibilityBanner({
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
-  if (!account)
-    return (
-      <Box sx={{ bgcolor: "info.light", borderColor: "info.main" }}>
-        <Typography variant="normal">Please connect your wallet to check the eligibility</Typography>
-      </Box>
-    );
+  if (!account) return null;
 
-  if (userEligibility === UserEligibility.PENDING) {
+  if (account && userEligibility === UserEligibility.PENDING) {
     return <SkeletonLoader />;
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return <Notqualified account={account} network={network} onViewRules={onViewRules} rejectReasons={rejectReasons} />;
+    return (
+      <Notqualified
+        account={account}
+        network={network}
+        onViewRules={onViewRules}
+        rejectReasons={rejectReasons}
+      />
+    );
   }
 
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">
+    <Box
+      sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }}
+      color="textAdvanced.dark"
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
