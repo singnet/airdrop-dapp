@@ -358,6 +358,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
             }
             tokenName={airdropTotalTokens.name}
             totalTokens={airdropTotalTokens.value}
+            totalAirdropWindows={totalWindows}
+            currentAirdropWindow={activeWindow.airdrop_window_order}
           />
         </Grid>
       </Grid>

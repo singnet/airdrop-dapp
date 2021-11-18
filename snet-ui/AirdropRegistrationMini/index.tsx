@@ -11,6 +11,8 @@ type AirdropRegistrationMiniProps = {
   startDate: Date;
   totalTokens: number;
   tokenName: string;
+  totalAirdropWindows: number;
+  currentAirdropWindow: number;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -22,12 +24,24 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   // timeZone: "UTC",
   timeZoneName: "short",
 });
-export default function AirdropRegistrationMini({ startDate, totalTokens, tokenName }: AirdropRegistrationMiniProps) {
-  const formattedDate = useMemo(() => DateFormatter.format(startDate), [startDate]);
+export default function AirdropRegistrationMini({
+  startDate,
+  totalTokens,
+  tokenName,
+  totalAirdropWindows,
+  currentAirdropWindow,
+}: AirdropRegistrationMiniProps) {
+  const formattedDate = useMemo(() => DateFormatter.format(startDate), [
+    startDate,
+  ]);
   return (
-    <GradientBox $background="bgGradientHighlight" sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}>
+    <GradientBox
+      $background="bgGradientHighlight"
+      sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+    >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Airdrop registration window starts {formattedDate}
+        Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
+        starts {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
       <Divider sx={{ mt: 4, mb: 3, borderColor: "text.secondary" }} />
@@ -37,7 +51,7 @@ export default function AirdropRegistrationMini({ startDate, totalTokens, tokenN
             Airdrop
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            1
+            {totalAirdropWindows}
           </Typography>
         </Grid>
         <Grid item xs={6} textAlign="center">
