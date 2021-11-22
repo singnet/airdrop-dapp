@@ -44,8 +44,8 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
 });
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "claim open",
-  [WindowStatus.REGISTRATION]: "registration open",
+  [WindowStatus.CLAIM]: "Claim Open",
+  [WindowStatus.REGISTRATION]: "Registration Open",
   [WindowStatus.UPCOMING]: "",
 };
 
@@ -167,14 +167,20 @@ export default function AirdropRegistration({
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                my: 4,
-
+                my: 8,
+                mx: 23,
+                borderRadius: 0.5,
+                borderColor: "note.main",
                 bgcolor: "note.main",
               }}
             >
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
-                <Typography variant="body1" color="textAdvanced.primary">
+                <Typography
+                  variant="body2"
+                  color="textAdvanced.primary"
+                  sx={{ mx: 1 }}
+                >
                   You can start claiming your tokens now. It is possible to
                   claim all tokens with the last airdrop window which allow you
                   save on the gas cost fees. However we recommend you claim your
@@ -197,7 +203,7 @@ export default function AirdropRegistration({
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 170 }}
+              sx={{ width: 270 }}
               onClick={handleClaimClick}
               loading={claimLoader}
             >
