@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import activeWindowReducer from "./features/activeWindowSlice";
 import walletReducer from "./features/walletSlice";
 
 export const store = configureStore({
   reducer: {
     wallet: walletReducer,
+    activeWindow: activeWindowReducer,
     //   posts: postsReducer,
     //   comments: commentsReducer,
     //   users: usersReducer,
