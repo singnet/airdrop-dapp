@@ -39,7 +39,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
           mt: 2,
         }}
       >
-        <Timeline sx={{ color: "red" }}>
+        <Timeline>
           {events.map((event, index) => (
             <ScheduleEvent
               key={event.time.toString()}
