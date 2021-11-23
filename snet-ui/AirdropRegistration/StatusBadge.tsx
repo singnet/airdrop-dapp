@@ -9,14 +9,14 @@ type StatusBadgeProps = {
 
 const BadgeWrapper = styled(Box)`
   position: absolute; /* Important for placing it in right loction with respect to the content */
-  width: 130px;
+  width: 160px;
   left: -30px; /* Twice border we are applying for .triangle */
-  top: 10px;
+  top: 28px;
 `;
 
 const TopRow = styled(Box)(
   ({ theme }) => `
-  padding: 4px 16px;
+  padding: 5px 16px;
   background: ${theme.palette.success.main};
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -50,7 +50,7 @@ export default function StatusBadge({ label }: StatusBadgeProps) {
   return (
     <BadgeWrapper>
       <TopRow>
-        <Typography variant="h5">{label}</Typography>
+        <Typography variant="body1">{label}</Typography>
       </TopRow>
       <BottomRow>
         <Triangle></Triangle>

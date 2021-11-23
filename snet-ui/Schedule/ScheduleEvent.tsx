@@ -39,6 +39,7 @@ export default function ScheduleEvent({
 }: ScheduleEventProps) {
   const isActiveEvent =
     nextEventTime && isDateBetween(event?.time, nextEventTime, now);
+  const nextEvent = () => nextEventTime;
   const formattedDate = useMemo(() => DateFormatter.format(event.time), [
     event,
   ]);
@@ -50,17 +51,29 @@ export default function ScheduleEvent({
     >
       <TimelineOppositeContent sx={{ display: "none" }} />
       <TimelineSeparator>
-        <TimelineDot color={isActiveEvent ? "success" : undefined} />
+        <TimelineDot
+          sx={{ width: 19, height: 19 }}
+          color={
+            isActiveEvent
+              ? "success"
+              : undefined || nextEvent()
+              ? undefined
+              : "primary"
+          }
+        />
         {!!nextEventTime ? (
           <TimelineConnector>
             {isActiveEvent ? (
               <Typography
                 sx={{
                   position: "absolute",
-                  bottom: 0,
-                  left: 0,
+                  //bottom: 0,
+                  //left: 0,
                   bgcolor: "bgHighlight.main",
+                  color: "textAdvanced.dark",
+                  mt: 3,
                 }}
+                variant="body2"
               >
                 Upcoming
                 <span></span>
@@ -73,16 +86,26 @@ export default function ScheduleEvent({
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <Typography
-              variant="priority"
-              color={isActiveEvent ? "secondary" : "primary"}
-              component="p"
+              variant="h6"
+              color={
+                isActiveEvent
+                  ? "success.main"
+                  : "textAdvanced.grey" && nextEvent()
+                  ? "textAdvanced.grey"
+                  : "primary"
+              }
             >
               {formattedDate.split(",")[0]}
             </Typography>
             <Typography
-              variant="priority"
-              color={isActiveEvent ? "secondary" : "primary"}
-              component="p"
+              variant="h6"
+              color={
+                isActiveEvent
+                  ? "success.main"
+                  : "textAdvanced.grey" && nextEvent()
+                  ? "textAdvanced.grey"
+                  : "primary"
+              }
             >
               {formattedDate.split(",")[1]}
             </Typography>
@@ -90,7 +113,13 @@ export default function ScheduleEvent({
           <Grid item xs={8}>
             <Typography
               variant="priority"
-              color={isActiveEvent ? "secondary" : "primary"}
+              color={
+                isActiveEvent
+                  ? "secondary"
+                  : "textAdvanced.grey" && nextEvent()
+                  ? "textAdvanced.grey"
+                  : "primary"
+              }
               component="p"
             >
               {event.title}
