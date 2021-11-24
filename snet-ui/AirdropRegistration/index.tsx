@@ -174,13 +174,16 @@ export default function AirdropRegistration({
             </Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
                 my: 8,
-                mx: 23,
-                borderRadius: 0.5,
-                borderColor: "note.main",
+
+                mx: 28,
+
+                display: "flex",
+                border: 0.3,
+
                 bgcolor: "note.main",
+                borderRadius: 1,
+                borderColor: "note.main",
               }}
             >
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
@@ -212,7 +215,7 @@ export default function AirdropRegistration({
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 270 }}
+              sx={{ width: 350 }}
               onClick={handleClaimClick}
               loading={claimLoader}
             >

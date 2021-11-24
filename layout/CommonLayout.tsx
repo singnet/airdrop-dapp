@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import Falsemessage from "snet-ui/Flasemessage";
-
+import Learn from "snet-ui/LearnandConnect";
 import Footer from "snet-ui/Footer";
 import Header from "snet-ui/Header";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
@@ -33,6 +33,7 @@ export default function CommonLayout({
         />
       </Box>
       <Box sx={{ mt: 23 }}>{children}</Box>
+      <Learn />
       <Footer />
     </>
   );
