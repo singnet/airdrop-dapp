@@ -26,7 +26,6 @@ type Props = {
   blogLink?: string;
 };
 
-
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
     <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], p: 3 }}>
@@ -42,7 +41,11 @@ export default function Schedule({ title, events, blogLink }: Props) {
       >
         <Timeline>
           {events.map((event, index) => (
-            <ScheduleEvent key={event.time.toString()} event={event} nextEventTime={events[index + 1]?.time} />
+            <ScheduleEvent
+              key={event.time.toString()}
+              event={event}
+              nextEventTime={events[index + 1]?.time}
+            />
           ))}
         </Timeline>
         <Box textAlign="center">

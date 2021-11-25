@@ -1,15 +1,15 @@
 import React, { forwardRef, useState } from "react";
 import Typography from "@mui/material/Typography";
-import GradientBox from "snet-ui/GradientBox";
+import GradientBox from "../../snet-ui/GradientBox";
 import MuiTextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
-import LoadingButton from "snet-ui/LoadingButton";
-import { APIError, ValidationError } from "utils/errors";
-import { AlertTypes } from "utils/constants/alert";
+import LoadingButton from "../../snet-ui/LoadingButton";
+import { APIError, ValidationError } from "../../utils/errors";
+import { AlertTypes } from "../../utils/constants/alert";
 import { Alert } from "@mui/material";
 
 function validateEmail(email) {
@@ -28,10 +28,16 @@ type SubscribeToNotificationProps = {
   onSubscribe: (email: string) => void;
 };
 
-function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, ref) {
+function SubscribeToNotification(
+  { onSubscribe }: SubscribeToNotificationProps,
+  ref
+) {
   const [email, setEmail] = useState("");
   const [subscriptionLoader, setSubscriptionLoader] = useState(false);
-  const [alertMessage, setAlertMessage] = useState({ severity: AlertTypes.info, message: "" });
+  const [alertMessage, setAlertMessage] = useState({
+    severity: AlertTypes.info,
+    message: "",
+  });
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -44,7 +50,10 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
       setSubscriptionLoader(true);
 
       await onSubscribe(email);
-      setAlertMessage({ severity: AlertTypes.success, message: "Successfully subcribed for updates" });
+      setAlertMessage({
+        severity: AlertTypes.success,
+        message: "Successfully subcribed for updates",
+      });
     } catch (error) {
       if (error instanceof APIError || error instanceof ValidationError) {
         console.log("error", error);
@@ -52,7 +61,10 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
         return;
       }
       console.log("error", error);
-      setAlertMessage({ severity: AlertTypes.error, message: "Unable to subscribe. Please try again later" });
+      setAlertMessage({
+        severity: AlertTypes.error,
+        message: "Unable to subscribe. Please try again later",
+      });
     } finally {
       setSubscriptionLoader(false);
     }
@@ -60,7 +72,12 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
 
   return (
     <GradientBox $background="bgGradient" sx={{ py: 8 }} ref={ref}>
-      <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
+      <Typography
+        align="center"
+        fontWeight="bold"
+        variant="h2"
+        color="text.secondary"
+      >
         Get Update Notification
       </Typography>
       <Box sx={{ mt: 5, px: 4 }}>
@@ -82,7 +99,12 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
               disabled={subscriptionLoader}
             />
           </Grid>
-          <Grid item xs={12} md={4} sx={{ display: "flex", alignItems: "center" }}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <LoadingButton
               type="submit"
               color="secondary"

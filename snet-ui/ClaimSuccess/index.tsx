@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import GradientBox from "snet-ui/GradientBox";
+import GradientBox from "../../snet-ui/GradientBox";
 import { Box } from "@mui/system";
 // import Image from "next/image";
 // import success from "public/images/success.png";
@@ -29,7 +29,12 @@ export default function ClaimSuccess({
       <GradientBox sx={{ py: 2, pb: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center", m: 4 }}>
           <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
-            <img src="/images/success.png" alt="SingularityNET" height="137px" width="137px" />
+            <img
+              src="/images/success.png"
+              alt="SingularityNET"
+              height="137px"
+              width="137px"
+            />
           </Box>
         </Box>
 
@@ -39,8 +44,14 @@ export default function ClaimSuccess({
               Congratulations
             </Typography>
             <Box>
-              <Typography align="center" fontWeight="bold" variant="h5" color="text.secondary">
-                Successfully Claimed for Airdrop Window {currentWindowId}/{totalWindows}
+              <Typography
+                align="center"
+                fontWeight="bold"
+                variant="h5"
+                color="text.secondary"
+              >
+                Successfully Claimed for Airdrop Window {currentWindowId}/
+                {totalWindows}
               </Typography>
             </Box>
             <Box
@@ -56,8 +67,8 @@ export default function ClaimSuccess({
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
                 <Typography variant="body1" color="textAdvanced.primary">
-                  To be eligible for the next airdrop, you need to register when window opens. The next window opens
-                  from 01 November 2021.
+                  To be eligible for the next airdrop, you need to register when
+                  window opens. The next window opens from 01 November 2021.
                 </Typography>
               </Box>
             </Box>
