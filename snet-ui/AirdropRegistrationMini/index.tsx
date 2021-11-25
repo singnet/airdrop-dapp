@@ -13,6 +13,7 @@ type AirdropRegistrationMiniProps = {
   tokenName: string;
   totalAirdropWindows: number;
   currentAirdropWindow: number;
+  windowAction: string;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -30,6 +31,7 @@ export default function AirdropRegistrationMini({
   tokenName,
   totalAirdropWindows,
   currentAirdropWindow,
+  windowAction,
 }: AirdropRegistrationMiniProps) {
   const formattedDate = useMemo(() => DateFormatter.format(startDate), [
     startDate,
@@ -41,7 +43,7 @@ export default function AirdropRegistrationMini({
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
         Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
-        starts {formattedDate}
+        {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
       <Divider sx={{ mt: 4, mb: 3, borderColor: "text.secondary" }} />

@@ -38,6 +38,13 @@ const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   timeZoneName: "short",
 });
 
+const windowStatusActionMap = {
+  [WindowStatus.UPCOMING]: "opens",
+  [WindowStatus.REGISTRATION]: "closes",
+  [WindowStatus.IDLE]: "opens",
+  [WindowStatus.CLAIM]: "claim",
+};
+
 interface RegistrationProps {
   userEligibility: UserEligibility;
   userRegistered: boolean;
@@ -69,6 +76,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     { type: AlertTypes.info, message: "" }
   );
   const [airdropOpen, setAirdropOpen] = useState(false);
+  const [windowAction, setWindowAction] = useState<string>("");
 
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
@@ -169,6 +177,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       },
     ]);
 
+    const _windowAction =
+      windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
+
+    setWindowAction(_windowAction);
     setAirdropHistory(history.flat());
   };
 
@@ -352,6 +364,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
             startDate={endDate}
+            windowAction={windowAction}
             tokenName={airdropTotalTokens.name}
             totalTokens={airdropTotalTokens.value}
             totalAirdropWindows={totalWindows}
@@ -415,6 +428,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
+        windowAction={windowAction}
         currentWindowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
         airdropWindowTotalTokens={activeWindow.airdrop_window_total_tokens}
