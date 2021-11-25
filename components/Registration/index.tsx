@@ -351,11 +351,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
-            startDate={
-              new Date(
-                `${activeWindow.airdrop_window_registration_start_period} UTC`
-              )
-            }
+            startDate={endDate}
             tokenName={airdropTotalTokens.name}
             totalTokens={airdropTotalTokens.value}
             totalAirdropWindows={totalWindows}
