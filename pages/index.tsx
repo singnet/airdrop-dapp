@@ -201,46 +201,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
-<<<<<<< HEAD
-      {account ? (
-        <>
-          <Box px={[0, 4, 15]} mt={3}>
-            <EligibilityBanner
-              userEligibility={userEligibility}
-              onViewRules={() => handleScrollToView(rulesRef)}
-              rejectReasons={rejectReasons}
-            />
-          </Box>
-          <Registration
-            userEligibility={userEligibility}
-            userRegistered={userRegistered}
-            setUserRegistered={setUserRegistered}
-            onViewRules={() => handleScrollToView(rulesRef)}
-            onViewSchedule={() => handleScrollToView(scheduleRef)}
-            onViewNotification={() => handleScrollToView(getNotificationRef)}
-            airdropTotalTokens={airdropTotalTokens}
-            claimStatus={userClaimStatus}
-            setClaimStatus={setUserClaimStatus}
-          />
-        </>
-      ) : (
-        <Box
-          sx={{
-            bgcolor: "bgHighlight.main",
-            borderColor: "info.light",
-            mx: [0, 4, 15],
-            px: [1, 4, 15],
-            my: 2,
-            py: 4,
-          }}
-        >
-          <Typography variant="h5" textAlign="center" mb={2}>
-            Please connect your wallet to proceed
-          </Typography>
-          {walletError ? <Alert severity="error">{walletError}</Alert> : null}
-        </Box>
-      )}
-=======
       <Box px={[0, 4, 15]} mt={3}>
         <EligibilityBanner
           userEligibility={userEligibility}
@@ -259,7 +219,6 @@ const Home: NextPage = () => {
         claimStatus={userClaimStatus}
         setClaimStatus={setUserClaimStatus}
       />
->>>>>>> c756a9089674a1acf2de2655478406d14866aedb
 
       <HowItWorks
         title="How NuNet Airdrop works"
