@@ -201,6 +201,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Airdrop</title>
       </Head>
+<<<<<<< HEAD
       {account ? (
         <>
           <Box px={[0, 4, 15]} mt={3}>
@@ -239,6 +240,26 @@ const Home: NextPage = () => {
           {walletError ? <Alert severity="error">{walletError}</Alert> : null}
         </Box>
       )}
+=======
+      <Box px={[0, 4, 15]} mt={3}>
+        <EligibilityBanner
+          userEligibility={userEligibility}
+          onViewRules={() => handleScrollToView(rulesRef)}
+          rejectReasons={rejectReasons}
+        />
+      </Box>
+      <Registration
+        userEligibility={userEligibility}
+        userRegistered={userRegistered}
+        setUserRegistered={setUserRegistered}
+        onViewRules={() => handleScrollToView(rulesRef)}
+        onViewSchedule={() => handleScrollToView(scheduleRef)}
+        onViewNotification={() => handleScrollToView(getNotificationRef)}
+        airdropTotalTokens={airdropTotalTokens}
+        claimStatus={userClaimStatus}
+        setClaimStatus={setUserClaimStatus}
+      />
+>>>>>>> c756a9089674a1acf2de2655478406d14866aedb
 
       <HowItWorks
         title="How NuNet Airdrop works"
