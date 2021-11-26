@@ -177,10 +177,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       },
     ]);
 
-    const _windowAction =
+    const airdropWindowAction =
       windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
 
-    setWindowAction(_windowAction);
+    setWindowAction(airdropWindowAction);
     setAirdropHistory(history.flat());
   };
 
