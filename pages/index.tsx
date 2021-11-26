@@ -26,7 +26,10 @@ import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { useAppDispatch, useAppSelector } from "utils/store/hooks";
 import { Alert } from "@mui/material";
 import { APIError } from "utils/errors";
-import { selectActiveWindow, setActiveWindowState } from "utils/store/features/activeWindowSlice";
+import {
+  selectActiveWindow,
+  setActiveWindowState,
+} from "utils/store/features/activeWindowSlice";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -44,13 +47,20 @@ const Home: NextPage = () => {
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   // const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
-  const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
+  const [userEligibility, setUserEligibility] = useState<UserEligibility>(
+    UserEligibility.PENDING
+  );
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
-  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
+  const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
+    ClaimStatus.NOT_STARTED
+  );
   const [airdropRules, setAirdropRules] = useState([]);
 
-  const [airdropTotalTokens, setAirdropTotalTokens] = useState({ value: 0, name: "" });
+  const [airdropTotalTokens, setAirdropTotalTokens] = useState({
+    value: 0,
+    name: "",
+  });
   const { error: walletError } = useAppSelector((state) => state.wallet);
   const { window: activeWindow } = useAppSelector(selectActiveWindow);
   const dispatch = useAppDispatch();
@@ -69,9 +79,13 @@ const Home: NextPage = () => {
   const getAirdropSchedule = async () => {
     try {
       const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
-      const data: any = await axios.get(`${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`);
+      const data: any = await axios.get(
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
+      );
       const airdrop = data.data.data;
-      const airdropTimelines = airdrop.airdrop_windows.map((el) => el.airdrop_window_timeline);
+      const airdropTimelines = airdrop.airdrop_windows.map(
+        (el) => el.airdrop_window_timeline
+      );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
         time: new Date(timeline.airdrop_window_timeline_date),
@@ -90,12 +104,20 @@ const Home: NextPage = () => {
       // setActiveWindow(activeWindow);
       const activeAirdropWindow = findActiveWindow(airdrop.airdrop_windows);
 
-      dispatch(setActiveWindowState({ totalWindows: airdrop.airdrop_windows.length, window: activeAirdropWindow }));
+      dispatch(
+        setActiveWindowState({
+          totalWindows: airdrop.airdrop_windows.length,
+          window: activeAirdropWindow,
+        })
+      );
 
       setSchedules(airdropSchedules);
       setAirdropRules(airdrop.airdrop_rules);
 
-      setAirdropTotalTokens({ value: airdrop.airdrop_total_tokens, name: airdrop.token_name });
+      setAirdropTotalTokens({
+        value: airdrop.airdrop_total_tokens,
+        name: airdrop.token_name,
+      });
     } catch (e) {
       console.log("schedule error", e);
       // TODO: Implement error handling
@@ -124,7 +146,10 @@ const Home: NextPage = () => {
         airdrop_id: activeWindow.airdrop_id,
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
-      const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
+      const response = await axios.post(
+        API_PATHS.AIRDROP_USER_ELIGIBILITY,
+        payload
+      );
 
       const data = response.data.data;
       const isEligible = data.is_eligible;
@@ -133,7 +158,9 @@ const Home: NextPage = () => {
       const reasonForRejection = data.reject_reason;
       const rules = data.airdrop_rules;
 
-      setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
+      setUserEligibility(
+        isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
+      );
       setUserRegistered(isRegistered);
       setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
@@ -197,7 +224,14 @@ const Home: NextPage = () => {
         </>
       ) : (
         <Box
-          sx={{ bgcolor: "bgHighlight.main", borderColor: "info.light", mx: [0, 4, 15], px: [1, 4, 15], my: 2, py: 4 }}
+          sx={{
+            bgcolor: "bgHighlight.main",
+            borderColor: "info.light",
+            mx: [0, 4, 15],
+            px: [1, 4, 15],
+            my: 2,
+            py: 4,
+          }}
         >
           <Typography variant="h5" textAlign="center" mb={2}>
             Please connect your wallet to proceed
@@ -206,14 +240,25 @@ const Home: NextPage = () => {
         </Box>
       )}
 
-      <HowItWorks title="How NuNet Airdrop works" steps={HowItWorksSampleData} blogLink="www.google.com" />
-      <SubscribeToNotification ref={getNotificationRef} onSubscribe={handleNotificationSubscription} />
-      <Airdroprules title="Airdrop Rules" steps={airdropRules} blogLink="www.google.com" ref={rulesRef} />
+      <HowItWorks
+        title="How NuNet Airdrop works"
+        steps={HowItWorksSampleData}
+        blogLink="www.google.com"
+      />
+      <SubscribeToNotification
+        ref={getNotificationRef}
+        onSubscribe={handleNotificationSubscription}
+      />
+      <Airdroprules
+        title="Airdrop Rules"
+        steps={airdropRules}
+        blogLink="www.google.com"
+        ref={rulesRef}
+      />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
       <FAQPage />
-      <Learn />
     </CommonLayout>
   );
 };
