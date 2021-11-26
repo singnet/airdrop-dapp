@@ -132,7 +132,6 @@ const Home: NextPage = () => {
   };
 
   const getUserEligibility = async () => {
-    console.log("activeWindow eligibility", activeWindow);
     try {
       if (
         typeof activeWindow?.airdrop_id === "undefined" ||

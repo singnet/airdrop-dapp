@@ -4,7 +4,7 @@ import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import GradientBox from "snet-ui/GradientBox";
+import GradientBox from "../../snet-ui/GradientBox";
 
 type Props = {
   blogLink?: string;
