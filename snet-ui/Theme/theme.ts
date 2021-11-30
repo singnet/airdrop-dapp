@@ -77,7 +77,7 @@ export const lightTheme = createTheme({
     success: { main: colors.GREEN },
     bgFocus: { main: colors.OFF_WHITE },
     textAdvanced: {
-      primary: '#424242',
+      primary: colors.BLACK,
       secondary: colors.WHITE_2,
       tertiary: colors.PURPLE,
       dark: colors.DARK_GREY,
@@ -112,7 +112,7 @@ export const lightTheme = createTheme({
       letterSpacing: 0,
     },
     h4: {
-      fontSize: "18px",
+      fontSize: "20px",
       fontWeight: 600,
       lineHeight: "24px",
       letterSpacing: 0,
@@ -129,7 +129,7 @@ export const lightTheme = createTheme({
       letterSpacing: 0,
     },
     normal: {
-      fontSize: "16px",
+      fontSize: "14px",
       lineHeight: "24px",
       letterSpacing: 0,
     },

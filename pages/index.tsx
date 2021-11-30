@@ -239,7 +239,6 @@ const Home: NextPage = () => {
       <Ecosystem blogLink="www.google.com" />
 
       <FAQPage />
-      <Learn />
     </CommonLayout>
   );
 };
