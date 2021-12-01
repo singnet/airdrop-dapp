@@ -182,6 +182,7 @@ export default function WalletModal({ open, setOpen }: Props) {
             align="center"
             variant="normal"
             pt={4}
+            
           >
             Need help connecting a wallet?
             <Typography
@@ -189,6 +190,7 @@ export default function WalletModal({ open, setOpen }: Props) {
               href="./"
               color="secondary.main"
               variant="link"
+              pl={1}
             >
               Read our documentation
             </Typography>
@@ -205,6 +207,7 @@ export default function WalletModal({ open, setOpen }: Props) {
               href="./"
               color="secondary.main"
               variant="link"
+              pl={1}
             >
               Terms and Conditions
             </Typography>
