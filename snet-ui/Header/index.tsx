@@ -51,8 +51,8 @@ const Header = ({
   return (
     <div className={`${classes.header} ${classes.addBgColor}`}>
       <div className={classes.wrapper}>
-        <Grid container sx={{ m: 8.5, mt: 0, mb: 0 }}>
-          <Grid item md={3} className={classes.logoSection}>
+        <Grid container sx={{ m: 2, mt: 0, mb: 0 }}>
+          <Grid item md={3}  className={classes.logoSection}>
             <MobileHeader navigationData={navData} userActions={userActions} />
 
             <h1>
@@ -61,7 +61,7 @@ const Header = ({
               </a>
             </h1>
           </Grid>
-          <Grid item md={6} className={classes.navigationSection}>
+          <Grid item md={6}  className={classes.navigationSection}>
             <NavBar
               navigationData={navData}
               onConnectWallet={onConnectWallet}
@@ -69,7 +69,10 @@ const Header = ({
           </Grid>
           <Grid
             item
-            md={3}
+            //md={3}
+            mr={10}
+            
+            
             // className={classes.navigationSection}
             sx={{ justifyContent: "right", color: "common.white" }}
           >
