@@ -6,7 +6,6 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
-
 type AirdropRegistrationMiniProps = {
   startDate: Date;
   totalTokens: number;
@@ -15,7 +14,6 @@ type AirdropRegistrationMiniProps = {
   currentAirdropWindow: number;
   windowAction: string;
 };
-
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
   month: "long",

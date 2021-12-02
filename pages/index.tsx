@@ -195,6 +195,7 @@ const Home: NextPage = () => {
   );
 
   console.log("activeWindow", activeWindow, airdropWindowClosingTime);
+  
 
   return (
     <CommonLayout>
@@ -235,6 +236,7 @@ const Home: NextPage = () => {
         blogLink="www.google.com"
         ref={rulesRef}
       />
+      
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
