@@ -18,8 +18,8 @@ export default function Learn() {
     >
       <Box
         sx={{
-          my: 2,
-          py: 2,
+          my: 1,
+          py: 1,
           justifyContent: "center",
           m: 8,
           //mx: [0, 3, 6],
