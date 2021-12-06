@@ -57,7 +57,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
                 color="bgtext.main"
                 variant="priority"
                 component="p"
-                sx={{ mb: 2 }}
+                sx={{ mb: "16px" }}
               >
                 {step.title}
               </Typography>
