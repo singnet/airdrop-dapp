@@ -33,7 +33,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
             <Grid item xs={2} sm={1} md={2}>
               <Box
                 sx={{
-                  bgcolor: "info.light",
+                  bgcolor: "#184FA7",
                   color: "primary.contrastText",
                   borderRadius: 1.5,
                   textAlign: "center",
@@ -57,7 +57,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
                 color="bgtext.main"
                 variant="priority"
                 component="p"
-                sx={{ mb: 2 }}
+                sx={{ mb: "16px" }}
               >
                 {step.title}
               </Typography>
