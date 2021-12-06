@@ -14,6 +14,7 @@ type AirdropRegistrationMiniProps = {
   totalAirdropWindows: number;
   currentAirdropWindow: number;
   windowAction: string;
+  onClickNotification: Function;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -32,10 +33,12 @@ export default function AirdropRegistrationMini({
   totalAirdropWindows,
   currentAirdropWindow,
   windowAction,
+  onViewNotification,
 }: AirdropRegistrationMiniProps) {
   const formattedDate = useMemo(() => DateFormatter.format(startDate), [
     startDate,
   ]);
+
   return (
     <GradientBox
       $background="bgGradientHighlight"
@@ -67,7 +70,11 @@ export default function AirdropRegistrationMini({
       </Grid>
       <Divider sx={{ mt: 3, borderColor: "text.secondary" }} />
       <Box sx={{ textAlign: "center", mt: 6 }}>
-        <Button variant="contained" color="secondary">
+        <Button
+          onClick={onViewNotification}
+          variant="contained"
+          color="secondary"
+        >
           Get Notifications
         </Button>
       </Box>

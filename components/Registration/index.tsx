@@ -369,6 +369,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
             totalTokens={airdropTotalTokens.value}
             totalAirdropWindows={totalWindows}
             currentAirdropWindow={activeWindow.airdrop_window_order}
+            onViewNotification={onViewNotification}
           />
         </Grid>
       </Grid>
@@ -457,6 +458,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           }
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
+          onViewNotification={onViewNotification}
         />
       </Grid>
     </Grid>
