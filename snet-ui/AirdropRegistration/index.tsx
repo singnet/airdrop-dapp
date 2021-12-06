@@ -191,7 +191,7 @@ export default function AirdropRegistration({
                 <Typography
                   variant="body2"
                   color="textAdvanced.primary"
-                  sx={{ mx: 1 }}
+                  sx={{ mx: 1, fontSize: 16 }}
                 >
                   You can start claiming your tokens now. It is possible to
                   claim all tokens with the last airdrop window which allow you
@@ -215,7 +215,7 @@ export default function AirdropRegistration({
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 350 }}
+              sx={{ width: 350, fontweight: "bold" }}
               onClick={handleClaimClick}
               loading={claimLoader}
             >
