@@ -86,7 +86,9 @@ function SubscribeToNotification(
           <Grid item xs={12} md={5}>
             <TextField
               name="EMAIL"
-              InputProps={{ startAdornment: <EmailOutlinedIcon /> }}
+              InputProps={{
+                startAdornment: <EmailOutlinedIcon sx={{ mr: 2 }} />,
+              }}
               placeholder="Please enter your email address"
               sx={{
                 bgcolor: "bgHighlight.main",
@@ -97,6 +99,7 @@ function SubscribeToNotification(
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={subscriptionLoader}
+              
             />
           </Grid>
           <Grid
@@ -111,6 +114,8 @@ function SubscribeToNotification(
               variant="contained"
               onClick={handleSubscribe}
               loading={subscriptionLoader}
+              sx={{width:"120px",height:"52.5px"}}
+              
             >
               Subscribe
             </LoadingButton>
@@ -119,7 +124,7 @@ function SubscribeToNotification(
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         {alertMessage.message ? (
-          <Alert severity={alertMessage.severity} sx={{ width: "80%" }}>
+          <Alert severity={alertMessage.severity} sx={{ width: "47.3%" }}>
             {alertMessage.message}
           </Alert>
         ) : null}
