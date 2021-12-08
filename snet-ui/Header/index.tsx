@@ -52,7 +52,7 @@ const Header = ({
     <div className={`${classes.header} ${classes.addBgColor}`}>
       <div className={classes.wrapper}>
         <Grid container sx={{ m: 2, mt: 0, mb: 0 }}>
-          <Grid item md={3} className={classes.logoSection}>
+          <Grid item md={3} className={classes.logoSection} >
             <MobileHeader navigationData={navData} userActions={userActions} />
 
             <h1>
