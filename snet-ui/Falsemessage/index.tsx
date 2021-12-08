@@ -10,7 +10,7 @@ export default function Falsemessage() {
       sx={{ bgcolor: "bgBox.main" }}
     >
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{mb:1,mt:1}}>
           Beware of false or phishing airdrop sites. Please double check the
           URLs before you continue.
         </Typography>
