@@ -7,8 +7,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import AppLogo from "public/AppLogo.png";
+import { FAQPage } from "snet-ui/FAQ/index.stories";
 
-export default function Footer() {
+type Eligibil = {
+  onViewRules: () => void;
+};
+export default function Footer({ onViewRules }: Eligibil) {
   return (
     <Box
       sx={{
@@ -56,8 +60,13 @@ export default function Footer() {
                 A project powered by
               </Typography>
             </ListItem>
-            <ListItem sx={{ justifyContent: "right" }}>
-              <img src="SNETLogoHorizontalWhite.png" />
+            <ListItem
+              sx={{
+                justifyContent: "right",
+               
+              }}
+            >
+              <img src="SNETLogo.png" height="37.7px" width="129.26px"/>
             </ListItem>
           </List>
         </Grid>
@@ -98,11 +107,11 @@ const LinksData = [
   {
     header: "Airdrop",
     links: [
-      { text: "How Airdrop Works", url: "#", external: false },
-      { text: "Airdrop Rules", url: "#", external: false },
-      { text: "Airdrop Schedule", url: "#", external: false },
-      { text: "F.A.Q", url: "#", external: false },
-      { text: "Contact Us", url: "#", external: false },
+      { text: "How Airdrop Works", url: "/howitworks", external: false },
+      { text: "Airdrop Rules", url:"/rules", external: false },
+      { text: "Airdrop Schedule", url: "/schedule", external: false },
+      { text: "F.A.Q", url: "/faqpage", external: false },
+      { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
   {
