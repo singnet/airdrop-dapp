@@ -7,9 +7,10 @@ import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
 import { styles } from "./styles";
 import { navData, userActions } from "../../snet-ui/constants/Header";
-import Button from "@mui/material/Button";
+//import {Button} from "@mui/Button";
+import { Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { styled } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,6 +22,10 @@ type HeaderProps = WithStyles<typeof styles> & {
   onConnectWallet: () => void;
   onDisconnect: () => void;
 };
+const MuiButton=styled(Button)`
+
+text-transform:capitalize;
+`;
 
 const Header = ({
   classes,
@@ -76,7 +81,7 @@ const Header = ({
           >
             {account ? (
               <>
-                <Button
+                <MuiButton
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleOpenUserMenu}
                 >
@@ -91,7 +96,7 @@ const Header = ({
                   >
                     {truncatedAddress}
                   </Typography>
-                </Button>
+                </MuiButton>
                 {/* <Menu anchorEl={anchorEl} open={open}>
                   <MenuItem onClick={handleDisconnectWallet}>Signout</MenuItem>
                 </Menu> */}
@@ -103,13 +108,13 @@ const Header = ({
                 />
               </>
             ) : (
-              <Button
+              <MuiButton
                 onClick={onConnectWallet}
                 color="secondary"
                 variant="contained"
               >
                 Connect Wallet
-              </Button>
+              </MuiButton>
             )}
           </Grid>
         </Grid>

@@ -35,7 +35,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
       <Box
         sx={{
           justifyContent: "center",
-          m: 10.5,
+          m: 10.,
           mt: 2,
         }}
       >
@@ -57,6 +57,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
               href={blogLink}
               target="_blank"
               rel="noreferrer noopener"
+              sx={{textTransform:"capitalize"}}
             >
               Read Blog Post
             </Button>

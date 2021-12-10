@@ -171,6 +171,7 @@ export default function ContactUs() {
               color="secondary"
               onClick={handleSubmit}
               loading={submittingForm}
+              sx={{textTransform:"capitalize"}}
             >
               Contact
             </LoadingButton>

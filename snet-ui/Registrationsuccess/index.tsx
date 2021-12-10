@@ -79,18 +79,18 @@ export default function Success({
             </Box>
             <Box sx={{ m: 8, my: 2, py: 2 }}>
               <Stack spacing={3} direction="row">
-                <Button variant="outlined" onClick={onViewNotification}>
+                <Button variant="outlined" onClick={onViewNotification}sx={{textTransform:"capitalize"}}>
                   <Typography color="text.secondary" fontSize="14px">
                     Get Notifications
                   </Typography>
                 </Button>
 
-                <Button variant="outlined" onClick={onViewSchedule}>
+                <Button variant="outlined" onClick={onViewSchedule}sx={{textTransform:"capitalize"}}>
                   <Typography color="text.secondary" fontSize="14px">
                     View Schedule
                   </Typography>
                 </Button>
-                <Button variant="outlined" onClick={onViewRules}>
+                <Button variant="outlined" onClick={onViewRules}sx={{textTransform:"capitalize"}}>
                   <Typography color="text.secondary" fontSize="14px">
                     View Rules
                   </Typography>

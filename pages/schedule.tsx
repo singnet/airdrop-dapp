@@ -14,12 +14,17 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Divider from "@mui/material/Divider";
 import { isDateBetween } from "utils/date";
 import ScheduleEvent from "./ScheduleEvent";
+import { styled } from "@mui/material/styles";
 
 type Event = {
   time: Date;
   title: string;
   description: string;
 };
+const MuiButton=styled(Button)`
+
+text-transform:capitalize;
+`;
 type Props = {
   title: string;
   events: Event[];
@@ -50,7 +55,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
         </Timeline>
         <Box textAlign="center">
           {blogLink ? (
-            <Button
+            <MuiButton
               variant="outlined"
               color="secondary"
               endIcon={<OpenInNewIcon />}
@@ -59,7 +64,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
               rel="noreferrer noopener"
             >
               Read Blog Post
-            </Button>
+            </MuiButton>
           ) : null}
         </Box>
       </Box>

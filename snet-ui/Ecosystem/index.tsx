@@ -43,12 +43,14 @@ export default function Ecosystem({ blogLink }: Props) {
                 href={blogLink}
                 target="_blank"
                 rel="noreferrer noopener"
+                sx={{textTransform:"capitalize"}}
               >
                 Visit SingularityNet
               </Button>
             ) : null}
             {blogLink ? (
               <Button
+              sx={{textTransform:"capitalize"}}
                 variant="outlined"
                 color="bgHighlight"
                 endIcon={<OpenInNewIcon />}
