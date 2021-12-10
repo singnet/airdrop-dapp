@@ -72,6 +72,7 @@ export default function AirdropRegistrationMini({
           onClick={onViewNotification}
           variant="contained"
           color="secondary"
+          sx={{textTransform:"capitalize"}}
         >
           Get Notifications
         </Button>

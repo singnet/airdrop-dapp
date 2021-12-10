@@ -124,7 +124,7 @@ export default function ScheduleEvent({
             >
               {event.title}
             </Typography>
-            <Typography variant="normal" color="textAdvanced.primary">
+            <Typography  color="textAdvanced.primary">
               {event.description}
             </Typography>
           </Grid>

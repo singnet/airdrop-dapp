@@ -78,6 +78,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
             href={blogLink}
             target="_blank"
             rel="noreferrer noopener"
+            sx={{textTransform:"capitalize"}}
           >
             Read Blog Post
           </Button>

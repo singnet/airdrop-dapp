@@ -215,8 +215,9 @@ export default function AirdropRegistration({
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 350, fontweight: "bold" }}
+              sx={{ width: 350, fontweight: "bold" ,textTransform:"capitalize"}}
               onClick={handleClaimClick}
+            
               loading={claimLoader}
             >
               Claim Now
@@ -244,8 +245,9 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ width: 170 }}
+                
                   onClick={onViewSchedule}
+                  sx={{textTransform:"capitalize",width:170}}
                 >
                   View Schedule
                 </Button>
@@ -256,8 +258,9 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ width: 170 }}
+                  
                   onClick={onViewRules}
+                  sx={{textTransform:"capitalize",width:170}}
                 >
                   View Rules
                 </Button>

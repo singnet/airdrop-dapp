@@ -18,7 +18,7 @@ export default function Airdropinfo({ blogLink }: Props) {
       </Typography>
       {blogLink ? (
         <Box mt={6}>
-          <Button variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
+          <Button sx={{textTransform:"capitalize"}} variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
             Read Whitepaper
           </Button>
         </Box>
