@@ -6,7 +6,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { isDateBetween } from "../../utils/date";
+import { isDateBetween } from "utils/date";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
