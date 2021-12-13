@@ -12,7 +12,7 @@ import LoadingButton from "../../snet-ui/LoadingButton";
 import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
 import { Stack } from "@mui/material";
-import { isDateBetween, isDateGreaterThan } from "../../utils/date";
+import { isDateBetween, isDateGreaterThan } from "utils/date";
 
 type HistoryEvent = {
   label: string;
@@ -229,7 +229,7 @@ export default function AirdropRegistration({
             sx={{textTransform:"capitalize"}}
             variant="outlined"
             color="bgHighlight">
-              hi
+              Claim to Wallet
               </Button>
             </Stack>
           ) : (
