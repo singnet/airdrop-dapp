@@ -11,6 +11,7 @@ import Alert, { AlertColor } from "@mui/material/Alert";
 import LoadingButton from "../../snet-ui/LoadingButton";
 import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
+import { Stack } from "@mui/material";
 import { isDateBetween, isDateGreaterThan } from "../../utils/date";
 
 type HistoryEvent = {
@@ -211,17 +212,26 @@ export default function AirdropRegistration({
             gap: [0, 2],
           }}
         >
+          
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
+            <Stack spacing={2} direction="row">
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 350, fontweight: "bold" ,textTransform:"capitalize"}}
+              sx={{ width: 350 ,textTransform:"capitalize"}}
               onClick={handleClaimClick}
             
               loading={claimLoader}
             >
-              Claim Now
+             Claim & Stake on SingularityDAO
             </LoadingButton>
+            <Button
+            sx={{textTransform:"capitalize"}}
+            variant="outlined"
+            color="bgHighlight">
+              hi
+              </Button>
+            </Stack>
           ) : (
             <>
               <Box

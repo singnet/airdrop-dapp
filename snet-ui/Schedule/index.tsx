@@ -35,7 +35,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
       <Box
         sx={{
           justifyContent: "center",
-          m: 10.,
+          m: 10,
           mt: 2,
         }}
       >
