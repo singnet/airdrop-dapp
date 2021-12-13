@@ -55,7 +55,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
               href={blogLink}
               target="_blank"
               rel="noreferrer noopener"
-              sx={{textTransform:"capitalize"}}
+              sx={{textTransform:"capitalize",fontWeight:600}}
             >
               Read Blog Post
             </Button>

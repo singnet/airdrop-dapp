@@ -57,7 +57,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
               href={blogLink}
               target="_blank"
               rel="noreferrer noopener"
-              sx={{textTransform:"capitalize"}}
+              sx={{textTransform:"capitalize",fontWeight:600}}
             >
               Read Blog Post
             </Button>

@@ -29,8 +29,8 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
 
       <Grid container spacing={4} mt={1} direction="row">
         {steps.map((step, index) => (
-          <Grid item container xs={12} md={6} key={step.title}>
-            <Grid item xs={3} sm={2} md={2}>
+          <Grid item container xs={12} md={6}  key={step.title}>
+            <Grid item xs={3} sm={2} md={2} mr={0}>
               <Box
                 sx={{
                   bgcolor: "info.light",
@@ -78,7 +78,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
             href={blogLink}
             target="_blank"
             rel="noreferrer noopener"
-            sx={{textTransform:"capitalize"}}
+            sx={{textTransform:"capitalize",fontWeight:600}}
           >
             Read Blog Post
           </Button>

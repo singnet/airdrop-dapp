@@ -8,7 +8,7 @@ type Props = {
 
 export default function Airdropinfo({ blogLink }: Props) {
   return (
-    <Box sx={{m:3.3}}>
+    <Box sx={{mr:3,m:5.5}}>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
         Airdrop Information: Find out how to participate in the NuNet Airdrop.
       </Typography>
@@ -18,7 +18,7 @@ export default function Airdropinfo({ blogLink }: Props) {
       </Typography>
       {blogLink ? (
         <Box mt={6}>
-          <Button sx={{textTransform:"capitalize"}} variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
+          <Button sx={{textTransform:"capitalize",fontWeight:600}} variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
             Read Whitepaper
           </Button>
         </Box>

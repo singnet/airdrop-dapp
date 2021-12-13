@@ -353,7 +353,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
   if (!account && (activeWindow !== null || activeWindow !== undefined)) {
     return (
-      <Grid container spacing={2} px={4} mt={2} mb={8}>
+      <Grid container spacing={2} px={5} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
           <Airdropinfo blogLink="www.google.com" />
         </Grid>
