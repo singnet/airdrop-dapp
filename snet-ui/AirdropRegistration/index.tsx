@@ -122,17 +122,17 @@ export default function AirdropRegistration({
   );
 
   // const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
-  const stake = async() =>{
-    try{
-    const payload={
-      "airdrop_id": "1",
-    "airdrop_window_id": "1",
-    "wallet_address": "0x0000000000000000000000000000000000000000"
-    }
-    await axios.post(API_PATHS.STAKE, payload);
-  }
-  catch{}
-};
+//   const stake = async() =>{
+//     try{
+//     const payload={
+//       "airdrop_id": "1",
+//     "airdrop_window_id": "1",
+//     "wallet_address": "0x0000000000000000000000000000000000000000"
+//     }
+//     await axios.post(API_PATHS.STAKE, payload);
+//   }
+//   catch{}
+// };
 
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
@@ -220,6 +220,13 @@ export default function AirdropRegistration({
             </Box>
           </>
         ) : null}
+        <Box sx={{ px: 2 ,mx:26, borderColor: "error.main"}}>
+          {uiAlert.message ? (
+            <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
+              {uiAlert.message}
+            </Alert>
+          ) : null}
+        </Box>
         <Box
           sx={{
             mt: 6,
@@ -229,6 +236,7 @@ export default function AirdropRegistration({
             gap: [0, 2],
           }}
         >
+          
           
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <Stack spacing={2} direction="row">
@@ -297,13 +305,7 @@ export default function AirdropRegistration({
             </>
           )}
         </Box>
-        <Box sx={{ px: 2 }}>
-          {uiAlert.message ? (
-            <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
-              {uiAlert.message}
-            </Alert>
-          ) : null}
-        </Box>
+        
         {history && history.length > 0 ? (
           <Box>
             <Typography

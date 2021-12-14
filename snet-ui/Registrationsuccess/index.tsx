@@ -58,17 +58,21 @@ export default function Success({
             </Box>
             <Box
               sx={{
+                my: 8,
+
+                mx: 28,
+
                 display: "flex",
-                justifyContent: "center",
-                my: 4,
-                height: "108px",
-                width: "620px",
+                border: 0.3,
+
                 bgcolor: "note.main",
+                borderRadius: 1,
+                borderColor: "note.main",
               }}
             >
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
-                <Typography variant="body1" color="textAdvanced.primary">
+                <Typography variant="body2" color="textAdvanced.primary">
                   You can start claiming your tokens for Airdrop from{" "}
                   {claimStartDate}. It is possible to claim all tokens with the
                   last airdrop window which allow you save on the gas cost fees.
@@ -79,18 +83,30 @@ export default function Success({
             </Box>
             <Box sx={{ m: 8, my: 2, py: 2 }}>
               <Stack spacing={3} direction="row">
-                <Button variant="outlined" onClick={onViewNotification}sx={{textTransform:"capitalize",fontWeight:600}}>
+                <Button
+                  variant="outlined"
+                  onClick={onViewNotification}
+                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                >
                   <Typography color="text.secondary" fontSize="14px">
                     Get Notifications
                   </Typography>
                 </Button>
 
-                <Button variant="outlined" onClick={onViewSchedule}sx={{textTransform:"capitalize",fontWeight:600}}>
+                <Button
+                  variant="outlined"
+                  onClick={onViewSchedule}
+                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                >
                   <Typography color="text.secondary" fontSize="14px">
                     View Schedule
                   </Typography>
                 </Button>
-                <Button variant="outlined" onClick={onViewRules}sx={{textTransform:"capitalize",fontWeight:600}}>
+                <Button
+                  variant="outlined"
+                  onClick={onViewRules}
+                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                >
                   <Typography color="text.secondary" fontSize="14px">
                     View Rules
                   </Typography>
