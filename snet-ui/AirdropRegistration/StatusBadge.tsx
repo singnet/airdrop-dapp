@@ -16,7 +16,7 @@ const BadgeWrapper = styled(Box)`
 
 const TopRow = styled(Box)(
   ({ theme }) => `
-  padding: 5px 16px;
+  padding: 7px 16px;
   background: ${theme.palette.success.main};
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -25,7 +25,7 @@ const TopRow = styled(Box)(
 );
 
 const BottomRow = styled(Box)`
-  height: 40px; /* Twice border we are applying for .triangle */
+  height: 50px; /* Twice border we are applying for .triangle */
   overflow: hidden;
 `;
 
@@ -37,7 +37,7 @@ const BottomRow = styled(Box)`
 const Triangle = styled(Box)(
   ({ theme }) => `
   /* All Values Should Be Equal; */
-  border-top: solid 15px ${theme.palette.success.main};
+  border-top: solid 19px ${theme.palette.success.main};
   border-left: solid 15px transparent;
   border-right: solid 15px ${theme.palette.success.main};
   border-bottom: solid 15px transparent;
@@ -50,7 +50,7 @@ export default function StatusBadge({ label }: StatusBadgeProps) {
   return (
     <BadgeWrapper>
       <TopRow>
-        <Typography variant="body2">{label}</Typography>
+        <Typography variant="body2" sx={{m:3,mt:0.3,mb:0.3}}>{label}</Typography>
       </TopRow>
       <BottomRow>
         <Triangle></Triangle>
