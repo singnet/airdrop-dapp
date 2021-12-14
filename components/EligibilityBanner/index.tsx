@@ -64,7 +64,7 @@ export default function EligibilityBanner({
               <CheckCircleIcon color="success" />
             </Box>
 
-            <Typography variant="priority" color="primary.main" variant="h5">
+            <Typography variant="h5" color="primary.main">
               Qualified for Airdrop Window {activeWindow.airdrop_window_order} /{" "}
               {totalWindows}
             </Typography>

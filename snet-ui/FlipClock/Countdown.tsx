@@ -128,6 +128,7 @@ export default class FlipCountdown extends React.Component<
           mt={3.5}
           color="bgHighlight.main"
           fontWeight="bold"
+          fontFamily="Montserrat"
         >
           :
         </Typography>
@@ -135,6 +136,7 @@ export default class FlipCountdown extends React.Component<
           unit={"hours"}
           digit={hours}
           shuffle={hoursShuffle}
+          
           countdown
         />
         <Typography
@@ -142,6 +144,7 @@ export default class FlipCountdown extends React.Component<
           mt={3.5}
           color="bgHighlight.main"
           fontWeight="bold"
+          fontFamily="Montserrat"
         >
           :
         </Typography>
@@ -150,6 +153,7 @@ export default class FlipCountdown extends React.Component<
           digit={minutes}
           shuffle={minutesShuffle}
           countdown
+      
         />
         {/* <FlipUnitContainer unit={"seconds"} digit={seconds} shuffle={secondsShuffle} countdown /> */}
       </div>
