@@ -9,10 +9,11 @@ import ListItem from "@mui/material/ListItem";
 import AppLogo from "public/AppLogo.png";
 import { FAQPage } from "snet-ui/FAQ/index.stories";
 
-type Eligibil = {
-  onViewRules: () => void;
-};
-export default function Footer({ onViewRules }: Eligibil) {
+type FooterProps={
+  handleScrollToLink : (scrollToKey?:string) => void;
+}
+export default function Footer({handleScrollToLink}:FooterProps) {
+  
   return (
     <Box
       sx={{
@@ -87,6 +88,7 @@ export default function Footer({ onViewRules }: Eligibil) {
                   target={link.external ? "_blank" : ""}
                   rel={link.external ? "noreferrer noopener" : ""}
                   key={link.text}
+                 // onClick={() => handleScrollToLink(scrollToKey)}
                 >
                   <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
                     {link.text}
@@ -107,7 +109,9 @@ const LinksData = [
   {
     header: "Airdrop",
     links: [
-      { text: "How Airdrop Works", url: "/howitworks", external: false },
+      { text: "How Airdrop Works", url: "/howitworks", external: false,
+      //scrollToKey:"rulesRef" 
+    },
       { text: "Airdrop Rules", url:"/rules", external: false },
       { text: "Airdrop Schedule", url: "/schedule", external: false },
       { text: "F.A.Q", url: "/faqpage", external: false },
@@ -133,3 +137,11 @@ const LinksData = [
     ],
   },
 ];
+function rulesRef(rulesRef: any): void {
+  throw new Error("Function not implemented.");
+}
+
+function scrollToKey(scrollToKey: any): void {
+  throw new Error("Function not implemented.");
+}
+

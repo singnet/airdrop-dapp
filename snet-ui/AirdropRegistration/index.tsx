@@ -13,6 +13,10 @@ import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
 import { Stack } from "@mui/material";
 import { isDateBetween, isDateGreaterThan } from "utils/date";
+import Staketype from "snet-ui/AirdropRegistration/Staketype";
+import axios from "utils/Axios";
+
+import { API_PATHS } from "utils/constants/ApiPaths";
 
 type HistoryEvent = {
   label: string;
@@ -95,7 +99,8 @@ export default function AirdropRegistration({
   const handleClaimClick = async () => {
     try {
       setClaimLoader(true);
-      await onClaim();
+      //await onClaim();
+      await stake();
     } finally {
       setClaimLoader(false);
     }
@@ -117,6 +122,17 @@ export default function AirdropRegistration({
   );
 
   // const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
+  const stake = async() =>{
+    try{
+    const payload={
+      "airdrop_id": "1",
+    "airdrop_window_id": "1",
+    "wallet_address": "0x0000000000000000000000000000000000000000"
+    }
+    await axios.post(API_PATHS.STAKE, payload);
+  }
+  catch{}
+};
 
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
@@ -161,14 +177,15 @@ export default function AirdropRegistration({
         <FlipCountdown endDate={endDate} />
         {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
           <>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="label" align="center" component="p">
+            <Box sx={{ mt: 6,mb:4 }}>
+              <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
                 Airdrop window {currentWindowId} / {totalWindows} rewards
               </Typography>
               <Typography
-                variant="h5"
+                variant="h3"
                 color="textAdvanced.secondary"
                 align="center"
+                sx={{mt:0.8}}
               >
                 {airdropWindowTotalTokens}
               </Typography>
@@ -218,15 +235,17 @@ export default function AirdropRegistration({
             <LoadingButton
               variant="contained"
               color="secondary"
-              sx={{ width: 350 ,textTransform:"capitalize"}}
+              sx={{ width: 350 ,textTransform:"capitalize",fontWeight:600}}
               onClick={handleClaimClick}
             
               loading={claimLoader}
             >
              Claim & Stake on SingularityDAO
             </LoadingButton>
+            
+        
             <Button
-            sx={{textTransform:"capitalize"}}
+            sx={{textTransform:"capitalize",fontWeight:600}}
             variant="outlined"
             color="bgHighlight">
               Claim to Wallet
@@ -241,7 +260,7 @@ export default function AirdropRegistration({
                   <LoadingButton
                     variant="contained"
                     color="secondary"
-                    sx={{ width: 170 }}
+                    sx={{ width: 170,fontWeight:600 }}
                     onClick={handleRegistrationClick}
                     loading={registrationLoader}
                   >
@@ -270,7 +289,7 @@ export default function AirdropRegistration({
                   color="secondary"
                   
                   onClick={onViewRules}
-                  sx={{textTransform:"capitalize",width:170}}
+                  sx={{textTransform:"capitalize",width:170,fontWeight:600}}
                 >
                   View Rules
                 </Button>

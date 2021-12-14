@@ -112,6 +112,7 @@ const Header = ({
                 onClick={onConnectWallet}
                 color="secondary"
                 variant="contained"
+                sx={{textTransform:"capitalize",fontWeight:600}}
               >
                 Connect Wallet
               </Button>

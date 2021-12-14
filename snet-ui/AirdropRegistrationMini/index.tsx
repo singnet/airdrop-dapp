@@ -40,7 +40,7 @@ export default function AirdropRegistrationMini({
   return (
     <GradientBox
       $background="bgGradientHighlight"
-      sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+      sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 ,m:12,mt:5.5,mr:8}}
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
         Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
@@ -72,7 +72,7 @@ export default function AirdropRegistrationMini({
           onClick={onViewNotification}
           variant="contained"
           color="secondary"
-          sx={{textTransform:"capitalize"}}
+          sx={{textTransform:"capitalize",fontWeight:600}}
         >
           Get Notifications
         </Button>

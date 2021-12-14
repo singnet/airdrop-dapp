@@ -114,7 +114,7 @@ function SubscribeToNotification(
               variant="contained"
               onClick={handleSubscribe}
               loading={subscriptionLoader}
-              sx={{width:"120px",height:"52.5px",textTransform:"capitalize"}}
+              sx={{width:"120px",height:"52.5px",textTransform:"capitalize",fontWeight:600}}
               
             >
               
