@@ -36,9 +36,9 @@
 .upperCard span,
 .lowerCard span {
   font-size: 4em;
-  font-family: "Droid Sans Mono", monospace;
+  font-family: "Montserrat";
   font-weight: lighter;
-  color: #333333;
+  color: "primary.main";
 }
 
 .upperCard {
@@ -74,10 +74,10 @@
   backface-visibility: hidden;
 }
 .flipCard span {
-  font-family: "Droid Sans Mono", monospace;
+  font-family: "Montserrat";
   font-size: 4em;
   font-weight: lighter;
-  color: #333333;
+  color:"primary.main";
 }
 .flipCard.unfold {
   top: 50%;
