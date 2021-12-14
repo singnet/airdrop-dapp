@@ -99,8 +99,8 @@ export default function AirdropRegistration({
   const handleClaimClick = async () => {
     try {
       setClaimLoader(true);
-      //await onClaim();
-      await stake();
+      await onClaim();
+      //await stake();
     } finally {
       setClaimLoader(false);
     }
