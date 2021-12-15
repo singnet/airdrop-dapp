@@ -232,7 +232,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       try {
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
-        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
+        const tokenAddress = "0x7F44Bc93BCb96011800Da80d1a31E05e5A5AC7f9";
+        console.log("calling claim method");
+
+        // TODO: Split signature and pass it as v,r,s
 
         const txn = await airdropContract.claim(
           tokenAddress,
