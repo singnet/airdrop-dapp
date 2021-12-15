@@ -99,7 +99,11 @@ export default function ContactUs() {
         <Typography align="center" color="primary" variant="h2">
           Contact Us
         </Typography>
-        <Box sx={{m:32,mt:4,mb:5}}>
+        <Box sx={{
+          m:43,mt:4,mb:5,
+          height:"394px",
+          width:"629px"
+          }}>
           <Grid container sx={{ my: 3 }} spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -107,7 +111,7 @@ export default function ContactUs() {
                 required
                 value={username}
                 label="Your username (Optional)"
-                placeholder="Firstusername Lastusername"
+                placeholder="Username"
                 onChange={handleusernameChange}
                 fullWidth
               />
