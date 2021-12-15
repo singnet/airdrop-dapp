@@ -121,19 +121,6 @@ export default function AirdropRegistration({
     new Date()
   );
 
-  // const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
-//   const stake = async() =>{
-//     try{
-//     const payload={
-//       "airdrop_id": "1",
-//     "airdrop_window_id": "1",
-//     "wallet_address": "0x0000000000000000000000000000000000000000"
-//     }
-//     await axios.post(API_PATHS.STAKE, payload);
-//   }
-//   catch{}
-// };
-
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
     `${activeWindow?.airdrop_window_claim_end_period} UTC`,
@@ -177,15 +164,20 @@ export default function AirdropRegistration({
         <FlipCountdown endDate={endDate} />
         {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
           <>
-            <Box sx={{ mt: 6,mb:4 }}>
-              <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
+            <Box sx={{ mt: 6, mb: 4 }}>
+              <Typography
+                variant="subtitle1"
+                align="center"
+                component="p"
+                color="text.secondary"
+              >
                 Airdrop window {currentWindowId} / {totalWindows} rewards
               </Typography>
               <Typography
                 variant="h3"
                 color="textAdvanced.secondary"
                 align="center"
-                sx={{mt:0.8}}
+                sx={{ mt: 0.8 }}
               >
                 {airdropWindowTotalTokens}
               </Typography>
@@ -220,7 +212,7 @@ export default function AirdropRegistration({
             </Box>
           </>
         ) : null}
-        <Box sx={{ px: 2 ,mx:26, borderColor: "error.main"}}>
+        <Box sx={{ px: 2, mx: 26, borderColor: "error.main" }}>
           {uiAlert.message ? (
             <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
               {uiAlert.message}
@@ -236,28 +228,29 @@ export default function AirdropRegistration({
             gap: [0, 2],
           }}
         >
-          
-          
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <Stack spacing={2} direction="row">
-            <LoadingButton
-              variant="contained"
-              color="secondary"
-              sx={{ width: 350 ,textTransform:"capitalize",fontWeight:600}}
-              onClick={handleClaimClick}
-            
-              loading={claimLoader}
-            >
-             Claim & Stake on SingularityDAO
-            </LoadingButton>
-            
-        
-            <Button
-            sx={{textTransform:"capitalize",fontWeight:600}}
-            variant="outlined"
-            color="bgHighlight">
-              Claim to Wallet
-              </Button>
+              <LoadingButton
+                variant="contained"
+                color="secondary"
+                sx={{
+                  width: 350,
+                  textTransform: "capitalize",
+                  fontWeight: 600,
+                }}
+                onClick={handleClaimClick}
+                loading={claimLoader}
+              >
+                Claim
+              </LoadingButton>
+
+              {/* <Button
+                sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                variant="outlined"
+                color="bgHighlight"
+              >
+                Claim to Wallet
+              </Button> */}
             </Stack>
           ) : (
             <>
@@ -268,7 +261,7 @@ export default function AirdropRegistration({
                   <LoadingButton
                     variant="contained"
                     color="secondary"
-                    sx={{ width: 170,fontWeight:600 }}
+                    sx={{ width: 170, fontWeight: 600 }}
                     onClick={handleRegistrationClick}
                     loading={registrationLoader}
                   >
@@ -282,9 +275,8 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                
                   onClick={onViewSchedule}
-                  sx={{textTransform:"capitalize",width:170}}
+                  sx={{ textTransform: "capitalize", width: 170 }}
                 >
                   View Schedule
                 </Button>
@@ -295,9 +287,12 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                  
                   onClick={onViewRules}
-                  sx={{textTransform:"capitalize",width:170,fontWeight:600}}
+                  sx={{
+                    textTransform: "capitalize",
+                    width: 170,
+                    fontWeight: 600,
+                  }}
                 >
                   View Rules
                 </Button>
@@ -305,7 +300,7 @@ export default function AirdropRegistration({
             </>
           )}
         </Box>
-        
+
         {history && history.length > 0 ? (
           <Box>
             <Typography
