@@ -4,6 +4,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "./IExternalStake.sol";
 
 contract SingularityAirdrop is Ownable, ReentrancyGuard {
 
@@ -11,7 +12,10 @@ contract SingularityAirdrop is Ownable, ReentrancyGuard {
 
     ERC20 public airDropToken; // Address of token contract
 
-    address public authorizer; // Authorizer Address for the airdrop 
+    address public authorizer; // Authorizer Address for the airdrop
+
+    // address public stakingContractAddress; // Staking Contract address for direct staking from AirDrop
+    mapping(address => bool) public stakingContractAddressList; // Enhacements to support Multiple Contracts
 
     //To store the current air drop window claim period - There is no point storing all the airDrop window details in the structure
     uint256 public currentAirDropWindowId;
@@ -23,8 +27,9 @@ contract SingularityAirdrop is Ownable, ReentrancyGuard {
 
     // Events
     event NewAuthorizer(address conversionAuthorizer);
+    event UpdatedStakingContract(address stakingContract, bool status);
     event WithdrawToken(address indexed owner, uint256 amount);
-    event Claim(address indexed authorizer, address indexed claimer, uint256 amount, uint256 airDropId, uint256 airDropWindowId);
+    event Claim(address indexed authorizer, address indexed claimer, uint256 airDropAmount, uint256 airDropId, uint256 airDropWindowId);
 
     constructor(address _token)
     public
@@ -38,6 +43,16 @@ contract SingularityAirdrop is Ownable, ReentrancyGuard {
         authorizer = newAuthorizer;
 
         emit NewAuthorizer(newAuthorizer);
+    }
+
+    function updateStakingContract(address newStakingContract, bool enable) public onlyOwner {
+
+        // Update the contract address, to remove the integration update the contract with 0x0
+        // stakingContractAddress = newStakingContract;
+
+        stakingContractAddressList[newStakingContract] = enable;
+
+        emit UpdatedStakingContract(newStakingContract, enable);
     }
 
 
@@ -65,16 +80,17 @@ contract SingularityAirdrop is Ownable, ReentrancyGuard {
 
     }
 
-    function claim(address token, uint256 amount, uint256 airDropId, uint256 airDropWindowId, uint8 v, bytes32 r, bytes32 s) external nonReentrant {
-    
+
+    function _validateClaim(address token, uint256 airDropAmount, uint256 airDropId, uint256 airDropWindowId, uint8 v, bytes32 r, bytes32 s) internal {
+
         // Check if contract is having required balance 
-        require(airDropToken.balanceOf(address(this)) >= amount, "Not enough balance in the contract");
+        require(airDropToken.balanceOf(address(this)) >= airDropAmount, "Not enough balance in the contract");
 
         // Restrict the claim time frame as per the claim period configured
         require(airDropWindowId == currentAirDropWindowId && now >= currentClaimStartTime && now <= currentClaimEndTime, "Invalid claim request");
 
         //compose the message which was signed
-        bytes32 message = prefixed(keccak256(abi.encodePacked("__airdropclaim", amount, msg.sender, airDropId, airDropWindowId, this, token)));
+        bytes32 message = prefixed(keccak256(abi.encodePacked("__airdropclaim", airDropAmount, msg.sender, airDropId, airDropWindowId, this, token)));
         // check that the signature is from the authorizer
         address signAddress = ecrecover(message, v, r, s);
         require(signAddress == authorizer, "Invalid request or signature for claim");
@@ -83,12 +99,84 @@ contract SingularityAirdrop is Ownable, ReentrancyGuard {
         require( ! usedSignatures[message], "Signature has already been used");
         usedSignatures[message] = true;
 
-        // Transfer to User Wallet
-        require(airDropToken.transfer(msg.sender, amount), "Unable to transfer token to the account");
+    }
 
-        emit Claim(authorizer, msg.sender, amount, airDropId, airDropWindowId);
+
+    function claim(address token, uint256 airDropAmount, uint256 airDropId, uint256 airDropWindowId, uint8 v, bytes32 r, bytes32 s) external nonReentrant {
+
+        /*
+        // Check if contract is having required balance 
+        require(airDropToken.balanceOf(address(this)) >= airDropAmount, "Not enough balance in the contract");
+
+        // Restrict the claim time frame as per the claim period configured
+        require(airDropWindowId == currentAirDropWindowId && now >= currentClaimStartTime && now <= currentClaimEndTime, "Invalid claim request");
+
+        //compose the message which was signed
+        bytes32 message = prefixed(keccak256(abi.encodePacked("__airdropclaim", airDropAmount, msg.sender, airDropId, airDropWindowId, this, token)));
+        // check that the signature is from the authorizer
+        address signAddress = ecrecover(message, v, r, s);
+        require(signAddress == authorizer, "Invalid request or signature for claim");
+
+        //check for replay attack (message signature can be used only once)
+        require( ! usedSignatures[message], "Signature has already been used");
+        usedSignatures[message] = true;
+
+        */
+
+        _validateClaim(token, airDropAmount, airDropId, airDropWindowId, v, r, s);
+
+        // Transfer to User Wallet
+        require(airDropToken.transfer(msg.sender, airDropAmount), "Unable to transfer token to the account");
+
+        emit Claim(authorizer, msg.sender, airDropAmount, airDropId, airDropWindowId);
 
     }
+
+    function claimAndStake(address stakingContractAddress, address token, uint256 airDropAmount, uint256 stakeAmount, uint256 airDropId, uint256 airDropWindowId, uint8 v, bytes32 r, bytes32 s) external nonReentrant {
+    
+        // Check for amount and staking contract address
+        require(stakeAmount > 0 && stakeAmount <= airDropAmount, "Invalid amount");
+        require(stakingContractAddressList[stakingContractAddress], "Automatic staking is not allowed");
+
+        /*
+        // Check if contract is having required balance 
+        require(airDropToken.balanceOf(address(this)) >= airDropAmount, "Not enough balance in the contract");
+
+        // Restrict the claim time frame as per the claim period configured
+        require(airDropWindowId == currentAirDropWindowId && now >= currentClaimStartTime && now <= currentClaimEndTime, "Invalid claim request");
+
+        //compose the message which was signed
+        bytes32 message = prefixed(keccak256(abi.encodePacked("__airdropclaim", airDropAmount, msg.sender, airDropId, airDropWindowId, this, token)));
+        // check that the signature is from the authorizer
+        address signAddress = ecrecover(message, v, r, s);
+        require(signAddress == authorizer, "Invalid request or signature for claim");
+
+        //check for replay attack (message signature can be used only once)
+        require( ! usedSignatures[message], "Signature has already been used");
+        usedSignatures[message] = true;
+
+        */
+
+        _validateClaim(token, airDropAmount, airDropId, airDropWindowId, v, r, s);
+
+        // Transfer to User Wallet
+        //require(airDropToken.transfer(msg.sender, airDropAmount), "Unable to transfer token to the account");
+
+        // Approve the Spender - Staking Contract
+        airDropToken.approve(stakingContractAddress, stakeAmount);
+
+        // Call the submet stake on behalf of the user - air drop msg.sender will be staker
+        require(IExternalStake(stakingContractAddress).submitStakeFor(msg.sender, stakeAmount), "Unable to stake");
+
+        if(airDropAmount > stakeAmount) {
+            // Transfer remaining amount to User Wallet
+            require(airDropToken.transfer(msg.sender, airDropAmount.sub(stakeAmount)), "Unable to transfer token to the account");
+        }
+
+        emit Claim(authorizer, msg.sender, airDropAmount, airDropId, airDropWindowId);
+
+    }
+
 
     /// builds a prefixed hash to mimic the behavior of ethSign.
     function prefixed(bytes32 hash) internal pure returns (bytes32) 
