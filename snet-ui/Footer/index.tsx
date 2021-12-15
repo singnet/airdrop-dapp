@@ -66,7 +66,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                 justifyContent: "right",
               }}
             >
-              <img src="SNETLogo.png" height="37.7px" width="129.26px" />
+              <img src="SNET Logo.png" height="37.7px" width="129.26px" />
             </ListItem>
           </List>
         </Grid>
@@ -137,7 +137,7 @@ const LinksData = [
         url: "https://medium.com/nunet",
         external: true,
       },
-      { text: "Documentation", url: "www.google.com", external: true },
+      { text: "Documentation", url: "https://nunet.io/#technology", external: true },
       { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
     ],
   },
@@ -154,9 +154,9 @@ const LinksData = [
         url: "https://www.facebook.com/NunetGlobal",
         external: true,
       },
-      { text: "LinkedIn", url: "", external: true },
-      { text: "YouTube", url: "www.google.com", external: true },
-      { text: "Instagram", url: "www.google.com", external: true },
+      { text: "LinkedIn", url: "https://www.linkedin.com/company/nunet-global/", external: true },
+      { text: "YouTube", url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA", external: true },
+      //{ text: "Instagram", url: "www.google.com", external: true },
     ],
   },
 ];

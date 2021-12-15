@@ -148,7 +148,7 @@ export default function Learn() {
                 <CardContent>
                   <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
                   <a
-              href="https://t.me/NuNet_Community"
+              href="https://nunet.io/#technology"
               rel="noopener noreferrer"
               target="_blank"
             
