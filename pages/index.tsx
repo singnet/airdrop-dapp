@@ -43,6 +43,8 @@ const Home: NextPage = () => {
   const { t } = useTranslation("common");
   const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
+  const howitworksRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
@@ -126,9 +128,27 @@ const Home: NextPage = () => {
 
   const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
     if (!elemRef) return;
-    const elemPosition = elemRef.current?.getBoundingClientRect().top as number;
-    const offsetPosition = elemPosition - headerOffset;
+  
+
+    const offsetTop = elemRef.current?.offsetTop;
+    if (typeof offsetTop === "undefined") {
+      return;
+    }
+    const offsetPosition = offsetTop - headerOffset;
+    
+
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+  };
+  const handleScrollToLink = (scrollToKey?: string) => {
+    if (scrollToKey === "schedule") {
+      handleScrollToView(scheduleRef);
+    } else if (scrollToKey === "faq") {
+      handleScrollToView(faqRef);
+    } else if (scrollToKey === "howitworks") {
+      handleScrollToView(howitworksRef);
+    } else if (scrollToKey === "rules") {
+      handleScrollToView(rulesRef);
+    }
   };
 
   const getUserEligibility = async () => {
@@ -197,7 +217,7 @@ const Home: NextPage = () => {
   console.log("activeWindow", activeWindow, airdropWindowClosingTime);
 
   return (
-    <CommonLayout>
+    <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
         <title>Airdrop</title>
       </Head>
@@ -221,9 +241,10 @@ const Home: NextPage = () => {
       />
 
       <HowItWorks
+        ref={howitworksRef}
         title="How NuNet Airdrop works"
         steps={HowItWorksSampleData}
-        blogLink="www.google.com"
+        blogLink="https://medium.com/nunet"
       />
       <SubscribeToNotification
         ref={getNotificationRef}
@@ -232,14 +253,14 @@ const Home: NextPage = () => {
       <Airdroprules
         title="Airdrop Rules"
         steps={airdropRules}
-        blogLink="www.google.com"
+        blogLink="https://medium.com/nunet"
         ref={rulesRef}
       />
 
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
-      <Ecosystem blogLink="www.google.com" />
+      <Ecosystem blogLink="https://medium.com/nunet" />
 
-      <FAQPage />
+      <FAQPage ref={faqRef} />
     </CommonLayout>
   );
 };

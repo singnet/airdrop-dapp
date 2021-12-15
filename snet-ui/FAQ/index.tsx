@@ -9,6 +9,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { Box } from "@mui/system";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import { forwardRef } from "react";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -18,9 +19,9 @@ const Accordion = styled((props: AccordionProps) => (
   borderLeft: 0,
 });
 
-export default function FAQPage() {
+function FAQPage(_,ref) {
   return (
-    <Box>
+    <Box ref={ref}>
       <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
         Frequently Asked Questions
       </Typography>
@@ -65,7 +66,7 @@ export default function FAQPage() {
             size="large"
             color="secondary"
             href="/contactus"
-            sx={{textTransform:"capitalize",fontWeight:600}}
+            sx={{ textTransform: "capitalize", fontWeight: 600 }}
           >
             <Typography color="secondary.main" variant="subtitle2">
               Contact us
@@ -76,3 +77,4 @@ export default function FAQPage() {
     </Box>
   );
 }
+export default forwardRef(FAQPage);

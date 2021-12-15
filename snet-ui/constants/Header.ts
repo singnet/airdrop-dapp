@@ -1,16 +1,11 @@
 export const navData = [
   {
-    id: 2,
+    id: 3,
     name: "Nunet Site",
     url: "https://nunet.io/",
     external: true,
   },
-  {
-    id: 3,
-    name: "SingularityNET Airdrops",
-    url: "#",
-    external: true,
-  },
+  
 
   {
     id: 4,
