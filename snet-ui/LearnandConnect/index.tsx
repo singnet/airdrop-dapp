@@ -47,8 +47,17 @@ export default function Learn() {
                       my: 2,
                     }}
                   >
+                    <a
+              href="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf"
+              rel="noopener noreferrer"
+              target="_blank"
+            
+            >
                     <img src="/images/Whitepaper.png" alt="SingularityNET" height="88px" width="98px" />
+                  </a>
                   </Box>
+
+                  
                   <Box
                     sx={{
                       display: "flex",
@@ -76,7 +85,9 @@ export default function Learn() {
                         </Box>
                       </Box>
                     </Box>
+                    
                   </Box>
+                  
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -91,7 +102,14 @@ export default function Learn() {
               <CardActionArea>
                 <CardContent>
                   <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+                  <a
+              href="https://t.me/NuNet_Community"
+              rel="noopener noreferrer"
+              target="_blank"
+            
+            >
                     <img src="/images/Telegram.png" alt="SingularityNET" height="88px" width="98px" />
+                    </a>
                   </Box>
                   <Box
                     sx={{
@@ -129,7 +147,14 @@ export default function Learn() {
               <CardActionArea>
                 <CardContent>
                   <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+                  <a
+              href="https://t.me/NuNet_Community"
+              rel="noopener noreferrer"
+              target="_blank"
+            
+            >
                     <img src="/images/Documentation.png" alt="SingularityNET" height="88px" width="98px" />
+                 </a>
                   </Box>
                   <Box
                     sx={{
