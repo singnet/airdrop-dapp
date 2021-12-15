@@ -8,10 +8,14 @@ import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/system/Box";
 
+type CommonLayoutProps={
+  handleScrollToLink: (scrollToKey?: string) => void;
+};
 export default function CommonLayout({
   children,
+  handleScrollToLink,
   ...rest
-}: PropsWithChildren<any>) {
+}: PropsWithChildren<CommonLayoutProps>) {
   const dispatch = useAppDispatch();
   const { account, deactivate } = useActiveWeb3React();
   return (
@@ -34,7 +38,7 @@ export default function CommonLayout({
       </Box>
       <Box sx={{ mt: 23 }}>{children}</Box>
       <Learn />
-      <Footer />
+      <Footer handleScrollToLink={handleScrollToLink}/>
     </>
   );
 }

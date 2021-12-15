@@ -6,14 +6,14 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
+import Link from "@mui/material/Link";
 import AppLogo from "public/AppLogo.png";
 import { FAQPage } from "snet-ui/FAQ/index.stories";
 
-type FooterProps={
-  handleScrollToLink : (scrollToKey?:string) => void;
-}
-export default function Footer({handleScrollToLink}:FooterProps) {
-  
+type FooterProps = {
+  handleScrollToLink: (scrollToKey?: string) => void;
+};
+export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
     <Box
       sx={{
@@ -64,10 +64,9 @@ export default function Footer({handleScrollToLink}:FooterProps) {
             <ListItem
               sx={{
                 justifyContent: "right",
-               
               }}
             >
-              <img src="SNETLogo.png" height="37.7px" width="129.26px"/>
+              <img src="SNETLogo.png" height="37.7px" width="129.26px" />
             </ListItem>
           </List>
         </Grid>
@@ -83,18 +82,34 @@ export default function Footer({handleScrollToLink}:FooterProps) {
             >
               {linkItem.links.map((link) => (
                 <ListItemButton
-                  component="a"
+                  component={link.scrollToKey ? "b" : "a"}
                   href={link.url}
                   target={link.external ? "_blank" : ""}
                   rel={link.external ? "noreferrer noopener" : ""}
                   key={link.text}
-                 // onClick={() => handleScrollToLink(scrollToKey)}
+                  onClick={() => handleScrollToLink(link.scrollToKey)}
                 >
                   <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
                     {link.text}
                   </Typography>
                 </ListItemButton>
               ))}
+
+              {/* {linkItem.links.map((link) => (
+                <ListItemButton
+                target="_blank" component="a"
+                              to={link.url}
+                              target={link.external ? "_blank" : ""}
+                              rel={link.external ? "noreferrer noopener" : ""}
+                              key={link.text}>
+                
+                  <Link target="_blank" to="http://www.google.com">
+                 Google
+                </Link>
+                </ListItemButton>
+                
+              
+              ))} */}
             </List>
           </Grid>
         ))}
@@ -109,29 +124,51 @@ const LinksData = [
   {
     header: "Airdrop",
     links: [
-      { text: "How Airdrop Works", url: "/howitworks", external: false,
-      //scrollToKey:"rulesRef" 
-    },
-      { text: "Airdrop Rules", url:"/rules", external: false },
-      { text: "Airdrop Schedule", url: "/schedule", external: false },
-      { text: "F.A.Q", url: "/faqpage", external: false },
+      {
+        text: "How Airdrop Works",
+
+        scrollToKey: "howitworks",
+      },
+      {
+        text: "Airdrop Rules",
+
+        scrollToKey: "rules",
+      },
+      {
+        text: "Airdrop Schedule",
+
+        scrollToKey: "schedule",
+      },
+      { text: "F.A.Q", scrollToKey: "faq" },
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
   {
     header: "Community",
     links: [
-      { text: "Official Blog", url: "www.google.com", external: true },
+      {
+        text: "Official Blog",
+        url: "https://medium.com/nunet",
+        external: true,
+      },
       { text: "Documentation", url: "www.google.com", external: true },
-      { text: "Telegram", url: "www.google.com", external: true },
+      { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
     ],
   },
   {
     header: "Social Media",
     links: [
-      { text: "Twitter", url: "www.google.com", external: true },
-      { text: "Facebook", url: "www.google.com", external: true },
-      { text: "LinkedIn", url: "www.google.com", external: true },
+      {
+        text: "Twitter",
+        url: "https://twitter.com/nunet_global",
+        external: true,
+      },
+      {
+        text: "Facebook",
+        url: "https://www.facebook.com/NunetGlobal",
+        external: true,
+      },
+      { text: "LinkedIn", url: "", external: true },
       { text: "YouTube", url: "www.google.com", external: true },
       { text: "Instagram", url: "www.google.com", external: true },
     ],
@@ -144,4 +181,3 @@ function rulesRef(rulesRef: any): void {
 function scrollToKey(scrollToKey: any): void {
   throw new Error("Function not implemented.");
 }
-

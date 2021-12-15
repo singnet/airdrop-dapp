@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import Button from "@mui/material/Button";
-import React from "react";
+import React, { forwardRef } from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type Step = {
@@ -15,9 +15,9 @@ type Props = {
   blogLink?: string;
 };
 
-export default function HowItWorks({ title, steps, blogLink }: Props) {
+function HowItWorks({ title, steps, blogLink }: Props, ref) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], py: 8 }}>
+    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], py: 8 }} ref={ref}>
       <Typography
         align="center"
         fontWeight="bold"
@@ -29,7 +29,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
 
       <Grid container spacing={4} mt={1} direction="row">
         {steps.map((step, index) => (
-          <Grid item container xs={12} md={6}  key={step.title}>
+          <Grid item container xs={12} md={6} key={step.title}>
             <Grid item xs={3} sm={2} md={2} mr={0}>
               <Box
                 sx={{
@@ -78,7 +78,7 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
             href={blogLink}
             target="_blank"
             rel="noreferrer noopener"
-            sx={{textTransform:"capitalize",fontWeight:600}}
+            sx={{ textTransform: "capitalize", fontWeight: 600 }}
           >
             Read Blog Post
           </Button>
@@ -87,3 +87,4 @@ export default function HowItWorks({ title, steps, blogLink }: Props) {
     </Box>
   );
 }
+export default forwardRef(HowItWorks);
