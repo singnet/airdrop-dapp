@@ -95,21 +95,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                 </ListItemButton>
               ))}
 
-              {/* {linkItem.links.map((link) => (
-                <ListItemButton
-                target="_blank" component="a"
-                              to={link.url}
-                              target={link.external ? "_blank" : ""}
-                              rel={link.external ? "noreferrer noopener" : ""}
-                              key={link.text}>
-                
-                  <Link target="_blank" to="http://www.google.com">
-                 Google
-                </Link>
-                </ListItemButton>
-                
-              
-              ))} */}
+             
             </List>
           </Grid>
         ))}
