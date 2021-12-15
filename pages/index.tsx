@@ -78,9 +78,9 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
+      const airdropId = process.env.NEXT_PUBLIC_AIRDROP_ID;
       const data: any = await axios.get(
-        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropId}`
       );
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map(
@@ -195,7 +195,6 @@ const Home: NextPage = () => {
   );
 
   console.log("activeWindow", activeWindow, airdropWindowClosingTime);
-  
 
   return (
     <CommonLayout>
@@ -236,7 +235,7 @@ const Home: NextPage = () => {
         blogLink="www.google.com"
         ref={rulesRef}
       />
-      
+
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
