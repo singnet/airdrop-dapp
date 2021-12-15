@@ -81,33 +81,39 @@ export default function Success({
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ m: 8, my: 2, py: 2 }}>
+            <Box sx={{ mx: 35}}>
               <Stack spacing={3} direction="row">
                 <Button
                   variant="outlined"
+                  
+                color="bgHighlight"
                   onClick={onViewNotification}
-                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                  sx={{ textTransform: "capitalize" }}
                 >
-                  <Typography color="text.secondary" fontSize="14px">
+                  <Typography color="text.secondary" fontSize="14px" fontWeight="600">
                     Get Notifications
                   </Typography>
                 </Button>
 
                 <Button
                   variant="outlined"
+              
+                color="bgHighlight"
                   onClick={onViewSchedule}
-                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                  sx={{ textTransform: "capitalize" }}
                 >
-                  <Typography color="text.secondary" fontSize="14px">
+                  <Typography color="text.secondary" fontSize="14px" fontWeight="600">
                     View Schedule
                   </Typography>
                 </Button>
                 <Button
                   variant="outlined"
+            
+                color="bgHighlight"
                   onClick={onViewRules}
-                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                  sx={{ textTransform: "capitalize" }}
                 >
-                  <Typography color="text.secondary" fontSize="14px">
+                  <Typography color="text.secondary" fontSize="14px"  fontWeight="600">
                     View Rules
                   </Typography>
                 </Button>
