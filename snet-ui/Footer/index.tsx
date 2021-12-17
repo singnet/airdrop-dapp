@@ -36,11 +36,18 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         >
           <List subheader>
             <ListItem sx={{ justifyContent: "right" }}>
+            <a
+              href="https://medium.com/nunet"
+              rel="noopener noreferrer"
+              target="_blank"
+            
+            >
               <img src="NuNet Logo.png" width="171.5px" height="52.27px" />
+              </a>
             </ListItem>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="https://medium.com/nunet"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}
@@ -66,7 +73,14 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                 justifyContent: "right",
               }}
             >
+              <a
+              href="https://singularitynet.io/"
+              rel="noopener noreferrer"
+              target="_blank"
+            
+            >
               <img src="SNET Logo.png" height="37.7px" width="129.26px" />
+              </a>
             </ListItem>
           </List>
         </Grid>

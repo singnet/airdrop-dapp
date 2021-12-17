@@ -34,34 +34,19 @@ export default function Ecosystem({ blogLink }: Props) {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <Box textAlign="center">
-          <Stack spacing={2} direction="row">
-            {blogLink ? (
+          
               <Button
                 variant="contained"
                 color="secondary"
                 endIcon={<OpenInNewIcon />}
-                href={blogLink}
+                href="https://singularitynet.io/"
                 target="_blank"
                 rel="noreferrer noopener"
                 sx={{textTransform:"capitalize",fontWeight:600}}
               >
                 Visit SingularityNet
               </Button>
-            ) : null}
-            {blogLink ? (
-              <Button
-              sx={{textTransform:"capitalize",fontWeight:600}}
-                variant="outlined"
-                color="bgHighlight"
-                endIcon={<OpenInNewIcon />}
-                href={blogLink}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                View All Airdrops
-              </Button>
-            ) : null}
-          </Stack>
+            
         </Box>
       </Box>
     </GradientBox>
