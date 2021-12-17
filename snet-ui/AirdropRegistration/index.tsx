@@ -246,15 +246,14 @@ export default function AirdropRegistration({
               </Button>
             </Grid>
             <Grid item xs={3}>
-              <LoadingButton
-                loading={stakeInfo.isLoading}
+              <Button
                 onClick={handleStakeClick}
                 color="secondary"
                 variant="contained"
                 fullWidth
               >
                 Stake
-              </LoadingButton>
+              </Button>
             </Grid>
           </Grid>
         </Box>
@@ -349,7 +348,7 @@ export default function AirdropRegistration({
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {!stakeInfo.isStakable ? (
+                {stakeInfo.isStakable ? (
                   <LoadingButton
                     variant="contained"
                     color="secondary"
