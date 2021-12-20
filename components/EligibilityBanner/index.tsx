@@ -5,16 +5,56 @@ import React, { useMemo } from "react";
 import { SupportedChainId } from "snet-ui/Blockchain/connectors";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { UserEligibility } from "utils/constants/CustomTypes";
+import Notqualified from "snet-ui/Noteligible";
+import SkeletonLoader from "./SkeletonLoader";
+import { useAppSelector } from "utils/store/hooks";
+import { selectActiveWindow } from "utils/store/features/activeWindowSlice";
 
-export default function EligibilityBanner() {
-  const { account, chainId } = useActiveWeb3React();
+type EligibilityBannerProps = {
+  onViewRules: () => void;
+  userEligibility: UserEligibility;
+  rejectReasons?: string;
+};
+
+export default function EligibilityBanner({
+  userEligibility,
+  onViewRules,
+  rejectReasons,
+}: EligibilityBannerProps) {
+  const { account, chainId, library } = useActiveWeb3React();
+  const { window: activeWindow, totalWindows } = useAppSelector(
+    selectActiveWindow
+  );
 
   const network = useMemo(() => SupportedChainId[chainId ?? ""], [chainId]);
 
   if (!account) return null;
 
+  if (userEligibility === UserEligibility.PENDING) {
+    return <SkeletonLoader />;
+  }
+
+  if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return (
+      <Notqualified
+        account={account}
+        network={network}
+        onViewRules={onViewRules}
+        rejectReasons={rejectReasons}
+      />
+    );
+  }
+
+  if (!activeWindow) {
+    return null;
+  }
+
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", p: 3, borderRadius: 2 }} color="textAdvanced.dark">
+    <Box
+      sx={{ bgcolor: "bgHighlight.main", my: 4, p: 4, py: 2, borderRadius: 2 }}
+      color="textAdvanced.dark"
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
@@ -24,21 +64,22 @@ export default function EligibilityBanner() {
               <CheckCircleIcon color="success" />
             </Box>
 
-            <Typography variant="priority" color="primary.main">
-              Qualified for Airdrop Window 2/2
+            <Typography variant="h5" color="primary.main">
+              Qualified for Airdrop Window {activeWindow.airdrop_window_order} /{" "}
+              {totalWindows}
             </Typography>
           </Box>
 
           <a href="#">
-            <Typography color="secondary.main">View Details</Typography>
+            <Typography color="secondary.main" variant="subtitle2">View Details</Typography>
           </a>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography>Connected Wallet Address</Typography>
-          <Typography noWrap variant="priority" component="p">
+          <Typography noWrap variant="priority" component="p" >
             {account}
           </Typography>
-          <Typography sx={{ textTransform: "capitalize" }} variant="priority">
+          <Typography sx={{ textTransform: "capitalize" }} variant="h5">
             Ethereum {network?.toLowerCase()}
           </Typography>
         </Grid>

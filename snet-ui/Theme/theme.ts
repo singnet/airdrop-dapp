@@ -23,6 +23,9 @@ declare module "@mui/material/styles" {
     bgGradientHighlight?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgBox?: { light?: string; main: string; dark?: string; contrastText?: string };
     bgtext?: { light?: string; main: string; dark?: string; contrastText?: string };
+    note?: { light?: string; main: string; dark?: string; contrastText?: string };
+    bgFocus?: { light?: string; main: string; dark?: string; contrastText?: string };
+
     textAdvanced?: { primary: string; secondary: string; tertiary: string; dark: string; grey: string; white: string };
   }
 }
@@ -68,7 +71,11 @@ export const lightTheme = createTheme({
     bgGradient: { main: colors.GRADIENT_1 },
     bgGradientHighlight: { main: colors.GRADIENT_2 },
     background: { default: colors.WHITE, paper: colors.WHITE },
-    text: { primary: colors.WHITE, secondary: colors.WHITE_2 },
+    text: { primary: colors.BLACK, secondary: colors.WHITE_2 },
+    error: { light: colors.LIGHT_RED, main: colors.DARK_RED, contrastText: colors.DARK_RED },
+    info: { light: colors.LIGHT_BLUE, main: colors.DARK_BLUE, contrastText: colors.DARK_BLUE },
+    success: { main: colors.GREEN },
+    bgFocus: { main: colors.OFF_WHITE },
     textAdvanced: {
       primary: colors.BLACK,
       secondary: colors.WHITE_2,
@@ -79,6 +86,10 @@ export const lightTheme = createTheme({
     },
     bgBox: { main: colors.PURPLE },
     bgtext: { main: colors.DARK_BLUE },
+
+    note: {
+      main: colors.ARC_LIGHT,
+    },
   },
   typography: {
     fontFamily: "Montserrat",

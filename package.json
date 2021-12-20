@@ -19,6 +19,8 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@ethersproject/providers": "^5.4.5",
+    "@material-ui/core": "^4.12.3",
+    "@mui-treasury/components": "^1.10.1",
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.0",
@@ -31,6 +33,8 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.4",
     "axios": "^0.22.0",
+    "bignumber.js": "^9.0.1",
+    "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.4.7",
     "next": "11.1.2",
     "next-i18next": "^8.8.0",
@@ -38,13 +42,15 @@
     "react-dom": "17.0.2",
     "react-redux": "^7.2.5",
     "storybook-addon-material-ui": "^0.9.0-alpha.24",
+    "stylis": "^4.0.10",
     "tiny-invariant": "^1.1.0",
-    "ua-parser-js": "^0.7.28",
-    "usehooks-ts": "^1.0.4"
+    "ua-parser-js": "^0.7.30",
+    "usehooks-ts": "^1.0.6"
   },
   "devDependencies": {
     "@types/react": "17.0.22",
     "@types/react-redux": "^7.1.18",
+    "@types/ua-parser-js": "^0.7.36",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "typescript": "4.4.3"

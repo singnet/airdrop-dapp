@@ -1,7 +1,6 @@
 import { Theme } from "@mui/material/styles";
 
 export const styles = (MUITheme: Theme): any => {
-  console.log("mui theme", MUITheme);
   return {
     header: {
       //position: "fixed",
@@ -11,8 +10,9 @@ export const styles = (MUITheme: Theme): any => {
     },
     wrapper: {
       boxSizing: "border-box",
-      maxWidth: 1400,
-      padding: "15px 60px",
+      maxWidth: 1550,
+     // padding: "15px 60px",
+     padding:7,
       margin: "0 auto",
       "& > div": {
         alignItems: "center",

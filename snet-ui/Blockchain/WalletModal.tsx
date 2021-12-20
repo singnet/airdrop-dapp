@@ -21,7 +21,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
-import Image from "next/image";
+// import Image from "next/image";
 
 const style: SxProps<Theme> = {
   position: "absolute",
@@ -42,13 +42,45 @@ type Props = {
 
 const WalletButton = ({ wallet, handleConnect, imgSrc }) => {
   return (
-    <ButtonBase onClick={() => handleConnect(SUPPORTED_WALLETS[wallet].connector)}>
-      <Paper elevation={2} sx={{ px: 3 }}>
-        <Box sx={{ px: 5, pb: 3, pt: 7 }}>
-          <Image src={imgSrc} width="100" height="100" />
+    <ButtonBase
+      onClick={() => handleConnect(SUPPORTED_WALLETS[wallet].connector)}
+    >
+      {/* sx={{
+                "&:hover": {
+                  bgcolor: "bgFocus.main",
+                },
+              }} */}
+      <Paper
+        elevation={2}
+        sx={{
+          px: 3,
+          "&:hover": {
+            bgcolor: "bgFocus.main",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            px: 5,
+            pb: 3,
+            pt: 7,
+          }}
+        >
+          <img src={imgSrc} width="100" height="100" />
         </Box>
-        <Typography color="primary.main">{SUPPORTED_WALLETS[wallet].name}</Typography>
-        <Typography color="textAdvanced.dark">{SUPPORTED_WALLETS[wallet].description}</Typography>
+        <Typography
+          color="primary.main"
+          sx={{
+            "&:hover": {
+              color: "secondary.main",
+            },
+          }}
+        >
+          {SUPPORTED_WALLETS[wallet].name}
+        </Typography>
+        <Typography color="textAdvanced.dark">
+          {SUPPORTED_WALLETS[wallet].description}
+        </Typography>
       </Paper>
     </ButtonBase>
   );
@@ -56,11 +88,18 @@ const WalletButton = ({ wallet, handleConnect, imgSrc }) => {
 
 export default function WalletModal({ open, setOpen }: Props) {
   const handleClose = () => setOpen(false);
-  const { active, account, connector, activate, error, library } = useWeb3React();
+  const {
+    active,
+    account,
+    connector,
+    activate,
+    error,
+    setError,
+    library,
+  } = useWeb3React();
   useEagerConnect();
 
   const handleConnect = async (connector: AbstractConnector | undefined) => {
-    console.log("inside handle connect");
     let name = "";
     Object.keys(SUPPORTED_WALLETS).map((key) => {
       if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -72,7 +111,10 @@ export default function WalletModal({ open, setOpen }: Props) {
     console.log("connecting to the wallet", name);
 
     // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+    if (
+      connector instanceof WalletConnectConnector &&
+      connector.walletConnectProvider?.wc?.uri
+    ) {
       connector.walletConnectProvider = undefined;
     }
 
@@ -87,6 +129,7 @@ export default function WalletModal({ open, setOpen }: Props) {
             activate(connector); // a little janky...can't use setError because the connector isn't set
           } else {
             console.log("connection error", error);
+            setError(error);
             // setPendingError(true)
           }
         });
@@ -99,12 +142,7 @@ export default function WalletModal({ open, setOpen }: Props) {
 
   return (
     <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <Typography color="primary.main" variant="h5">
             Connect to a wallet
@@ -138,15 +176,39 @@ export default function WalletModal({ open, setOpen }: Props) {
               />
             </Grid>
           </Grid>
-          <Typography component="p" color="textAdvanced.dark" align="center" variant="normal" pt={4}>
+          <Typography
+            component="p"
+            color="textAdvanced.dark"
+            align="center"
+            variant="normal"
+            pt={4}
+            
+          >
             Need help connecting a wallet?
-            <Typography component="a" href="./" color="secondary.main" variant="link">
+            <Typography
+              component="a"
+              href="./"
+              color="secondary.main"
+              variant="link"
+              pl={1}
+            >
               Read our documentation
             </Typography>
           </Typography>
-          <Typography component="p" color="textAdvanced.dark" align="center" variant="normal">
+          <Typography
+            component="p"
+            color="textAdvanced.dark"
+            align="center"
+            variant="normal"
+          >
             By connecting a wallet, you agree to our
-            <Typography component="a" href="./" color="secondary.main" variant="link">
+            <Typography
+              component="a"
+              href="./"
+              color="secondary.main"
+              variant="link"
+              pl={1}
+            >
               Terms and Conditions
             </Typography>
           </Typography>

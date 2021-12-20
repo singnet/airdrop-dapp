@@ -11,6 +11,8 @@ import * as route53Targets from "@aws-cdk/aws-route53-targets";
 import * as path from "path";
 import { buildOutputDir } from "../../bin/cdk";
 import config, { appEnv } from "../../config";
+import { EdgeLambda } from "@aws-cdk/aws-cloudfront";
+import { Version } from "@aws-cdk/aws-lambda";
 
 // dotenv Must be the first expression
 dotenv.config();
@@ -79,17 +81,26 @@ export class AirdropStack extends cdk.Stack {
 
     const origin = new origins.S3Origin(myBucket);
 
+    const cloudfrontEdgeLambdaAssociation: EdgeLambda[] = [
+      {
+        functionVersion: defaultLambda.currentVersion,
+        eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+      },
+    ];
+
+    if (appConfig?.basicAuthLambdaARNWithVersion) {
+      cloudfrontEdgeLambdaAssociation.push({
+        functionVersion: Version.fromVersionArn(this, "basic_auth_lambda", appConfig.basicAuthLambdaARNWithVersion),
+        eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
+      });
+    }
+
     // Default distribution requests to the default lambda
     const distribution = new cloudfront.Distribution(this, distributionName, {
       defaultBehavior: {
         origin: origin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        edgeLambdas: [
-          {
-            functionVersion: defaultLambda.currentVersion,
-            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-          },
-        ],
+        edgeLambdas: cloudfrontEdgeLambdaAssociation,
       },
       domainNames: [domainName],
       certificate: acm.Certificate.fromCertificateArn(this, "AirdropCertificate", certificateARN),

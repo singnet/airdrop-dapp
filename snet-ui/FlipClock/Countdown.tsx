@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 function secondsToDhms(sec) {
   sec = Number(sec);
   var days = Math.floor(sec / (3600 * 24));
@@ -33,7 +34,10 @@ type FlipClockState = {
 };
 
 // class component
-export default class FlipCountdown extends React.Component<FlipClockProps, FlipClockState> {
+export default class FlipCountdown extends React.Component<
+  FlipClockProps,
+  FlipClockState
+> {
   timerID?: NodeJS.Timer | number;
   constructor(props) {
     super(props);
@@ -64,35 +68,93 @@ export default class FlipCountdown extends React.Component<FlipClockProps, FlipC
     // const hours = time.getHours();
     // const minutes = time.getMinutes();
 
-    const { days, hours, minutes, seconds } = secondsToDhms((this.props.endDate.getTime() - now.getTime()) / 1000);
+    const { days, hours, minutes, seconds } = secondsToDhms(
+      (this.props.endDate.getTime() - now.getTime()) / 1000
+    );
 
     // on day change, update hours and shuffle state
     if (days !== this.state.days) {
-      this.setState((prevState) => ({ days, daysShuffle: !prevState.daysShuffle }));
+      this.setState((prevState) => ({
+        days,
+        daysShuffle: !prevState.daysShuffle,
+      }));
     }
     // on hour change, update hours and shuffle state
     if (hours !== this.state.hours) {
-      this.setState((prevState) => ({ hours, hoursShuffle: !prevState.hoursShuffle }));
+      this.setState((prevState) => ({
+        hours,
+        hoursShuffle: !prevState.hoursShuffle,
+      }));
     }
     // on minute change, update minutes and shuffle state
     if (minutes !== this.state.minutes) {
-      this.setState((prevState) => ({ minutes, minutesShuffle: !prevState.minutesShuffle }));
+      this.setState((prevState) => ({
+        minutes,
+        minutesShuffle: !prevState.minutesShuffle,
+      }));
     }
     // on second change, update seconds and shuffle state
     if (seconds !== this.state.seconds) {
-      this.setState((prevState) => ({ seconds, secondsShuffle: !prevState.secondsShuffle }));
+      this.setState((prevState) => ({
+        seconds,
+        secondsShuffle: !prevState.secondsShuffle,
+      }));
     }
   }
 
   render() {
     // state object destructuring
-    const { days, daysShuffle, hours, minutes, seconds, hoursShuffle, minutesShuffle, secondsShuffle } = this.state;
+    const {
+      days,
+      daysShuffle,
+      hours,
+      minutes,
+      seconds,
+      hoursShuffle,
+      minutesShuffle,
+      secondsShuffle,
+    } = this.state;
 
     return (
       <div className={styles.flipClock}>
-        <FlipUnitContainer unit={"days"} digit={days} shuffle={daysShuffle} countdown />
-        <FlipUnitContainer unit={"hours"} digit={hours} shuffle={hoursShuffle} countdown />
-        <FlipUnitContainer unit={"minutes"} digit={minutes} shuffle={minutesShuffle} countdown />
+        <FlipUnitContainer
+          unit={"days"}
+          digit={days}
+          shuffle={daysShuffle}
+          countdown
+        />
+        <Typography
+          variant="h1"
+          mt={3.5}
+          color="bgHighlight.main"
+          fontWeight="bold"
+          fontFamily="Montserrat"
+        >
+          :
+        </Typography>
+        <FlipUnitContainer
+          unit={"hours"}
+          digit={hours}
+          shuffle={hoursShuffle}
+          
+          countdown
+        />
+        <Typography
+          variant="h1"
+          mt={3.5}
+          color="bgHighlight.main"
+          fontWeight="bold"
+          fontFamily="Montserrat"
+        >
+          :
+        </Typography>
+        <FlipUnitContainer
+          unit={"minutes"}
+          digit={minutes}
+          shuffle={minutesShuffle}
+          countdown
+      
+        />
         {/* <FlipUnitContainer unit={"seconds"} digit={seconds} shuffle={secondsShuffle} countdown /> */}
       </div>
     );
