@@ -66,7 +66,7 @@ const Header = ({
               </a>
             </h1>
           </Grid>
-          <Grid item md={7} className={classes.navigationSection}>
+          <Grid item md={7} className={classes.navigationSection} mr={8}>
             <NavBar
               navigationData={navData}
               onConnectWallet={onConnectWallet}
