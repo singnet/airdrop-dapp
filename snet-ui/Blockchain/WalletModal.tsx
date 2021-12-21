@@ -176,30 +176,13 @@ export default function WalletModal({ open, setOpen }: Props) {
               />
             </Grid>
           </Grid>
+         
           <Typography
             component="p"
             color="textAdvanced.dark"
             align="center"
             variant="normal"
-            pt={4}
-            
-          >
-            Need help connecting a wallet?
-            <Typography
-              component="a"
-              href="./"
-              color="secondary.main"
-              variant="link"
-              pl={1}
-            >
-              Read our documentation
-            </Typography>
-          </Typography>
-          <Typography
-            component="p"
-            color="textAdvanced.dark"
-            align="center"
-            variant="normal"
+            sx={{mt:2.5}}
           >
             By connecting a wallet, you agree to our
             <Typography
