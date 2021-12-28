@@ -6,7 +6,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { isDateBetween } from "utils/date";
+import { isDateBetween, getDateInStandardFormat } from "utils/date";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
@@ -40,10 +40,8 @@ export default function ScheduleEvent({
   const isActiveEvent =
     nextEventTime && isDateBetween(event?.time, nextEventTime, now);
   const nextEvent = () => nextEventTime;
-  const formattedDate = useMemo(() => DateFormatter.format(event.time), [
-    event,
-  ]);
-  console.log("isActiveEvent", event.time.toDateString());
+  const formattedDate = getDateInStandardFormat(event.time);
+
   return (
     <TimelineItem
       sx={{ bgcolor: "textAdvanced.main" }}
@@ -97,20 +95,7 @@ export default function ScheduleEvent({
                   : "primary"
               }
             >
-              {formattedDate.split(",")[0]}
-            </Typography>
-            <Typography
-              variant="h6"
-              fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
-            >
-              {formattedDate.split(",")[1]}
+              {formattedDate}
             </Typography>
           </Grid>
           <Grid item xs={8}>

@@ -15,7 +15,7 @@ import StatusBadge from "./StatusBadge";
 import { Stack } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import Grid from "@mui/material/Grid";
-import { isDateBetween, isDateGreaterThan } from "utils/date";
+import { isDateBetween, isDateGreaterThan, getDateInStandardFormat } from "utils/date";
 import Staketype from "snet-ui/AirdropRegistration/Staketype";
 import axios from "utils/Axios";
 
@@ -112,8 +112,7 @@ export default function AirdropRegistration({
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
-
-  const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
+  const formattedDate = useMemo(() => getDateInStandardFormat(endDate), [endDate]);
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);

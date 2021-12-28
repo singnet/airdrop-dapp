@@ -27,6 +27,7 @@ import Success from "snet-ui/Registrationsuccess";
 import ClaimSuccess from "snet-ui/ClaimSuccess";
 import { isDateGreaterThan } from "utils/date";
 import { selectActiveWindow } from "utils/store/features/activeWindowSlice";
+import moment from "moment";
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -110,14 +111,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const endDate = useMemo(
     () =>
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
-        ? new Date(
-            `${activeWindow?.airdrop_window_registration_end_period} UTC`
-          )
+        ? new Date(moment.utc(activeWindow?.airdrop_window_registration_end_period))
         : activeWindow?.airdrop_window_status === WindowStatus.IDLE
-        ? new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`)
+        ? new Date(moment.utc(activeWindow?.airdrop_window_claim_start_period))
         : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        ? new Date(`${activeWindow?.airdrop_window_claim_end_period} UTC`)
-        : new Date(),
+        ? new Date(moment.utc(activeWindow?.airdrop_window_claim_end_period))
+        : new Date(moment.utc(activeWindow?.airdrop_window_registration_start_period)),
     [activeWindow]
   );
 

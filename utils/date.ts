@@ -1,3 +1,9 @@
+import moment from "moment";
+
+export const getDateInStandardFormat = (dateObject : string | Date) : string => {
+  return moment.utc(dateObject).local().format("YYYY-MM-DD HH:mm:ss");
+};
+
 export const isDateBetween = (startDate: string | Date, endDate: string | Date, actualDate: string | Date): boolean => {
   startDate = new Date(startDate);
   endDate = new Date(endDate);
