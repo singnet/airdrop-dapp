@@ -3,13 +3,17 @@ import { WithStyles, withStyles } from "@mui/styles";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import NavBar from "../NavBar";
-import {  styles } from "./styles";
+import { styles } from "./styles";
 
 type MobileHeaderProps = WithStyles<typeof styles> & {
   navigationData: any;
   userActions: any;
 };
-const MobileHeader = ({ classes, navigationData, userActions }: MobileHeaderProps) => {
+const MobileHeader = ({
+  classes,
+  navigationData,
+  userActions,
+}: MobileHeaderProps) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const openMobileNavigation = () => {
@@ -41,7 +45,12 @@ const MobileHeader = ({ classes, navigationData, userActions }: MobileHeaderProp
           <div className={classes.mobileUserAction}>
             <ul>
               <li>
-                <a href={userActions[0].url} title={userActions[0].name} target="_blank" rel="noreferrer">
+                <a
+                  href={userActions[0].url}
+                  title={userActions[0].name}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {userActions[0].name}
                 </a>
               </li>

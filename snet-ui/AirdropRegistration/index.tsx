@@ -18,6 +18,8 @@ import Grid from "@mui/material/Grid";
 import { isDateBetween, isDateGreaterThan } from "utils/date";
 import Staketype from "snet-ui/AirdropRegistration/Staketype";
 import axios from "utils/Axios";
+import Container from "@mui/material/Container";
+import moment from "moment";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
 
@@ -49,6 +51,7 @@ type AirdropRegistrationProps = {
   uiAlert: { type: AlertColor; message: string };
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
+  airdropWindowrewards: number;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -76,7 +79,7 @@ const windowStatusActionMap = {
 };
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Claim Open",
+  [WindowStatus.CLAIM]: "Vesting Open",
   [WindowStatus.REGISTRATION]: "Registration Open",
   [WindowStatus.UPCOMING]: "",
 };
@@ -108,12 +111,16 @@ export default function AirdropRegistration({
   airdropWindowStatus,
   uiAlert,
   activeWindow,
+  airdropWindowrewards,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
+  const formattedDate = useMemo(
+    () => moment.utc(endDate).local().format("YYYY-MM-DD HH:mm:ss"),
+    [endDate]
+  );
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -228,7 +235,7 @@ export default function AirdropRegistration({
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
               <Link
-                href={`https://google.com`}
+                href={`https://singularitynet.io/`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -271,44 +278,53 @@ export default function AirdropRegistration({
                 : ""
             }
           />
-          <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-            Airdrop {windowName} window &nbsp;
-            {currentWindowId} / {totalWindows} &nbsp;
-            {windowAction}:
-          </Typography>
-          <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-            {formattedDate}
-          </Typography>
+          <Container sx={{ my: 6 }}>
+            <Typography
+              color="text.secondary"
+              variant="h4"
+              align="center"
+              mb={1}
+            >
+              Vesting {windowName} window &nbsp;
+              {currentWindowId} / {totalWindows} &nbsp;
+              {windowAction}:
+            </Typography>
+            <Typography
+              color="text.secondary"
+              variant="h4"
+              align="center"
+              mb={6}
+            >
+              {formattedDate}
+            </Typography>
+          </Container>
+
           <FlipCountdown endDate={endDate} />
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <>
-              <Box sx={{ mt: 6, mb: 4 }}>
+              <Box sx={{ mt: 6 }}>
                 <Typography
                   variant="subtitle1"
                   align="center"
                   component="p"
                   color="text.secondary"
                 >
-                  Airdrop window {currentWindowId} / {totalWindows} rewards
+                  Tokens available to claim
                 </Typography>
                 <Typography
-                  variant="h3"
+                  variant="h2"
                   color="textAdvanced.secondary"
                   align="center"
-                  sx={{ mt: 0.8 }}
                 >
-                  {airdropWindowTotalTokens}
+                  {airdropWindowrewards / 1000000} NTX
                 </Typography>
               </Box>
-              <Box
+              <Container
+                maxWidth="md"
                 sx={{
                   my: 8,
-
-                  mx: 28,
-
                   display: "flex",
                   border: 0.3,
-
                   bgcolor: "note.main",
                   borderRadius: 1,
                   borderColor: "note.main",
@@ -322,15 +338,14 @@ export default function AirdropRegistration({
                     sx={{ mx: 1, fontSize: 16 }}
                   >
                     You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last airdrop window which allow
-                    you save on the gas cost fees. However we recommend you
-                    claim your tokens at each window claim time.
+                    claim all tokens with the last window which will save you
+                    gas fees.
                   </Typography>
                 </Box>
-              </Box>
+              </Container>
             </>
           ) : null}
-          <Box sx={{ px: 2, mx: 26, borderColor: "error.main" }}>
+          <Box sx={{ borderColor: "error.main" }}>
             {uiAlert.message ? (
               <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
                 {uiAlert.message}
@@ -405,38 +420,20 @@ export default function AirdropRegistration({
                     View Schedule
                   </Button>
                 </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewRules}
-                    sx={{
-                      textTransform: "capitalize",
-                      width: 170,
-                      fontWeight: 600,
-                    }}
-                  >
-                    View Rules
-                  </Button>
-                </Box>
               </>
             )}
           </Box>
-
           {history && history.length > 0 ? (
-            <Box>
+            <Container maxWidth="md">
               <Typography
                 align="center"
                 color="textAdvanced.secondary"
                 variant="h5"
-                mt={6}
               >
-                Your Airdrop History
+                Your Vesting History
               </Typography>
               <History events={history} />
-            </Box>
+            </Container>
           ) : null}
         </GradientBox>
       </Box>
