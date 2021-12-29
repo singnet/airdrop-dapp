@@ -40,10 +40,10 @@ export default function AirdropRegistrationMini({
   return (
     <GradientBox
       $background="bgGradientHighlight"
-      sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 ,m:12,mt:5.5,mr:8}}
+      sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
+        OccamRazer vested unlock {currentAirdropWindow}/{totalAirdropWindows}{" "}
         {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
@@ -51,7 +51,7 @@ export default function AirdropRegistrationMini({
       <Grid container>
         <Grid item xs={6} textAlign="center">
           <Typography variant="normal" color="text.secondary">
-            Airdrop
+            Unlocks
           </Typography>
           <Typography variant="h3" color="text.secondary">
             {totalAirdropWindows}
@@ -62,7 +62,7 @@ export default function AirdropRegistrationMini({
             Total Token Worth
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            {totalTokens} {tokenName}
+            5,000,000 {tokenName}
           </Typography>
         </Grid>
       </Grid>
@@ -72,7 +72,7 @@ export default function AirdropRegistrationMini({
           onClick={onViewNotification}
           variant="contained"
           color="secondary"
-          sx={{textTransform:"capitalize",fontWeight:600}}
+          sx={{ textTransform: "capitalize", fontWeight: 600 }}
         >
           Get Notifications
         </Button>

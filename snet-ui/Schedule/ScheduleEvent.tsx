@@ -9,6 +9,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import { isDateBetween } from "utils/date";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import moment from "moment";
 
 type Event = {
   time: Date;
@@ -40,27 +41,17 @@ export default function ScheduleEvent({
   const isActiveEvent =
     nextEventTime && isDateBetween(event?.time, nextEventTime, now);
   const nextEvent = () => nextEventTime;
-  const formattedDate = useMemo(() => DateFormatter.format(event.time), [
-    event,
-  ]);
-  console.log("isActiveEvent", event.time.toDateString());
+  const formattedDate = moment
+    .utc(event.time)
+    .local()
+    .format("YYYY-MM-DD HH:mm:ss");
   return (
-    <TimelineItem
-      sx={{ bgcolor: "textAdvanced.main" }}
-      key={event.time.toDateString()}
-    >
+    <TimelineItem sx={{ bgcolor: "textAdvanced.main" }} key={event.id}>
       <TimelineOppositeContent sx={{ display: "none" }} />
       <TimelineSeparator>
         <TimelineDot
-          sx={{ width: 19, height: 19,borderColor:"common.white" }}
-          
-          color={
-            isActiveEvent
-              ? "success"
-              : undefined || nextEvent()
-              ? undefined
-              : "primary"
-          }
+          sx={{ width: 19, height: 19, borderColor: "common.white" }}
+          color="primary"
         />
         {!!nextEventTime ? (
           <TimelineConnector>
@@ -68,8 +59,6 @@ export default function ScheduleEvent({
               <Typography
                 sx={{
                   position: "absolute",
-                  //bottom: 0,
-                  //left: 0,
                   bgcolor: "bgHighlight.main",
                   color: "textAdvanced.dark",
                   mt: 3,
@@ -86,49 +75,24 @@ export default function ScheduleEvent({
       <TimelineContent>
         <Grid container spacing={4}>
           <Grid item xs={4}>
-            <Typography
-              variant="h6"
-              fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
-            >
-              {formattedDate.split(",")[0]}
-            </Typography>
-            <Typography
-              variant="h6"
-              fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
-            >
-              {formattedDate.split(",")[1]}
+            <Typography variant="h6" fontSize="18px" color="primary">
+              {formattedDate}
             </Typography>
           </Grid>
           <Grid item xs={8}>
             <Typography
               variant="h6"
               fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "secondary"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              color="primary"
               component="p"
             >
               {event.title}
             </Typography>
-            <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
+            <Typography
+              variant="normal"
+              fontSize="14px"
+              color="textAdvanced.primary"
+            >
               {event.description}
             </Typography>
           </Grid>

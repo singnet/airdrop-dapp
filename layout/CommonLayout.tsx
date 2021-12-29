@@ -7,8 +7,9 @@ import Header from "snet-ui/Header";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/system/Box";
+import Container from "@mui/material/Container";
 
-type CommonLayoutProps={
+type CommonLayoutProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
 };
 export default function CommonLayout({
@@ -25,7 +26,6 @@ export default function CommonLayout({
           position: "fixed",
           top: 0,
           width: "100%",
-
           zIndex: 2,
         }}
       >
@@ -36,9 +36,9 @@ export default function CommonLayout({
           account={account as string}
         />
       </Box>
-      <Box sx={{ mt: 23 }}>{children}</Box>
+      <Box>{children}</Box>
       <Learn />
-      <Footer handleScrollToLink={handleScrollToLink}/>
+      <Footer handleScrollToLink={handleScrollToLink} />
     </>
   );
 }

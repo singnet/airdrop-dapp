@@ -31,7 +31,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
           {steps.map((step, index) => (
             <Grid item key={step.title}>
               <Box sx={{ display: "flex" }}>
-                <Box  sx={{ mr: 1 }}>
+              <Box  sx={{ mr: 1 }}>
                   <StarsOutlinedIcon sx={{color:"info.light"}} />
                 </Box>
                 <Typography color="bgtext.main" variant="h4" fontSize="18px">

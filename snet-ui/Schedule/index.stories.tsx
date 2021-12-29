@@ -6,7 +6,7 @@ export default {
 } as Meta;
 
 export const Schedule: React.VFC<{}> = () => {
-  return <ScheduleComponent title="Airdrop Schedule" events={ScheduleSampleData} blogLink="www.google.com" />;
+  return <ScheduleComponent title="Vesting Schedule" events={ScheduleSampleData} blogLink="www.google.com" />;
 };
 
 const ScheduleSampleData = [

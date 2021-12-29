@@ -176,18 +176,19 @@ export default function WalletModal({ open, setOpen }: Props) {
               />
             </Grid>
           </Grid>
-         
+          
+        
           <Typography
             component="p"
             color="textAdvanced.dark"
             align="center"
             variant="normal"
-            sx={{mt:2.5}}
+            sx={{mt:3}}
           >
             By connecting a wallet, you agree to our
             <Typography
               component="a"
-              href="./"
+              href="https://public.singularitynet.io/terms_and_conditions.html"
               color="secondary.main"
               variant="link"
               pl={1}
