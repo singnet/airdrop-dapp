@@ -100,6 +100,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   // }, 500);
 
   useEffect(() => {
+    getAlertRefresh();
     getClaimHistory();
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
 
@@ -132,6 +133,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       };
       setStakeDetails(details);
     } catch (error) {}
+  };
+  const getAlertRefresh= async () =>{
+    setUiAlert({ type: AlertTypes.info, message: "" });
+
   };
 
   const handleRegistration = async () => {

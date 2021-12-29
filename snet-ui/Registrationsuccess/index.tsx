@@ -105,6 +105,17 @@ export default function Success({
                     View Schedule
                   </Typography>
                 </Button>
+                <Button
+                  variant="outlined"
+
+                color="bgHighlight"
+                  onClick={onViewRules}
+                  sx={{ textTransform: "capitalize" }}
+                >
+                  <Typography color="text.secondary" fontSize="14px"  fontWeight="600">
+                    View Rules
+                  </Typography>
+                </Button>
               </Stack>
             </Box>
           </Box>

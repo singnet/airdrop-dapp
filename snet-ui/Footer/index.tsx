@@ -103,23 +103,26 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
     </Box>
   );
 }
-
 const LinksData = [
   {
-    header: "Vesting",
+    header: "Airdrop",
     links: [
       {
-        text: "How Vesting Works",
+        text: "How Airdrop Works",
 
         scrollToKey: "howitworks",
       },
-      
       {
-        text: "Vesting Schedule",
+        text: "Airdrop Rules",
+
+        scrollToKey: "rules",
+      },
+      {
+        text: "Airdrop Schedule",
 
         scrollToKey: "schedule",
       },
-      
+      { text: "F.A.Q", scrollToKey: "faq" },
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
@@ -128,14 +131,10 @@ const LinksData = [
     links: [
       {
         text: "Official Blog",
-        url: "https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add",
+        url: "https://medium.com/nunet",
         external: true,
       },
-      {
-        text: "Documentation",
-        url: "https://nunet.io/#technology",
-        external: true,
-      },
+      { text: "Documentation", url: "https://nunet.io/#technology", external: true },
       { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
     ],
   },
@@ -152,25 +151,9 @@ const LinksData = [
         url: "https://www.facebook.com/NunetGlobal",
         external: true,
       },
-      {
-        text: "LinkedIn",
-        url: "https://www.linkedin.com/company/nunet-global/",
-        external: true,
-      },
-      {
-        text: "YouTube",
-        url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA",
-        external: true,
-      },
-      //{ text: "Instagram", url: "www.google.com", external: true },
+      { text: "LinkedIn", url: "https://www.linkedin.com/company/nunet-global/", external: true },
+      { text: "YouTube", url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA", external: true },
+      
     ],
   },
 ];
-
-function rulesRef(rulesRef: any): void {
-  throw new Error("Function not implemented.");
-}
-
-function scrollToKey(scrollToKey: any): void {
-  throw new Error("Function not implemented.");
-}
