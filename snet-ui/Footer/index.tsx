@@ -36,18 +36,11 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         >
           <List subheader>
             <ListItem sx={{ justifyContent: "right" }}>
-            <a
-              href="https://medium.com/nunet"
-              rel="noopener noreferrer"
-              target="_blank"
-            
-            >
-              <img src="NuNet Logo.png" width="171.5px" height="52.27px" />
-              </a>
+              <img src="NuNet Logo.png" height="53px" />
             </ListItem>
             <ListItemButton
               component="a"
-              href="https://medium.com/nunet"
+              href="https://nunet.io/"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}
@@ -73,14 +66,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                 justifyContent: "right",
               }}
             >
-              <a
-              href="https://singularitynet.io/"
-              rel="noopener noreferrer"
-              target="_blank"
-            
-            >
-              <img src="SNET Logo.png" height="37.7px" width="129.26px" />
-              </a>
+              <img src="SNET Logo.png" width="130px" />
             </ListItem>
           </List>
         </Grid>
@@ -108,8 +94,6 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                   </Typography>
                 </ListItemButton>
               ))}
-
-             
             </List>
           </Grid>
         ))}
@@ -122,24 +106,20 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
 
 const LinksData = [
   {
-    header: "Airdrop",
+    header: "Vesting",
     links: [
       {
-        text: "How Airdrop Works",
+        text: "How Vesting Works",
 
         scrollToKey: "howitworks",
       },
+      
       {
-        text: "Airdrop Rules",
-
-        scrollToKey: "rules",
-      },
-      {
-        text: "Airdrop Schedule",
+        text: "Vesting Schedule",
 
         scrollToKey: "schedule",
       },
-      { text: "F.A.Q", scrollToKey: "faq" },
+      
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
@@ -148,10 +128,14 @@ const LinksData = [
     links: [
       {
         text: "Official Blog",
-        url: "https://medium.com/nunet",
+        url: "https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add",
         external: true,
       },
-      { text: "Documentation", url: "https://nunet.io/#technology", external: true },
+      {
+        text: "Documentation",
+        url: "https://nunet.io/#technology",
+        external: true,
+      },
       { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
     ],
   },
@@ -168,12 +152,21 @@ const LinksData = [
         url: "https://www.facebook.com/NunetGlobal",
         external: true,
       },
-      { text: "LinkedIn", url: "https://www.linkedin.com/company/nunet-global/", external: true },
-      { text: "YouTube", url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA", external: true },
+      {
+        text: "LinkedIn",
+        url: "https://www.linkedin.com/company/nunet-global/",
+        external: true,
+      },
+      {
+        text: "YouTube",
+        url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA",
+        external: true,
+      },
       //{ text: "Instagram", url: "www.google.com", external: true },
     ],
   },
 ];
+
 function rulesRef(rulesRef: any): void {
   throw new Error("Function not implemented.");
 }

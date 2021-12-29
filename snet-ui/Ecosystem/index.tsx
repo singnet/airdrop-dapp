@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import React from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import GradientBox from "../../snet-ui/GradientBox";
+import Container from "@mui/material/Container";
 
 type Props = {
   blogLink?: string;
@@ -22,7 +23,7 @@ export default function Ecosystem({ blogLink }: Props) {
       >
         SingularityNET Ecosystem
       </Typography>
-      <Box sx={{ mt: 3, mb: 6, mx: 14 }}>
+      <Container>
         <Typography color="text.secondary" align="left" textAlign="justify">
           SingularityNET hosts an ecosystem of different technology projects in
           different areas with the common theme of accelerating to the future
@@ -31,22 +32,37 @@ export default function Ecosystem({ blogLink }: Props) {
           other ecosystem projects, including Rejuve, Mindplex, SingularityDAO,
           and TrueAGI.
         </Typography>
-      </Box>
+      </Container>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <Box textAlign="center">
-          
+          <Stack spacing={2} direction="row">
+            {blogLink ? (
               <Button
                 variant="contained"
                 color="secondary"
                 endIcon={<OpenInNewIcon />}
-                href="https://singularitynet.io/"
+                href={blogLink}
                 target="_blank"
                 rel="noreferrer noopener"
-                sx={{textTransform:"capitalize",fontWeight:600}}
+                sx={{ textTransform: "capitalize", fontWeight: 600 }}
               >
                 Visit SingularityNet
               </Button>
-            
+            ) : null}
+            {/* {blogLink ? (
+              <Button
+                sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                variant="outlined"
+                color="bgHighlight"
+                endIcon={<OpenInNewIcon />}
+                href={blogLink}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                View All Airdrops
+              </Button>
+            ) : null} */}
+          </Stack>
         </Box>
       </Box>
     </GradientBox>
