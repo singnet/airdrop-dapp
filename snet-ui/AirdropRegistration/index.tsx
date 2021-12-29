@@ -420,6 +420,22 @@ export default function AirdropRegistration({
                     View Schedule
                   </Button>
                 </Box>
+                <Box
+                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
+                >
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={onViewRules}
+                    sx={{
+                      textTransform: "capitalize",
+                      width: 170,
+                      fontWeight: 600,
+                    }}
+                  >
+                    View Rules
+                  </Button>
+                </Box>
               </>
             )}
           </Box>

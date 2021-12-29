@@ -70,6 +70,16 @@ export default function Notqualified({
           <Box sx={{ display: "flex", justifyContent: "center", my: 6 }}>
             <Box textAlign="center">
               <Stack spacing={2} direction="row">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={onViewRules}
+                >
+                  <Typography color="secondary.main" variant="subtitle2">
+                    View Airdrop Rules
+                  </Typography>
+                </Button>
                 <Button
                   variant="outlined"
                   size="large"
