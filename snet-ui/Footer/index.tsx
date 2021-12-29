@@ -157,10 +157,3 @@ const LinksData = [
     ],
   },
 ];
-function rulesRef(rulesRef: any): void {
-  throw new Error("Function not implemented.");
-}
-
-function scrollToKey(scrollToKey: any): void {
-  throw new Error("Function not implemented.");
-}
