@@ -27,6 +27,8 @@ export default function CommonLayout({
           top: 0,
           width: "100%",
           zIndex: 2,
+          
+          
         }}
       >
         <Falsemessage />
@@ -34,6 +36,7 @@ export default function CommonLayout({
           onConnectWallet={() => dispatch(setShowConnectionModal(true))}
           onDisconnect={deactivate}
           account={account as string}
+          
         />
       </Box>
       <Box>{children}</Box>
