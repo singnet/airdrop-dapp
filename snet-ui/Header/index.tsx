@@ -63,7 +63,7 @@ const Header = ({
   return (
     <>
     <div className={classes.topNavBar}>
-    <Container>
+    <Container sx={{pb:1}}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h4" className={classes.logo}>
