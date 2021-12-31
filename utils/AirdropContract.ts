@@ -2,18 +2,17 @@ import { ethers } from "ethers";
 import { useState } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { WalletNotConnectedError } from "./errors";
-import AirdropContractNetworks from "contract/airdrop-contract/networks/SingularityAirdrop.json";
-import AirdropContractABI from "contract/airdrop-contract/abi/SingularityAirdrop.json";
+import AirdropContractNetworks from "contract/occam-contract/networks/SingularityAirdrop.json";
+import AirdropContractABI from "contract/occam-contract/abi/SingularityAirdrop.json";
 import { splitSignature } from "@ethersproject/bytes";
 import { getGasPrice } from "./ethereum";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 
-export const useAirdropContract = (contractAddress: string) => {
-  console.log("Contract Address", contractAddress);
-  //   const [details, setDetails] = useState();
+export const useAirdropContract = () => {
   const { account, library } = useActiveWeb3React();
 
   const stake = async (
+    contractAddress: string,
     tokenAddress: string,
     stakingAddress: string,
     airdropAmount: string,
@@ -69,6 +68,7 @@ export const useAirdropContract = (contractAddress: string) => {
   };
 
   const claim = async (
+    contractAddress: string,
     tokenAddress: string,
     claimAmount: string,
     airdropId: string,

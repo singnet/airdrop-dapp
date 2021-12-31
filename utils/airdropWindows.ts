@@ -41,7 +41,7 @@ export const checkDateIsGreaterThan = (date) => {
 };
 
 export const checkDateIsBetween = (start, end) => {
-  return moment(start).isBetween(moment(), moment(end));
+  return moment().isBetween(moment(start), moment(end));
 };
 
 export const findActiveWindow = (
