@@ -1,32 +1,27 @@
 import Box from '@mui/material/Box';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
-import axios from 'utils/Axios';
-import { setShowConnectionModal } from 'utils/store/features/walletSlice';
-import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
-import Airdropinfo from 'snet-ui/Airdropinfo';
+import { useActiveWeb3React } from '../../snet-ui/Blockchain/web3Hooks';
+import axios from '../../utils/Axios';
+import { setShowConnectionModal } from '../../utils/store/features/walletSlice';
+import { useAppDispatch, useAppSelector } from '../../utils/store/hooks';
+import Airdropinfo from '../../snet-ui/Airdropinfo';
 import Grid from '@mui/material/Grid';
-import AirdropRegistrationMini from 'snet-ui/AirdropRegistrationMini';
-import Registrationsuccess from 'snet-ui/Registrationsuccess';
-import { useInterval } from 'usehooks-ts';
-import AirdropRegistration from 'snet-ui/AirdropRegistration';
-import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
-import { API_PATHS } from 'utils/constants/ApiPaths';
-import { AirdropWindow, WindowStatus } from 'utils/airdropWindows';
-import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
-import AirdropContractNetworks from 'contract/airdrop-contract/networks/SingularityAirdrop.json';
-import { parseEthersError } from 'utils/ethereum';
-import { useAirdropContract } from 'utils/AirdropContract';
+import AirdropRegistrationMini from '../../snet-ui/AirdropRegistrationMini';
+import Registrationsuccess from '../../snet-ui/Registrationsuccess';
+import AirdropRegistration from '../../snet-ui/AirdropRegistration';
+import { ClaimStatus, UserEligibility } from '../../utils/constants/CustomTypes';
+import { API_PATHS } from '../../utils/constants/ApiPaths';
+import {  WindowStatus } from '../../utils/airdropWindows';
+import { useEthSign } from '../../snet-ui/Blockchain/signatureHooks';
+import { parseEthersError } from '../../utils/ethereum';
+import { useAirdropContract } from '../../utils/AirdropContract';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
-import AirdropRegistrationLoader from 'snet-ui/AirdropRegistration/SkeletonLoader';
-import { APIError } from 'utils/errors';
-import { SettingsOverscanOutlined } from '@mui/icons-material';
-import { AlertTypes } from 'utils/constants/alert';
+import AirdropRegistrationLoader from '../../snet-ui/AirdropRegistration/SkeletonLoader';
+import { APIError } from '../../utils/errors';
+import { AlertTypes } from '../../utils/constants/alert';
 import { AlertColor } from '@mui/material';
-import Success from 'snet-ui/Registrationsuccess';
-import ClaimSuccess from 'snet-ui/ClaimSuccess';
-import { isDateGreaterThan } from 'utils/date';
-import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
+import ClaimSuccess from '../../snet-ui/ClaimSuccess';
+import { selectActiveWindow } from '../../utils/store/features/activeWindowSlice';
 
 const DateFormatter = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
@@ -80,12 +75,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
   const [windowAction, setWindowAction] = useState<string>('');
-  const [error, setErrors] = useState<any>(null);
+  
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: '' });
-  const [airdropOpen, setAirdropOpen] = useState(false);
+
 
   const [airdropHistory, setAirdropHistory] = useState([]);
-  const { account, library, chainId } = useActiveWeb3React();
+  const { account, library} = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS);
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
@@ -198,10 +193,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const handleAutoStake = async () => {
     if (
-      typeof activeWindow?.airdrop_id === 'undefined' ||
-      typeof activeWindow.airdrop_window_id === 'undefined' ||
-      !account ||
-      !library
+      typeof activeWindow?.airdrop_id === 'undefined' 
+      || typeof activeWindow.airdrop_window_id === 'undefined' 
+      || !account 
+      || !library
     )
       return;
 
@@ -317,10 +312,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const handleClaim = async () => {
     if (
-      typeof activeWindow?.airdrop_id === 'undefined' ||
-      typeof activeWindow.airdrop_window_id === 'undefined' ||
-      !account ||
-      !library
+      typeof activeWindow?.airdrop_id === 'undefined' 
+      || typeof activeWindow.airdrop_window_id === 'undefined' 
+      || !account 
+      || !library
     )
       return;
 
@@ -359,7 +354,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const executeClaimMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
       try {
-        const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+      
         const tokenAddress = process.env.NEXT_PUBLIC_NTX_ADDRESS;
         console.log('calling claim method');
 
@@ -526,7 +521,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   const showMini =
-    activeWindow.airdrop_window_status == WindowStatus.UPCOMING && activeWindow.airdrop_window_order === 1;
+    activeWindow.airdrop_window_status === WindowStatus.UPCOMING && activeWindow.airdrop_window_order === 1;
 
   console.log('show mini', showMini);
 

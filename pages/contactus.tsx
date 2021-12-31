@@ -1,34 +1,34 @@
-import { Grid, Typography } from "@mui/material";
-import CommonLayout from "layout/CommonLayout";
-import React, { useState } from "react";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Box from "@mui/material/Box";
-import TextField from "snet-ui/TextField";
-import axios from "utils/Axios";
-import Alert from "@mui/material/Alert";
-import { API_PATHS } from "utils/constants/ApiPaths";
-import LoadingButton from "snet-ui/LoadingButton";
+import { Grid, Typography } from '@mui/material';
+import CommonLayout from '../layout/CommonLayout';
+import React, { useState } from 'react';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import TextField from '../snet-ui/TextField';
+import axios from '../utils/Axios';
+import Alert from '@mui/material/Alert';
+import { API_PATHS } from '../utils/constants/ApiPaths';
+import LoadingButton from '../snet-ui/LoadingButton';
 
-const categories = ["Airdrop Enquiry"];
+const categories = ['Airdrop Enquiry'];
 const alertTypes: any = {
-  INFO: "info",
-  SUCCESS: "success",
-  WARNING: "warning",
-  ERROR: "error",
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  ERROR: 'error',
 };
 export default function ContactUs() {
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [submittingForm, setSubmittingForm] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [messageError, setMessageError] = useState("");
+  const [emailError, setEmailError] = useState('');
+  const [messageError, setMessageError] = useState('');
   const [alertMessage, setAlertMessage] = useState({
     severity: alertTypes.INFO,
-    value: "",
+    value: '',
   });
-  const [category, setCategory] = useState("Airdrop Enquiry");
+  const [category, setCategory] = useState('Airdrop Enquiry');
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
@@ -56,18 +56,18 @@ export default function ContactUs() {
       const payload = {
         recipient: EMAIL_HOST,
         message: query,
-        subject: "General enquiry ",
-        notification_type: "support",
+        subject: 'General enquiry ',
+        notification_type: 'support',
       };
       await axios.post(API_PATHS.CONTACT_US, payload);
       setAlertMessage({
         severity: alertTypes.SUCCESS,
-        value: "Your Feedback has been submitted successfully",
+        value: 'Your Feedback has been submitted successfully',
       });
     } catch (error: any) {
       setAlertMessage({
         severity: alertTypes.ERROR,
-        value: "Unable to submit your feedback",
+        value: 'Unable to submit your feedback',
       });
     }
   };
@@ -75,14 +75,14 @@ export default function ContactUs() {
   const handleSubmit = async () => {
     try {
       setSubmittingForm(true);
-      setMessageError("");
-      setEmailError("");
-      setAlertMessage({ severity: alertTypes.ERROR, value: "" });
+      setMessageError('');
+      setEmailError('');
+      setAlertMessage({ severity: alertTypes.ERROR, value: '' });
       if (!message) {
-        setMessageError("Message should not be empty");
+        setMessageError('Message should not be empty');
       }
       if (!email) {
-        setEmailError("Enter a valid email");
+        setEmailError('Enter a valid email');
       }
       if (!message || !email) {
         return;
@@ -96,13 +96,15 @@ export default function ContactUs() {
   return (
     <CommonLayout>
       <Box >
-        <Typography align="center" color="primary" variant="h2">
+        <Typography align="center" color="primary" variant="h2" sx={{mt:13}}>
           Contact Us
         </Typography>
         <Box sx={{
-          m:43,mt:4,mb:5,
-          height:"394px",
-          width:"629px"
+         m:43,
+          mt:4,
+        
+          height:'394px',
+          width:'629px'
           }}>
           <Grid container sx={{ my: 3 }} spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -110,8 +112,8 @@ export default function ContactUs() {
                 color="primary"
                 required
                 value={username}
-                label="Your username (Optional)"
-                placeholder="Username"
+                label="Your Name (Optional)"
+                placeholder="Name"
                 onChange={handleusernameChange}
                 fullWidth
               />
@@ -169,13 +171,14 @@ export default function ContactUs() {
           {alertMessage.value.trim() ? (
             <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
           ) : null}
-          <Box display="flex" justifyContent="center" sx={{mt:2}}>
+          <Box display="flex" justifyContent="center" sx={{ mt:2 }}>
             <LoadingButton
               variant="contained"
               color="secondary"
               onClick={handleSubmit}
               loading={submittingForm}
-              sx={{textTransform:"capitalize"}}
+              sx={{ textTransform:'capitalize' }}
+              disabled={email.length<1 || message.length<1 || username.length<1 }
             >
               Contact
             </LoadingButton>
