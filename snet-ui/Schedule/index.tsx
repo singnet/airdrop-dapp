@@ -36,9 +36,10 @@ export default function Schedule({ title, events, blogLink }: Props) {
         sx={{
           justifyContent: "center",
           mt: 2,
+          
         }}
       >
-        <Timeline>
+        <Timeline sx={{mx:16}}>
           {events.map((event, index) => (
             <ScheduleEvent
               key={event.time.toString()}
