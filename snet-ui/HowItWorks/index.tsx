@@ -21,18 +21,19 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
       sx={{
         bgcolor: 'bgHighlight.main',
         justifyContent: 'center',
-        px: [1, 4, 15],
+        //px: [1, 4, 15],
         py: '64px',
-        //height:"856px",
-        //width:"1440px"
+        height:"856px",
+        width:"1440px"
       }}
       ref={ref}
     >
       <Box
       sx={{
       height:"728px",
-      width:"1160px"
-      
+      width:"1160px",
+      py:"64px"
+
 
       }}
       >

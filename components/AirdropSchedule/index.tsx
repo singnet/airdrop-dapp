@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import Schedule from '../../snet-ui/Schedule';
 import Box from '@mui/material/Box';
+import Schedule from 'snet-ui/Schedule';
 
 type scheduleEvent = { time: Date; title: string; description: string };
 type AirdropProps = {
@@ -17,7 +17,7 @@ const AirdropSchedules = ({ schedules }: AirdropProps, ref) => {
   }
   return (
     <Box sx={{ bgcolor: 'bgHighlight.main' }} ref={ref}>
-      <Schedule title='Vesting Schedule' events={schedules} blogLink='https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add' />
+      <Schedule title="Vesting Schedule" events={schedules} blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add" />
     </Box>
   );
 };

@@ -4,11 +4,11 @@ import Typography from '@mui/material/Typography';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useActiveWeb3React } from '../../../snet-ui/Blockchain/web3Hooks';
-import Header from '../../../snet-ui/Header';
-import axios from '../../../utils/Axios';
-import { setShowConnectionModal } from '../../../utils/store/features/walletSlice';
-import { useAppDispatch } from '../../../utils/store/hooks';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import Header from 'snet-ui/Header';
+import axios from 'utils/Axios';
+import { setShowConnectionModal } from 'utils/store/features/walletSlice';
+import { useAppDispatch } from 'utils/store/hooks';
 
 interface AirdropWindowProps {}
 
@@ -23,18 +23,13 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
     airdropWindowName: '',
     airdropWindowRewards: 'Pending',
     airdropWindowRewardsClaimed: 'Pending',
-    airdropWindowRegisteredAt:'',
+    airdropWindowRegisteredAt: '',
   });
 
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { airdropwindow } = router.query;
   const { account } = useActiveWeb3React();
-
-  useEffect(() => {
-    getUserRegistrationInfo();
-  }, [account, airdropwindow]);
-
   const getUserRegistrationInfo = async () => {
     try {
       const payload = {
@@ -52,6 +47,10 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getUserRegistrationInfo();
+  }, [account, airdropwindow]);
 
   return (
     <>
@@ -73,23 +72,22 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
           </Box>
           <Box sx={style}>
             <Typography variant="h6">
-              {values.airdropWindowName} 
+              {values.airdropWindowName}
               Registration
             </Typography>
             <Typography variant="h6">{values.airdropWindowRegisteredAt}</Typography>
           </Box>
           <Box sx={style}>
             <Typography variant="h6">
-              {values.airdropWindowName} 
+              {values.airdropWindowName}
               Rewards
-              
             </Typography>
             <Typography variant="h6">{values.airdropWindowRewards}</Typography>
           </Box>
           <Box sx={style}>
             <Typography variant="h6">
               {values.airdropWindowName}
-               Rewards claimed
+              Rewards claimed
             </Typography>
             <Typography variant="h6">{values.airdropWindowRewardsClaimed}</Typography>
           </Box>

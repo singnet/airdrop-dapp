@@ -1,14 +1,14 @@
 import { Grid, Typography } from '@mui/material';
-import CommonLayout from '../layout/CommonLayout';
+import CommonLayout from 'layout/CommonLayout';
 import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import TextField from '../snet-ui/TextField';
-import axios from '../utils/Axios';
+import TextField from 'snet-ui/TextField';
+import axios from 'utils/Axios';
 import Alert from '@mui/material/Alert';
-import { API_PATHS } from '../utils/constants/ApiPaths';
-import LoadingButton from '../snet-ui/LoadingButton';
+import { API_PATHS } from 'utils/constants/ApiPaths';
+import LoadingButton from 'snet-ui/LoadingButton';
 
 const categories = ['Airdrop Enquiry'];
 const alertTypes: any = {
@@ -95,17 +95,16 @@ export default function ContactUs() {
 
   return (
     <CommonLayout>
-      <Box >
-        <Typography align="center" color="primary" variant="h2" sx={{mt:13}}>
+      <Box>
+        <Typography align="center" color="primary" variant="h2" sx={{ mt: 13 }}>
           Contact Us
         </Typography>
         <Box sx={{
-         m:43,
-          mt:4,
-        
-          height:'394px',
-          width:'629px'
-          }}>
+          m: 43,
+          mt: 4,
+          height: '394px',
+          width: '629px',
+      }}>
           <Grid container sx={{ my: 3 }} spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -171,14 +170,14 @@ export default function ContactUs() {
           {alertMessage.value.trim() ? (
             <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
           ) : null}
-          <Box display="flex" justifyContent="center" sx={{ mt:2 }}>
+          <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
             <LoadingButton
               variant="contained"
               color="secondary"
               onClick={handleSubmit}
               loading={submittingForm}
-              sx={{ textTransform:'capitalize' }}
-              disabled={email.length<1 || message.length<1 || username.length<1 }
+              sx={{ textTransform: 'capitalize' }}
+              disabled={email.length < 1 || message.length < 1 || username.length < 1}
             >
               Contact
             </LoadingButton>

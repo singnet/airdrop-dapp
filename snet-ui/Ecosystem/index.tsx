@@ -13,18 +13,24 @@ type Props = {
 
 export default function Ecosystem({ blogLink }: Props) {
   return (
-    <GradientBox $background="bgGradient" sx={{ my: 2, py: 8, px: [0, 4, 15] }}>
+    <GradientBox $background="bgGradient" sx={{
+      //my: 2, py: 8, px: [0, 4, 15]
+      width:"1440px",
+      height:"428px"
+      }}>
+        <Box sx={{width:"963px",height:"300px",pt:"64px",pb:"64px",pl:"238px"}}>
       <Typography
         align="center"
         variant="h2"
         color="text.secondary"
         component="p"
         mb={3}
+        sx={{pl:"234.04px"}}
       >
         SingularityNET Ecosystem
       </Typography>
       <Container>
-        <Typography color="text.secondary" align="left" textAlign="justify">
+        <Typography color="text.secondary" align="left" textAlign="justify" sx={{height:"116px",width:"963px",fontSize:"18px"}}>
           SingularityNET hosts an ecosystem of different technology projects in
           different areas with the common theme of accelerating to the future
           and to the Technological Singularity in a beneficial way under
@@ -64,6 +70,7 @@ export default function Ecosystem({ blogLink }: Props) {
             ) : null} */}
           </Stack>
         </Box>
+      </Box>
       </Box>
     </GradientBox>
   );
