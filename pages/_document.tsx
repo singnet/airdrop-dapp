@@ -1,24 +1,23 @@
 import * as React from 'react';
 import Document, {
-   Head, Html, Main, NextScript
- } from 'next/document';
+  Head, Html, Main, NextScript,
+} from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
-import { lightTheme } from '../snet-ui/Theme/theme';
-import createEmotionCache from '../snet-ui/Theme/createEmotionCache';
+import { lightTheme } from 'snet-ui/Theme/theme';
+import createEmotionCache from 'snet-ui/Theme/createEmotionCache';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
-        
           <meta name="theme-color" content={lightTheme.palette.primary.main} />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-          ></link>
+            rel="stylesheet" />
+
         </Head>
         <body>
           <Main />
@@ -55,8 +54,6 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage;
-
-
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
@@ -64,8 +61,8 @@ MyDocument.getInitialProps = async (ctx) => {
   ctx.renderPage = () =>
   /* eslint-disable react/jsx-props-no-spreading */
   // @ts-ignore
-  
-    originalRenderPage({enhanceApp: (App) => (props) => <App emotionCache={cache} {...props} />,});
+
+    originalRenderPage({ enhanceApp: (App) => (props) => <App emotionCache={cache} {...props} /> });
 
   const initialProps = await Document.getInitialProps(ctx);
   // This is important. It prevents emotion to render invalid HTML.

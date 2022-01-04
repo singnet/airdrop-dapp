@@ -63,7 +63,7 @@ const Header = ({
   return (
     <>
     <div className={classes.topNavBar}>
-    <Container sx={{pb:1}}>
+    <Container sx={{pb:1,width:"1440px",height:"64px"}}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h4" className={classes.logo}>
@@ -130,7 +130,7 @@ const Header = ({
     </Container>
     </div>
     </>
-    
+
   );
 };
 

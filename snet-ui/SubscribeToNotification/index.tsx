@@ -71,7 +71,7 @@ function SubscribeToNotification(
   };
 
   return (
-    <GradientBox $background="bgGradient" sx={{ py: 8 }} ref={ref}>
+    <GradientBox $background="bgGradient" sx={{ py: "64px",height:"268px",width:"1440px" }} ref={ref}>
       <Typography
         align="center"
         fontWeight="bold"
@@ -99,7 +99,7 @@ function SubscribeToNotification(
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={subscriptionLoader}
-              
+
             />
           </Grid>
           <Grid
@@ -115,11 +115,11 @@ function SubscribeToNotification(
               onClick={handleSubscribe}
               loading={subscriptionLoader}
               sx={{width:"120px",height:"52.5px",textTransform:"capitalize",fontWeight:600}}
-              
+
             >
-              
+
               Subscribe
-        
+
             </LoadingButton>
           </Grid>
         </Grid>

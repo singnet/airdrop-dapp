@@ -265,7 +265,8 @@ export default function AirdropRegistration({
           </Grid>
         </Box>
       </Modal>
-      <Box>
+      <Box sx={{width:"1440px",height:"638px"}}>
+      <Box sx={{width:"1181px",height:"420px"}}>
         <GradientBox
           $background="bgGradientHighlight"
           className={styles.contentWrapper}
@@ -452,6 +453,7 @@ export default function AirdropRegistration({
             </Container>
           ) : null}
         </GradientBox>
+      </Box>
       </Box>
     </>
   );

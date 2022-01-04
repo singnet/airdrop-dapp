@@ -1,41 +1,37 @@
-import AirdropSchedules from '../components/AirdropSchedule';
-import EligibilityBanner from '../components/EligibilityBanner';
+import AirdropSchedules from 'components/AirdropSchedule';
+import EligibilityBanner from 'components/EligibilityBanner';
 import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
-import nextI18NextConfig from '../next-i18next.config';
+import nextI18NextConfig from 'next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import HowItWorks from '../snet-ui/HowItWorks';
+import HowItWorks from 'snet-ui/HowItWorks';
 import Box from '@mui/material/Box';
-import Airdroprules from '../snet-ui/Airdroprules';
-import SubscribeToNotification from '../snet-ui/SubscribeToNotification';
-import Ecosystem from '../snet-ui/Ecosystem';
-import CommonLayout from '../layout/CommonLayout';
-import Registration from '../components/Registration';
-//import Typography from "@mui/material/Typography";
-//import Learn from "snet-ui/LearnandConnect";
-// import Notqualified from "snet-ui/Noteligible";
+import Airdroprules from 'snet-ui/Airdroprules';
+import SubscribeToNotification from 'snet-ui/SubscribeToNotification';
+import Ecosystem from 'snet-ui/Ecosystem';
+import CommonLayout from 'layout/CommonLayout';
+import Registration from 'components/Registration';
 import {
-   RefObject, 
-   useEffect, 
-   useMemo, 
-   useRef, 
-   useState 
-  } from 'react';
-import FAQPage from '../snet-ui/FAQ';
-import axios from '../utils/Axios';
-
-import { API_PATHS } from '../utils/constants/ApiPaths';
-import { findActiveWindow, WindowStatus } from '../utils/airdropWindows';
-import { useActiveWeb3React } from '../snet-ui/Blockchain/web3Hooks';
-import { ClaimStatus, UserEligibility } from '../utils/constants/CustomTypes';
-import { useAppDispatch, useAppSelector } from '../utils/store/hooks';
-//import { Alert } from "@mui/material";
-import { APIError } from '../utils/errors';
+  RefObject,
+  React,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   selectActiveWindow,
   setActiveWindowState,
 } from 'utils/store/features/activeWindowSlice';
+import FAQPage from 'snet-ui/FAQ';
+import axios from 'utils/Axios';
+
+import { API_PATHS } from 'utils/constants/ApiPaths';
+import { findActiveWindow, WindowStatus } from 'utils/airdropWindows';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
+import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
+import { APIError } from 'utils/errors';
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -46,7 +42,7 @@ export const getStaticProps = async ({ locale }) => ({
 const headerOffset = 82;
 
 const Home: NextPage = () => {
-  
+
   const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const howitworksRef = useRef<HTMLDivElement>(null);
@@ -61,7 +57,7 @@ const Home: NextPage = () => {
   const [rejectReasons, setRejectReasons] = useState<string | undefined>('');
   const [userRegistered, setUserRegistered] = useState(false);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
-    ClaimStatus.NOT_STARTED
+    ClaimStatus.NOT_STARTED,
   );
   const [airdropRules, setAirdropRules] = useState([]);
 
@@ -75,14 +71,6 @@ const Home: NextPage = () => {
   // const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
 
   console.log('airdropTotalTokens', airdropTotalTokens);
-
-  useEffect(() => {
-    getAirdropSchedule();
-  }, []);
-
-  useEffect(() => {
-    getUserEligibility();
-  }, [activeWindow, account]);
 
   const getAirdropSchedule = async () => {
     try {
@@ -116,7 +104,7 @@ const Home: NextPage = () => {
         setActiveWindowState({
           totalWindows: airdrop.airdrop_windows.length,
           window: activeAirdropWindow,
-        })
+        }),
       );
 
       setSchedules(airdropSchedules);
@@ -130,17 +118,18 @@ const Home: NextPage = () => {
       console.log('schedule error', e);
     }
   };
+  useEffect(() => {
+    getAirdropSchedule();
+  }, []);
 
   const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
     if (!elemRef) return;
-  
 
     const offsetTop = elemRef.current?.offsetTop;
-    if (typeof offsetTop === "undefined") {
+    if (typeof offsetTop === 'undefined') {
       return;
     }
     const offsetPosition = offsetTop - headerOffset;
-    
 
     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
   };
@@ -159,11 +148,13 @@ const Home: NextPage = () => {
   const getUserEligibility = async () => {
     try {
       if (
-        typeof activeWindow?.airdrop_id === 'undefined' 
-        || typeof activeWindow?.airdrop_window_id === 'undefined' 
+        typeof activeWindow?.airdrop_id === 'undefined'
+        || typeof activeWindow?.airdrop_window_id === 'undefined'
         || !account
-      )
+      ) {
         return;
+      }
+
       setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
         signature: '',
@@ -181,7 +172,6 @@ const Home: NextPage = () => {
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
-      
 
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE,
@@ -194,6 +184,9 @@ const Home: NextPage = () => {
       console.log('eligibility check error', error);
     }
   };
+  useEffect(() => {
+    getUserEligibility();
+  }, [activeWindow, account]);
 
   const handleNotificationSubscription = async (email: string) => {
     try {
@@ -207,15 +200,15 @@ const Home: NextPage = () => {
     }
   };
 
-  const airdropWindowClosingTime = useMemo(() =>
-      activeWindow?. airdrop_window_status ===  WindowStatus.CLAIM
-        ? activeWindow. airdrop_window_claim_end_period
-        : activeWindow?. airdrop_window_status ===  WindowStatus.REGISTRATION
-        ? activeWindow. airdrop_window_registration_end_period
-        : activeWindow?. airdrop_window_status ===  WindowStatus.UPCOMING
-        ? activeWindow. airdrop_window_registration_start_period
-        : "",
-    [activeWindow]
+  const airdropWindowClosingTime = useMemo(
+    () => activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+    ? activeWindow.airdrop_window_claim_end_period
+    : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
+    ? activeWindow.airdrop_window_registration_end_period
+    : activeWindow?.airdrop_window_status === WindowStatus.UPCOMING
+          ? activeWindow.airdrop_window_registration_start_period
+          : '',
+    [activeWindow],
   );
 
   console.log('activeWindow', activeWindow, airdropWindowClosingTime);

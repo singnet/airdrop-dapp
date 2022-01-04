@@ -28,17 +28,28 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], p: 3 }}>
+    <Box sx={{
+      bgcolor: "bgHighlight.main",
+      // px: [1, 4, 15],
+      // p: 3,
+      width:"1440px",
+      height:"1164px",
+
+      }}>
+        <Box sx={{width:"962px",height:"1036px",pt:"64px"}}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
       <Box
         sx={{
           justifyContent: "center",
-          mt: 2,
+
+          width:"962px",
+          height:"860px"
+
         }}
       >
-        <Timeline>
+        <Timeline sx={{mx:16}}>
           {events.map((event, index) => (
             <ScheduleEvent
               key={event.time.toString()}
@@ -63,6 +74,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
           ) : null}
         </Box>
       </Box>
+    </Box>
     </Box>
   );
 }

@@ -2,14 +2,15 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import React, { useMemo } from 'react';
-import { SupportedChainId } from '../../snet-ui/Blockchain/connectors';
-import { useActiveWeb3React } from '../../snet-ui/Blockchain/web3Hooks';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { UserEligibility } from '../../utils/constants/CustomTypes';
-import Notqualified from '../../snet-ui/Noteligible';
+import { SupportedChainId } from 'snet-ui/Blockchain/connectors';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import { UserEligibility } from 'utils/constants/CustomTypes';
+import Notqualified from 'snet-ui/Noteligible';
+
+import { useAppSelector } from 'utils/store/hooks';
+import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
 import SkeletonLoader from './SkeletonLoader';
-import { useAppSelector } from '../../utils/store/hooks';
-import { selectActiveWindow } from '../../utils/store/features/activeWindowSlice';
 
 type EligibilityBannerProps = {
   onViewRules: () => void;
@@ -52,40 +53,44 @@ export default function EligibilityBanner({
 
   return (
     <Box
-      sx={{ 
-        bgcolor: "bgHighlight.main", 
-        my: 4, 
-        p: 4, 
-        py: 2, 
-        borderRadius: 2 
+      sx={{
+        bgcolor: 'bgHighlight.main',
+        my: 4,
+        p: 4,
+        py: 2,
+        borderRadius: 2,
+        width:'1160px',
+        height:'114px'
       }}
-      color='textAdvanced.dark'
+      color="textAdvanced.dark"
     >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Vesting Eligibility</Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-            <Box color='success' sx={{ mr: 1, mt: 1 }}>
-              <CheckCircleIcon color='success' />
+            <Box color="success" sx={{ mr: 1, mt: 1 }}>
+              <CheckCircleIcon color="success" />
             </Box>
 
-            <Typography variant='h5' color="primary.main">
-              Qualified for Vesting Window 
-              {activeWindow.airdrop_window_order} /{" "}
+            <Typography variant="h5" color="primary.main">
+              Qualified for Vesting Window
+              {activeWindow.airdrop_window_order}
+              /
+              {' '}
               {totalWindows}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography>Connected Wallet Address</Typography>
-          <Typography noWrap variant='priority' component='p'>
+          <Typography noWrap variant="priority" component="p">
             {account}
           </Typography>
-          <Typography sx={{ textTransform: 'capitalize' }} variant='h5'>
-            Ethereum 
-            {network?.toLowerCase()}
-          </Typography>
+              <Typography sx={{ textTransform: 'capitalize' }} variant="h5">
+            Ethereum
+              {network?.toLowerCase()}
+            </Typography>
         </Grid>
       </Grid>
     </Box>

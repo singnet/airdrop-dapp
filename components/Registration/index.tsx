@@ -1,27 +1,27 @@
 import Box from '@mui/material/Box';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { useActiveWeb3React } from '../../snet-ui/Blockchain/web3Hooks';
-import axios from '../../utils/Axios';
-import { setShowConnectionModal } from '../../utils/store/features/walletSlice';
-import { useAppDispatch, useAppSelector } from '../../utils/store/hooks';
-import Airdropinfo from '../../snet-ui/Airdropinfo';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import axios from 'utils/Axios';
+import { setShowConnectionModal } from 'utils/store/features/walletSlice';
+import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
+import Airdropinfo from 'snet-ui/Airdropinfo';
 import Grid from '@mui/material/Grid';
-import AirdropRegistrationMini from '../../snet-ui/AirdropRegistrationMini';
-import Registrationsuccess from '../../snet-ui/Registrationsuccess';
-import AirdropRegistration from '../../snet-ui/AirdropRegistration';
-import { ClaimStatus, UserEligibility } from '../../utils/constants/CustomTypes';
-import { API_PATHS } from '../../utils/constants/ApiPaths';
-import {  WindowStatus } from '../../utils/airdropWindows';
-import { useEthSign } from '../../snet-ui/Blockchain/signatureHooks';
-import { parseEthersError } from '../../utils/ethereum';
-import { useAirdropContract } from '../../utils/AirdropContract';
+import AirdropRegistrationMini from 'snet-ui/AirdropRegistrationMini';
+import Registrationsuccess from 'snet-ui/Registrationsuccess';
+import AirdropRegistration from 'snet-ui/AirdropRegistration';
+import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
+import { API_PATHS } from 'utils/constants/ApiPaths';
+import {  WindowStatus } from 'utils/airdropWindows';
+import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
+import { parseEthersError } from 'utils/ethereum';
+import { useAirdropContract } from 'utils/AirdropContract';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
-import AirdropRegistrationLoader from '../../snet-ui/AirdropRegistration/SkeletonLoader';
-import { APIError } from '../../utils/errors';
-import { AlertTypes } from '../../utils/constants/alert';
+import AirdropRegistrationLoader from 'snet-ui/AirdropRegistration/SkeletonLoader';
+import { APIError } from 'utils/errors';
+import { AlertTypes } from 'utils/constants/alert';
 import { AlertColor } from '@mui/material';
-import ClaimSuccess from '../../snet-ui/ClaimSuccess';
-import { selectActiveWindow } from '../../utils/store/features/activeWindowSlice';
+import ClaimSuccess from 'snet-ui/ClaimSuccess';
+import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
 
 const DateFormatter = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
@@ -75,12 +75,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
   const [windowAction, setWindowAction] = useState<string>('');
-  
+
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: '' });
 
-
   const [airdropHistory, setAirdropHistory] = useState([]);
-  const { account, library} = useActiveWeb3React();
+  const { account, library } = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS);
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
@@ -100,16 +99,15 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
 
   const endDate = useMemo(
-    () =>
-      activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
-        ? new Date(`${activeWindow?.airdrop_window_registration_end_period} UTC`)
-        : activeWindow?.airdrop_window_status === WindowStatus.IDLE
-        ? new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`)
-        : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        ? new Date(`${activeWindow?.airdrop_window_claim_end_period} UTC`)
-        : new Date(),
-    [activeWindow]
-  );
+    () => activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
+          ? new Date(`${activeWindow?.airdrop_window_registration_end_period} UTC`)
+          : activeWindow?.airdrop_window_status === WindowStatus.IDLE
+          ? new Date(`${activeWindow?.airdrop_window_claim_start_period} UTC`)
+          : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+          ? new Date(`${activeWindow?.airdrop_window_claim_end_period} UTC`)
+          : new Date(),
+      [activeWindow],
+    );
 
   const getStakeDetails = async () => {
     try {
@@ -129,8 +127,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       setStakeDetails(details);
     } catch (error) {}
   };
-  const getAlertRefresh= async () =>{
-    setUiAlert({ type: AlertTypes.info, message: "" });
+  const getAlertRefresh = async () =>{
+    setUiAlert({ type: AlertTypes.info, message: '' });
 
   };
 
@@ -143,7 +141,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
       const signature = await ethSign.sign(
         ['uint8', 'uint8', 'address'],
-        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account]
+        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account],
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
@@ -155,7 +153,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       } else {
         setUiAlert({
           type: AlertTypes.error,
-          message: `Failed Registration: unable to generate signature`,
+          message: 'Failed Registration: unable to generate signature',
         });
       }
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
@@ -193,9 +191,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const handleAutoStake = async () => {
     if (
-      typeof activeWindow?.airdrop_id === 'undefined' 
-      || typeof activeWindow.airdrop_window_id === 'undefined' 
-      || !account 
+      typeof activeWindow?.airdrop_id === 'undefined'
+      || typeof activeWindow.airdrop_window_id === 'undefined'
+      || !account
       || !library
     )
       return;
@@ -205,13 +203,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         type: AlertTypes.error,
         message: 'There is already a pending claim transaction. Please wait for it to get completed',
       });
-      return;
-    } else if (claimStatus === ClaimStatus.SUCCESS) {
+      { return; }
+    }
+    if (claimStatus === ClaimStatus.SUCCESS) {
       setUiAlert({
         type: AlertTypes.error,
         message: 'You have already Claimed',
       });
-      return;
+      { return; }
     }
 
     const getStakeDetails = async () => {
@@ -233,7 +232,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
     };
 
-    const executeStakeMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
+    const executeStakeMethod = async (signature: string, claimAmount: number):
+    Promise<TransactionResponse> => {
       try {
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
@@ -248,7 +248,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           stakeDetails.claimableTokensToWallet.toString(),
           activeWindow.airdrop_id?.toString(),
           activeWindow.airdrop_window_id?.toString(),
-          signature
+          signature,
         );
         return txn;
       } catch (error: any) {
@@ -312,12 +312,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const handleClaim = async () => {
     if (
-      typeof activeWindow?.airdrop_id === 'undefined' 
-      || typeof activeWindow.airdrop_window_id === 'undefined' 
-      || !account 
+      typeof activeWindow?.airdrop_id === 'undefined'
+      || typeof activeWindow.airdrop_window_id === 'undefined'
+      || !account
       || !library
     )
-      return;
+  { return; }
 
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
@@ -325,12 +325,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         message: 'There is already a pending claim transaction. Please wait for it to get completed',
       });
       return;
-    } else if (claimStatus === ClaimStatus.SUCCESS) {
+    }
+    if (claimStatus === ClaimStatus.SUCCESS) {
       setUiAlert({
         type: AlertTypes.error,
         message: 'You have already Claimed',
       });
-      return;
+      { return; }
     }
 
     const getClaimDetails = async () => {
@@ -352,9 +353,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
     };
 
-    const executeClaimMethod = async (signature: string, claimAmount: number): Promise<TransactionResponse> => {
+    const executeClaimMethod = async (signature: string, claimAmount: number):
+    Promise<TransactionResponse> => {
       try {
-      
+
         const tokenAddress = process.env.NEXT_PUBLIC_NTX_ADDRESS;
         console.log('calling claim method');
 
@@ -363,7 +365,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           claimAmount.toString(),
           activeWindow.airdrop_id?.toString(),
           activeWindow.airdrop_window_id?.toString(),
-          signature
+          signature,
         );
         return txn;
       } catch (error: any) {
@@ -463,7 +465,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const showRegistrationSuccess = useMemo(
     () => userRegistered && activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
-    [userRegistered, activeWindow]
+    [userRegistered, activeWindow],
   );
   if (!activeWindow) {
     return null;
@@ -505,7 +507,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  if (claimStatus === ClaimStatus.SUCCESS && activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
+  if (claimStatus === ClaimStatus.SUCCESS
+     && activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
         <ClaimSuccess
@@ -520,8 +523,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     );
   }
 
-  const showMini =
-    activeWindow.airdrop_window_status === WindowStatus.UPCOMING && activeWindow.airdrop_window_order === 1;
+  const showMini = activeWindow.airdrop_window_status === WindowStatus.UPCOMING
+  && activeWindow.airdrop_window_order === 1;
 
   console.log('show mini', showMini);
 

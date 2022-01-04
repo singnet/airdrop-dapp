@@ -13,15 +13,22 @@ export default function Learn() {
   return (
     <Box
       sx={{
-        p: 3,
+        //p: 3,
+        height:"512px",
+        width:"1440px",
         bgcolor: "bgHighlight.main",
       }}
     >
       <Box
         sx={{
-          my: 1,
-          py: 1,
+          //my: 1,
+          //py: 1,
+          width:"1158px",
+          height:"384px",
           justifyContent: "center",
+          pt:"64px",
+          pl:"140px",
+          pb:"64px"
         }}
       >
         <Typography align="center" variant="h2" color="bgtext.main" mb={5}>

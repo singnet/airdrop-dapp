@@ -34,6 +34,7 @@
     "@web3-react/walletconnect-connector": "^6.2.4",
     "axios": "^0.22.0",
     "bignumber.js": "^9.0.1",
+    "eslint-import-resolver-typescript": "^2.5.0",
     "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.4.7",
     "moment": "^2.29.1",
