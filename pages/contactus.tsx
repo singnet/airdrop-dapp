@@ -1,14 +1,15 @@
 import { Grid, Typography } from '@mui/material';
-import CommonLayout from '../layout/CommonLayout';
+import CommonLayout from 'layout/CommonLayout';
 import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import TextField from '../snet-ui/TextField';
-import axios from '../utils/Axios';
+import TextField from 'snet-ui/TextField';
+import axios from 'utils/Axios';
 import Alert from '@mui/material/Alert';
-import { API_PATHS } from '../utils/constants/ApiPaths';
-import LoadingButton from '../snet-ui/LoadingButton';
+import { API_PATHS } from 'utils/constants/ApiPaths';
+import LoadingButton from 'snet-ui/LoadingButton';
+import Container from '@mui/material/Container';
 
 const categories = ['Airdrop Enquiry'];
 const alertTypes: any = {
@@ -18,6 +19,7 @@ const alertTypes: any = {
   ERROR: 'error',
 };
 export default function ContactUs() {
+  const [walletAddress, setWalletAddress] = useState('');
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -30,33 +32,31 @@ export default function ContactUs() {
   });
   const [category, setCategory] = useState('Airdrop Enquiry');
 
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWalletAddress(event.target.value);
+  };
+
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
   };
-  const handleEmailChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleEmailChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setEmail(event.target.value);
   };
-  const handleusernameChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleusernameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setUsername(event.target.value);
   };
-  const handleMessageChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleMessageChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setMessage(event.target.value);
   };
 
   const sendEmail = async () => {
     try {
-      const query = ` Message : ${message} . From ${email}`;
+      const query = `Message : ${message} . From ${email} Wallet Address : ${walletAddress}`;
       const EMAIL_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
       const payload = {
         recipient: EMAIL_HOST,
         message: query,
-        subject: 'General enquiry ',
+        subject: 'Occam support enquiry ',
         notification_type: 'support',
       };
       await axios.post(API_PATHS.CONTACT_US, payload);
@@ -95,25 +95,19 @@ export default function ContactUs() {
 
   return (
     <CommonLayout>
-      <Box >
-        <Typography align="center" color="primary" variant="h2" sx={{mt:13}}>
+      <Box sx={{ mt: 20 }}>
+        <Typography align="center" color="primary" variant="h2">
           Contact Us
         </Typography>
-        <Box sx={{
-         m:43,
-          mt:4,
-        
-          height:'394px',
-          width:'629px'
-          }}>
+        <Container>
           <Grid container sx={{ my: 3 }} spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 color="primary"
                 required
                 value={username}
-                label="Your Name (Optional)"
-                placeholder="Name"
+                label="Your username (Optional)"
+                placeholder="Username"
                 onChange={handleusernameChange}
                 fullWidth
               />
@@ -135,9 +129,11 @@ export default function ContactUs() {
           <TextField
             color="primary"
             label="Wallet Address (Optional)"
-            placeholder="connect your wallet"
+            placeholder="Wallet Address"
             sx={{ my: 3 }}
             fullWidth
+            value={walletAddress}
+            onChange={handleAddressChange}
           />
           <Select
             labelId="feedback-category-select-label"
@@ -168,22 +164,19 @@ export default function ContactUs() {
             onChange={handleMessageChange}
             helperText={messageError}
           />
-          {alertMessage.value.trim() ? (
-            <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
-          ) : null}
-          <Box display="flex" justifyContent="center" sx={{ mt:2 }}>
+          {alertMessage.value.trim() ? <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert> : null}
+          <Box display="flex" justifyContent="center" sx={{ my: 2 }}>
             <LoadingButton
               variant="contained"
               color="secondary"
               onClick={handleSubmit}
               loading={submittingForm}
-              sx={{ textTransform:'capitalize' }}
-              disabled={email.length<1 || message.length<1 || username.length<1 }
+              sx={{ textTransform: 'capitalize' }}
             >
               Contact
             </LoadingButton>
           </Box>
-        </Box>
+        </Container>
       </Box>
     </CommonLayout>
   );

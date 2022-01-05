@@ -1,12 +1,12 @@
-import { ethers } from "ethers";
-import { useState } from "react";
-import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import { WalletNotConnectedError } from "./errors";
-import AirdropContractNetworks from "contract/occam-contract/networks/SingularityAirdrop.json";
-import AirdropContractABI from "contract/occam-contract/abi/SingularityAirdrop.json";
-import { splitSignature } from "@ethersproject/bytes";
-import { getGasPrice } from "./ethereum";
-import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { ethers } from 'ethers';
+import { useState } from 'react';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import { WalletNotConnectedError } from './errors';
+import AirdropContractNetworks from 'contract/airdrop-contract/networks/SingularityAirdrop.json';
+import AirdropContractABI from 'contract/airdrop-contract/abi/SingularityAirdrop.json';
+import { splitSignature } from '@ethersproject/bytes';
+import { getGasPrice } from './ethereum';
+import { TransactionResponse } from '@ethersproject/abstract-provider';
 
 export const useAirdropContract = () => {
   const { account, library } = useActiveWeb3React();
@@ -26,19 +26,15 @@ export const useAirdropContract = () => {
     }
 
     if (!contractAddress) {
-      throw new Error("Missing Contract Address");
+      throw new Error('Missing Contract Address');
     }
 
     if (!contractAddress) {
-      throw new Error("Missing Contract Address");
+      throw new Error('Missing Contract Address');
     }
 
     const signer = await library.getSigner(account);
-    const airdropContract = new ethers.Contract(
-      contractAddress,
-      AirdropContractABI,
-      signer
-    );
+    const airdropContract = new ethers.Contract(contractAddress, AirdropContractABI, signer);
 
     const signatureParts = splitSignature(signature);
 
@@ -54,16 +50,16 @@ export const useAirdropContract = () => {
       signatureParts.s,
     ];
 
-    console.log("ClaimAndStake ARGS: ", args);
+    console.log('ClaimAndStake ARGS: ', args);
 
     const gasPrice = await getGasPrice();
     const gasLimit = await airdropContract.estimateGas.claimAndStake(...args);
-    console.log("estimated gas limit", gasLimit);
+    console.log('estimated gas limit', gasLimit);
     const txn = await airdropContract.claimAndStake(...args, {
       gasLimit: gasLimit,
       gasPrice,
     });
-    console.log("Stake txn submitted", txn.hash);
+    console.log('Stake txn submitted', txn.hash);
     return txn;
   };
 
@@ -80,15 +76,11 @@ export const useAirdropContract = () => {
     }
 
     if (!contractAddress) {
-      throw new Error("Missing Contract Address");
+      throw new Error('Missing Contract Address');
     }
 
     const signer = await library.getSigner(account);
-    const airdropContract = new ethers.Contract(
-      contractAddress,
-      AirdropContractABI,
-      signer
-    );
+    const airdropContract = new ethers.Contract(contractAddress, AirdropContractABI, signer);
 
     const signatureParts = splitSignature(signature);
 
@@ -104,12 +96,12 @@ export const useAirdropContract = () => {
 
     const gasPrice = await getGasPrice();
     const gasLimit = await airdropContract.estimateGas.claim(...args);
-    console.log("estimated gas limit", gasLimit);
+    console.log('estimated gas limit', gasLimit);
     const txn = await airdropContract.claim(...args, {
       gasLimit: gasLimit,
       gasPrice,
     });
-    console.log("Claim txn submitted", txn.hash);
+    console.log('Claim txn submitted', txn.hash);
     return txn;
   };
 

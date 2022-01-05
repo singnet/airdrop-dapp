@@ -1,11 +1,12 @@
-import React, { useMemo } from "react";
-import GradientBox from "snet-ui/GradientBox";
-import Typography from "@mui/material/Typography";
-import FlipCountdown from "snet-ui/FlipClock/Countdown";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Box from "@mui/system/Box";
+import React, { useMemo } from 'react';
+import GradientBox from 'snet-ui/GradientBox';
+import Typography from '@mui/material/Typography';
+import FlipCountdown from 'snet-ui/FlipClock/Countdown';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Box from '@mui/system/Box';
+import moment from 'moment';
 type AirdropRegistrationMiniProps = {
   startDate: Date;
   totalTokens: number;
@@ -15,14 +16,14 @@ type AirdropRegistrationMiniProps = {
   windowAction: string;
   onClickNotification: Function;
 };
-const DateFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
+const DateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
   // timeZone: "UTC",
-  timeZoneName: "short",
+  timeZoneName: 'short',
 });
 export default function AirdropRegistrationMini({
   startDate,
@@ -33,21 +34,15 @@ export default function AirdropRegistrationMini({
   windowAction,
   onViewNotification,
 }: AirdropRegistrationMiniProps) {
-  const formattedDate = useMemo(() => DateFormatter.format(startDate), [
-    startDate,
-  ]);
+  const formattedDate = useMemo(() => moment.utc(startDate).local().format('YYYY-MM-DD HH:mm:ss'), [startDate]);
 
   return (
-    <GradientBox
-      $background="bgGradientHighlight"
-      sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}
-    >
+    <GradientBox $background="bgGradientHighlight" sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}>
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        OccamRazer vested unlock {currentAirdropWindow}/{totalAirdropWindows}{" "}
-        {windowAction} {formattedDate}
+        OccamRazer vested unlock {currentAirdropWindow}/{totalAirdropWindows} {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
-      <Divider sx={{ mt: 4, mb: 3, borderColor: "text.secondary" }} />
+      <Divider sx={{ mt: 4, mb: 3, borderColor: 'text.secondary' }} />
       <Grid container>
         <Grid item xs={6} textAlign="center">
           <Typography variant="normal" color="text.secondary">
@@ -66,13 +61,13 @@ export default function AirdropRegistrationMini({
           </Typography>
         </Grid>
       </Grid>
-      <Divider sx={{ mt: 3, borderColor: "text.secondary" }} />
-      <Box sx={{ textAlign: "center", mt: 6 }}>
+      <Divider sx={{ mt: 3, borderColor: 'text.secondary' }} />
+      <Box sx={{ textAlign: 'center', mt: 6 }}>
         <Button
           onClick={onViewNotification}
           variant="contained"
           color="secondary"
-          sx={{ textTransform: "capitalize", fontWeight: 600 }}
+          sx={{ textTransform: 'capitalize', fontWeight: 600 }}
         >
           Get Notifications
         </Button>

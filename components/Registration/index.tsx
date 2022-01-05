@@ -8,26 +8,20 @@ import Airdropinfo from 'snet-ui/Airdropinfo';
 import Grid from '@mui/material/Grid';
 import AirdropRegistrationMini from 'snet-ui/AirdropRegistrationMini';
 import Registrationsuccess from 'snet-ui/Registrationsuccess';
-import { useInterval } from 'usehooks-ts';
 import AirdropRegistration from 'snet-ui/AirdropRegistration';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { API_PATHS } from 'utils/constants/ApiPaths';
-import { AirdropWindow, WindowStatus } from 'utils/airdropWindows';
+import { WindowStatus } from 'utils/airdropWindows';
 import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
-import AirdropContractNetworks from 'contract/airdrop-contract/networks/SingularityAirdrop.json';
 import { parseEthersError } from 'utils/ethereum';
 import { useAirdropContract } from 'utils/AirdropContract';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import AirdropRegistrationLoader from 'snet-ui/AirdropRegistration/SkeletonLoader';
 import { APIError } from 'utils/errors';
-import { SettingsOverscanOutlined } from '@mui/icons-material';
 import { AlertTypes } from 'utils/constants/alert';
 import { AlertColor } from '@mui/material';
-import Success from 'snet-ui/Registrationsuccess';
 import ClaimSuccess from 'snet-ui/ClaimSuccess';
-import { isDateGreaterThan } from 'utils/date';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
-import moment from 'moment';
 
 const DateFormatter = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
