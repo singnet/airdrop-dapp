@@ -18,14 +18,11 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
     <Box
       sx={{
         bgcolor: "primary.main",
-        //py: 5,
-       // px: 5,
+        py: 5,
+        px: 5,
         color: "textAdvanced.secondary",
-        height:"416px",
-        width:"1440px"
       }}
     >
-      <Box sx={{width:"1160px",height:"330.67px",pt:"42.67px",pl:"140px",pb:"42.66px"}}>
       <Grid container spacing={2}>
         <Grid
           item
@@ -103,7 +100,6 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
       </Grid>
       <Divider sx={{ bgcolor: "common.white", my: 3 }} />
       <Typography align="center">Copyright © 2021 Nunet</Typography>
-      </Box>
     </Box>
   );
 }
@@ -157,7 +153,7 @@ const LinksData = [
       },
       { text: "LinkedIn", url: "https://www.linkedin.com/company/nunet-global/", external: true },
       { text: "YouTube", url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA", external: true },
-
+      
     ],
   },
 ];

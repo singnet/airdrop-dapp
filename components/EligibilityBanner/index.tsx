@@ -2,15 +2,14 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import React, { useMemo } from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { SupportedChainId } from 'snet-ui/Blockchain/connectors';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { UserEligibility } from 'utils/constants/CustomTypes';
 import Notqualified from 'snet-ui/Noteligible';
-
+import SkeletonLoader from './SkeletonLoader';
 import { useAppSelector } from 'utils/store/hooks';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
-import SkeletonLoader from './SkeletonLoader';
 
 type EligibilityBannerProps = {
   onViewRules: () => void;
@@ -18,15 +17,9 @@ type EligibilityBannerProps = {
   rejectReasons?: string;
 };
 
-export default function EligibilityBanner({
-  userEligibility,
-  onViewRules,
-  rejectReasons,
-}: EligibilityBannerProps) {
-  const { account, chainId } = useActiveWeb3React();
-  const { window: activeWindow, totalWindows } = useAppSelector(
-    selectActiveWindow,
-  );
+export default function EligibilityBanner({ userEligibility, onViewRules, rejectReasons }: EligibilityBannerProps) {
+  const { account, chainId, library } = useActiveWeb3React();
+  const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
   const network = useMemo(() => SupportedChainId[chainId ?? ''], [chainId]);
 
@@ -37,14 +30,7 @@ export default function EligibilityBanner({
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return (
-      <Notqualified
-        account={account}
-        network={network}
-        onViewRules={onViewRules}
-        rejectReasons={rejectReasons}
-      />
-    );
+    return <Notqualified account={account} network={network} onViewRules={onViewRules} rejectReasons={rejectReasons} />;
   }
 
   if (!activeWindow) {
@@ -52,18 +38,7 @@ export default function EligibilityBanner({
   }
 
   return (
-    <Box
-      sx={{
-        bgcolor: 'bgHighlight.main',
-        my: 4,
-        p: 4,
-        py: 2,
-        borderRadius: 2,
-        width:'1160px',
-        height:'114px'
-      }}
-      color="textAdvanced.dark"
-    >
+    <Box sx={{ bgcolor: 'bgHighlight.main', my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Vesting Eligibility</Typography>
@@ -74,11 +49,7 @@ export default function EligibilityBanner({
             </Box>
 
             <Typography variant="h5" color="primary.main">
-              Qualified for Vesting Window
-              {activeWindow.airdrop_window_order}
-              /
-              {' '}
-              {totalWindows}
+              Qualified for Vesting Window {activeWindow.airdrop_window_order} / {totalWindows}
             </Typography>
           </Box>
         </Grid>
@@ -87,10 +58,9 @@ export default function EligibilityBanner({
           <Typography noWrap variant="priority" component="p">
             {account}
           </Typography>
-              <Typography sx={{ textTransform: 'capitalize' }} variant="h5">
-            Ethereum
-              {network?.toLowerCase()}
-            </Typography>
+          <Typography sx={{ textTransform: 'capitalize' }} variant="h5">
+            Ethereum {network?.toLowerCase()}
+          </Typography>
         </Grid>
       </Grid>
     </Box>

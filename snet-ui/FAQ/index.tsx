@@ -21,17 +21,11 @@ const Accordion = styled((props: AccordionProps) => (
 
 function FAQPage(_,ref) {
   return (
-    <Box ref={ref} sx={{height:"624px",width:"1440px"}}>
-      <Box sx={{pt:"64px",pl:"238px",height:"496px",width:"965px"}}>
+    <Box ref={ref}>
       <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
         Frequently Asked Questions
       </Typography>
-      <Box sx={{
-        //mx: [0, 19, 28], mt: 3
-        height:"288px",
-        width:"965px",
-
-        }}>
+      <Box sx={{ mx: [0, 19, 28], mt: 3 }}>
         {faqSampleData.map((faq) => (
           <Accordion key={faq.question}>
             <AccordionSummary
@@ -41,7 +35,6 @@ function FAQPage(_,ref) {
               sx={{
                 "&:hover": {
                   bgcolor: "bgFocus.main",
-                  fontSize:"18px"
                 },
               }}
             >
@@ -51,7 +44,6 @@ function FAQPage(_,ref) {
                 sx={{
                   "&:hover": {
                     color: "secondary.main",
-                    fontSize:"18px"
                   },
                 }}
               >
@@ -64,8 +56,8 @@ function FAQPage(_,ref) {
           </Accordion>
         ))}
       </Box>
-      <Box sx={{ pl:"250px" }}>
-        <Typography align="center" color="textAdvanced.main" variant="body1" sx={{fontSize:"18px"}}>
+      <Box sx={{ p: 3 }}>
+        <Typography align="center" color="textAdvanced.main" variant="body1">
           Still Have Questions?
         </Typography>
         <Box textAlign="center" sx={{ mt: 1 }}>
@@ -82,7 +74,6 @@ function FAQPage(_,ref) {
           </Button>
         </Box>
       </Box>
-    </Box>
     </Box>
   );
 }
