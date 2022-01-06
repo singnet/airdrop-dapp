@@ -30,6 +30,11 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
   const router = useRouter();
   const { airdropwindow } = router.query;
   const { account } = useActiveWeb3React();
+
+  useEffect(() => {
+    getUserRegistrationInfo();
+  }, [account, airdropwindow]);
+
   const getUserRegistrationInfo = async () => {
     try {
       const payload = {
@@ -48,22 +53,18 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
     }
   };
 
-  useEffect(() => {
-    getUserRegistrationInfo();
-  }, [account, airdropwindow]);
-
   return (
     <>
       <Head>
-        <title>Airdrop</title>
+        <title>OccamRazer Vesting</title>
       </Head>
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
       <Grid container spacing={2}>
         <Grid item xs={6} md={8}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
-              <Typography variant="body2">Airdrop Eligibility</Typography>
-              <Typography variant="h6">Airdrop</Typography>
+              <Typography variant="body2">OccamRazer Vesting</Typography>
+              <Typography variant="h6">OccamRazer Vesting</Typography>
             </Box>
             <Box>
               <Typography variant="body2">Connected Wallet address</Typography>
@@ -71,24 +72,15 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
             </Box>
           </Box>
           <Box sx={style}>
-            <Typography variant="h6">
-              {values.airdropWindowName}
-              Registration
-            </Typography>
+            <Typography variant="h6">{values.airdropWindowName} Registration</Typography>
             <Typography variant="h6">{values.airdropWindowRegisteredAt}</Typography>
           </Box>
           <Box sx={style}>
-            <Typography variant="h6">
-              {values.airdropWindowName}
-              Rewards
-            </Typography>
+            <Typography variant="h6">{values.airdropWindowName} Rewards</Typography>
             <Typography variant="h6">{values.airdropWindowRewards}</Typography>
           </Box>
           <Box sx={style}>
-            <Typography variant="h6">
-              {values.airdropWindowName}
-              Rewards claimed
-            </Typography>
+            <Typography variant="h6">{values.airdropWindowName} Rewards claimed</Typography>
             <Typography variant="h6">{values.airdropWindowRewardsClaimed}</Typography>
           </Box>
         </Grid>

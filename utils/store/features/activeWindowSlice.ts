@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AirdropWindow } from "utils/airdropWindows";
-import { RootState } from "../";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AirdropWindow } from 'utils/airdropWindows';
+import { RootState } from '../';
 
 type ActiveWindowState = {
   totalWindows: number;
@@ -13,7 +13,7 @@ const initialState: ActiveWindowState = {
 };
 
 export const activeWindowSlice = createSlice({
-  name: "Active Window",
+  name: 'Active Window',
   initialState,
   reducers: {
     setActiveWindow(state, action: PayloadAction<AirdropWindow>) {

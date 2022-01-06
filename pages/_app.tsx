@@ -1,33 +1,33 @@
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+
 import React, { useMemo } from 'react';
-import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
-import Image from 'next/image';
+
 import { lightTheme } from 'snet-ui/Theme/theme';
 import createEmotionCache from 'snet-ui/Theme/createEmotionCache';
-import 'styles/globals.css';
+import '../styles/globals.css';
 import { appWithTranslation } from 'next-i18next';
-
+import nextI18NextConfig from 'next-i18next.config';
 import WalletModal from 'snet-ui/Blockchain/WalletModal';
-
 import { store } from 'utils/store';
-
+import { Provider } from 'react-redux';
 import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
 import { setShowConnectionModal, setWalletError } from 'utils/store/features/walletSlice';
-
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import UnsupportedNetworkModal from 'snet-ui/Blockchain/UnsupportedNetworkModal';
-import nextI18NextConfig from '../next-i18next.config';
+import Image from 'next/image';
+
 console.log(
-  `Don't remove this console.
+  `Don't remove this console. 
 It is mandatory to import the Image from "next/image"
 for @sls-next/serverless-component to build the Image lambda properly.`,
-  Image.name,
+  Image.name
 );
 
 const BlockChainProvider = dynamic(() => import('snet-ui/Blockchain/Provider'), { ssr: false });
@@ -60,15 +60,8 @@ const AppWithBlockchainComps = (props: AppProps) => {
 
   return (
     <>
-      <Component
-        {
-          ...pageProps
-        }
-      />
-      <WalletModal
-        open={showConnectionModal}
-        setOpen={(val) => dispatch(setShowConnectionModal(val))}
-      />
+      <Component {...pageProps} />
+      <WalletModal open={showConnectionModal} setOpen={(val) => dispatch(setShowConnectionModal(val))} />
       <UnsupportedNetworkModal open={showNetworkOverlay} supportedChainId={supportedChainId} />
     </>
   );
@@ -76,34 +69,32 @@ const AppWithBlockchainComps = (props: AppProps) => {
 
 function MyApp(props: AppProps) {
   // @ts-ignore
-  const { emotionCache = clientSideEmotionCache } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Airdrop</title>
+        <title>Nunet Occam</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={lightTheme}>
-
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-           <BlockChainProvider>
-       { /* eslint-disable react/jsx-props-no-spreading */}
+        <BlockChainProvider>
           <AppWithBlockchainComps {...props} />
-
-           </BlockChainProvider>
+          {/* <Component {...pageProps} />
+          <WalletModal open={showConnectionModal} setOpen={(val) => dispatch(setShowConnectionModal(val))} /> */}
+        </BlockChainProvider>
       </ThemeProvider>
     </CacheProvider>
   );
 }
 
 const AppWithRedux = (props: AppProps) => (
-   <Provider store={store}>
-   { /* eslint-disable react/jsx-props-no-spreading */}
+  <Provider store={store}>
     <MyApp {...props} />
   </Provider>
 );
-/* eslint-disable react/jsx-props-no-spreading */
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,

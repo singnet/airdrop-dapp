@@ -1,27 +1,27 @@
-import React, { useMemo, useState } from "react";
-import GradientBox from "../../snet-ui/GradientBox";
-import Typography from "@mui/material/Typography";
-import FlipCountdown from "../../snet-ui/FlipClock/Countdown";
-import Button from "@mui/material/Button";
-import Box from "@mui/system/Box";
-import InfoIcon from "@mui/icons-material/Info";
-import History from "../../snet-ui/History";
-import { AirdropWindow, WindowStatus } from "../../utils/airdropWindows";
-import Alert, { AlertColor } from "@mui/material/Alert";
-import LoadingButton from "../../snet-ui/LoadingButton";
-import Link from "@mui/material/Link";
-import styles from "./style.module.css";
-import StatusBadge from "./StatusBadge";
-import { Stack } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Grid from "@mui/material/Grid";
-import { isDateBetween, isDateGreaterThan } from "utils/date";
-import Staketype from "snet-ui/AirdropRegistration/Staketype";
-import axios from "utils/Axios";
-import Container from "@mui/material/Container";
-import moment from "moment";
+import React, { useMemo, useState } from 'react';
+import GradientBox from '../../snet-ui/GradientBox';
+import Typography from '@mui/material/Typography';
+import FlipCountdown from '../../snet-ui/FlipClock/Countdown';
+import Button from '@mui/material/Button';
+import Box from '@mui/system/Box';
+import InfoIcon from '@mui/icons-material/Info';
+import History from '../../snet-ui/History';
+import { AirdropWindow, WindowStatus } from '../../utils/airdropWindows';
+import Alert, { AlertColor } from '@mui/material/Alert';
+import LoadingButton from '../../snet-ui/LoadingButton';
+import Link from '@mui/material/Link';
+import styles from './style.module.css';
+import StatusBadge from './StatusBadge';
+import { Stack } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
+import { isDateBetween, isDateGreaterThan } from 'utils/date';
+import Staketype from 'snet-ui/AirdropRegistration/Staketype';
+import axios from 'utils/Axios';
+import Container from '@mui/material/Container';
+import moment from 'moment';
 
-import { API_PATHS } from "utils/constants/ApiPaths";
+import { API_PATHS } from 'utils/constants/ApiPaths';
 
 type HistoryEvent = {
   label: string;
@@ -54,46 +54,46 @@ type AirdropRegistrationProps = {
   airdropWindowrewards: number;
 };
 
-const DateFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
+const DateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
   // timeZone: "UTC",
-  timeZoneName: "short",
+  timeZoneName: 'short',
 });
 
 const windowStatusLabelMap = {
-  [WindowStatus.UPCOMING]: "registration",
-  [WindowStatus.REGISTRATION]: "registration",
-  [WindowStatus.IDLE]: "claim",
-  [WindowStatus.CLAIM]: "claim",
+  [WindowStatus.UPCOMING]: 'registration',
+  [WindowStatus.REGISTRATION]: 'registration',
+  [WindowStatus.IDLE]: 'claim',
+  [WindowStatus.CLAIM]: 'claim',
 };
 
 const windowStatusActionMap = {
-  [WindowStatus.UPCOMING]: "opens",
-  [WindowStatus.REGISTRATION]: "closes",
-  [WindowStatus.IDLE]: "opens",
-  [WindowStatus.CLAIM]: "claim",
+  [WindowStatus.UPCOMING]: 'opens',
+  [WindowStatus.REGISTRATION]: 'closes',
+  [WindowStatus.IDLE]: 'opens',
+  [WindowStatus.CLAIM]: 'claim',
 };
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Vesting Open",
-  [WindowStatus.REGISTRATION]: "Registration Open",
-  [WindowStatus.UPCOMING]: "",
+  [WindowStatus.CLAIM]: 'Vesting Open',
+  [WindowStatus.REGISTRATION]: 'Registration Open',
+  [WindowStatus.UPCOMING]: '',
 };
 
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  width: "50%",
+  width: '50%',
 };
 
 export default function AirdropRegistration({
@@ -117,10 +117,7 @@ export default function AirdropRegistration({
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(
-    () => moment.utc(endDate).local().format("YYYY-MM-DD HH:mm:ss"),
-    [endDate]
-  );
+  const formattedDate = useMemo(() => moment.utc(endDate).local().format('YYYY-MM-DD HH:mm:ss'), [endDate]);
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -183,11 +180,9 @@ export default function AirdropRegistration({
     new Date()
   );
 
-  const windowName =
-    windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ""];
+  const windowName = windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ''];
 
-  const windowAction =
-    windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
+  const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status ?? ''];
 
   return (
     <>
@@ -203,8 +198,7 @@ export default function AirdropRegistration({
           </Typography>
           <Box sx={{ marginBottom: 2, marginTop: 2 }}>
             <Typography id="stake-modal-description" variant="p">
-              Please select the SingularityDAO stake pool for your airdrop
-              reward.
+              Please select the SingularityDAO stake pool for your airdrop reward.
             </Typography>
           </Box>
           <Grid container spacing={2}>
@@ -215,87 +209,51 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakableTokens} {stakeInfo.stakableTokenName}
+                {stakeInfo.stakable_tokens / 1000000} {stakeInfo.stakable_token_name}
               </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6">
-                Tokens to be Claimed into Wallet
-              </Typography>
+              <Typography variant="h6">Tokens to be Claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.claimableTokensToWallet}{" "}
-                {stakeInfo.stakableTokenName}
-              </Typography>
+              <Typography variant="h4">{stakeInfo.claimable_tokens_to_wallet / 1000000} </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
-              <Link
-                href={`https://singularitynet.io/`}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <Link href={`https://singularitynet.io/`} target="_blank" rel="noreferrer">
                 Visit SingularityNET
               </Link>
             </Grid>
             <Grid item xs={3}>
-              <Button
-                onClick={toggleStakeModal}
-                color="secondary"
-                variant="outlined"
-                fullWidth
-              >
+              <Button onClick={toggleStakeModal} color="secondary" variant="outlined" fullWidth>
                 Cancel
               </Button>
             </Grid>
             <Grid item xs={3}>
-              <Button
-                onClick={handleStakeClick}
-                color="secondary"
-                variant="contained"
-                fullWidth
-              >
+              <Button onClick={handleStakeClick} color="secondary" variant="contained" fullWidth>
                 Stake
               </Button>
             </Grid>
           </Grid>
         </Box>
       </Modal>
-      <Box sx={{width:"1440px",height:"638px"}}>
-      <Box sx={{width:"1181px",height:"420px"}}>
+      <Box>
         <GradientBox
           $background="bgGradientHighlight"
           className={styles.contentWrapper}
           sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
         >
-          <StatusBadge
-            label={
-              isRegistrationActive || isClaimActive
-                ? statusLabelMap[airdropWindowStatus ?? ""]
-                : ""
-            }
-          />
+          <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ''] : ''} />
           <Container sx={{ my: 6 }}>
-            <Typography
-              color="text.secondary"
-              variant="h4"
-              align="center"
-              mb={1}
-            >
+            <Typography color="text.secondary" variant="h4" align="center" mb={1}>
               Vesting {windowName} window &nbsp;
               {currentWindowId} / {totalWindows} &nbsp;
               {windowAction}:
             </Typography>
-            <Typography
-              color="text.secondary"
-              variant="h4"
-              align="center"
-              mb={6}
-            >
+            <Typography color="text.secondary" variant="h4" align="center" mb={6}>
               {formattedDate}
             </Typography>
           </Container>
@@ -304,19 +262,10 @@ export default function AirdropRegistration({
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <>
               <Box sx={{ mt: 6 }}>
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  component="p"
-                  color="text.secondary"
-                >
+                <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
                   Tokens available to claim
                 </Typography>
-                <Typography
-                  variant="h2"
-                  color="textAdvanced.secondary"
-                  align="center"
-                >
+                <Typography variant="h2" color="textAdvanced.secondary" align="center">
                   {airdropWindowrewards / 1000000} NTX
                 </Typography>
               </Box>
@@ -324,29 +273,24 @@ export default function AirdropRegistration({
                 maxWidth="md"
                 sx={{
                   my: 8,
-                  display: "flex",
+                  display: 'flex',
                   border: 0.3,
-                  bgcolor: "note.main",
+                  bgcolor: 'note.main',
                   borderRadius: 1,
-                  borderColor: "note.main",
+                  borderColor: 'note.main',
                 }}
               >
-                <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
+                <Box sx={{ display: 'flex', my: 1, py: 1, m: 1 }}>
                   <InfoIcon color="primary" />
-                  <Typography
-                    variant="body2"
-                    color="textAdvanced.primary"
-                    sx={{ mx: 1, fontSize: 16 }}
-                  >
-                    You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last window which will save you
-                    gas fees.
+                  <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
+                    You can start claiming your tokens now. It is possible to claim all tokens with the last window
+                    which will save you gas fees.
                   </Typography>
                 </Box>
               </Container>
             </>
           ) : null}
-          <Box sx={{ borderColor: "error.main" }}>
+          <Box sx={{ borderColor: 'error.main' }}>
             {uiAlert.message ? (
               <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
                 {uiAlert.message}
@@ -356,34 +300,33 @@ export default function AirdropRegistration({
           <Box
             sx={{
               mt: 6,
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: ["column", "row"],
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: ['column', 'row'],
               gap: [0, 2],
             }}
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {stakeInfo.isStakable ? (
-                  <LoadingButton
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      width: 350,
-                      textTransform: "capitalize",
-                      fontWeight: 600,
-                    }}
-                    onClick={toggleStakeModal}
-                    loading={claimLoader}
-                  >
-                    Stake
-                  </LoadingButton>
-                ) : null}
+                <LoadingButton
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    width: 350,
+                    textTransform: 'capitalize',
+                    fontWeight: 600,
+                  }}
+                  onClick={toggleStakeModal}
+                  loading={claimLoader}
+                  disabled={!stakeInfo.is_stakable}
+                >
+                  Stake
+                </LoadingButton>
                 <LoadingButton
                   variant="contained"
                   sx={{
                     width: 350,
-                    textTransform: "capitalize",
+                    textTransform: 'capitalize',
                     fontWeight: 600,
                   }}
                   onClick={handleClaimClick}
@@ -394,9 +337,7 @@ export default function AirdropRegistration({
               </Stack>
             ) : (
               <>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
                   {airdropWindowStatus === WindowStatus.REGISTRATION ? (
                     <LoadingButton
                       variant="contained"
@@ -409,32 +350,14 @@ export default function AirdropRegistration({
                     </LoadingButton>
                   ) : null}
                 </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
                   <Button
                     variant="contained"
                     color="secondary"
                     onClick={onViewSchedule}
-                    sx={{ textTransform: "capitalize", width: 170 }}
+                    sx={{ textTransform: 'capitalize', width: 170 }}
                   >
                     View Schedule
-                  </Button>
-                </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewRules}
-                    sx={{
-                      textTransform: "capitalize",
-                      width: 170,
-                      fontWeight: 600,
-                    }}
-                  >
-                    View Rules
                   </Button>
                 </Box>
               </>
@@ -442,18 +365,13 @@ export default function AirdropRegistration({
           </Box>
           {history && history.length > 0 ? (
             <Container maxWidth="md">
-              <Typography
-                align="center"
-                color="textAdvanced.secondary"
-                variant="h5"
-              >
+              <Typography align="center" color="textAdvanced.secondary" variant="h5">
                 Your Vesting History
               </Typography>
               <History events={history} />
             </Container>
           ) : null}
         </GradientBox>
-      </Box>
       </Box>
     </>
   );
