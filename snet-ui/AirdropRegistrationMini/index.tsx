@@ -6,9 +6,10 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
-import moment from 'moment';
+import { getDateInStandardFormat } from 'utils/date';
+
 type AirdropRegistrationMiniProps = {
-  startDate: Date;
+  startDate: Moment;
   totalTokens: number;
   tokenName: string;
   totalAirdropWindows: number;
@@ -16,15 +17,7 @@ type AirdropRegistrationMiniProps = {
   windowAction: string;
   onClickNotification: Function;
 };
-const DateFormatter = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  // timeZone: "UTC",
-  timeZoneName: 'short',
-});
+
 export default function AirdropRegistrationMini({
   startDate,
   totalTokens,
@@ -34,12 +27,17 @@ export default function AirdropRegistrationMini({
   windowAction,
   onViewNotification,
 }: AirdropRegistrationMiniProps) {
-  const formattedDate = useMemo(() => moment.utc(startDate).local().format('YYYY-MM-DD HH:mm:ss'), [startDate]);
+  const formattedDate = useMemo(() => getDateInStandardFormat(startDate), [startDate]);
 
   return (
-    <GradientBox $background="bgGradientHighlight" sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}>
+    <GradientBox
+      $background="bgGradientHighlight"
+      sx={{
+        px: 2, pt: 2, pb: 2, borderRadius: 2,
+      }}
+    >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        OccamRazer vested unlock {currentAirdropWindow}/{totalAirdropWindows} {windowAction} {formattedDate}
+        Next window is  {currentAirdropWindow}/{totalAirdropWindows} {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
       <Divider sx={{ mt: 4, mb: 3, borderColor: 'text.secondary' }} />

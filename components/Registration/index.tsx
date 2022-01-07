@@ -24,16 +24,8 @@ import { AlertTypes } from 'utils/constants/alert';
 import { AlertColor } from '@mui/material';
 import ClaimSuccess from 'snet-ui/ClaimSuccess';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
-
-const DateFormatter = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  // timeZone: "UTC",
-  timeZoneName: 'short',
-});
+import moment from 'moment';
+import { getDateInStandardFormat } from 'utils/date';
 
 const windowStatusActionMap = {
   [WindowStatus.UPCOMING]: 'opens',
@@ -87,26 +79,21 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const dispatch = useAppDispatch();
 
-  // useInterval(() => {
-  //   const now = new Date();
-  //   if (now.getTime() >= airdropOpensIn.getTime()) {
-  //     setAirdropOpen(true);
-  //   }
-  // }, 500);
-
   useEffect(() => {
     getClaimHistory();
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
 
   const endDate = useMemo(
     () =>
-      activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
-        ? new Date(`${activeWindow?.airdrop_window_registration_end_period}`)
-        : activeWindow?.airdrop_window_status === WindowStatus.IDLE
-          ? new Date(`${activeWindow?.airdrop_window_claim_start_period}`)
-          : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-            ? new Date(`${activeWindow?.next_window_start_period}`)
-            : new Date(),
+      activeWindow?.airdrop_window_status === WindowStatus.UPCOMING
+        ? moment.utc(`${activeWindow?.airdrop_window_registration_start_period}`)
+        : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
+          ? moment.utc(`${activeWindow?.airdrop_window_registration_end_period}`)
+          : activeWindow?.airdrop_window_status === WindowStatus.IDLE
+            ? moment.utc(`${activeWindow?.airdrop_window_claim_start_period}`)
+            : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+              ? moment.utc(`${activeWindow?.next_window_start_period}`)
+              : moment.utc(),
     [activeWindow],
   );
 
@@ -516,7 +503,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewNotification={onViewNotification}
         windowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
-        claimStartDate={DateFormatter.format(new Date(`${activeWindow?.airdrop_window_claim_start_period ?? ''} UTC`))}
+        claimStartDate={getDateInStandardFormat(`${activeWindow?.airdrop_window_claim_start_period}`)}
       />
     </Box>
   ) : !showMini ? (
@@ -546,7 +533,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini
-          startDate={new Date(`${activeWindow.airdrop_window_registration_start_period} UTC`)}
+          startDate={moment.utc(`${activeWindow.airdrop_window_registration_start_period}`)}
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
           onViewNotification={onViewNotification}
