@@ -1,13 +1,12 @@
-import React, { PropsWithChildren } from "react";
-import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import Falsemessage from "snet-ui/Falsemessage";
-import Learn from "snet-ui/LearnandConnect";
-import Footer from "snet-ui/Footer";
-import Header from "snet-ui/Header";
-import { setShowConnectionModal } from "utils/store/features/walletSlice";
-import { useAppDispatch } from "utils/store/hooks";
-import Box from "@mui/system/Box";
-import Container from "@mui/material/Container";
+import React, { PropsWithChildren } from 'react';
+import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
+import Falsemessage from 'snet-ui/Falsemessage';
+import Learn from 'snet-ui/LearnandConnect';
+import Footer from 'snet-ui/Footer';
+import Header from 'snet-ui/Header';
+import { setShowConnectionModal } from 'utils/store/features/walletSlice';
+import { useAppDispatch } from 'utils/store/hooks';
+import Box from '@mui/system/Box';
 
 type CommonLayoutProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
@@ -23,12 +22,10 @@ export default function CommonLayout({
     <>
       <Box
         sx={{
-          position: "fixed",
+          position: 'fixed',
           top: 0,
-          width: "100%",
+          width: '100%',
           zIndex: 2,
-          
-          
         }}
       >
         <Falsemessage />
@@ -36,7 +33,7 @@ export default function CommonLayout({
           onConnectWallet={() => dispatch(setShowConnectionModal(true))}
           onDisconnect={deactivate}
           account={account as string}
-          
+
         />
       </Box>
       <Box>{children}</Box>

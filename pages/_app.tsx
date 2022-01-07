@@ -18,7 +18,6 @@ import { store } from 'utils/store';
 import { Provider } from 'react-redux';
 import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
 import { setShowConnectionModal, setWalletError } from 'utils/store/features/walletSlice';
-import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import UnsupportedNetworkModal from 'snet-ui/Blockchain/UnsupportedNetworkModal';
 import Image from 'next/image';
@@ -27,7 +26,7 @@ console.log(
   `Don't remove this console. 
 It is mandatory to import the Image from "next/image"
 for @sls-next/serverless-component to build the Image lambda properly.`,
-  Image.name
+  Image.name,
 );
 
 const BlockChainProvider = dynamic(() => import('snet-ui/Blockchain/Provider'), { ssr: false });
@@ -42,7 +41,6 @@ const AppWithBlockchainComps = (props: AppProps) => {
   // Using `useWeb3React` only to capture the UnsupportedChainIdError.
   // Always use `useActiveWeb3React` anywhere in the rest of the Application.
   const { error, chainId, account } = useWeb3React();
-  console.log('global web3 error', error);
 
   const { showConnectionModal, error: walletError } = useAppSelector((state) => state.wallet);
   const dispatch = useAppDispatch();
@@ -61,7 +59,10 @@ const AppWithBlockchainComps = (props: AppProps) => {
   return (
     <>
       <Component {...pageProps} />
-      <WalletModal open={showConnectionModal} setOpen={(val) => dispatch(setShowConnectionModal(val))} />
+      <WalletModal
+        open={showConnectionModal}
+        setOpen={(val) => dispatch(setShowConnectionModal(val))}
+      />
       <UnsupportedNetworkModal open={showNetworkOverlay} supportedChainId={supportedChainId} />
     </>
   );
@@ -83,7 +84,8 @@ function MyApp(props: AppProps) {
         <BlockChainProvider>
           <AppWithBlockchainComps {...props} />
           {/* <Component {...pageProps} />
-          <WalletModal open={showConnectionModal} setOpen={(val) => dispatch(setShowConnectionModal(val))} /> */}
+          <WalletModal open={showConnectionModal}
+           setOpen={(val) => dispatch(setShowConnectionModal(val))} /> */}
         </BlockChainProvider>
       </ThemeProvider>
     </CacheProvider>

@@ -164,7 +164,8 @@ export default function ContactUs() {
             onChange={handleMessageChange}
             helperText={messageError}
           />
-          {alertMessage.value.trim() ? <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert> : null}
+          {alertMessage.value.trim() ?
+            <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert> : null}
           <Box display="flex" justifyContent="center" sx={{ my: 2 }}>
             <LoadingButton
               variant="contained"

@@ -17,7 +17,8 @@ type EligibilityBannerProps = {
   rejectReasons?: string;
 };
 
-export default function EligibilityBanner({ userEligibility, onViewRules, rejectReasons }: EligibilityBannerProps) {
+export default function EligibilityBanner({ userEligibility, onViewRules, rejectReasons }:
+  EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
@@ -30,7 +31,14 @@ export default function EligibilityBanner({ userEligibility, onViewRules, reject
   }
 
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
-    return <Notqualified account={account} network={network} onViewRules={onViewRules} rejectReasons={rejectReasons} />;
+    return (
+      <Notqualified
+        account={account}
+        network={network}
+        onViewRules={onViewRules}
+        rejectReasons={rejectReasons}
+      />
+    );
   }
 
   if (!activeWindow) {
@@ -38,7 +46,12 @@ export default function EligibilityBanner({ userEligibility, onViewRules, reject
   }
 
   return (
-    <Box sx={{ bgcolor: 'bgHighlight.main', my: 4, p: 4, py: 2, borderRadius: 2 }} color="textAdvanced.dark">
+    <Box
+      sx={{
+        bgcolor: 'bgHighlight.main', my: 4, p: 4, py: 2, borderRadius: 2,
+      }}
+      color="textAdvanced.dark"
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Vesting Eligibility</Typography>
