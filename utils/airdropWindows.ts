@@ -1,5 +1,6 @@
-import { isDateBetween, isDateGreaterThan } from "./date";
 import moment from "moment";
+import { isDateGreaterThan, checkDateIsGreaterThan, checkDateIsBetween } from "./date";
+
 
 export type AirdropWindowTimeline = {
   airdrop_window_timeline_date: string;
@@ -16,6 +17,7 @@ export type AirdropWindow = {
   airdrop_window_registration_end_period: string;
   airdrop_window_claim_start_period: string;
   airdrop_window_claim_end_period: string;
+  next_window_start_period: string;
   airdrop_window_schedule_description: string;
   airdrop_window_timeline: AirdropWindowTimeline[];
   airdrop_window_total_tokens: number;
@@ -36,13 +38,6 @@ export enum WindowStatus {
 //     return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
 //   });
 
-export const checkDateIsGreaterThan = (date) => {
-  return moment(date).isAfter(moment());
-};
-
-export const checkDateIsBetween = (start, end) => {
-  return moment().isBetween(moment(start), moment(end));
-};
 
 export const findActiveWindow = (
   windows: AirdropWindow[]
@@ -54,23 +49,23 @@ export const findActiveWindow = (
         windowA.airdrop_window_id - windowB.airdrop_window_id
     );
 
-  const activeWindow = sortedWindows.find((windowA) => {
-    return (
-      checkDateIsGreaterThan(
-        windowA.airdrop_window_registration_start_period
-      ) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_end_period)
-    );
-  });
+  const activeWindow = sortedWindows.find((windowA) => (
+      checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, moment()) ||
+      checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period, moment()) ||
+      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, moment()) ||
+      checkDateIsGreaterThan(windowA.airdrop_window_claim_end_period, moment())
+    ));
 
   if (activeWindow) {
-    if (
-      checkDateIsGreaterThan(
-        activeWindow.airdrop_window_registration_start_period
-      )
-    ) {
+    const nextWindow = sortedWindows.find((windowA) => (
+      checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, activeWindow.airdrop_window_claim_start_period)));
+
+    activeWindow.next_window_start_period = activeWindow.airdrop_window_claim_end_period;
+    if (nextWindow) {
+      activeWindow.next_window_start_period = nextWindow.airdrop_window_registration_start_period;
+    }
+
+    if (checkDateIsGreaterThan(activeWindow.airdrop_window_registration_start_period, moment())) {
       activeWindow.airdrop_window_status = WindowStatus.UPCOMING;
     } else if (
       checkDateIsBetween(
@@ -90,7 +85,6 @@ export const findActiveWindow = (
       activeWindow.airdrop_window_status = WindowStatus.CLAIM;
     }
   }
-
   return activeWindow;
 };
 

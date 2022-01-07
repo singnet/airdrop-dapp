@@ -189,18 +189,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const airdropWindowClosingTime = useMemo(
-    () =>
-      activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        ? activeWindow.airdrop_window_claim_end_period
-        : activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
-        ? activeWindow.airdrop_window_registration_end_period
-        : activeWindow?.airdrop_window_status === WindowStatus.UPCOMING
-        ? activeWindow.airdrop_window_registration_start_period
-        : '',
-    [activeWindow]
-  );
-
   return (
     <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
