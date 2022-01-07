@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box';
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import React, {
+  FunctionComponent, useEffect, useMemo, useState,
+} from 'react';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import axios from 'utils/Axios';
 import { setShowConnectionModal } from 'utils/store/features/walletSlice';
@@ -101,11 +103,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
         ? new Date(`${activeWindow?.airdrop_window_registration_end_period}`)
         : activeWindow?.airdrop_window_status === WindowStatus.IDLE
-        ? new Date(`${activeWindow?.airdrop_window_claim_start_period}`)
-        : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        ? new Date(`${activeWindow?.next_window_start_period}`)
-        : new Date(),
-    [activeWindow]
+          ? new Date(`${activeWindow?.airdrop_window_claim_start_period}`)
+          : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+            ? new Date(`${activeWindow?.next_window_start_period}`)
+            : new Date(),
+    [activeWindow],
   );
 
   const getStakeDetails = async () => {
@@ -130,7 +132,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
       const signature = await ethSign.sign(
         ['uint8', 'uint8', 'address'],
-        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account]
+        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account],
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
@@ -142,7 +144,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       } else {
         setUiAlert({
           type: AlertTypes.error,
-          message: `Failed Registration: unable to generate signature`,
+          message: 'Failed Registration: unable to generate signature',
         });
       }
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
@@ -184,8 +186,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       typeof activeWindow.airdrop_window_id === 'undefined' ||
       !account ||
       !library
-    )
-      return;
+    ) { return; }
 
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
@@ -209,7 +210,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           airdrop_window_id: activeWindow.airdrop_window_id.toString(),
         });
 
-        console.log('response', response);
         return response.data.data;
       } catch (error: any) {
         const backendErrorMessage = error?.errorText?.error?.message;
@@ -226,35 +226,23 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       stakingAddress: string,
       tokenAddress: string,
       userWalletAddress: string,
-      contractAddress: string
+      contractAddress: string,
     ): Promise<TransactionResponse> => {
-      try {
-        console.log('calling autostake method');
-
-        console.log('stakingAddress', stakingAddress);
-        console.log('tokenAddress', tokenAddress);
-        console.log('contractAddress', contractAddress);
-
-        const txn = await airdropContract.stake(
-          contractAddress,
-          tokenAddress,
-          stakingAddress,
-          stakeDetails.airdrop_rewards.toString(),
-          stakeDetails.stakable_tokens.toString(),
-          activeWindow.airdrop_id?.toString(),
-          activeWindow.airdrop_window_id?.toString(),
-          signature
-        );
-        return txn;
-      } catch (error: any) {
-        console.log('contract error', error);
-
-        throw error;
-      }
+      const txn = await airdropContract.stake(
+        contractAddress,
+        tokenAddress,
+        stakingAddress,
+        stakeDetails.airdrop_rewards.toString(),
+        stakeDetails.stakable_tokens.toString(),
+        activeWindow.airdrop_id?.toString(),
+        activeWindow.airdrop_window_id?.toString(),
+        signature,
+      );
+      return txn;
     };
 
     const saveClaimTxn = async (txnHash: string, claimAmount) => {
-      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
+      await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
         address: account,
         txn_hash: txnHash,
         amount: claimAmount.toString(),
@@ -262,7 +250,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
         blockchain_method: blockChainActionTypes.STAKE_AND_CLAIM,
       });
-      console.log('response.data', response.data);
     };
 
     try {
@@ -276,13 +263,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         stakeDetails.staking_contract_address,
         stakeDetails.token_address,
         stakeDetails.user_address,
-        stakeDetails.contract_address
+        stakeDetails.contract_address,
       );
 
       await saveClaimTxn(txn.hash, stakeDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
-      console.log('receipt', receipt);
       if (receipt.status) {
         setUserRegistered(true);
         setClaimStatus(ClaimStatus.SUCCESS);
@@ -292,7 +278,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         });
       }
     } catch (error: any) {
-      console.log('signature error', error);
       if (error instanceof APIError) {
         setUiAlert({ type: AlertTypes.error, message: error.message });
         return;
@@ -318,8 +303,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       typeof activeWindow.airdrop_window_id === 'undefined' ||
       !account ||
       !library
-    )
-      return;
+    ) { return; }
 
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
@@ -343,7 +327,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           airdrop_window_id: activeWindow.airdrop_window_id.toString(),
         });
 
-        console.log('response', response);
         return response.data.data;
       } catch (error: any) {
         const backendErrorMessage = error?.errorText?.error?.message;
@@ -358,29 +341,21 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       contractAddress: string,
       tokenAddress: string,
       signature: string,
-      claimAmount: number
+      claimAmount: number,
     ): Promise<TransactionResponse> => {
-      try {
-        console.log('calling claim method');
-
-        const txn = await airdropContract.claim(
-          contractAddress,
-          tokenAddress,
-          claimAmount.toString(),
-          activeWindow.airdrop_id?.toString(),
-          activeWindow.airdrop_window_id?.toString(),
-          signature
-        );
-        return txn;
-      } catch (error: any) {
-        console.log('contract error', error);
-
-        throw error;
-      }
+      const txn = await airdropContract.claim(
+        contractAddress,
+        tokenAddress,
+        claimAmount.toString(),
+        activeWindow.airdrop_id?.toString(),
+        activeWindow.airdrop_window_id?.toString(),
+        signature,
+      );
+      return txn;
     };
 
     const saveClaimTxn = async (txnHash: string, claimAmount) => {
-      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
+      await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
         address: account,
         txn_hash: txnHash,
         amount: claimAmount.toString(),
@@ -388,7 +363,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
         blockchain_method: blockChainActionTypes.CLAIM,
       });
-      console.log('response.dat', response.data);
     };
 
     try {
@@ -400,13 +374,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.contract_address,
         claimDetails.token_address,
         claimDetails.signature,
-        claimDetails.claimable_amount
+        claimDetails.claimable_amount,
       );
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
-      console.log('receipt', receipt);
       if (receipt.status) {
         setUserRegistered(true);
         setClaimStatus(ClaimStatus.SUCCESS);
@@ -416,7 +389,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         });
       }
     } catch (error: any) {
-      console.log('signature error', error);
       if (error instanceof APIError) {
         setUiAlert({ type: AlertTypes.error, message: error.message });
         return;
@@ -474,7 +446,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const showRegistrationSuccess = useMemo(
     () => userRegistered && activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
-    [userRegistered, activeWindow]
+    [userRegistered, activeWindow],
   );
   if (!activeWindow) {
     return null;
@@ -516,7 +488,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  if (claimStatus === ClaimStatus.SUCCESS && activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
+  if (claimStatus === ClaimStatus.SUCCESS &&
+      activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
         <ClaimSuccess
@@ -532,9 +505,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   const showMini =
-    activeWindow.airdrop_window_status == WindowStatus.UPCOMING && activeWindow.airdrop_window_order === 1;
-
-  console.log('show mini', showMini);
+    activeWindow.airdrop_window_status == WindowStatus.UPCOMING && 
+    activeWindow.airdrop_window_order === 1;
 
   return showRegistrationSuccess ? (
     <Box sx={{ px: [0, 4, 15] }}>

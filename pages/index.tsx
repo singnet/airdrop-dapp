@@ -7,24 +7,21 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import HowItWorks from 'snet-ui/HowItWorks';
 import Box from '@mui/material/Box';
-import Airdroprules from 'snet-ui/Airdroprules';
 import SubscribeToNotification from 'snet-ui/SubscribeToNotification';
 import Ecosystem from 'snet-ui/Ecosystem';
 import CommonLayout from 'layout/CommonLayout';
 import Registration from 'components/Registration';
-import Typography from '@mui/material/Typography';
-import Learn from 'snet-ui/LearnandConnect';
 // import Notqualified from "snet-ui/Noteligible";
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import FAQPage from 'snet-ui/FAQ';
+import {
+  RefObject, useEffect, useRef, useState,
+} from 'react';
 import axios from 'utils/Axios';
 
 import { API_PATHS } from 'utils/constants/ApiPaths';
-import { findActiveWindow, WindowStatus } from 'utils/airdropWindows';
+import { findActiveWindow } from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
-import { Alert } from '@mui/material';
 import { APIError } from 'utils/errors';
 import { selectActiveWindow, setActiveWindowState } from 'utils/store/features/activeWindowSlice';
 
@@ -61,9 +58,6 @@ const Home: NextPage = () => {
   const { error: walletError } = useAppSelector((state) => state.wallet);
   const { window: activeWindow } = useAppSelector(selectActiveWindow);
   const dispatch = useAppDispatch();
-  // const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
-
-  console.log('airdropTotalTokens', airdropTotalTokens);
 
   useEffect(() => {
     getAirdropSchedule();
@@ -86,22 +80,13 @@ const Home: NextPage = () => {
         description: timeline.airdrop_window_timeline_description,
       }));
 
-      // let activeWindow = findActiveWindow(airdrop.airdrop_windows);
-      // if (!activeWindow) {
-      //   activeWindow = findFirstUpcomingWindow(airdrop.airdrop_windows);
-      // }
-
-      // const nextAirdropWindow = findNextAirdropWindow(airdrop.airdrop_windows, activeWindow);
-      // setNextWindow(nextAirdropWindow);
-
-      // setActiveWindow(activeWindow);
       const activeAirdropWindow = findActiveWindow(airdrop.airdrop_windows);
 
       dispatch(
         setActiveWindowState({
           totalWindows: airdrop.airdrop_windows.length,
           window: activeAirdropWindow,
-        })
+        }),
       );
 
       setSchedules(airdropSchedules);
@@ -146,8 +131,7 @@ const Home: NextPage = () => {
         typeof activeWindow?.airdrop_id === 'undefined' ||
         typeof activeWindow?.airdrop_window_id === 'undefined' ||
         !account
-      )
-        return;
+      ) { return; }
       setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
         signature: '',
@@ -169,7 +153,7 @@ const Home: NextPage = () => {
       setAirdropwindowRewards(airdropRewards);
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
-      setUserClaimStatus(claimStatus ? claimStatus : ClaimStatus.NOT_STARTED);
+      setUserClaimStatus(claimStatus || ClaimStatus.NOT_STARTED);
       setRejectReasons(reasonForRejection);
       // setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
@@ -219,7 +203,10 @@ const Home: NextPage = () => {
         steps={HowItWorksSampleData}
         blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
       />
-      <SubscribeToNotification ref={getNotificationRef} onSubscribe={handleNotificationSubscription} />
+      <SubscribeToNotification
+        ref={getNotificationRef}
+        onSubscribe={handleNotificationSubscription}
+      />
 
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
