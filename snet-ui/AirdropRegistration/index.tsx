@@ -15,13 +15,8 @@ import StatusBadge from './StatusBadge';
 import { Stack } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
-import { isDateBetween, isDateGreaterThan } from 'utils/date';
-import Staketype from 'snet-ui/AirdropRegistration/Staketype';
-import axios from 'utils/Axios';
+import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Container from '@mui/material/Container';
-import moment from 'moment';
-
-import { API_PATHS } from 'utils/constants/ApiPaths';
 
 type HistoryEvent = {
   label: string;
@@ -40,7 +35,7 @@ type AirdropRegistrationProps = {
   currentWindowId: number;
   totalWindows: number;
   airdropWindowTotalTokens?: number;
-  endDate: Date;
+  endDate: Moment;
   onRegister: () => void;
   onViewSchedule: () => void;
   onViewRules: () => void;
@@ -53,16 +48,6 @@ type AirdropRegistrationProps = {
   stakeInfo: StakeInfo;
   airdropWindowrewards: number;
 };
-
-const DateFormatter = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  // timeZone: "UTC",
-  timeZoneName: 'short',
-});
 
 const windowStatusLabelMap = {
   [WindowStatus.UPCOMING]: 'registration',
@@ -117,7 +102,7 @@ export default function AirdropRegistration({
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(() => moment.utc(endDate).local().format('YYYY-MM-DD HH:mm:ss'), [endDate]);
+  const formattedDate = useMemo(() => getDateInStandardFormat(endDate), [endDate]);
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -141,8 +126,6 @@ export default function AirdropRegistration({
     }
   };
 
-  const openStakeModal = () => {};
-
   const handleStakeClick = async () => {
     try {
       toggleStakeModal();
@@ -153,35 +136,24 @@ export default function AirdropRegistration({
     }
   };
 
-  // const isUpcomingClaim = isDateBetween(
-  //   `${activeWindow?.airdrop_window_registration_end_period} UTC`,
-  //   `${activeWindow?.airdrop_window_claim_start_period} UTC`,
-  //   new Date()
-  // );
-
   if (!activeWindow) {
     return null;
   }
 
-  const isUpcomingRegistration = isDateGreaterThan(
-    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
-    new Date()
+  const now = new Date();
+  const isClaimActive = checkDateIsBetween(
+    `${activeWindow?.airdrop_window_claim_start_period}`,
+    `${activeWindow?.airdrop_window_claim_end_period}`,
+    now,
   );
 
-  const isClaimActive = isDateBetween(
-    `${activeWindow?.airdrop_window_claim_start_period} UTC`,
-    `${activeWindow?.airdrop_window_claim_end_period} UTC`,
-    new Date()
-  );
-
-  const isRegistrationActive = isDateBetween(
-    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
-    `${activeWindow?.airdrop_window_registration_end_period} UTC`,
-    new Date()
+  const isRegistrationActive = checkDateIsBetween(
+    `${activeWindow?.airdrop_window_registration_start_period}`,
+    `${activeWindow?.airdrop_window_registration_end_period}`,
+    now,
   );
 
   const windowName = windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ''];
-
   const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status ?? ''];
 
   return (
@@ -223,7 +195,7 @@ export default function AirdropRegistration({
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
-              <Link href={`https://singularitynet.io/`} target="_blank" rel="noreferrer">
+              <Link href="https://singularitynet.io/" target="_blank" rel="noreferrer">
                 Visit SingularityNET
               </Link>
             </Grid>
@@ -244,7 +216,9 @@ export default function AirdropRegistration({
         <GradientBox
           $background="bgGradientHighlight"
           className={styles.contentWrapper}
-          sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+          sx={{
+            px: 4, pt: 4, pb: 5, borderRadius: 2,
+          }}
         >
           <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ''] : ''} />
           <Container sx={{ my: 6 }}>
@@ -280,10 +254,14 @@ export default function AirdropRegistration({
                   borderColor: 'note.main',
                 }}
               >
-                <Box sx={{ display: 'flex', my: 1, py: 1, m: 1 }}>
+                <Box sx={{
+                  display: 'flex', my: 1, py: 1, m: 1,
+                }}
+                >
                   <InfoIcon color="primary" />
                   <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
-                    You can start claiming your tokens now. It is possible to claim all tokens with the last window
+                    You can start claiming your tokens now.
+                    It is possible to claim all tokens in the last window
                     which will save you gas fees.
                   </Typography>
                 </Box>

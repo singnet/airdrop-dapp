@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { isDateGreaterThan, checkDateIsGreaterThan, checkDateIsBetween } from './date';
+import { checkDateIsGreaterThan, checkDateIsBetween } from './date';
 
 export type AirdropWindowTimeline = {
   airdrop_window_timeline_date: string;
@@ -30,13 +30,6 @@ export enum WindowStatus {
   CLAIM = 'CLAIM',
 }
 
-// const sortWindows = (windows: AirdropWindow[]): AirdropWindow[] =>
-//   windows.sort((windowA, windowB) => {
-//     const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
-//     const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
-//     return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
-//   });
-
 export const findActiveWindow = (
   windows: AirdropWindow[],
 ): AirdropWindow | undefined => {
@@ -47,11 +40,11 @@ export const findActiveWindow = (
         windowA.airdrop_window_id - windowB.airdrop_window_id,
     );
 
-  const activeWindow = sortedWindows.find((windowA) => (
-    checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, moment()) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period, moment()) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, moment()) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_end_period, moment())
+  const todayDate = moment();
+  let activeWindow = sortedWindows.find((windowA) => (
+    checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, todayDate) ||
+      checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period, todayDate) ||
+      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, todayDate)
   ));
 
   if (activeWindow) {
@@ -66,12 +59,13 @@ export const findActiveWindow = (
       activeWindow.next_window_start_period = nextWindow.airdrop_window_registration_start_period;
     }
 
-    if (checkDateIsGreaterThan(activeWindow.airdrop_window_registration_start_period, moment())) {
+    if (checkDateIsGreaterThan(activeWindow.airdrop_window_registration_start_period, todayDate)) {
       activeWindow.airdrop_window_status = WindowStatus.UPCOMING;
     } else if (
       checkDateIsBetween(
         activeWindow.airdrop_window_registration_start_period,
         activeWindow.airdrop_window_registration_end_period,
+        todayDate,
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.REGISTRATION;
@@ -79,13 +73,20 @@ export const findActiveWindow = (
       checkDateIsBetween(
         activeWindow.airdrop_window_registration_end_period,
         activeWindow.airdrop_window_claim_start_period,
+        todayDate,
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.IDLE;
     } else {
       activeWindow.airdrop_window_status = WindowStatus.CLAIM;
     }
+  } else {
+    // No active window so default to last window and set end time till claim end
+    activeWindow = sortedWindows[sortedWindows.length - 1];
+    activeWindow.airdrop_window_status = WindowStatus.CLAIM;
+    activeWindow.next_window_start_period = activeWindow.airdrop_window_claim_end_period;
   }
+
   return activeWindow;
 };
 
@@ -93,16 +94,10 @@ export const findFirstUpcomingWindow = (
   windows: AirdropWindow[],
 ): AirdropWindow | undefined => {
   const now = new Date();
-  // const sortedWindows = windows.sort((windowA, windowB) => {
-  //   const { airdrop_window_registration_start_period: AregistrationStart } = windowA;
-  //   const { airdrop_window_registration_end_period: BregistrationEnd } = windowB;
-  //   return new Date(AregistrationStart).getTime() - new Date(BregistrationEnd).getTime();
-  // });
-
   const sortedWindows = windows;
 
   const firstUpcomingWindow = sortedWindows.find((window) =>
-    isDateGreaterThan(window.airdrop_window_registration_start_period, now));
+    checkDateIsGreaterThan(window.airdrop_window_registration_start_period, now));
   if (firstUpcomingWindow) {
     firstUpcomingWindow.airdrop_window_status = WindowStatus.UPCOMING;
   }

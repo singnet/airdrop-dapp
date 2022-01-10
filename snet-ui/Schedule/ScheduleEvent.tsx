@@ -1,15 +1,13 @@
-import React, { useMemo } from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import { isDateBetween } from "utils/date";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import moment from "moment";
+import React from 'react';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 type Event = {
   time: Date;
@@ -24,43 +22,30 @@ type ScheduleEventProps = {
 
 const now = new Date();
 
-const DateFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  // timeZone: "UTC",
-  timeZoneName: "short",
-});
-
 export default function ScheduleEvent({
   event,
   nextEventTime,
 }: ScheduleEventProps) {
   const isActiveEvent =
-    nextEventTime && isDateBetween(event?.time, nextEventTime, now);
+    nextEventTime && checkDateIsBetween(event?.time, nextEventTime, now);
   const nextEvent = () => nextEventTime;
-  const formattedDate = moment
-    .utc(event.time)
-    .local()
-    .format("YYYY-MM-DD HH:mm:ss");
+  const formattedDate = getDateInStandardFormat(event.time);
   return (
-    <TimelineItem sx={{ bgcolor: "textAdvanced.main" }} key={event.id}>
-      <TimelineOppositeContent sx={{ display: "none" }} />
+    <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
+      <TimelineOppositeContent sx={{ display: 'none' }} />
       <TimelineSeparator>
         <TimelineDot
-          sx={{ width: 19, height: 19, borderColor: "common.white" }}
+          sx={{ width: 19, height: 19, borderColor: 'common.white' }}
           color="primary"
         />
-        {!!nextEventTime ? (
+        {nextEventTime ? (
           <TimelineConnector>
             {isActiveEvent ? (
               <Typography
                 sx={{
-                  position: "absolute",
-                  bgcolor: "bgHighlight.main",
-                  color: "textAdvanced.dark",
+                  position: 'absolute',
+                  bgcolor: 'bgHighlight.main',
+                  color: 'textAdvanced.dark',
                   mt: 3,
                 }}
                 variant="body2"

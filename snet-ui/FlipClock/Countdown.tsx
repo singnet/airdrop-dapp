@@ -1,21 +1,23 @@
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
+import React from 'react';
+import FlipUnitContainer from './FlipUnitContainer';
+import styles from './style.module.css';
+import { checkDateIsGreaterThan } from 'utils/date';
+
 function secondsToDhms(sec) {
   sec = Number(sec);
-  var days = Math.floor(sec / (3600 * 24));
-  var hours = Math.floor((sec % (3600 * 24)) / 3600);
-  var minutes = Math.floor((sec % 3600) / 60);
-  var seconds = Math.floor(sec % 60);
-  return { days, hours, minutes, seconds };
+  const days = Math.floor(sec / (3600 * 24));
+  const hours = Math.floor((sec % (3600 * 24)) / 3600);
+  const minutes = Math.floor((sec % 3600) / 60);
+  const seconds = Math.floor(sec % 60);
+  return {
+    days, hours, minutes, seconds,
+  };
 }
 
-import React from "react";
-
-import FlipUnitContainer from "./FlipUnitContainer";
-import styles from "./style.module.css";
-
-export type Unit = "days" | "hours" | "minutes" | "seconds";
-export type Animation = "fold" | "unfold";
-export type Position = "upperCard" | "lowerCard";
+export type Unit = 'days' | 'hours' | 'minutes' | 'seconds';
+export type Animation = 'fold' | 'unfold';
+export type Position = 'upperCard' | 'lowerCard';
 export type Digit = string | number;
 
 type FlipClockProps = {
@@ -39,6 +41,7 @@ export default class FlipCountdown extends React.Component<
   FlipClockState
 > {
   timerID?: NodeJS.Timer | number;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -67,9 +70,15 @@ export default class FlipCountdown extends React.Component<
     // set time units
     // const hours = time.getHours();
     // const minutes = time.getMinutes();
+    if (checkDateIsGreaterThan(now, this.props.endDate)) {
+      // We have nothing to count down to
+      return;
+    }
 
-    const { days, hours, minutes, seconds } = secondsToDhms(
-      (this.props.endDate.getTime() - now.getTime()) / 1000
+    const {
+      days, hours, minutes, seconds,
+    } = secondsToDhms(
+      (this.props.endDate.valueOf() - now.getTime()) / 1000,
     );
 
     // on day change, update hours and shuffle state
@@ -118,7 +127,7 @@ export default class FlipCountdown extends React.Component<
     return (
       <div className={styles.flipClock}>
         <FlipUnitContainer
-          unit={"days"}
+          unit="days"
           digit={days}
           shuffle={daysShuffle}
           countdown
@@ -133,10 +142,10 @@ export default class FlipCountdown extends React.Component<
           :
         </Typography>
         <FlipUnitContainer
-          unit={"hours"}
+          unit="hours"
           digit={hours}
           shuffle={hoursShuffle}
-          
+
           countdown
         />
         <Typography
@@ -149,13 +158,14 @@ export default class FlipCountdown extends React.Component<
           :
         </Typography>
         <FlipUnitContainer
-          unit={"minutes"}
+          unit="minutes"
           digit={minutes}
           shuffle={minutesShuffle}
           countdown
-      
+
         />
-        {/* <FlipUnitContainer unit={"seconds"} digit={seconds} shuffle={secondsShuffle} countdown /> */}
+        {/* <FlipUnitContainer unit={"seconds"} digit={seconds}
+        shuffle={secondsShuffle} countdown /> */}
       </div>
     );
   }
