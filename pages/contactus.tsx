@@ -57,7 +57,7 @@ export default function ContactUs() {
       const payload = {
         recipient: EMAIL_HOST,
         message: query,
-        subject: {AIRDROP_SUPPORT_QUERY_STRING},
+        subject: { AIRDROP_SUPPORT_QUERY_STRING },
         notification_type: 'support',
       };
       await axios.post(API_PATHS.CONTACT_US, payload);

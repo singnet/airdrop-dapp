@@ -11,6 +11,7 @@ import SubscribeToNotification from 'snet-ui/SubscribeToNotification';
 import Ecosystem from 'snet-ui/Ecosystem';
 import CommonLayout from 'layout/CommonLayout';
 import Registration from 'components/Registration';
+import Airdroprules from 'snet-ui/Airdroprules';
 
 import {
   RefObject, useEffect, useRef, useState,
@@ -20,7 +21,7 @@ import axios from 'utils/Axios';
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import {
   findActiveWindow, AIRDROP_BLOG_POST, AIRDROP_HOW_IT_WORKS_STRING,
-  HOW_IT_WORKS, AIRDROP_TITLE_STRING
+  HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES,
 } from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
@@ -49,10 +50,8 @@ const Home: NextPage = () => {
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
   const [rejectReasons, setRejectReasons] = useState<string | undefined>('');
   const [userRegistered, setUserRegistered] = useState(false);
-  const [airdropWindowRules, setWindowRules] = useState([]);
   const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
-  const [airdropRules, setAirdropRules] = useState([]);
 
   const [airdropTotalTokens, setAirdropTotalTokens] = useState({
     value: 0,
@@ -93,7 +92,6 @@ const Home: NextPage = () => {
       );
 
       setSchedules(airdropSchedules);
-      setAirdropRules(airdrop.airdrop_rules);
 
       setAirdropTotalTokens({
         value: airdrop.airdrop_total_tokens,
@@ -150,9 +148,7 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
-      const rules = data.airdrop_rules;
 
-      setAirdropRules(rules);
       setAirdropwindowRewards(airdropRewards);
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
       setUserRegistered(isRegistered);
@@ -210,7 +206,12 @@ const Home: NextPage = () => {
         ref={getNotificationRef}
         onSubscribe={handleNotificationSubscription}
       />
-
+      <Airdroprules
+        title="Airdrop Rules"
+        steps={AIRDROP_RULES}
+        blogLink={AIRDROP_BLOG_POST}
+        ref={rulesRef}
+      />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
     </CommonLayout>
