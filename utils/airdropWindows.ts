@@ -28,7 +28,30 @@ export enum WindowStatus {
   REGISTRATION = 'REGISTRATION',
   IDLE = 'IDLE', // Between registration and the claim period
   CLAIM = 'CLAIM',
+  LAST_CLAIM = 'LAST_CLAIM',
 }
+
+export const TOTAL_AIRDROP_TOKENS_STRING = 'Total Airdrop Tokens';
+export const TOTAL_AIRDROPS_STRING = 'Airdrops';
+export const SUCCESSFUL_REGISTRATION_STRING = 'Successfully registered for Airdrop window';
+
+export const windowStatusActionMap = {
+  [WindowStatus.UPCOMING]: 'Starts',
+  [WindowStatus.IDLE]: 'Starts',
+  [WindowStatus.REGISTRATION]: 'Closes',
+  [WindowStatus.CLAIM]: 'Closes',
+  [WindowStatus.LAST_CLAIM]: 'closes',
+};
+
+export const windowStatusLabelMap = {
+  [WindowStatus.UPCOMING]: 'Airdrop Registration Window',
+  [WindowStatus.REGISTRATION]: 'Airdrop Registration Window',
+  [WindowStatus.IDLE]: 'Airdrop Claim Window',
+  [WindowStatus.CLAIM]: 'Airdrop Claim Window',
+  [WindowStatus.LAST_CLAIM]: 'Airdrop Claim Window',
+};
+
+export const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 export const findActiveWindow = (
   windows: AirdropWindow[],
@@ -83,7 +106,7 @@ export const findActiveWindow = (
   } else {
     // No active window so default to last window and set end time till claim end
     activeWindow = sortedWindows[sortedWindows.length - 1];
-    activeWindow.airdrop_window_status = WindowStatus.CLAIM;
+    activeWindow.airdrop_window_status = WindowStatus.LAST_CLAIM;
     activeWindow.next_window_start_period = activeWindow.airdrop_window_claim_end_period;
   }
 

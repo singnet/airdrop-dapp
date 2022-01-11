@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 import InfoIcon from '@mui/icons-material/Info';
 import History from '../../snet-ui/History';
-import { AirdropWindow, WindowStatus } from '../../utils/airdropWindows';
+import { AirdropWindow, WindowStatus, windowStatusActionMap, windowStatusLabelMap } from '../../utils/airdropWindows';
 import Alert, { AlertColor } from '@mui/material/Alert';
 import LoadingButton from '../../snet-ui/LoadingButton';
 import Link from '@mui/material/Link';
@@ -47,20 +47,6 @@ type AirdropRegistrationProps = {
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
   airdropWindowrewards: number;
-};
-
-const windowStatusLabelMap = {
-  [WindowStatus.UPCOMING]: 'registration',
-  [WindowStatus.REGISTRATION]: 'registration',
-  [WindowStatus.IDLE]: 'claim',
-  [WindowStatus.CLAIM]: 'claim',
-};
-
-const windowStatusActionMap = {
-  [WindowStatus.UPCOMING]: 'opens',
-  [WindowStatus.REGISTRATION]: 'closes',
-  [WindowStatus.IDLE]: 'opens',
-  [WindowStatus.CLAIM]: 'claim',
 };
 
 const statusLabelMap = {

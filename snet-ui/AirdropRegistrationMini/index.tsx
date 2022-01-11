@@ -7,8 +7,10 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 import { getDateInStandardFormat } from 'utils/date';
+import { TOTAL_AIRDROPS_STRING, TOTAL_AIRDROP_TOKENS_STRING, numberWithCommas } from 'utils/airdropWindows';
 
 type AirdropRegistrationMiniProps = {
+  windowMessage: string;
   startDate: Moment;
   totalTokens: number;
   tokenName: string;
@@ -19,6 +21,7 @@ type AirdropRegistrationMiniProps = {
 };
 
 export default function AirdropRegistrationMini({
+  windowMessage,
   startDate,
   totalTokens,
   tokenName,
@@ -28,6 +31,7 @@ export default function AirdropRegistrationMini({
   onViewNotification,
 }: AirdropRegistrationMiniProps) {
   const formattedDate = useMemo(() => getDateInStandardFormat(startDate), [startDate]);
+  const formattedTotalTokens = useMemo(() => numberWithCommas(totalTokens), [totalTokens]);
 
   return (
     <GradientBox
@@ -36,15 +40,18 @@ export default function AirdropRegistrationMini({
         px: 2, pt: 2, pb: 2, borderRadius: 2,
       }}
     >
-      <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Next window is  {currentAirdropWindow}/{totalAirdropWindows} {windowAction} {formattedDate}
+      <Typography color="text.secondary" variant="h4" align="center" mb={2}>
+        {windowMessage} {currentAirdropWindow}/{totalAirdropWindows} {windowAction}
+      </Typography>
+      <Typography color="text.secondary" variant="h4" align="center" mb={4}>
+        {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
       <Divider sx={{ mt: 4, mb: 3, borderColor: 'text.secondary' }} />
       <Grid container>
         <Grid item xs={6} textAlign="center">
           <Typography variant="normal" color="text.secondary">
-            Unlocks
+            {TOTAL_AIRDROPS_STRING}
           </Typography>
           <Typography variant="h3" color="text.secondary">
             {totalAirdropWindows}
@@ -52,10 +59,10 @@ export default function AirdropRegistrationMini({
         </Grid>
         <Grid item xs={6} textAlign="center">
           <Typography variant="normal" color="text.secondary">
-            Total Token Worth
+            {TOTAL_AIRDROP_TOKENS_STRING}
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            5,000,000 {tokenName}
+            {formattedTotalTokens} {tokenName}
           </Typography>
         </Grid>
       </Grid>
