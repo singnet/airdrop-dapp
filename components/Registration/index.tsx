@@ -13,7 +13,10 @@ import Registrationsuccess from 'snet-ui/Registrationsuccess';
 import AirdropRegistration from 'snet-ui/AirdropRegistration';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { API_PATHS } from 'utils/constants/ApiPaths';
-import { WindowStatus, windowStatusActionMap, windowStatusLabelMap } from 'utils/airdropWindows';
+import {
+  WindowStatus, windowStatusActionMap, windowStatusLabelMap,
+  AIRDROP_WINDOW_STRING, AIRDROP_PENDING_CLAIM_STRING, AIRDROP_LINKS,
+} from 'utils/airdropWindows';
 import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
 import { parseEthersError } from 'utils/ethereum';
 import { useAirdropContract } from 'utils/AirdropContract';
@@ -58,9 +61,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropWindowrewards,
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ is_stakable: false });
-  const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: '' });
-  const [airdropOpen, setAirdropOpen] = useState(false);
 
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
@@ -123,14 +124,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       } else {
         setUiAlert({
           type: AlertTypes.error,
-          message: 'Failed Registration: unable to generate signature',
+          message: 'Registration Failed: Unable to generate signature',
         });
       }
       // router.push(`airdrop/${airdrop.airdrop_window_id}`);
     } catch (error: any) {
       setUiAlert({
         type: AlertTypes.error,
-        message: `Failed Registration: ${error.message}`,
+        message: `Registration Failed: ${error.message}`,
       });
     }
   };
@@ -144,11 +145,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const history = response.data.data.claim_history.map((el) => [
       {
-        label: `Vesting ${el.airdrop_window_id} Rewards`,
+        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} Rewards`,
         value: `${Number(el.claimable_amount) / 1000000} ${airdropTotalTokens.name}`,
       },
       {
-        label: `Vesting ${el.airdrop_window_id} ${el.action_type} status`,
+        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} ${el.action_type} status`,
         value: `${el.txn_status}`,
       },
     ]);
@@ -168,7 +169,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
         type: AlertTypes.error,
-        message: 'There is already a pending claim transaction. Please wait for it to get completed',
+        message: { AIRDROP_PENDING_CLAIM_STRING },
       });
       return;
     } else if (claimStatus === ClaimStatus.SUCCESS) {
@@ -285,7 +286,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     if (claimStatus === ClaimStatus.PENDING) {
       setUiAlert({
         type: AlertTypes.error,
-        message: 'There is already a pending claim transaction. Please wait for it to get completed',
+        message: { AIRDROP_PENDING_CLAIM_STRING },
       });
       return;
     } else if (claimStatus === ClaimStatus.SUCCESS) {
@@ -433,7 +434,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return (
       <Grid container spacing={2} px={5} mb={8} mt={20}>
         <Grid item xs={12} sm={6}>
-          <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
+          <Airdropinfo blogLink={AIRDROP_LINKS.WHITEPAPER} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
@@ -520,7 +521,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : (
     <Grid container spacing={2} px={4} mt={2} mb={8}>
       <Grid item xs={12} sm={6}>
-        <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
+        <Airdropinfo blogLink={AIRDROP_LINKS.WHITEPAPER} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import Schedule from 'snet-ui/Schedule';
 import Box from '@mui/material/Box';
-import { AIRDROP_BLOG_POST } from 'utils/airdropWindows';
+import { AIRDROP_LINKS, AIRDROP_SCHEDULE_STRING } from 'utils/airdropWindows';
 
 type scheduleEvent = { time: Date; title: string; description: string };
 type AirdropProps = {
@@ -19,9 +19,9 @@ const AirdropSchedules = ({ schedules }: AirdropProps, ref) => {
   return (
     <Box sx={{ bgcolor: 'bgHighlight.main' }} ref={ref}>
       <Schedule
-        title="Vesting Schedule"
+        title={AIRDROP_SCHEDULE_STRING}
         events={schedules}
-        blogLink={AIRDROP_BLOG_POST}
+        blogLink={AIRDROP_LINKS.BLOG_POST}
       />
     </Box>
   );

@@ -6,7 +6,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 import InfoIcon from '@mui/icons-material/Info';
 import History from '../../snet-ui/History';
-import { AirdropWindow, WindowStatus, windowStatusActionMap, windowStatusLabelMap } from '../../utils/airdropWindows';
+import {
+  AirdropWindow, WindowStatus, windowStatusActionMap,
+  windowStatusLabelMap, windowStateMap,
+} from '../../utils/airdropWindows';
 import Alert, { AlertColor } from '@mui/material/Alert';
 import LoadingButton from '../../snet-ui/LoadingButton';
 import Link from '@mui/material/Link';
@@ -47,12 +50,6 @@ type AirdropRegistrationProps = {
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
   airdropWindowrewards: number;
-};
-
-const statusLabelMap = {
-  [WindowStatus.CLAIM]: 'Vesting Open',
-  [WindowStatus.REGISTRATION]: 'Registration Open',
-  [WindowStatus.UPCOMING]: '',
 };
 
 const style = {
@@ -206,10 +203,10 @@ export default function AirdropRegistration({
             px: 4, pt: 4, pb: 5, borderRadius: 2,
           }}
         >
-          <StatusBadge label={isRegistrationActive || isClaimActive ? statusLabelMap[airdropWindowStatus ?? ''] : ''} />
+          <StatusBadge label={isRegistrationActive || isClaimActive ? windowStateMap[airdropWindowStatus ?? ''] : ''} />
           <Container sx={{ my: 6 }}>
             <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-              Vesting {windowName} window &nbsp;
+              {windowName} &nbsp;
               {currentWindowId} / {totalWindows} &nbsp;
               {windowAction}:
             </Typography>
@@ -346,7 +343,7 @@ export default function AirdropRegistration({
           {history && history.length > 0 ? (
             <Container maxWidth="md">
               <Typography align="center" color="textAdvanced.secondary" variant="h5">
-                Your Vesting History
+                Your Claim History
               </Typography>
               <History events={history} />
             </Container>

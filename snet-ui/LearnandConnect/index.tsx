@@ -1,27 +1,25 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Container from "@mui/material/Container";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import { AIRDROP_LINKS } from 'utils/airdropWindows';
 
 export default function Learn() {
   return (
     <Box
       sx={{
         p: 3,
-        bgcolor: "bgHighlight.main",
+        bgcolor: 'bgHighlight.main',
       }}
     >
       <Box
         sx={{
           my: 1,
           py: 1,
-          justifyContent: "center",
+          justifyContent: 'center',
         }}
       >
         <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
@@ -29,23 +27,18 @@ export default function Learn() {
         </Typography>
         <Grid container spacing={{ xs: 4 }}>
           <Grid item md={4}>
-            <Card
-            // sx={{
-            //   my: 2,
-            //   py: 2,
-            // }}
-            >
+            <Card>
               <CardActionArea>
                 <CardContent>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
                       my: 2,
                     }}
                   >
                     <a
-                      href="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf"
+                      href={AIRDROP_LINKS.WHITEPAPER}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -60,8 +53,8 @@ export default function Learn() {
 
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
                     }}
                   >
                     <Box>
@@ -100,19 +93,14 @@ export default function Learn() {
             </Card>
           </Grid>
           <Grid item md={4}>
-            <Card
-            // sx={{
-            //   my: 2,
-            //   py: 2,
-            // }}
-            >
+            <Card>
               <CardActionArea>
                 <CardContent>
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
+                    sx={{ display: 'flex', justifyContent: 'center', my: 2 }}
                   >
                     <a
-                      href="https://t.me/NuNet_Community"
+                      href={AIRDROP_LINKS.TELEGRAM}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -126,8 +114,8 @@ export default function Learn() {
                   </Box>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
                     }}
                   >
                     <Box>
@@ -169,10 +157,10 @@ export default function Learn() {
               <CardActionArea>
                 <CardContent>
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", my: 2 }}
+                    sx={{ display: 'flex', justifyContent: 'center', my: 2 }}
                   >
                     <a
-                      href="https://nunet.io/#technology"
+                      href={AIRDROP_LINKS.DOCUMENTATION}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -186,8 +174,8 @@ export default function Learn() {
                   </Box>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
+                      display: 'flex',
+                      justifyContent: 'center',
                     }}
                   >
                     <Box>

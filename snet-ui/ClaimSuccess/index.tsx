@@ -53,7 +53,7 @@ export default function ClaimSuccess({
                 variant="h5"
                 color="text.secondary"
               >
-                Successfully Claimed for Vesting Window {currentWindowId}/
+                Successfully Claimed for Window {currentWindowId}/
                 {totalWindows}
               </Typography>
             </Box>
@@ -89,7 +89,7 @@ export default function ClaimSuccess({
               color="textAdvanced.secondary"
               variant="h5"
             >
-              Your Vesting History
+              Your Claim History
             </Typography>
             <History events={history} />
           </Container>
