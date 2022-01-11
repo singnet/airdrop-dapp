@@ -9,6 +9,7 @@ import Header from 'snet-ui/Header';
 import axios from 'utils/Axios';
 import { setShowConnectionModal } from 'utils/store/features/walletSlice';
 import { useAppDispatch } from 'utils/store/hooks';
+import { AIRDROP_TITLE_STRING } from 'utils/airdropWindows';
 
 interface AirdropWindowProps {}
 
@@ -56,15 +57,15 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
   return (
     <>
       <Head>
-        <title>OccamRazer Vesting</title>
+        <title>Nunet Airdrop</title>
       </Head>
       <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
       <Grid container spacing={2}>
         <Grid item xs={6} md={8}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
-              <Typography variant="body2">OccamRazer Vesting</Typography>
-              <Typography variant="h6">OccamRazer Vesting</Typography>
+              <Typography variant="body2">{AIRDROP_TITLE_STRING}</Typography>
+              <Typography variant="h6">{AIRDROP_TITLE_STRING}</Typography>
             </Box>
             <Box>
               <Typography variant="body2">Connected Wallet address</Typography>

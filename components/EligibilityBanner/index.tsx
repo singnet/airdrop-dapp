@@ -10,6 +10,7 @@ import Notqualified from 'snet-ui/Noteligible';
 import SkeletonLoader from './SkeletonLoader';
 import { useAppSelector } from 'utils/store/hooks';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
+import { AIRDROP_ELIGIBILITY_STRING, windowNameActionMap } from 'utils/airdropWindows';
 
 type EligibilityBannerProps = {
   onViewRules: () => void;
@@ -54,7 +55,7 @@ export default function EligibilityBanner({ userEligibility, onViewRules, reject
     >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography variant="normal">Vesting Eligibility</Typography>
+          <Typography variant="normal">{AIRDROP_ELIGIBILITY_STRING}</Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
             <Box color="success" sx={{ mr: 1, mt: 1 }}>
@@ -62,7 +63,8 @@ export default function EligibilityBanner({ userEligibility, onViewRules, reject
             </Box>
 
             <Typography variant="h5" color="primary.main">
-              Qualified for Vesting Window {activeWindow.airdrop_window_order} / {totalWindows}
+              Qualified for {windowNameActionMap[activeWindow.airdrop_window_status]} Window {' '}
+              {activeWindow.airdrop_window_order} / {totalWindows}
             </Typography>
           </Box>
         </Grid>

@@ -430,9 +430,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   if (!account && (activeWindow !== null || activeWindow !== undefined)) {
-    const windowMessage = windowStatusLabelMap[activeWindow?.airdrop_window_status];
-    const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status];
-
     return (
       <Grid container spacing={2} px={5} mb={8} mt={20}>
         <Grid item xs={12} sm={6}>
@@ -440,9 +437,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
-            windowMessage={windowMessage}
+            windowMessage={windowStatusLabelMap[activeWindow.airdrop_window_status]}
             startDate={endDate}
-            windowAction={windowAction}
+            windowAction={windowStatusActionMap[activeWindow.airdrop_window_status]}
             tokenName={airdropTotalTokens.name}
             totalTokens={airdropTotalTokens.value}
             totalAirdropWindows={totalWindows}
@@ -484,9 +481,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Box>
     );
   }
-
-  const windowMessage = windowStatusLabelMap[activeWindow?.airdrop_window_status];
-  const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status];
 
   const showMini =
     activeWindow.airdrop_window_status == WindowStatus.UPCOMING &&
@@ -530,9 +524,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini
-          windowMessage={windowMessage}
+          windowMessage={windowStatusLabelMap[activeWindow.airdrop_window_status]}
           startDate={moment.utc(`${activeWindow.airdrop_window_registration_start_period}`)}
-          windowAction={windowAction}
+          windowAction={windowStatusActionMap[activeWindow.airdrop_window_status]}
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
           totalAirdropWindows={totalWindows}

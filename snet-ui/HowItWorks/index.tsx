@@ -1,9 +1,9 @@
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/system/Box";
-import Button from "@mui/material/Button";
-import React, { forwardRef } from "react";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/system/Box';
+import Button from '@mui/material/Button';
+import React, { forwardRef } from 'react';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 type Step = {
   title: string;
@@ -17,7 +17,7 @@ type Props = {
 
 function HowItWorks({ title, steps, blogLink }: Props, ref) {
   return (
-    <Box sx={{ bgcolor: "bgHighlight.main", px: [1, 4, 15], py: 8 }} ref={ref}>
+    <Box sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], py: 8 }} ref={ref}>
       <Typography
         align="center"
         fontWeight="bold"
@@ -33,18 +33,18 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
             <Grid item xs={3} sm={2} md={2} mr={0}>
               <Box
                 sx={{
-                  bgcolor: "info.light",
-                  color: "primary.contrastText",
+                  bgcolor: 'info.light',
+                  color: 'primary.contrastText',
                   borderRadius: 1.5,
-                  textAlign: "center",
+                  textAlign: 'center',
                   maxWidth: 40,
-                  height: "53px",
+                  height: '53px',
                   m: 2,
                   mt: 0,
                 }}
               >
                 <Typography variant="caption">Step</Typography>
-                <Box sx={{ flexDirection: "column" }}>
+                <Box sx={{ flexDirection: 'column' }}>
                   <Typography fontWeight="bold" variant="h3">
                     {index + 1}
                   </Typography>
@@ -57,11 +57,11 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
                 color="bgtext.main"
                 variant="priority"
                 component="p"
-                sx={{ mb: "16px" }}
+                sx={{ mb: '16px' }}
               >
                 {step.title}
               </Typography>
-              <Typography variant="normal" color="textAdvanced.dark">
+              <Typography variant="normal" color="textAdvanced.dark" style={{ whiteSpace: 'pre-line' }}>
                 {step.description}
               </Typography>
             </Grid>
@@ -78,7 +78,7 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
             href={blogLink}
             target="_blank"
             rel="noreferrer noopener"
-            sx={{ textTransform: "capitalize", fontWeight: 600 }}
+            sx={{ textTransform: 'capitalize', fontWeight: 600 }}
           >
             Read Blog Post
           </Button>
