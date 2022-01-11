@@ -8,7 +8,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import History from '../../snet-ui/History';
 import {
   AirdropWindow, WindowStatus, windowStatusActionMap,
-  windowStatusLabelMap, windowStateMap,
+  windowStatusLabelMap, windowStateMap, AIRDROP_TOKEN_DIVISOR,
+  AIRDROP_TOKEN_SYMBOL,
 } from '../../utils/airdropWindows';
 import Alert, { AlertColor } from '@mui/material/Alert';
 import LoadingButton from '../../snet-ui/LoadingButton';
@@ -164,7 +165,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakable_tokens / 1000000} {stakeInfo.stakable_token_name}
+                {stakeInfo.stakable_tokens / { AIRDROP_TOKEN_DIVISOR }} {stakeInfo.stakable_token_name}
               </Typography>
             </Grid>
           </Grid>
@@ -173,7 +174,7 @@ export default function AirdropRegistration({
               <Typography variant="h6">Tokens to be Claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">{stakeInfo.claimable_tokens_to_wallet / 1000000} </Typography>
+              <Typography variant="h4">{stakeInfo.claimable_tokens_to_wallet / { AIRDROP_TOKEN_DIVISOR }} </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
@@ -223,7 +224,7 @@ export default function AirdropRegistration({
                   Tokens available to claim
                 </Typography>
                 <Typography variant="h2" color="textAdvanced.secondary" align="center">
-                  {airdropWindowrewards / 1000000} NTX
+                  {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
                 </Typography>
               </Box>
               <Container

@@ -31,6 +31,8 @@ export enum WindowStatus {
   LAST_CLAIM = 'LAST_CLAIM',
 }
 
+export const AIRDROP_TOKEN_DIVISOR = 1000000;
+export const AIRDROP_TOKEN_SYMBOL = 'NTX';
 export const AIRDROP_SITE_STRING = 'Nunet';
 export const AIRDROP_PENDING_CLAIM_STRING = 'There is already a pending claim. Please wait for it to complete';
 export const AIRDROP_WINDOW_STRING = 'Airdrop Window';
