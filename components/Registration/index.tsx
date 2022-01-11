@@ -13,7 +13,7 @@ import Registrationsuccess from 'snet-ui/Registrationsuccess';
 import AirdropRegistration from 'snet-ui/AirdropRegistration';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { API_PATHS } from 'utils/constants/ApiPaths';
-import { WindowStatus } from 'utils/airdropWindows';
+import { WindowStatus, windowStatusActionMap, windowStatusLabelMap } from 'utils/airdropWindows';
 import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
 import { parseEthersError } from 'utils/ethereum';
 import { useAirdropContract } from 'utils/AirdropContract';
@@ -26,13 +26,6 @@ import ClaimSuccess from 'snet-ui/ClaimSuccess';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
 import moment from 'moment';
 import { getDateInStandardFormat } from 'utils/date';
-
-const windowStatusActionMap = {
-  [WindowStatus.UPCOMING]: 'opens',
-  [WindowStatus.REGISTRATION]: 'closes',
-  [WindowStatus.IDLE]: 'opens',
-  [WindowStatus.CLAIM]: 'claim',
-};
 
 const blockChainActionTypes = {
   CLAIM: 'claim',
@@ -65,7 +58,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropWindowrewards,
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ is_stakable: false });
-  const [windowAction, setWindowAction] = useState<string>('');
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>({ type: AlertTypes.info, message: '' });
   const [airdropOpen, setAirdropOpen] = useState(false);
@@ -162,8 +154,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     ]);
 
     await getStakeDetails();
-    const airdropWindowAction = windowStatusActionMap[activeWindow?.airdrop_window_status ?? ''];
-    setWindowAction(airdropWindowAction);
     setAirdropHistory(history.flat());
   };
 
@@ -440,6 +430,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   }
 
   if (!account && (activeWindow !== null || activeWindow !== undefined)) {
+    const windowMessage = windowStatusLabelMap[activeWindow?.airdrop_window_status];
+    const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status];
+
     return (
       <Grid container spacing={2} px={5} mb={8} mt={20}>
         <Grid item xs={12} sm={6}>
@@ -447,6 +440,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
+            windowMessage={windowMessage}
             startDate={endDate}
             windowAction={windowAction}
             tokenName={airdropTotalTokens.name}
@@ -491,8 +485,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     );
   }
 
+  const windowMessage = windowStatusLabelMap[activeWindow?.airdrop_window_status];
+  const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status];
+
   const showMini =
-    activeWindow.airdrop_window_status == WindowStatus.UPCOMING && 
+    activeWindow.airdrop_window_status == WindowStatus.UPCOMING &&
     activeWindow.airdrop_window_order === 1;
 
   return showRegistrationSuccess ? (
@@ -533,9 +530,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini
+          windowMessage={windowMessage}
           startDate={moment.utc(`${activeWindow.airdrop_window_registration_start_period}`)}
+          windowAction={windowAction}
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
+          totalAirdropWindows={totalWindows}
+          currentAirdropWindow={activeWindow.airdrop_window_order}
           onViewNotification={onViewNotification}
         />
       </Grid>
