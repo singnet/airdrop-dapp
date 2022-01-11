@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import LoadingButton from 'snet-ui/LoadingButton';
 import Container from '@mui/material/Container';
+import { AIRDROP_SUPPORT_QUERY_STRING } from 'utils/airdropWindows';
 
 const categories = ['Airdrop Enquiry'];
 const alertTypes: any = {
@@ -56,7 +57,7 @@ export default function ContactUs() {
       const payload = {
         recipient: EMAIL_HOST,
         message: query,
-        subject: 'Occam support enquiry ',
+        subject: {AIRDROP_SUPPORT_QUERY_STRING},
         notification_type: 'support',
       };
       await axios.post(API_PATHS.CONTACT_US, payload);

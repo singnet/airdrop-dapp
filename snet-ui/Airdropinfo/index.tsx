@@ -1,6 +1,6 @@
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
-import { Button } from '@mui/material';
+import { AIRDROP_TITLE_STRING, AIRDROP_DESCRIPTION_STRING } from 'utils/airdropWindows';
 
 type Props = {
   blogLink?: string;
@@ -10,10 +10,10 @@ export default function Airdropinfo({ blogLink }: Props) {
   return (
     <Box>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
-        OccamRazer allocations of the NuNet TGE Public Round
+        {AIRDROP_TITLE_STRING}
       </Typography>
       <Typography color="textAdvanced.dark" variant="normal" sx={{ mt: 3, display: 'block', textAlign: 'left' }}>
-        If you have participated in the OccamRazer launch, you can claim your two vested allocations here.
+        {AIRDROP_DESCRIPTION_STRING}
       </Typography>
       {blogLink ? (
         <Box mt={6}>

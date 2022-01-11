@@ -11,14 +11,17 @@ import SubscribeToNotification from 'snet-ui/SubscribeToNotification';
 import Ecosystem from 'snet-ui/Ecosystem';
 import CommonLayout from 'layout/CommonLayout';
 import Registration from 'components/Registration';
-// import Notqualified from "snet-ui/Noteligible";
+
 import {
   RefObject, useEffect, useRef, useState,
 } from 'react';
 import axios from 'utils/Axios';
 
 import { API_PATHS } from 'utils/constants/ApiPaths';
-import { findActiveWindow } from 'utils/airdropWindows';
+import {
+  findActiveWindow, AIRDROP_BLOG_POST, AIRDROP_HOW_IT_WORKS_STRING,
+  HOW_IT_WORKS, AIRDROP_TITLE_STRING
+} from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
@@ -176,7 +179,7 @@ const Home: NextPage = () => {
   return (
     <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
-        <title>Nunet Occam</title>
+        <title>{AIRDROP_TITLE_STRING}</title>
       </Head>
       <Box px={[0, 4, 15]} mt={18}>
         <EligibilityBanner
@@ -199,9 +202,9 @@ const Home: NextPage = () => {
       />
       <HowItWorks
         ref={howitworksRef}
-        title="Claiming your NTX allocation of the OccamRazer launch."
-        steps={HowItWorksSampleData}
-        blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
+        title={AIRDROP_HOW_IT_WORKS_STRING}
+        steps={HOW_IT_WORKS}
+        blogLink={AIRDROP_BLOG_POST}
       />
       <SubscribeToNotification
         ref={getNotificationRef}
@@ -215,26 +218,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const HowItWorksSampleData = [
-  {
-    title: 'Participate in the OccamRazer IDO',
-    description:
-      'If you have participated in the OccamRazer round, you can claim the vested allocations here, in two installments of 25%.',
-  },
-  {
-    title: 'OccamRazer vesting schedule',
-    description:
-      'The two remaining distributions will unlock on December 26th 2021, 13:00 UTC and January 26th 2022, 13:00 UTC.',
-  },
-  {
-    title: 'Process of claiming',
-    description:
-      'The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.',
-  },
-  {
-    title: 'Final claim',
-    description:
-      'You can claim your allocations until 3 months after the last unlock. The final claim date is April 26th 13:00 UTC. You can claim both unlocked allocations at once, to save gas fees.',
-  },
-];
