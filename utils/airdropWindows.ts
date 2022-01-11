@@ -45,6 +45,17 @@ export const AIRDROP_DESCRIPTION_STRING = 'NuNet is distributing 5% of its total
 'A total of 50 million NTX will be distributed across the four airdrops of 12.5 million tokens each, in January, April, July and October 2022. ' +
 'The October 2022 airdrop will reward only those users who have held AGIX  tokens since the start of the airdrops in January 2022.';
 
+export const AIRDROP_RULES = [
+  {
+    title: 'AGIX Balance',
+    description: 'Your AGIX balance across your wallet, staking account and liquidity contribution on SingularityDAO should be atleast 2500 tokens during the snapshot period.',
+  },
+  {
+    title: 'Registation',
+    description: 'You must register your eligible wallet address here in this portal during every registration period. Registration does not cost gas fees, claiming the rewards does cost gas fees.',
+  },
+];
+
 export const HOW_IT_WORKS = [
   /*{
     title: 'About the NuNet Airdrop',

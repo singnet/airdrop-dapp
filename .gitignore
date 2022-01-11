@@ -44,3 +44,4 @@ cdk/.env.local
 cdk/.env.development.local
 cdk/.env.test.local
 cdk/.env.production.local
+build.bat
