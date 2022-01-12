@@ -27,6 +27,7 @@ import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
 import { Alert } from '@mui/material';
 import { APIError } from 'utils/errors';
 import { selectActiveWindow, setActiveWindowState } from 'utils/store/features/activeWindowSlice';
+import { selectSection } from 'utils/store/features/scrollToSectionSlice';
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -60,6 +61,7 @@ const Home: NextPage = () => {
   });
   const { error: walletError } = useAppSelector((state) => state.wallet);
   const { window: activeWindow } = useAppSelector(selectActiveWindow);
+  const { scrollToSection } = useAppSelector(selectSection);
   const dispatch = useAppDispatch();
   // const [currentWindowRewards, setCurrentWindowRewards] = useState(0);
 
@@ -70,6 +72,10 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    const { section } = scrollToSection;
+    if (section) {
+      handleScrollToLink(section);
+    }
     getUserEligibility();
   }, [activeWindow, account]);
 

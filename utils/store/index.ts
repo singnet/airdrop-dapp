@@ -1,14 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import activeWindowReducer from "./features/activeWindowSlice";
-import walletReducer from "./features/walletSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import activeWindowReducer from './features/activeWindowSlice';
+import walletReducer from './features/walletSlice';
+import scrollToSectionReducer from './features/scrollToSectionSlice';
 
 export const store = configureStore({
   reducer: {
     wallet: walletReducer,
     activeWindow: activeWindowReducer,
-    //   posts: postsReducer,
-    //   comments: commentsReducer,
-    //   users: usersReducer,
+    scrollToSection: scrollToSectionReducer,
   },
 });
 

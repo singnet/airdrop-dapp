@@ -10,6 +10,10 @@ import Alert from '@mui/material/Alert';
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import LoadingButton from 'snet-ui/LoadingButton';
 import Container from '@mui/material/Container';
+import { useAppDispatch } from 'utils/store/hooks';
+
+import { useRouter } from 'next/router';
+import { setScrollSection } from 'utils/store/features/scrollToSectionSlice';
 
 const categories = ['Airdrop Enquiry'];
 const alertTypes: any = {
@@ -31,6 +35,9 @@ export default function ContactUs() {
     value: '',
   });
   const [category, setCategory] = useState('Airdrop Enquiry');
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWalletAddress(event.target.value);
@@ -93,8 +100,13 @@ export default function ContactUs() {
     }
   };
 
+  const handleScrollToLink = (section: string) => {
+    dispatch(setScrollSection(section));
+    router.push('/');
+  };
+
   return (
-    <CommonLayout>
+    <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Box sx={{ mt: 20 }}>
         <Typography align="center" color="primary" variant="h2">
           Contact Us
