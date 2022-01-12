@@ -66,7 +66,7 @@ export const AIRDROP_LINKS = {
 export const AIRDROP_RULES = [
   {
     title: 'AGIX Balance',
-    description: 'Your AGIX balance across your wallet, staking account and liquidity contribution on SingularityDAO should be atleast 2500 tokens during the snapshot period.',
+    description: 'Your AGIX balance across your wallet, staking account and liquidity contribution on SingularityDAO should be at least 2500 tokens during the snapshot period.',
   },
   {
     title: 'Registation',

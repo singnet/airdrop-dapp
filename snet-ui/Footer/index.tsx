@@ -108,7 +108,7 @@ const LinksData = [
       { text: 'How Airdrop Works', scrollToKey: 'howitworks' },
       { text: 'Airdrop Rules', scrollToKey: 'rules' },
       { text: 'Airdrop Schedule', scrollToKey: 'schedule' },
-      { text: 'F.A.Q', scrollToKey: 'faq' },
+      /* { text: 'F.A.Q', scrollToKey: 'faq' }, */
       { text: 'Contact Us', url: '/contactus', external: false },
     ],
   },
