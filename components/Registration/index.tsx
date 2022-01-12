@@ -75,6 +75,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   useEffect(() => {
     getClaimHistory();
+    // Clear any previous state
+    setUiAlert({ type: AlertTypes.info, message: '' });
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
 
   const endDate = useMemo(
