@@ -20,7 +20,7 @@ import axios from 'utils/Axios';
 
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import {
-  findActiveWindow, AIRDROP_BLOG_POST, AIRDROP_HOW_IT_WORKS_STRING,
+  findActiveWindow, AIRDROP_LINKS, AIRDROP_HOW_IT_WORKS_STRING,
   HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES,
 } from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
@@ -200,7 +200,7 @@ const Home: NextPage = () => {
         ref={howitworksRef}
         title={AIRDROP_HOW_IT_WORKS_STRING}
         steps={HOW_IT_WORKS}
-        blogLink={AIRDROP_BLOG_POST}
+        blogLink={AIRDROP_LINKS.BLOG_POST}
       />
       <SubscribeToNotification
         ref={getNotificationRef}
@@ -209,7 +209,7 @@ const Home: NextPage = () => {
       <Airdroprules
         title="Airdrop Rules"
         steps={AIRDROP_RULES}
-        blogLink={AIRDROP_BLOG_POST}
+        blogLink={AIRDROP_LINKS.BLOG_POST}
         ref={rulesRef}
       />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
