@@ -27,7 +27,7 @@ import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
 import { Alert } from '@mui/material';
 import { APIError } from 'utils/errors';
 import { selectActiveWindow, setActiveWindowState } from 'utils/store/features/activeWindowSlice';
-import { selectSection } from 'utils/store/features/scrollToSectionSlice';
+import { selectSection, setScrollSection } from 'utils/store/features/scrollToSectionSlice';
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -75,6 +75,7 @@ const Home: NextPage = () => {
     const { section } = scrollToSection;
     if (section) {
       handleScrollToLink(section);
+      dispatch(setScrollSection({ section: null }));
     }
     getUserEligibility();
   }, [activeWindow, account]);
