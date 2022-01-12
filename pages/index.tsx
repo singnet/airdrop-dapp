@@ -75,7 +75,7 @@ const Home: NextPage = () => {
     const { section } = scrollToSection;
     if (section) {
       handleScrollToLink(section);
-      dispatch(setScrollSection({ section: null }));
+      dispatch(setScrollSection(null));
     }
     getUserEligibility();
   }, [activeWindow, account]);
