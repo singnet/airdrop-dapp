@@ -100,6 +100,13 @@ const DrawerComponent =({
                   setOpen={handleUserMenuClose}
                   changeAccount={onConnectWallet}
                 />
+                             <IconButton className={classes.drawerIcon} onClick={() => setOpenDrawer(!openDrawer)}>
+                <div className={classes.hamburger}>
+                    <span />
+                    <span />
+                    <span />
+                </div>
+            </IconButton>
               </>
             ) : (
               <Button
@@ -111,13 +118,7 @@ const DrawerComponent =({
                 Connect Wallet
               </Button>
             )}
-            <IconButton className={classes.drawerIcon} onClick={() => setOpenDrawer(!openDrawer)}>
-                <div className={classes.hamburger}>
-                    <span />
-                    <span />
-                    <span />
-                </div>
-            </IconButton>
+
       </div>
       
     </>
