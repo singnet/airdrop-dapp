@@ -16,6 +16,7 @@ import { API_PATHS } from 'utils/constants/ApiPaths';
 import {
   WindowStatus, windowStatusActionMap, windowStatusLabelMap,
   AIRDROP_WINDOW_STRING, AIRDROP_PENDING_CLAIM_STRING, AIRDROP_LINKS,
+  AIRDROP_TOKEN_DIVISOR,
 } from 'utils/airdropWindows';
 import { useEthSign } from 'snet-ui/Blockchain/signatureHooks';
 import { parseEthersError } from 'utils/ethereum';
@@ -74,6 +75,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   useEffect(() => {
     getClaimHistory();
+    // Clear any previous state
+    setUiAlert({ type: AlertTypes.info, message: '' });
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
 
   const endDate = useMemo(
@@ -146,7 +149,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     const history = response.data.data.claim_history.map((el) => [
       {
         label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} Rewards`,
-        value: `${Number(el.claimable_amount) / 1000000} ${airdropTotalTokens.name}`,
+        value: `${Number(el.claimable_amount) / AIRDROP_TOKEN_DIVISOR} ${airdropTotalTokens.name}`,
       },
       {
         label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} ${el.action_type} status`,
