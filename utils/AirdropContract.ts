@@ -5,7 +5,7 @@ import { WalletNotConnectedError } from './errors';
 import AirdropContractNetworks from 'contract/airdrop-contract/networks/SingularityAirdrop.json';
 import AirdropContractABI from 'contract/airdrop-contract/abi/SingularityAirdrop.json';
 import { splitSignature } from '@ethersproject/bytes';
-import { getGasPrice } from './ethereum';
+import { getGasPrice, toGwei } from './ethereum';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 
 export const useAirdropContract = () => {
@@ -52,7 +52,8 @@ export const useAirdropContract = () => {
 
     console.log('ClaimAndStake ARGS: ', args);
 
-    const gasPrice = await getGasPrice();
+    const gasPrice = await airdropContract.provider.getGasPrice();
+    console.log('gasPrice', gasPrice);
     const gasLimit = await airdropContract.estimateGas.claimAndStake(...args);
     console.log('estimated gas limit', gasLimit);
     const txn = await airdropContract.claimAndStake(...args, {
@@ -94,7 +95,8 @@ export const useAirdropContract = () => {
       signatureParts.s,
     ];
 
-    const gasPrice = await getGasPrice();
+    const gasPrice = await airdropContract.provider.getGasPrice();
+    console.log('gasPrice', gasPrice);
     const gasLimit = await airdropContract.estimateGas.claim(...args);
     console.log('estimated gas limit', gasLimit);
     const txn = await airdropContract.claim(...args, {

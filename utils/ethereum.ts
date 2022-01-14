@@ -1,22 +1,13 @@
-import axios from "axios";
-import BigNumber from "bignumber.js";
-import { serializeError } from "eth-rpc-errors";
+import BigNumber from 'bignumber.js';
+import { serializeError } from 'eth-rpc-errors';
 
 type BigNumberish = string | number | BigNumber;
 
-const ethersToWei = "1000000000000000000";
-const ethersToGwei = "1000000000";
+const ethersToWei = '1000000000000000000';
+const ethersToGwei = '1000000000';
 
-export const getGasPrice = async () => {
-  // TEMPORARY:
-  // return toGwei("80");
-  const url = "https://blockscout.com/eth/mainnet/api/v1/gas-price-oracle";
-  var priceString: any = await axios.get(url);
-  const priceJSON = priceString.data;
-  console.log("PRICE FAST:", priceJSON.fast);
-  const instantGasPrice = priceJSON.fast.toFixed().toString();
-
-  return toGwei(instantGasPrice);
+export const getGasPrice = async (gasPrice: BigNumberish) => {
+  return toGwei(gasPrice);
 };
 
 export const toWei = (value: BigNumberish): string => {
