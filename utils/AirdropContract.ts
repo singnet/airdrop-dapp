@@ -1,11 +1,8 @@
 import { ethers } from 'ethers';
-import { useState } from 'react';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { WalletNotConnectedError } from './errors';
-import AirdropContractNetworks from 'contract/airdrop-contract/networks/SingularityAirdrop.json';
 import AirdropContractABI from 'contract/airdrop-contract/abi/SingularityAirdrop.json';
 import { splitSignature } from '@ethersproject/bytes';
-import { getGasPrice, toGwei } from './ethereum';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 
 export const useAirdropContract = () => {
