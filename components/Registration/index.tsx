@@ -213,6 +213,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         contractAddress,
         tokenAddress,
         stakingAddress,
+        stakeDetails.total_eligible_amount.toString(),
         stakeDetails.airdrop_rewards.toString(),
         stakeDetails.stakable_tokens.toString(),
         activeWindow.airdrop_id?.toString(),
