@@ -322,12 +322,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       contractAddress: string,
       tokenAddress: string,
       signature: string,
-      claimAmount: number,
+      totalEligibleAmount: string,
     ): Promise<TransactionResponse> => {
       const txn = await airdropContract.claim(
         contractAddress,
         tokenAddress,
-        claimAmount.toString(),
+        totalEligibleAmount.toString(),
         activeWindow.airdrop_id?.toString(),
         activeWindow.airdrop_window_id?.toString(),
         signature,
@@ -355,7 +355,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.contract_address,
         claimDetails.token_address,
         claimDetails.signature,
-        claimDetails.claimable_amount,
+        claimDetails.total_eligible_amount
       );
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
