@@ -12,6 +12,7 @@ export const useAirdropContract = () => {
     contractAddress: string,
     tokenAddress: string,
     stakingAddress: string,
+    totalEligibleAmount: string,
     airdropAmount: string,
     stakeAmount: string,
     airdropId: string,
@@ -38,6 +39,7 @@ export const useAirdropContract = () => {
     const args = [
       stakingAddress,
       tokenAddress,
+      Number(totalEligibleAmount),
       Number(airdropAmount),
       Number(stakeAmount),
       Number(airdropId),
