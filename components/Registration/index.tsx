@@ -203,7 +203,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const executeStakeMethod = async (
       signature: string,
-      claimAmount: number,
+      totalEligibleAmount: string,
+      claimAmount: string,
       stakingAddress: string,
       tokenAddress: string,
       userWalletAddress: string,
@@ -213,9 +214,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         contractAddress,
         tokenAddress,
         stakingAddress,
-        stakeDetails.total_eligible_amount.toString(),
-        stakeDetails.airdrop_rewards.toString(),
-        stakeDetails.stakable_tokens.toString(),
+        stakeDetails.total_eligible_amount,
+        stakeDetails.airdrop_rewards,
+        stakeDetails.stakable_tokens,
         activeWindow.airdrop_id?.toString(),
         activeWindow.airdrop_window_id?.toString(),
         signature,
@@ -241,6 +242,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       // Using the claim signature and calling the Ethereum Airdrop Contract.
       const txn = await executeStakeMethod(
         stakeDetails.signature,
+        stakeDetails.total_eligible_amount,
         stakeDetails.claimable_amount,
         stakeDetails.staking_contract_address,
         stakeDetails.token_address,
@@ -324,11 +326,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       tokenAddress: string,
       signature: string,
       totalEligibleAmount: string,
+      claimAmount: string,
     ): Promise<TransactionResponse> => {
       const txn = await airdropContract.claim(
         contractAddress,
         tokenAddress,
-        totalEligibleAmount.toString(),
+        totalEligibleAmount,
+        claimAmount,
         activeWindow.airdrop_id?.toString(),
         activeWindow.airdrop_window_id?.toString(),
         signature,
@@ -350,13 +354,19 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     try {
       // Retreiving Claim Signature from the backend signer service
       const claimDetails = await getClaimDetails();
-
+      console.log('claimDetails', claimDetails);
+      console.log('claimDetails.contract_address', claimDetails.contract_address);
+      console.log('claimDetails.token_address', claimDetails.token_address);
+      console.log('claimDetails.signature', claimDetails.signature);
+      console.log('claimDetails.total_eligibility_amount', claimDetails.total_eligibility_amount);
+      console.log('claimDetails.claimable_amount', claimDetails.claimable_amount);
       // Using the claim signature and calling the Ethereum Airdrop Contract.
       const txn = await executeClaimMethod(
         claimDetails.contract_address,
         claimDetails.token_address,
         claimDetails.signature,
-        claimDetails.total_eligible_amount
+        claimDetails.total_eligibility_amount,
+        claimDetails.claimable_amount
       );
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
