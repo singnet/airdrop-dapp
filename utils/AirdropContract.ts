@@ -35,15 +35,15 @@ export const useAirdropContract = () => {
     const airdropContract = new ethers.Contract(contractAddress, AirdropContractABI, signer);
 
     const signatureParts = splitSignature(signature);
-
+    console.log("75643564363473453456342378564387956906736546456235345", BigInt("75643564363473453456342378564387956906736546456235345"));
     const args = [
       stakingAddress,
       tokenAddress,
-      Number(totalEligibleAmount),
-      Number(airdropAmount),
-      Number(stakeAmount),
-      Number(airdropId),
-      Number(airdropWindowId),
+      BigInt(totalEligibleAmount),
+      BigInt(airdropAmount),
+      BigInt(stakeAmount),
+      BigInt(airdropId),
+      BigInt(airdropWindowId),
       signatureParts.v,
       signatureParts.r,
       signatureParts.s,
@@ -66,6 +66,7 @@ export const useAirdropContract = () => {
   const claim = async (
     contractAddress: string,
     tokenAddress: string,
+    totalEligibleAmount: string,
     claimAmount: string,
     airdropId: string,
     airdropWindowId: string,
@@ -78,7 +79,12 @@ export const useAirdropContract = () => {
     if (!contractAddress) {
       throw new Error('Missing Contract Address');
     }
-
+    console.log('tokeAddress', tokenAddress);
+    console.log('totalEligibleAmount', totalEligibleAmount);
+    console.log('claimAmount', claimAmount);
+    console.log('airdropId', airdropId);
+    console.log('airdropWindowId', airdropWindowId);
+    console.log('signature', signature);
     const signer = await library.getSigner(account);
     const airdropContract = new ethers.Contract(contractAddress, AirdropContractABI, signer);
 
@@ -86,13 +92,15 @@ export const useAirdropContract = () => {
 
     const args = [
       tokenAddress,
-      Number(claimAmount),
-      Number(airdropId),
-      Number(airdropWindowId),
+      BigInt(totalEligibleAmount),
+      BigInt(claimAmount),
+      BigInt(airdropId),
+      BigInt(airdropWindowId),
       signatureParts.v,
       signatureParts.r,
       signatureParts.s,
     ];
+    console.log('Claim ARGS: ', args);
 
     const gasPrice = await airdropContract.provider.getGasPrice();
     console.log('gasPrice', gasPrice);
