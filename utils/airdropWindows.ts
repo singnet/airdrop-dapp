@@ -96,7 +96,7 @@ export const HOW_IT_WORKS = [
     title: 'Schedule of airdrop registration periods',
     description:
       'Participants need to register their wallet address to indicate participation four times, ' +
-      'to ensure the NTX tokens get distributed to those who stay involved. Registration can be done on this portal, ' + 
+      'to ensure the NTX tokens get distributed to those who stay involved. Registration can be done on this portal, ' +
       'during four registration periods: ' +
       '\n1st : January 20th 11 AM UTC - January 25th 11 AM UTC ' +
       '\n2nd: April 20th 11 AM UTC - April 25th 11 AM UTC ' +
@@ -105,8 +105,8 @@ export const HOW_IT_WORKS = [
   },
   {
     title: 'Claiming schedule',
-    description: 'You can claim your NTX tokens on this portal as they become available in the quarterly tranches, ' + 
-                 'or you can opt to accumulate them until the end of the fourth airdrop in order to save gas fees. ' + 
+    description: 'You can claim your NTX tokens on this portal as they become available in the quarterly tranches, ' +
+                 'or you can opt to accumulate them until the end of the fourth airdrop in order to save gas fees. ' +
                  'You can choose to claim the rewards directly to your wallet or into a 90 day bonded stake pool on SingularityDAO. ' +
                  'You must claim your tokens before November 22th 2022 11 AM UTC; any tokens not claimed by ' +
                  'then will be returned to NuNet and used to fund ongoing development.',
@@ -159,7 +159,10 @@ export const findActiveWindow = (
   let activeWindow = sortedWindows.find((windowA) => (
     checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, todayDate) ||
       checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period, todayDate) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, todayDate)
+      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, todayDate) ||
+      // without this check below , the correct claim window never gets picked up,
+      // make sure that the claim end period of window x <= registration start of window x+1
+      checkDateIsGreaterThan(windowA.airdrop_window_claim_end_period, todayDate)
   ));
 
   if (activeWindow) {
