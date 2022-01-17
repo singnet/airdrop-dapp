@@ -21,7 +21,7 @@ import axios from 'utils/Axios';
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import {
   findActiveWindow, AIRDROP_LINKS, AIRDROP_HOW_IT_WORKS_STRING,
-  HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES,
+  HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES, WindowStatus,
 } from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
@@ -143,11 +143,18 @@ const Home: NextPage = () => {
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
 
       const data = response.data.data;
-      const isEligible = data.is_eligible;
+      let isEligible = data.is_eligible;
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
+
+      if ((activeWindow?.airdrop_window_status === WindowStatus.CLAIM
+        || activeWindow?.airdrop_window_status === WindowStatus.IDLE)
+        && !isRegistered) {
+        // HACK: Implement better logic
+        isEligible = false;
+      }
 
       setAirdropwindowRewards(airdropRewards);
       setUserEligibility(isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE);
@@ -181,6 +188,7 @@ const Home: NextPage = () => {
         <EligibilityBanner
           userEligibility={userEligibility}
           onViewRules={() => handleScrollToView(rulesRef)}
+          onViewSchedule={() => handleScrollToView(scheduleRef)}
           rejectReasons={rejectReasons}
         />
       </Box>

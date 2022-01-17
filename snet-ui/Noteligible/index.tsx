@@ -11,6 +11,7 @@ type NotqualifiedProps = {
   account: string;
   network: string;
   onViewRules: () => void;
+  onViewSchedule: () => void;
   rejectReasons?: string;
 };
 
@@ -18,6 +19,7 @@ export default function Notqualified({
   account,
   network,
   onViewRules,
+  onViewSchedule,
   rejectReasons,
 }: NotqualifiedProps) {
   return (
@@ -73,6 +75,16 @@ export default function Notqualified({
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 6 }}>
             <Box textAlign="center">
               <Stack spacing={2} direction="row">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={onViewSchedule}
+                >
+                  <Typography color="secondary.main" variant="subtitle2">
+                    View Schedule
+                  </Typography>
+                </Button>
                 <Button
                   variant="outlined"
                   color="secondary"

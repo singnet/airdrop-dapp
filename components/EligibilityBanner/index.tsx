@@ -14,11 +14,15 @@ import { AIRDROP_ELIGIBILITY_STRING, windowNameActionMap } from 'utils/airdropWi
 
 type EligibilityBannerProps = {
   onViewRules: () => void;
+  onViewSchedule: () => void;
   userEligibility: UserEligibility;
   rejectReasons?: string;
 };
 
-export default function EligibilityBanner({ userEligibility, onViewRules, rejectReasons }:
+export default function EligibilityBanner({
+  userEligibility, onViewRules,
+  onViewSchedule, rejectReasons,
+}:
   EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
@@ -37,6 +41,7 @@ export default function EligibilityBanner({ userEligibility, onViewRules, reject
         account={account}
         network={network}
         onViewRules={onViewRules}
+        onViewSchedule={onViewSchedule}
         rejectReasons={rejectReasons}
       />
     );
