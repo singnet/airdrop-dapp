@@ -366,7 +366,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.token_address,
         claimDetails.signature,
         claimDetails.total_eligibility_amount,
-        claimDetails.claimable_amount
+        claimDetails.claimable_amount,
       );
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
@@ -444,6 +444,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
+  const windowOrder = activeWindow.airdrop_window_status === WindowStatus.CLAIM ?
+    (activeWindow.airdrop_window_order + 1) : activeWindow.airdrop_window_order;
+
   if (!account && (activeWindow !== null || activeWindow !== undefined)) {
     return (
       <Grid container spacing={2} px={5} mb={8} mt={20}>
@@ -458,7 +461,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
             tokenName={airdropTotalTokens.name}
             totalTokens={airdropTotalTokens.value}
             totalAirdropWindows={totalWindows}
-            currentAirdropWindow={activeWindow.airdrop_window_order}
+            currentAirdropWindow={windowOrder}
             onViewNotification={onViewNotification}
           />
         </Grid>
@@ -481,7 +484,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return null;
   }
 
-  if (claimStatus === ClaimStatus.SUCCESS &&
+  if ((claimStatus === ClaimStatus.SUCCESS || claimStatus === ClaimStatus.PENDING) &&
       activeWindow.airdrop_window_status === WindowStatus.CLAIM) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
@@ -515,7 +518,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        currentWindowId={activeWindow.airdrop_window_order}
+        windowOrder={windowOrder}
         totalWindows={totalWindows}
         airdropWindowTotalTokens={activeWindow.airdrop_window_total_tokens}
         endDate={endDate}
@@ -545,7 +548,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           tokenName={airdropTotalTokens.name}
           totalTokens={airdropTotalTokens.value}
           totalAirdropWindows={totalWindows}
-          currentAirdropWindow={activeWindow.airdrop_window_order}
+          currentAirdropWindow={windowOrder}
           onViewNotification={onViewNotification}
         />
       </Grid>
