@@ -151,8 +151,11 @@ const Home: NextPage = () => {
 
       if ((activeWindow?.airdrop_window_status === WindowStatus.CLAIM
         || activeWindow?.airdrop_window_status === WindowStatus.IDLE)
-        && !isRegistered) {
+        && !isRegistered
+        && airdropRewards == 0) {
         // HACK: Implement better logic
+        // If the user is not registered but has some
+        // past rewards to be claimed, allow them to do so
         isEligible = false;
       }
 
