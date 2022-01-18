@@ -8,6 +8,104 @@ export const styles = (MUITheme: Theme): any => {
       left: 0,
       zIndex: 5,
     },
+    rightMobileMenu:{
+      marginLeft:'auto',
+      display:'flex',
+      alignItems:'center',
+      '& .MuiButton-root':{
+        backgroundColor:'#01A79E',
+        "@media (max-width:1024px)": { padding: "4px 5px",borderRadius: '4px', },
+        "@media (max-width:500px)": { padding: "4px 5px",borderRadius: '4px', height:'32px'},
+        '&:hover':{
+          backgroundColor:'#01A79E',
+        },
+        '&:active':{
+          backgroundColor:'#01A79E',
+        },
+      },
+    },
+    hamburger: {
+      padding: 0,
+      margin: "auto",
+      display: "none",
+      cursor: "pointer",
+      "& span": {
+        width: 18,
+        height: 2,
+        display: "block",
+        backgroundColor: '#fff',
+        marginBottom: 3,
+      },
+      "@media (max-width:1024px)": { display: "block" },
+      "@media (max-width:768px)": { margin: "0 0px 0 0" },
+    },
+    drawerIcon:{
+      marginLeft:'auto !important',
+      padding:'0px',
+    },
+    topNavBar:{
+      background: "linear-gradient(180deg, #061753 0%, #184FA7 100%)",
+      backgroundColor: "#4086FF",
+      borderBottom: '3px solid #01A79E',
+      boxShadow: "0 2px 6px 0 rgba(0,0,0,0.3)",
+      '& .MuiToolbar-root':{
+        display:'flex',
+        alignItems:'center',
+      },
+      '& .MuiAppBar-colorPrimary':{
+        background:'transparent',
+        boxShadow:'none',
+      },
+      '& .MuiContainer-root':{
+        "@media(max-width:768px)": {
+          paddingLeft:'0px',
+          paddingRight:'0px',
+         },
+      },
+    },
+    navlinks:{
+      marginLeft:'auto',
+    },
+    rightButton:{
+      marginLeft:'50px'
+    },
+    accountButton:{
+      padding:'0px',
+      '& svg':{
+        "@media(max-width:768px)": {
+          width:'24px',
+          height:'24px',
+        },
+      },
+      '& .MuiTypography-root':{
+        fontSize:'14px',
+      },
+    },
+    signUpLink: {
+      padding: "6px 18px",
+      borderRadius: 4,
+      marginLeft: 32,
+      backgroundColor: "#4086ff",
+      fontWeight: 600,
+      fontSize: 14,
+      lineHeight: "16px",
+      letterSpacing: 1.25,
+      textTransform: "uppercase",
+      "&:hover": {
+        backgroundColor: "#005ACB",
+        transition: "all .5s linear",
+      },
+      "& span": {
+        "@media(max-width:768px)": { display: "none" },
+      },
+    },
+    link:{
+      color: '#FFFFFF',
+      fontFamily: 'Montserrat',
+      fontSize: '16px',
+      fontWeight: 500,
+      lineHeight: '19px',
+    },
     wrapper: {
       boxSizing: "border-box",
       maxWidth: 1550,
@@ -25,6 +123,18 @@ export const styles = (MUITheme: Theme): any => {
       backgroundColor: "#4086FF",
       boxShadow: "0 2px 6px 0 rgba(0,0,0,0.3)",
     },
+    customDrawer:{
+      '& .MuiDrawer-paper':{
+        background: 'linear-gradient(180deg, #061753 0%, #184FA7 100%)',
+        '& ul':{
+          '& li':{
+            '& a':{
+              color:'#fff',
+            },
+          },
+        },
+      },
+    },
     logoSection: {
       display: "flex",
       alignItems: "center",
@@ -39,7 +149,10 @@ export const styles = (MUITheme: Theme): any => {
     },
     logoAnchor: {
       display: "inline-block",
-      "& img": { width: 180 },
+      "& img": { 
+        width: 180,
+        "@media(max-width:400px)": { width: 140, },
+      },
     },
     navigationSection: {
       display: "flex",

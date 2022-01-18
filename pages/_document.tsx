@@ -1,8 +1,8 @@
-import * as React from "react";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import createEmotionServer from "@emotion/server/create-instance";
-import { lightTheme } from "snet-ui/Theme/theme";
-import createEmotionCache from "snet-ui/Theme/createEmotionCache";
+import * as React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import createEmotionServer from '@emotion/server/create-instance';
+import { lightTheme } from 'snet-ui/Theme/theme';
+import createEmotionCache from 'snet-ui/Theme/createEmotionCache';
 
 export default class MyDocument extends Document {
   render() {
@@ -54,7 +54,8 @@ MyDocument.getInitialProps = async (ctx) => {
 
   const originalRenderPage = ctx.renderPage;
 
-  // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+  // You can consider sharing the same emotion cache between
+  // all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
@@ -71,7 +72,7 @@ MyDocument.getInitialProps = async (ctx) => {
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
-      data-emotion={`${style.key} ${style.ids.join(" ")}`}
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}

@@ -8,7 +8,7 @@ import NavBar from "./NavBar";
 import { styles } from "./styles";
 import { navData, userActions } from "../../snet-ui/constants/Header";
 //import {Button} from "@mui/Button";
-import { Button as MuiButton} from "@mui/material";
+import { Button as MuiButton, Container, useMediaQuery} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { styled } from "@mui/system";
 import Typography from "@mui/material/Typography";
@@ -16,7 +16,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import AccountModal from "../Blockchain/AccountModal";
-
+import {
+  AppBar,
+  Toolbar,
+} from "@material-ui/core";
+import { useTheme } from "@material-ui/core";;
+import DrawerComponent from "./DrawerComponent";
 type HeaderProps = WithStyles<typeof styles> & {
   account?: string;
   onConnectWallet: () => void;
@@ -53,74 +58,79 @@ const Header = ({
     if (!account) return "";
     return account.slice(0, 4) + "..." + account.slice(-4);
   }, [account]);
+  const theme = useTheme();
+ const isMobile = useMediaQuery(theme.breakpoints.down(1023));
   return (
-    <div className={`${classes.header} ${classes.addBgColor}`}>
-      <div className={classes.wrapper}>
-        <Grid container sx={{ m: 2, mt: 0, mb: 0 }}>
-          <Grid item md={3} className={classes.logoSection} >
-            <MobileHeader navigationData={navData} userActions={userActions} />
-
-            <h1>
-              <a href="/" className={classes.logoAnchor}>
-                <img src="/AppLogo.png" alt="SingularityNET" />
-              </a>
-            </h1>
-          </Grid>
-          <Grid item md={7} className={classes.navigationSection}>
-            <NavBar
-              navigationData={navData}
-              onConnectWallet={onConnectWallet}
-            />
-          </Grid>
-          <Grid
-            item
-            //md={3}
-            //mr={8}
-            // className={classes.navigationSection}
-            sx={{ justifyContent: "right", color: "common.white" }}
-          >
-            {account ? (
-              <>
-                <Button
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleOpenUserMenu}
-                >
-                  <AccountCircleIcon
-                    fontSize="large"
-                    sx={{ color: "common.white" }}
-                  />
-                  <Typography
-                    color="textAdvanced.secondary"
-                    component="span"
-                    sx={{ m: 1 }}
-                  >
-                    {truncatedAddress}
-                  </Typography>
-                </Button>
-                {/* <Menu anchorEl={anchorEl} open={open}>
-                  <MenuItem onClick={handleDisconnectWallet}>Signout</MenuItem>
-                </Menu> */}
-                <AccountModal
-                  account={account}
-                  open={open}
-                  setOpen={handleUserMenuClose}
-                  changeAccount={onConnectWallet}
+    <>
+    <div className={classes.topNavBar}>
+    <Container sx={{pb:1}}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h4" className={classes.logo}>
+            <a href="/" className={classes.logoAnchor}>
+              <img src="/AppLogo.png" alt="SingularityNET" />
+            </a>
+          </Typography>
+          {isMobile ? (
+          <DrawerComponent onConnectWallet={onConnectWallet} navigationData={navData} userActions={userActions} account={account}/>
+        ) : (
+            <div className={classes.navlinks}>
+              <div className={classes.navigationSection}>
+                <NavBar
+                  navigationData={navData}
+                  onConnectWallet={onConnectWallet}
                 />
-              </>
-            ) : (
-              <Button
-                onClick={onConnectWallet}
-                color="secondary"
-                variant="contained"
-                sx={{textTransform:"capitalize",fontWeight:600}}
-              >
-                Connect Wallet
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-      </div>
+                {account ? (
+                  <>
+                  <div className={classes.rightButton}>
+                    <Button
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleOpenUserMenu}
+                    >
+                      <AccountCircleIcon
+                        fontSize="large"
+                        sx={{ color: "common.white" }}
+                      />
+                      <Typography
+                        color="textAdvanced.secondary"
+                        component="span"
+                        sx={{ m: 1 }}
+                      >
+                        {truncatedAddress}
+                      </Typography>
+                    </Button>
+                    {/* <Menu anchorEl={anchorEl} open={open}>
+                      <MenuItem onClick={handleDisconnectWallet}>Signout</MenuItem>
+                    </Menu> */}
+                    <AccountModal
+                      account={account}
+                      open={open}
+                      setOpen={handleUserMenuClose}
+                      changeAccount={onConnectWallet}
+                    />
+                    </div>
+                  </>
+                ) : (
+                  <div  className={classes.rightButton}>
+                  <Button
+                    onClick={onConnectWallet}
+                    color="secondary"
+                    variant="contained"
+                    sx={{textTransform:"capitalize",fontWeight:600}}
+                  >
+                    Connect Wallet
+                  </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+        )}
+        </Toolbar>
+      </AppBar>
+    </Container>
     </div>
+    </>
+    
   );
 };
 

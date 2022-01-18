@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import GradientBox from "../../snet-ui/GradientBox";
 import { Box } from "@mui/system";
+import History from "snet-ui/History";
+import Container from "@mui/material/Container";
 // import Image from "next/image";
 // import success from "public/images/success.png";
 
@@ -15,6 +17,7 @@ type RegistrationSuccessProps = {
   onViewNotification: () => void;
   currentWindowId: number;
   totalWindows: number;
+  history: [];
 };
 
 export default function ClaimSuccess({
@@ -23,6 +26,7 @@ export default function ClaimSuccess({
   onViewNotification,
   currentWindowId,
   totalWindows,
+  history,
 }: RegistrationSuccessProps) {
   return (
     <Box>
@@ -37,7 +41,6 @@ export default function ClaimSuccess({
             />
           </Box>
         </Box>
-
         <Box sx={{ display: "flex", justifyContent: "center", pb: 3 }}>
           <Box>
             <Typography align="center" variant="h4" color="secondary.main">
@@ -50,50 +53,47 @@ export default function ClaimSuccess({
                 variant="h5"
                 color="text.secondary"
               >
-                Successfully Claimed for Airdrop Window {currentWindowId}/
+                Successfully Claimed for Window {currentWindowId}/
                 {totalWindows}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                my: 4,
-                height: "108px",
-                width: "620px",
-                bgcolor: "note.main",
-              }}
-            >
-              <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
-                <InfoIcon color="primary" />
-                <Typography variant="body1" color="textAdvanced.primary">
-                  To be eligible for the next airdrop, you need to register when
-                  window opens. The next window opens from 01 November 2021.
-                </Typography>
-              </Box>
-            </Box>
             <Box sx={{ m: 8, my: 2, py: 2 }}>
               <Stack spacing={3} direction="row">
-                <Button variant="outlined" onClick={onViewNotification} sx={{textTransform:"capitalize",fontWeight:600}}>
+                <Button
+                  variant="outlined"
+                  onClick={onViewNotification}
+                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                >
                   <Typography color="text.secondary" fontSize="14px">
                     Get Notifications
                   </Typography>
                 </Button>
 
-                <Button variant="outlined" onClick={onViewSchedule} sx={{textTransform:"capitalize",fontWeight:600}}>
+                <Button
+                  variant="outlined"
+                  onClick={onViewSchedule}
+                  sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                >
                   <Typography color="text.secondary" fontSize="14px">
                     View Schedule
-                  </Typography>
-                </Button>
-                <Button variant="outlined" onClick={onViewRules} sx={{textTransform:"capitalize",fontWeight:600}}>
-                  <Typography color="text.secondary" fontSize="14px">
-                    View Rules
                   </Typography>
                 </Button>
               </Stack>
             </Box>
           </Box>
         </Box>
+        {history && history.length > 0 ? (
+          <Container maxWidth="md">
+            <Typography
+              align="center"
+              color="textAdvanced.secondary"
+              variant="h5"
+            >
+              Your Claim History
+            </Typography>
+            <History events={history} />
+          </Container>
+        ) : null}
       </GradientBox>
     </Box>
   );

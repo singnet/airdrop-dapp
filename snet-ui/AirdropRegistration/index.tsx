@@ -1,25 +1,26 @@
-import React, { useMemo, useState } from "react";
-import GradientBox from "../../snet-ui/GradientBox";
-import Typography from "@mui/material/Typography";
-import FlipCountdown from "../../snet-ui/FlipClock/Countdown";
-import Button from "@mui/material/Button";
-import Box from "@mui/system/Box";
-import InfoIcon from "@mui/icons-material/Info";
-import History from "../../snet-ui/History";
-import { AirdropWindow, WindowStatus } from "../../utils/airdropWindows";
-import Alert, { AlertColor } from "@mui/material/Alert";
-import LoadingButton from "../../snet-ui/LoadingButton";
-import Link from "@mui/material/Link";
-import styles from "./style.module.css";
-import StatusBadge from "./StatusBadge";
-import { Stack } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Grid from "@mui/material/Grid";
-import { isDateBetween, isDateGreaterThan } from "utils/date";
-import Staketype from "snet-ui/AirdropRegistration/Staketype";
-import axios from "utils/Axios";
-
-import { API_PATHS } from "utils/constants/ApiPaths";
+import React, { useMemo, useState } from 'react';
+import GradientBox from '../../snet-ui/GradientBox';
+import Typography from '@mui/material/Typography';
+import FlipCountdown from '../../snet-ui/FlipClock/Countdown';
+import Button from '@mui/material/Button';
+import Box from '@mui/system/Box';
+import InfoIcon from '@mui/icons-material/Info';
+import History from '../../snet-ui/History';
+import {
+  AirdropWindow, WindowStatus, windowStatusActionMap,
+  windowStatusLabelMap, windowStateMap, AIRDROP_TOKEN_DIVISOR,
+  AIRDROP_TOKEN_SYMBOL,
+} from '../../utils/airdropWindows';
+import Alert, { AlertColor } from '@mui/material/Alert';
+import LoadingButton from '../../snet-ui/LoadingButton';
+import Link from '@mui/material/Link';
+import styles from './style.module.css';
+import StatusBadge from './StatusBadge';
+import { Stack } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
+import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
+import Container from '@mui/material/Container';
 
 type HistoryEvent = {
   label: string;
@@ -35,10 +36,10 @@ type StakeInfo = {
 };
 
 type AirdropRegistrationProps = {
-  currentWindowId: number;
+  windowOrder: number;
   totalWindows: number;
   airdropWindowTotalTokens?: number;
-  endDate: Date;
+  endDate: Moment;
   onRegister: () => void;
   onViewSchedule: () => void;
   onViewRules: () => void;
@@ -49,52 +50,23 @@ type AirdropRegistrationProps = {
   uiAlert: { type: AlertColor; message: string };
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
-};
-
-const DateFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  // timeZone: "UTC",
-  timeZoneName: "short",
-});
-
-const windowStatusLabelMap = {
-  [WindowStatus.UPCOMING]: "registration",
-  [WindowStatus.REGISTRATION]: "registration",
-  [WindowStatus.IDLE]: "claim",
-  [WindowStatus.CLAIM]: "claim",
-};
-
-const windowStatusActionMap = {
-  [WindowStatus.UPCOMING]: "opens",
-  [WindowStatus.REGISTRATION]: "closes",
-  [WindowStatus.IDLE]: "opens",
-  [WindowStatus.CLAIM]: "claim",
-};
-
-const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Claim Open",
-  [WindowStatus.REGISTRATION]: "Registration Open",
-  [WindowStatus.UPCOMING]: "",
+  airdropWindowrewards: number;
 };
 
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  width: "50%",
+  width: '50%',
 };
 
 export default function AirdropRegistration({
-  currentWindowId,
+  windowOrder,
   totalWindows,
   airdropWindowTotalTokens,
   endDate,
@@ -108,12 +80,13 @@ export default function AirdropRegistration({
   airdropWindowStatus,
   uiAlert,
   activeWindow,
+  airdropWindowrewards,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
+  const formattedDate = useMemo(() => getDateInStandardFormat(endDate), [endDate]);
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -137,8 +110,6 @@ export default function AirdropRegistration({
     }
   };
 
-  const openStakeModal = () => {};
-
   const handleStakeClick = async () => {
     try {
       toggleStakeModal();
@@ -149,38 +120,25 @@ export default function AirdropRegistration({
     }
   };
 
-  // const isUpcomingClaim = isDateBetween(
-  //   `${activeWindow?.airdrop_window_registration_end_period} UTC`,
-  //   `${activeWindow?.airdrop_window_claim_start_period} UTC`,
-  //   new Date()
-  // );
-
   if (!activeWindow) {
     return null;
   }
 
-  const isUpcomingRegistration = isDateGreaterThan(
-    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
-    new Date()
+  const now = new Date();
+  const isClaimActive = checkDateIsBetween(
+    `${activeWindow?.airdrop_window_claim_start_period}`,
+    `${activeWindow?.airdrop_window_claim_end_period}`,
+    now,
   );
 
-  const isClaimActive = isDateBetween(
-    `${activeWindow?.airdrop_window_claim_start_period} UTC`,
-    `${activeWindow?.airdrop_window_claim_end_period} UTC`,
-    new Date()
+  const isRegistrationActive = checkDateIsBetween(
+    `${activeWindow?.airdrop_window_registration_start_period}`,
+    `${activeWindow?.airdrop_window_registration_end_period}`,
+    now,
   );
 
-  const isRegistrationActive = isDateBetween(
-    `${activeWindow?.airdrop_window_registration_start_period} UTC`,
-    `${activeWindow?.airdrop_window_registration_end_period} UTC`,
-    new Date()
-  );
-
-  const windowName =
-    windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ""];
-
-  const windowAction =
-    windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
+  const windowName = windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ''];
+  const windowAction = windowStatusActionMap[activeWindow?.airdrop_window_status ?? ''];
 
   return (
     <>
@@ -196,8 +154,7 @@ export default function AirdropRegistration({
           </Typography>
           <Box sx={{ marginBottom: 2, marginTop: 2 }}>
             <Typography id="stake-modal-description" variant="p">
-              Please select the SingularityDAO stake pool for your airdrop
-              reward.
+              Please select the SingularityDAO stake pool for your airdrop reward.
             </Typography>
           </Box>
           <Grid container spacing={2}>
@@ -208,50 +165,31 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakableTokens} {stakeInfo.stakableTokenName}
+                {stakeInfo.stakable_tokens / { AIRDROP_TOKEN_DIVISOR }} {stakeInfo.stakable_token_name}
               </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6">
-                Tokens to be Claimed into Wallet
-              </Typography>
+              <Typography variant="h6">Tokens to be Claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.claimableTokensToWallet}{" "}
-                {stakeInfo.stakableTokenName}
-              </Typography>
+              <Typography variant="h4">{stakeInfo.claimable_tokens_to_wallet / { AIRDROP_TOKEN_DIVISOR }} </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
-              <Link
-                href={`https://google.com`}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <Link href="https://singularitynet.io/" target="_blank" rel="noreferrer">
                 Visit SingularityNET
               </Link>
             </Grid>
             <Grid item xs={3}>
-              <Button
-                onClick={toggleStakeModal}
-                color="secondary"
-                variant="outlined"
-                fullWidth
-              >
+              <Button onClick={toggleStakeModal} color="secondary" variant="outlined" fullWidth>
                 Cancel
               </Button>
             </Grid>
             <Grid item xs={3}>
-              <Button
-                onClick={handleStakeClick}
-                color="secondary"
-                variant="contained"
-                fullWidth
-              >
+              <Button onClick={handleStakeClick} color="secondary" variant="contained" fullWidth>
                 Stake
               </Button>
             </Grid>
@@ -262,75 +200,59 @@ export default function AirdropRegistration({
         <GradientBox
           $background="bgGradientHighlight"
           className={styles.contentWrapper}
-          sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+          sx={{
+            px: 4, pt: 4, pb: 5, borderRadius: 2,
+          }}
         >
-          <StatusBadge
-            label={
-              isRegistrationActive || isClaimActive
-                ? statusLabelMap[airdropWindowStatus ?? ""]
-                : ""
-            }
-          />
-          <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-            Airdrop {windowName} window &nbsp;
-            {currentWindowId} / {totalWindows} &nbsp;
-            {windowAction}:
-          </Typography>
-          <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-            {formattedDate}
-          </Typography>
+          <StatusBadge label={isRegistrationActive || isClaimActive ? windowStateMap[airdropWindowStatus ?? ''] : ''} />
+          <Container sx={{ my: 6 }}>
+            <Typography color="text.secondary" variant="h4" align="center" mb={1}>
+              {windowName} &nbsp;
+              {windowOrder} / {totalWindows} &nbsp;
+              {windowAction}:
+            </Typography>
+            <Typography color="text.secondary" variant="h4" align="center" mb={6}>
+              {formattedDate}
+            </Typography>
+          </Container>
+
           <FlipCountdown endDate={endDate} />
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <>
-              <Box sx={{ mt: 6, mb: 4 }}>
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  component="p"
-                  color="text.secondary"
-                >
-                  Airdrop window {currentWindowId} / {totalWindows} rewards
+              <Box sx={{ mt: 6 }}>
+                <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
+                  Tokens available to claim
                 </Typography>
-                <Typography
-                  variant="h3"
-                  color="textAdvanced.secondary"
-                  align="center"
-                  sx={{ mt: 0.8 }}
-                >
-                  {airdropWindowTotalTokens}
+                <Typography variant="h2" color="textAdvanced.secondary" align="center">
+                  {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
                 </Typography>
               </Box>
-              <Box
+              <Container
+                maxWidth="md"
                 sx={{
                   my: 8,
-
-                  mx: 28,
-
-                  display: "flex",
+                  display: 'flex',
                   border: 0.3,
-
-                  bgcolor: "note.main",
+                  bgcolor: 'note.main',
                   borderRadius: 1,
-                  borderColor: "note.main",
+                  borderColor: 'note.main',
                 }}
               >
-                <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
+                <Box sx={{
+                  display: 'flex', my: 1, py: 1, m: 1,
+                }}
+                >
                   <InfoIcon color="primary" />
-                  <Typography
-                    variant="body2"
-                    color="textAdvanced.primary"
-                    sx={{ mx: 1, fontSize: 16 }}
-                  >
-                    You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last airdrop window which allow
-                    you save on the gas cost fees. However we recommend you
-                    claim your tokens at each window claim time.
+                  <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
+                    You can start claiming your tokens now.
+                    It is possible to claim all tokens in the last window
+                    which will save you gas fees.
                   </Typography>
                 </Box>
-              </Box>
+              </Container>
             </>
           ) : null}
-          <Box sx={{ px: 2, mx: 26, borderColor: "error.main" }}>
+          <Box sx={{ borderColor: 'error.main' }}>
             {uiAlert.message ? (
               <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
                 {uiAlert.message}
@@ -340,34 +262,33 @@ export default function AirdropRegistration({
           <Box
             sx={{
               mt: 6,
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: ["column", "row"],
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: ['column', 'row'],
               gap: [0, 2],
             }}
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {stakeInfo.isStakable ? (
-                  <LoadingButton
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      width: 350,
-                      textTransform: "capitalize",
-                      fontWeight: 600,
-                    }}
-                    onClick={toggleStakeModal}
-                    loading={claimLoader}
-                  >
-                    Stake
-                  </LoadingButton>
-                ) : null}
+                <LoadingButton
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    width: 350,
+                    textTransform: 'capitalize',
+                    fontWeight: 600,
+                  }}
+                  onClick={toggleStakeModal}
+                  loading={claimLoader}
+                  disabled={!stakeInfo.is_stakable}
+                >
+                  Stake
+                </LoadingButton>
                 <LoadingButton
                   variant="contained"
                   sx={{
                     width: 350,
-                    textTransform: "capitalize",
+                    textTransform: 'capitalize',
                     fontWeight: 600,
                   }}
                   onClick={handleClaimClick}
@@ -378,9 +299,7 @@ export default function AirdropRegistration({
               </Stack>
             ) : (
               <>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
                   {airdropWindowStatus === WindowStatus.REGISTRATION ? (
                     <LoadingButton
                       variant="contained"
@@ -393,14 +312,12 @@ export default function AirdropRegistration({
                     </LoadingButton>
                   ) : null}
                 </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
                   <Button
                     variant="contained"
                     color="secondary"
                     onClick={onViewSchedule}
-                    sx={{ textTransform: "capitalize", width: 170 }}
+                    sx={{ textTransform: 'capitalize', width: 170 }}
                   >
                     View Schedule
                   </Button>
@@ -424,19 +341,13 @@ export default function AirdropRegistration({
               </>
             )}
           </Box>
-
           {history && history.length > 0 ? (
-            <Box>
-              <Typography
-                align="center"
-                color="textAdvanced.secondary"
-                variant="h5"
-                mt={6}
-              >
-                Your Airdrop History
+            <Container maxWidth="md">
+              <Typography align="center" color="textAdvanced.secondary" variant="h5">
+                Your Claim History
               </Typography>
               <History events={history} />
-            </Box>
+            </Container>
           ) : null}
         </GradientBox>
       </Box>

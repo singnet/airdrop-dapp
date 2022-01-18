@@ -1,14 +1,12 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import Typography from "@mui/material/Typography";
-import ListItem from "@mui/material/ListItem";
-import Link from "@mui/material/Link";
-import AppLogo from "public/AppLogo.png";
-import { FAQPage } from "snet-ui/FAQ/index.stories";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import { AIRDROP_LINKS, AIRDROP_SITE_STRING } from 'utils/airdropWindows';
 
 type FooterProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
@@ -17,10 +15,10 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
     <Box
       sx={{
-        bgcolor: "primary.main",
+        bgcolor: 'primary.main',
         py: 5,
         px: 5,
-        color: "textAdvanced.secondary",
+        color: 'textAdvanced.secondary',
       }}
     >
       <Grid container spacing={2}>
@@ -29,58 +27,44 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
           xs={12}
           sm={3}
           sx={{
-            borderRight: "solid",
+            borderRight: 'solid',
             borderRightWidth: [0, 1],
-            borderRightColor: "common.white",
+            borderRightColor: 'common.white',
           }}
         >
           <List subheader>
-            <ListItem sx={{ justifyContent: "right" }}>
-            <a
-              href="https://medium.com/nunet"
-              rel="noopener noreferrer"
-              target="_blank"
-            
-            >
-              <img src="NuNet Logo.png" width="171.5px" height="52.27px" />
-              </a>
+            <ListItem sx={{ justifyContent: 'right' }}>
+              <img alt="" src="NuNet Logo.png" height="53px" />
             </ListItem>
             <ListItemButton
               component="a"
-              href="https://medium.com/nunet"
+              href={AIRDROP_LINKS.WEBSITE}
               target="_blank"
               rel="noreferrer noopener"
-              sx={{ justifyContent: "right" }}
+              sx={{ justifyContent: 'right' }}
             >
-              <Typography variant="link"> Nunet Site </Typography>
+              <Typography variant="link"> {AIRDROP_SITE_STRING} Site </Typography>
             </ListItemButton>
             <ListItemButton
               component="a"
               href="/contactus"
               target="_blank"
               rel="noreferrer noopener"
-              sx={{ justifyContent: "right" }}
+              sx={{ justifyContent: 'right' }}
             >
               <Typography variant="link"> Contact Us </Typography>
             </ListItemButton>
-            <ListItem sx={{ justifyContent: "right" }}>
+            <ListItem sx={{ justifyContent: 'right' }}>
               <Typography justifyContent="right" component="p">
                 A project powered by
               </Typography>
             </ListItem>
             <ListItem
               sx={{
-                justifyContent: "right",
+                justifyContent: 'right',
               }}
             >
-              <a
-              href="https://singularitynet.io/"
-              rel="noopener noreferrer"
-              target="_blank"
-            
-            >
-              <img src="SNET Logo.png" height="37.7px" width="129.26px" />
-              </a>
+              <img alt="" src="SNET Logo.png" width="130px" />
             </ListItem>
           </List>
         </Grid>
@@ -88,18 +72,18 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         {LinksData.map((linkItem) => (
           <Grid item xs={12} sm={3} key={linkItem.header}>
             <List
-              subheader={
+              subheader={(
                 <Typography variant="h3" pl={2} sx={{ m: 2 }}>
                   {linkItem.header}
                 </Typography>
-              }
+              )}
             >
               {linkItem.links.map((link) => (
                 <ListItemButton
-                  component={link.scrollToKey ? "b" : "a"}
+                  component={link.scrollToKey ? 'b' : 'a'}
                   href={link.url}
-                  target={link.external ? "_blank" : ""}
-                  rel={link.external ? "noreferrer noopener" : ""}
+                  target={link.external ? '_blank' : ''}
+                  rel={link.external ? 'noreferrer noopener' : ''}
                   key={link.text}
                   onClick={() => handleScrollToLink(link.scrollToKey)}
                 >
@@ -108,76 +92,69 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
                   </Typography>
                 </ListItemButton>
               ))}
-
-             
             </List>
           </Grid>
         ))}
       </Grid>
-      <Divider sx={{ bgcolor: "common.white", my: 3 }} />
-      <Typography align="center">Copyright © 2021 Nunet</Typography>
+      <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
+      <Typography align="center">Copyright © 2021 {AIRDROP_SITE_STRING}</Typography>
     </Box>
   );
 }
-
 const LinksData = [
   {
-    header: "Airdrop",
+    header: 'Airdrop',
     links: [
-      {
-        text: "How Airdrop Works",
-
-        scrollToKey: "howitworks",
-      },
-      {
-        text: "Airdrop Rules",
-
-        scrollToKey: "rules",
-      },
-      {
-        text: "Airdrop Schedule",
-
-        scrollToKey: "schedule",
-      },
-      { text: "F.A.Q", scrollToKey: "faq" },
-      { text: "Contact Us", url: "/contactus", external: false },
+      { text: 'How Airdrop Works', scrollToKey: 'howitworks' },
+      { text: 'Airdrop Rules', scrollToKey: 'rules' },
+      { text: 'Airdrop Schedule', scrollToKey: 'schedule' },
+      /* { text: 'F.A.Q', scrollToKey: 'faq' }, */
+      { text: 'Contact Us', url: '/contactus', external: false },
     ],
   },
   {
-    header: "Community",
+    header: 'Community',
     links: [
       {
-        text: "Official Blog",
-        url: "https://medium.com/nunet",
+        text: 'Official Blog',
+        url: `${AIRDROP_LINKS.BLOG_POST}`,
         external: true,
       },
-      { text: "Documentation", url: "https://nunet.io/#technology", external: true },
-      { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
+      {
+        text: 'Documentation',
+        url: `${AIRDROP_LINKS.DOCUMENTATION}`,
+        external: true,
+      },
+      {
+        text: 'Telegram',
+        url: `${AIRDROP_LINKS.TELEGRAM}`,
+        external: true,
+      },
     ],
   },
   {
-    header: "Social Media",
+    header: 'Social Media',
     links: [
       {
-        text: "Twitter",
-        url: "https://twitter.com/nunet_global",
+        text: 'Twitter',
+        url: `${AIRDROP_LINKS.TWITTER}`,
         external: true,
       },
       {
-        text: "Facebook",
-        url: "https://www.facebook.com/NunetGlobal",
+        text: 'Facebook',
+        url: `${AIRDROP_LINKS.FACEBOOK}`,
         external: true,
       },
-      { text: "LinkedIn", url: "https://www.linkedin.com/company/nunet-global/", external: true },
-      { text: "YouTube", url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA", external: true },
-      //{ text: "Instagram", url: "www.google.com", external: true },
+      {
+        text: 'LinkedIn',
+        url: `${AIRDROP_LINKS.LINKEDIN}`,
+        external: true,
+      },
+      {
+        text: 'YouTube',
+        url: `${AIRDROP_LINKS.YOUTUBE}`,
+        external: true,
+      },
     ],
   },
 ];
-function rulesRef(rulesRef: any): void {
-  throw new Error("Function not implemented.");
-}
-
-function scrollToKey(scrollToKey: any): void {
-  throw new Error("Function not implemented.");
-}
