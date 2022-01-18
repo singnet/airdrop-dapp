@@ -165,7 +165,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakable_tokens / { AIRDROP_TOKEN_DIVISOR }} {stakeInfo.stakable_token_name}
+                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}
               </Typography>
             </Grid>
           </Grid>
@@ -174,7 +174,7 @@ export default function AirdropRegistration({
               <Typography variant="h6">Tokens to be Claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">{stakeInfo.claimable_tokens_to_wallet / { AIRDROP_TOKEN_DIVISOR }} </Typography>
+              <Typography variant="h4">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR}`}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
