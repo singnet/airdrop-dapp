@@ -36,7 +36,7 @@ type StakeInfo = {
 };
 
 type AirdropRegistrationProps = {
-  currentWindowId: number;
+  windowOrder: number;
   totalWindows: number;
   airdropWindowTotalTokens?: number;
   endDate: Moment;
@@ -66,7 +66,7 @@ const style = {
 };
 
 export default function AirdropRegistration({
-  currentWindowId,
+  windowOrder,
   totalWindows,
   airdropWindowTotalTokens,
   endDate,

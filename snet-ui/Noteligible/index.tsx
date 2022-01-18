@@ -5,12 +5,18 @@ import Grid from '@mui/material/Grid';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
-import { AIRDROP_ELIGIBILITY_STRING, AIRDROP_NOT_QUALIFIED_STRING, AIRDROP_INELIGIBILITY_REASON_STRING } from 'utils/airdropWindows';
+import { useAppSelector } from 'utils/store/hooks';
+import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
+import {
+  AIRDROP_ELIGIBILITY_STRING, AIRDROP_NOT_QUALIFIED_STRING,
+  AIRDROP_WINDOW_INELIGIBILITY_STRING, AIRDROP_CHECK_RULES_SCHEDULE,
+} from 'utils/airdropWindows';
 
 type NotqualifiedProps = {
   account: string;
   network: string;
   onViewRules: () => void;
+  onViewSchedule: () => void;
   rejectReasons?: string;
 };
 
@@ -18,8 +24,11 @@ export default function Notqualified({
   account,
   network,
   onViewRules,
+  onViewSchedule,
   rejectReasons,
 }: NotqualifiedProps) {
+  const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
+
   return (
     <Box sx={{
       bgcolor: 'bgHighlight.main', my: 2, py: 8, pb: 2,
@@ -66,13 +75,25 @@ export default function Notqualified({
           >
             <Box sx={{ p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">
-                {AIRDROP_INELIGIBILITY_REASON_STRING}
+                {AIRDROP_WINDOW_INELIGIBILITY_STRING} {" "}
+                {activeWindow.airdrop_window_order} / {totalWindows} {". "}
+                {AIRDROP_CHECK_RULES_SCHEDULE}
               </Typography>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 6 }}>
             <Box textAlign="center">
               <Stack spacing={2} direction="row">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={onViewSchedule}
+                >
+                  <Typography color="secondary.main" variant="subtitle2">
+                    View Schedule
+                  </Typography>
+                </Button>
                 <Button
                   variant="outlined"
                   color="secondary"

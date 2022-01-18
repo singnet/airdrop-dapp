@@ -43,7 +43,8 @@ export const TOTAL_AIRDROPS_STRING = 'Airdrops';
 export const SUCCESSFUL_REGISTRATION_STRING = 'Successfully registered for Airdrop window';
 export const AIRDROP_ELIGIBILITY_STRING = 'Airdrop Eligibility';
 export const AIRDROP_NOT_QUALIFIED_STRING = 'Not Qualified';
-export const AIRDROP_INELIGIBILITY_REASON_STRING = 'Sorry. You are not qualified for this Airdrop Window';
+export const AIRDROP_WINDOW_INELIGIBILITY_STRING = 'Sorry, You are not qualified for airdrop window ';
+export const AIRDROP_CHECK_RULES_SCHEDULE = 'Please check the rules and schedule for the next window.';
 export const AIRDROP_HOW_IT_WORKS_STRING = 'How Nunet Airdrop works';
 export const AIRDROP_TITLE_STRING = 'NuNet Airdrop';
 export const AIRDROP_DESCRIPTION_STRING = 'NuNet is distributing 5% of its total supply of one billion NTX tokens to SingularityNET AGIX token holders. ' +
@@ -131,7 +132,7 @@ export const windowStatusActionMap = {
   [WindowStatus.UPCOMING]: 'Starts',
   [WindowStatus.IDLE]: 'Starts',
   [WindowStatus.REGISTRATION]: 'Closes',
-  [WindowStatus.CLAIM]: 'Closes',
+  [WindowStatus.CLAIM]: 'Starts',
   [WindowStatus.LAST_CLAIM]: 'closes',
 };
 
@@ -139,7 +140,7 @@ export const windowStatusLabelMap = {
   [WindowStatus.UPCOMING]: 'Airdrop Registration Window',
   [WindowStatus.REGISTRATION]: 'Airdrop Registration Window',
   [WindowStatus.IDLE]: 'Airdrop Claim Window',
-  [WindowStatus.CLAIM]: 'Airdrop Claim Window',
+  [WindowStatus.CLAIM]: 'Airdrop Registration Window',
   [WindowStatus.LAST_CLAIM]: 'Airdrop Claim Window',
 };
 
