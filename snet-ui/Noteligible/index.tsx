@@ -25,8 +25,8 @@ export default function Notqualified({
       bgcolor: 'bgHighlight.main', my: 2, py: 8, pb: 2,
     }}
     >
-      <Grid container spacing={2} px={3}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={2} px={3} direction="row" justifyContent="center" alignItems="center">
+        <Grid item xs={8} md={6}>
           <Typography variant="normal">{AIRDROP_ELIGIBILITY_STRING}</Typography>
 
           <Box sx={{
