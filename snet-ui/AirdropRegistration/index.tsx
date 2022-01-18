@@ -196,161 +196,165 @@ export default function AirdropRegistration({
           </Grid>
         </Box>
       </Modal>
-      <Box>
-        <GradientBox
-          $background="bgGradientHighlight"
-          className={styles.contentWrapper}
-          sx={{
-            px: 4, pt: 4, pb: 5, borderRadius: 2,
-          }}
-        >
-          <StatusBadge label={isRegistrationActive || isClaimActive ? windowStateMap[airdropWindowStatus ?? ''] : ''} />
-          <Container sx={{ my: 6 }}>
-            <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-              {windowName} &nbsp;
-              {windowOrder} / {totalWindows} &nbsp;
-              {windowAction}:
-            </Typography>
-            <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-              {formattedDate}
-            </Typography>
-          </Container>
+      <Grid container direction="row" justifyContent="center" alignItems="center">
+        <Grid item xs={10} md={12}>
+          <Box>
+            <GradientBox
+              $background="bgGradientHighlight"
+              className={styles.contentWrapper}
+              sx={{
+                px: 4, pt: 4, pb: 5, borderRadius: 2,
+              }}
+            >
+              <StatusBadge label={isRegistrationActive || isClaimActive ? windowStateMap[airdropWindowStatus ?? ''] : ''} />
+              <Container sx={{ my: 6 }}>
+                <Typography color="text.secondary" variant="h4" align="center" mb={1}>
+                  {windowName} &nbsp;
+                  {currentWindowId} / {totalWindows} &nbsp;
+                  {windowAction}:
+                </Typography>
+                <Typography color="text.secondary" variant="h4" align="center" mb={6}>
+                  {formattedDate}
+                </Typography>
+              </Container>
 
-          <FlipCountdown endDate={endDate} />
-          {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
-            <>
-              <Box sx={{ mt: 6 }}>
-                <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
-                  Tokens available to claim
-                </Typography>
-                <Typography variant="h2" color="textAdvanced.secondary" align="center">
-                  {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
-                </Typography>
+              <FlipCountdown endDate={endDate} />
+              {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
+                <>
+                  <Box sx={{ mt: 6 }}>
+                    <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
+                      Tokens available to claim
+                    </Typography>
+                    <Typography variant="h2" color="textAdvanced.secondary" align="center">
+                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
+                    </Typography>
+                  </Box>
+                  <Container
+                    maxWidth="md"
+                    sx={{
+                      my: 8,
+                      display: 'flex',
+                      border: 0.3,
+                      bgcolor: 'note.main',
+                      borderRadius: 1,
+                      borderColor: 'note.main',
+                    }}
+                  >
+                    <Box sx={{
+                      display: 'flex', my: 1, py: 1, m: 1,
+                    }}
+                    >
+                      <InfoIcon color="primary" />
+                      <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
+                        You can start claiming your tokens now.
+                        It is possible to claim all tokens in the last window
+                        which will save you gas fees.
+                      </Typography>
+                    </Box>
+                  </Container>
+                </>
+              ) : null}
+              <Box sx={{ borderColor: 'error.main' }}>
+                {uiAlert.message ? (
+                  <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
+                    {uiAlert.message}
+                  </Alert>
+                ) : null}
               </Box>
-              <Container
-                maxWidth="md"
+              <Box
                 sx={{
-                  my: 8,
+                  mt: 6,
                   display: 'flex',
-                  border: 0.3,
-                  bgcolor: 'note.main',
-                  borderRadius: 1,
-                  borderColor: 'note.main',
+                  justifyContent: 'center',
+                  flexDirection: ['column', 'row'],
+                  gap: [0, 2],
                 }}
               >
-                <Box sx={{
-                  display: 'flex', my: 1, py: 1, m: 1,
-                }}
-                >
-                  <InfoIcon color="primary" />
-                  <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
-                    You can start claiming your tokens now.
-                    It is possible to claim all tokens in the last window
-                    which will save you gas fees.
-                  </Typography>
-                </Box>
-              </Container>
-            </>
-          ) : null}
-          <Box sx={{ borderColor: 'error.main' }}>
-            {uiAlert.message ? (
-              <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
-                {uiAlert.message}
-              </Alert>
-            ) : null}
-          </Box>
-          <Box
-            sx={{
-              mt: 6,
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: ['column', 'row'],
-              gap: [0, 2],
-            }}
-          >
-            {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
-              <Stack spacing={2} direction="row">
-                <LoadingButton
-                  variant="contained"
-                  color="secondary"
-                  sx={{
-                    width: 350,
-                    textTransform: 'capitalize',
-                    fontWeight: 600,
-                  }}
-                  onClick={toggleStakeModal}
-                  loading={claimLoader}
-                  disabled={!stakeInfo.is_stakable}
-                >
-                  Stake
-                </LoadingButton>
-                <LoadingButton
-                  variant="contained"
-                  sx={{
-                    width: 350,
-                    textTransform: 'capitalize',
-                    fontWeight: 600,
-                  }}
-                  onClick={handleClaimClick}
-                  loading={claimLoader}
-                >
-                  Claim to Wallet
-                </LoadingButton>
-              </Stack>
-            ) : (
-              <>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
-                  {airdropWindowStatus === WindowStatus.REGISTRATION ? (
+                {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
+                  <Stack spacing={2} direction="row">
                     <LoadingButton
                       variant="contained"
                       color="secondary"
-                      sx={{ width: 170, fontWeight: 600 }}
-                      onClick={handleRegistrationClick}
-                      loading={registrationLoader}
+                      sx={{
+                        width: 350,
+                        textTransform: 'capitalize',
+                        fontWeight: 600,
+                      }}
+                      onClick={toggleStakeModal}
+                      loading={claimLoader}
+                      disabled={!stakeInfo.is_stakable}
                     >
-                      Register Now
+                      Stake
                     </LoadingButton>
-                  ) : null}
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewSchedule}
-                    sx={{ textTransform: 'capitalize', width: 170 }}
-                  >
-                    View Schedule
-                  </Button>
-                </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewRules}
-                    sx={{
-                      textTransform: "capitalize",
-                      width: 170,
-                      fontWeight: 600,
-                    }}
-                  >
-                    View Rules
-                  </Button>
-                </Box>
-              </>
-            )}
+                    <LoadingButton
+                      variant="contained"
+                      sx={{
+                        width: 350,
+                        textTransform: 'capitalize',
+                        fontWeight: 600,
+                      }}
+                      onClick={handleClaimClick}
+                      loading={claimLoader}
+                    >
+                      Claim to Wallet
+                    </LoadingButton>
+                  </Stack>
+                ) : (
+                  <>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
+                      {airdropWindowStatus === WindowStatus.REGISTRATION ? (
+                        <LoadingButton
+                          variant="contained"
+                          color="secondary"
+                          sx={{ width: 170, fontWeight: 600 }}
+                          onClick={handleRegistrationClick}
+                          loading={registrationLoader}
+                        >
+                          Register Now
+                        </LoadingButton>
+                      ) : null}
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={onViewSchedule}
+                        sx={{ textTransform: 'capitalize', width: 170 }}
+                      >
+                        View Schedule
+                      </Button>
+                    </Box>
+                    <Box
+                      sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={onViewRules}
+                        sx={{
+                          textTransform: 'capitalize',
+                          width: 170,
+                          fontWeight: 600,
+                        }}
+                      >
+                        View Rules
+                      </Button>
+                    </Box>
+                  </>
+                )}
+              </Box>
+              {history && history.length > 0 ? (
+                <Container maxWidth="md">
+                  <Typography align="center" color="textAdvanced.secondary" variant="h5">
+                    Your Claim History
+                  </Typography>
+                  <History events={history} />
+                </Container>
+              ) : null}
+            </GradientBox>
           </Box>
-          {history && history.length > 0 ? (
-            <Container maxWidth="md">
-              <Typography align="center" color="textAdvanced.secondary" variant="h5">
-                Your Claim History
-              </Typography>
-              <History events={history} />
-            </Container>
-          ) : null}
-        </GradientBox>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }
