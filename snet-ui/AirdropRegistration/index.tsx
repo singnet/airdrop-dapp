@@ -315,19 +315,19 @@ export default function AirdropRegistration({
                       ) : null}
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
-                      <Button
+                      <LoadingButton
                         variant="contained"
                         color="secondary"
                         onClick={onViewSchedule}
                         sx={{ textTransform: 'capitalize', width: 170 }}
                       >
                         View Schedule
-                      </Button>
+                      </LoadingButton>
                     </Box>
                     <Box
                       sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}
                     >
-                      <Button
+                      <LoadingButton
                         variant="contained"
                         color="secondary"
                         onClick={onViewRules}
@@ -338,7 +338,7 @@ export default function AirdropRegistration({
                         }}
                       >
                         View Rules
-                      </Button>
+                      </LoadingButton>
                     </Box>
                   </>
                 )}
