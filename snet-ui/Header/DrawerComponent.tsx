@@ -3,15 +3,22 @@ import { navData, userActions } from '../../snet-ui/constants/Header';
 import {
   Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { WithStyles, withStyles } from '@mui/styles';
-import { Button, Typography } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
 import AccountModal from 'snet-ui/Blockchain/AccountModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import MenuIcon from '@mui/icons-material/Menu';
 
 type DrawerComponentProps = WithStyles<typeof styles> & {
     account?: string;
@@ -47,22 +54,19 @@ const DrawerComponent = ({
         onClose={() => setOpenDrawer(false)}
         className={classes.customDrawer}
       >
-        <List>
-          {
-            navData.map((navItem, index) => (
-              <ListItem onClick={() => setOpenDrawer(false)} key={index}>
-                <ListItemText>
-                  <a
-                    href={navItem.url}
-                    title={navItem.name}
-                    target="_blank"
-                    rel="noreferrer"
-                  >{navItem.name}</a>
-                </ListItemText>
+        <Box role="presentation" sx={{ width: 300 }}>
+          <List>
+            {
+            navData.map((navItem) => (
+              <ListItem onClick={() => setOpenDrawer(false)} key={navItem.id}>
+                <ListItemButton component="a" href={navItem.url} title={navItem.name} target="_blank" rel="noreferrer">
+                  <ListItemText primary={navItem.name} />
+                </ListItemButton>
               </ListItem>
             ))
           }
-        </List>
+          </List>
+        </Box>
       </Drawer>
       <div className={classes.rightMobileMenu}>
         {account ? (
@@ -90,12 +94,8 @@ const DrawerComponent = ({
               setOpen={handleUserMenuClose}
               changeAccount={onConnectWallet}
             />
-            <IconButton className={classes.drawerIcon} onClick={() => setOpenDrawer(!openDrawer)}>
-              <div className={classes.hamburger}>
-                <span />
-                <span />
-                <span />
-              </div>
+            <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={() => setOpenDrawer(!openDrawer)}>
+              <MenuIcon />
             </IconButton>
           </>
         ) : (
