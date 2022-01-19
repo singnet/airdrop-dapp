@@ -20,7 +20,7 @@ const zoneName = "singularitynet.io";
 
 const domainNames: { [key in appEnv]: string } = {
   [appEnv.ropsten]: "ropsten-airdrop.singularitynet.io",
-  [appEnv.mainnet]: "airdrop.singularitynet.io",
+  [appEnv.mainnet]: "nunet-airdrop.singularitynet.io",
 };
 
 const githubRepo = "singnet/airdrop-dapp";
