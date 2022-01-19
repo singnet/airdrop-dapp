@@ -70,7 +70,7 @@ const createConfig = (stage: appEnv): Config => ({
   certificateARN: <string>process.env.CERTIFICATE_ARN,
   // Add this ARN if you need to attach a basic authentication to your app
   // before the actual release date
-  //basicAuthLambdaARNWithVersion: process.env.BASIC_AUTH_LAMBDA_ARN,
+  // basicAuthLambdaARNWithVersion: process.env.BASIC_AUTH_LAMBDA_ARN,
 });
 
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
