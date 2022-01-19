@@ -70,7 +70,7 @@ export const AIRDROP_RULES = [
     description: 'Your AGIX balance across your wallet, staking account and liquidity contribution on SingularityDAO should be at least 2500 tokens during the snapshot period.',
   },
   {
-    title: 'Registation',
+    title: 'Registration',
     description: 'You must register your eligible wallet address here in this portal during every registration period. Registration does not cost gas fees, claiming the rewards does cost gas fees.',
   },
 ];
