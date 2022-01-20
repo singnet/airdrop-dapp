@@ -156,14 +156,15 @@ export const findActiveWindow = (
         windowA.airdrop_window_id - windowB.airdrop_window_id,
     );
 
-  const todayDate = moment();
+  const todayDate = moment.utc(new Date());
+
   let activeWindow = sortedWindows.find((windowA) => (
-    checkDateIsGreaterThan(windowA.airdrop_window_registration_start_period, todayDate) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_registration_end_period, todayDate) ||
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_start_period, todayDate) ||
+    checkDateIsGreaterThan(moment.utc(windowA.airdrop_window_registration_start_period), todayDate) ||
+    checkDateIsGreaterThan(moment.utc(windowA.airdrop_window_registration_end_period), todayDate) ||
+      checkDateIsGreaterThan(moment.utc(windowA.airdrop_window_claim_start_period), todayDate) ||
       // without this check below , the correct claim window never gets picked up,
       // make sure that the claim end period of window x <= registration start of window x+1
-      checkDateIsGreaterThan(windowA.airdrop_window_claim_end_period, todayDate)
+      checkDateIsGreaterThan(moment.utc(windowA.airdrop_window_claim_end_period), todayDate)
   ));
 
   if (activeWindow) {
@@ -178,20 +179,20 @@ export const findActiveWindow = (
       activeWindow.next_window_start_period = nextWindow.airdrop_window_registration_start_period;
     }
 
-    if (checkDateIsGreaterThan(activeWindow.airdrop_window_registration_start_period, todayDate)) {
+    if (checkDateIsGreaterThan(moment.utc(activeWindow.airdrop_window_registration_start_period), todayDate)) {
       activeWindow.airdrop_window_status = WindowStatus.UPCOMING;
     } else if (
       checkDateIsBetween(
-        activeWindow.airdrop_window_registration_start_period,
-        activeWindow.airdrop_window_registration_end_period,
+        moment.utc(activeWindow.airdrop_window_registration_start_period),
+        moment.utc(activeWindow.airdrop_window_registration_end_period),
         todayDate,
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.REGISTRATION;
     } else if (
       checkDateIsBetween(
-        activeWindow.airdrop_window_registration_end_period,
-        activeWindow.airdrop_window_claim_start_period,
+        moment.utc(activeWindow.airdrop_window_registration_end_period),
+        moment.utc(activeWindow.airdrop_window_claim_start_period),
         todayDate,
       )
     ) {
