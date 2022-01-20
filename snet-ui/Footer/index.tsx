@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import { AIRDROP_LINKS, AIRDROP_SITE_STRING } from 'utils/airdropWindows';
+import { Link } from '@mui/material';
 
 type FooterProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
@@ -97,7 +98,27 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         ))}
       </Grid>
       <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
-      <Typography align="center">Copyright © 2021 {AIRDROP_SITE_STRING}</Typography>
+      <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+        <Grid item>
+          <Typography align="center">Copyright © 2022 {AIRDROP_SITE_STRING}</Typography>
+        </Grid>
+        <Divider orientation="vertical" flexItem> | </Divider>
+        <Grid item>
+          <Link 
+            href="https://public.singularitynet.io/terms_and_conditions.html" 
+            target="_blank" 
+            color="inherit"
+            underline="none">Terms of Service</Link>
+        </Grid>
+        <Divider orientation="vertical" flexItem> | </Divider>
+        <Grid item>
+          <Link 
+            href="https://public.singularitynet.io/privacy_policy.html" 
+            target="_blank" 
+            color="inherit"
+            underline="none">Privacy Policy</Link>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
