@@ -114,7 +114,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
 
       const signature = await ethSign.sign(
-        ['uint8', 'uint8', 'address'],
+        ['uint256', 'uint256', 'address'],
         [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account],
       );
       if (signature) {
