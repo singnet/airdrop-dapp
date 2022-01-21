@@ -53,8 +53,8 @@ export default function Success({
                 variant="h5"
                 color="text.secondary"
               >
-                {SUCCESSFUL_REGISTRATION_STRING} {windowId} /{' '}
-                {totalWindows}
+                {SUCCESSFUL_REGISTRATION_STRING}
+
               </Typography>
             </Box>
             <Box
