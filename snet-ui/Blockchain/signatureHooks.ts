@@ -12,9 +12,13 @@ export const useEthSign = () => {
 
     const message = solidityKeccak256(types, values);
     const bytesDataHash = arrayify(message);
-
+    console.log("useEthSign:account", account);
+    console.log("useEthSign:library", library);
     const signer = library.getSigner(account);
+    console.log("useEthSign:signer", signer);
+    console.log("useEthSign:signer", bytesDataHash);
     const signature = await signer.signMessage(bytesDataHash);
+    console.log("useEthSign:signature", signature);
     return signature;
   };
 
