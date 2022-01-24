@@ -15,6 +15,7 @@ export const useEthSign = () => {
     const bytesDataHash = arrayify(message);
     const signer = library.getSigner(account);
     const signature = await signer.signMessage(hexlify(bytesDataHash));
+    console.log("useEthSign:signature", signature);
     return signature;
   };
 
