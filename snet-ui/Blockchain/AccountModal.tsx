@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
@@ -14,6 +14,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useWeb3React } from "@web3-react/core";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 type AccountModalProps = {
   account: string;
@@ -26,9 +28,17 @@ let copiedStateTimeout;
 
 export default function AccountModal({ account, open, setOpen, changeAccount }: AccountModalProps) {
   const [copied, setCopied] = useState(false);
+  const [showChangebutton, setShowchangeButton] = useState(false);
+  const {connector} = useWeb3React();
 
   const theme = useTheme();
   const matchesSmallDevices = useMediaQuery(theme.breakpoints.up("sm"));
+
+  useEffect(() => {
+    if(connector instanceof WalletConnectConnector) {
+      setShowchangeButton(true);
+    }
+  }, [connector]);  
 
   const handleClose = () => setOpen(false);
 
@@ -54,6 +64,19 @@ export default function AccountModal({ account, open, setOpen, changeAccount }: 
     }
     window.open(url, "_blank");
   };
+
+  const disconnectWallet = async () => {
+    try {
+      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+        connector?.close();
+      }   
+      changeAccount(); 
+    }
+    catch (e) {
+      console.log('Error on deactivatin', e);
+    }
+  }
+
 
   return (
     <Box>
@@ -95,11 +118,11 @@ export default function AccountModal({ account, open, setOpen, changeAccount }: 
                 </Button>
               </Grid>
             </Grid>
-            <Box sx={{ display: "flex", flexDirection: "row-reverse", mt: 3 }}>
-              <Button onClick={changeAccount} variant="outlined" color="secondary">
+            {showChangebutton? <Box sx={{ display: "flex", flexDirection: "row-reverse", mt: 3 }}>
+              <Button onClick={disconnectWallet} variant="outlined" color="secondary">
                 change
               </Button>
-            </Box>
+            </Box>: null}            
           </Box>
         </DialogContent>
       </Dialog>
