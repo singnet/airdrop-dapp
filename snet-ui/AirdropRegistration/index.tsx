@@ -159,42 +159,49 @@ export default function AirdropRegistration({
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6" color="text.primary">
+              <Typography variant="h5" color="text.primary">
                 Token to be Staked
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
+              <Typography variant="h6">
                 {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}
               </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6">Tokens to be Claimed into Wallet</Typography>
+              <Typography variant="h5">Tokens to be Claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR}`}</Typography>
+              <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
+
             <Grid item xs={6}>
-              <Link href="https://singularitynet.io/" target="_blank" rel="noreferrer">
-                Visit SingularityNET
-              </Link>
-            </Grid>
-            <Grid item xs={3}>
-              <Button onClick={toggleStakeModal} color="secondary" variant="outlined" fullWidth>
+              <Button onClick={toggleStakeModal} color="secondary" variant="contained" fullWidth>
                 Cancel
               </Button>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6}>
               <Button onClick={handleStakeClick} color="secondary" variant="contained" fullWidth>
                 Stake
               </Button>
             </Grid>
           </Grid>
+
+          <Box sx={{ marginBottom: 2, marginTop: 2 }}>
+            <Grid item xs={13} justifyContent="center" alignItems="right">
+            <Typography id="stake-modal-description" variant="p">
+              <Link href="https://app.singularitydao.ai/staking/bonded" target="_blank" rel="noreferrer" sx={{ mx: 1, fontSize: 14 }}>
+                Visit SingularityDAO
+              </Link>
+            </Typography>
+            </Grid>
+          </Box>
         </Box>
+
       </Modal>
       <Grid container direction="row" justifyContent="center" alignItems="center">
         <Grid item xs={10} md={12}>
