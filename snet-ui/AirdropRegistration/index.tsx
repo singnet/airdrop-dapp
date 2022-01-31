@@ -21,6 +21,7 @@ import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Container from '@mui/material/Container';
+import moment from 'moment';
 
 type HistoryEvent = {
   label: string;
@@ -124,16 +125,16 @@ export default function AirdropRegistration({
     return null;
   }
 
-  const now = new Date();
+  const now = moment.utc(new Date());
   const isClaimActive = checkDateIsBetween(
-    `${activeWindow?.airdrop_window_claim_start_period}`,
-    `${activeWindow?.airdrop_window_claim_end_period}`,
+    moment.utc(activeWindow?.airdrop_window_claim_start_period),
+    moment.utc(activeWindow?.airdrop_window_claim_end_period),
     now,
   );
 
   const isRegistrationActive = checkDateIsBetween(
-    `${activeWindow?.airdrop_window_registration_start_period}`,
-    `${activeWindow?.airdrop_window_registration_end_period}`,
+    moment.utc(activeWindow?.airdrop_window_registration_start_period),
+    moment.utc(activeWindow?.airdrop_window_registration_end_period),
     now,
   );
 
