@@ -29,7 +29,7 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
 
       <Grid container spacing={4} mt={1} direction="row">
         {steps.map((step, index) => (
-          <Grid item container xs={12} md={6} key={step.title}>
+          <Grid item container xs={12} md={6} px={16} key={step.title}>
             <Grid item xs={3} sm={2} md={2} mr={0}>
               <Box
                 sx={{
