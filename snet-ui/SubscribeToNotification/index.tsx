@@ -42,7 +42,7 @@ function SubscribeToNotification(
   const handleSubscribe = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setAlertMessage({ severity: AlertTypes.info, message: "" });
+    setAlertMessage({ severity: AlertTypes.error, message: "" });
     try {
       if (!validateEmail(email)) {
         throw new ValidationError("invalid email");
@@ -124,10 +124,10 @@ function SubscribeToNotification(
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 3,  ml: 3.3}}>
         {alertMessage.message ? (
-          <Alert severity={alertMessage.severity} sx={{ width: "47.3%" }}>
-            {alertMessage.message}
+          <Alert severity="error" sx={{ width: "49.8%", height: "45px"}}>
+            {alertMessage.message }
           </Alert>
         ) : null}
       </Box>
