@@ -10,7 +10,9 @@ import { styled } from "@mui/system";
 import LoadingButton from "../../snet-ui/LoadingButton";
 import { APIError, ValidationError } from "../../utils/errors";
 import { AlertTypes } from "../../utils/constants/alert";
-import { Alert } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
+import colors from "../Theme/colors";
+import { ErrorOutline } from "@mui/icons-material" 
 
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -126,9 +128,9 @@ function SubscribeToNotification(
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3,  ml: 3.3}}>
         {alertMessage.message ? (
-          <Alert severity="error" sx={{ width: "49.8%", height: "45px"}}>
-            {alertMessage.message }
-          </Alert>
+         <Alert  icon={<ErrorOutline sx={{color: '#A70147'}} />} severity="error" sx={{  fontWeight: "200", height: "45px", width: "49.5%", backgroundColor:`${colors.LIGHT_RED} !important`}}>
+         <AlertTitle>{alertMessage.message}</AlertTitle>
+       </Alert>
         ) : null}
       </Box>
     </GradientBox>
