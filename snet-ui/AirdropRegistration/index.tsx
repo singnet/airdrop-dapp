@@ -290,7 +290,7 @@ export default function AirdropRegistration({
                       }}
                       onClick={toggleStakeModal}
                       loading={claimLoader}
-                      disabled={true}
+                      disabled={!stakeInfo.is_stakable}
                     >
                       Stake
                     </LoadingButton>
