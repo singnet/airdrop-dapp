@@ -2,7 +2,7 @@ import React from 'react';
 import Timeline from '@mui/lab/Timeline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ScheduleEvent from './ScheduleEvent';
 
@@ -19,7 +19,7 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Box sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], p: 3 }}>
+    <Container sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], p: 3 }}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
@@ -31,11 +31,7 @@ export default function Schedule({ title, events, blogLink }: Props) {
       >
         <Timeline>
           {events.map((event, index) => (
-            <ScheduleEvent
-              key={event.time.toString()}
-              event={event}
-              nextEventTime={events[index + 1]?.time}
-            />
+            <ScheduleEvent key={event.time.toString()} event={event} nextEventTime={events[index + 1]?.time} />
           ))}
         </Timeline>
         <Box textAlign="center">
@@ -54,6 +50,6 @@ export default function Schedule({ title, events, blogLink }: Props) {
           ) : null}
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 }

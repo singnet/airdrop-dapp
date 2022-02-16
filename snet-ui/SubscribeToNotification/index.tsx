@@ -10,7 +10,7 @@ import { styled } from "@mui/system";
 import LoadingButton from "../../snet-ui/LoadingButton";
 import { APIError, ValidationError } from "../../utils/errors";
 import { AlertTypes } from "../../utils/constants/alert";
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertTitle, Container } from "@mui/material";
 import colors from "../Theme/colors";
 import { ErrorOutline } from "@mui/icons-material";
 
@@ -70,7 +70,7 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
   };
 
   return (
-    <GradientBox $background="bgGradient" sx={{ py: 8 }} ref={ref}>
+    <Container sx={{ py: 8, background: `${colors.GRADIENT_1} !important` }} ref={ref}>
       <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
         Get Update Notification
       </Typography>
@@ -125,7 +125,7 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
           </Alert>
         ) : null}
       </Box>
-    </GradientBox>
+    </Container>
   );
 }
 
