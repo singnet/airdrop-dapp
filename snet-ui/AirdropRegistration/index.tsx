@@ -21,6 +21,7 @@ import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Container from '@mui/material/Container';
+import moment from 'moment';
 
 type HistoryEvent = {
   label: string;
@@ -124,16 +125,16 @@ export default function AirdropRegistration({
     return null;
   }
 
-  const now = new Date();
+  const now = moment.utc(new Date());
   const isClaimActive = checkDateIsBetween(
-    `${activeWindow?.airdrop_window_claim_start_period}`,
-    `${activeWindow?.airdrop_window_claim_end_period}`,
+    moment.utc(activeWindow?.airdrop_window_claim_start_period),
+    moment.utc(activeWindow?.airdrop_window_claim_end_period),
     now,
   );
 
   const isRegistrationActive = checkDateIsBetween(
-    `${activeWindow?.airdrop_window_registration_start_period}`,
-    `${activeWindow?.airdrop_window_registration_end_period}`,
+    moment.utc(activeWindow?.airdrop_window_registration_start_period),
+    moment.utc(activeWindow?.airdrop_window_registration_end_period),
     now,
   );
 
@@ -149,18 +150,18 @@ export default function AirdropRegistration({
         aria-describedby="stake-modal-description"
       >
         <Box sx={{ ...style, flexGrow: 1 }}>
-          <Typography id="stake-modal-title" variant="h6" component="h2">
+          {/* <Typography id="stake-modal-title" variant="h6" component="h2">
             Select Your Stake Type
           </Typography>
           <Box sx={{ marginBottom: 2, marginTop: 2 }}>
             <Typography id="stake-modal-description" variant="p">
               Please select the SingularityDAO stake pool for your airdrop reward.
             </Typography>
-          </Box>
+          </Box> */}
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h5" color="text.primary">
-                Token to be Staked
+                Tokens to be staked
               </Typography>
             </Grid>
             <Grid item xs={4}>
@@ -171,7 +172,7 @@ export default function AirdropRegistration({
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h5">Tokens to be Claimed into Wallet</Typography>
+              <Typography variant="h5">Tokens to be claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}</Typography>
@@ -289,7 +290,7 @@ export default function AirdropRegistration({
                       }}
                       onClick={toggleStakeModal}
                       loading={claimLoader}
-                      disabled={true}
+                      disabled={!stakeInfo.is_stakable}
                     >
                       Stake
                     </LoadingButton>

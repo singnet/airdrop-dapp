@@ -4,6 +4,7 @@ import Box from '@mui/system/Box';
 import Button from '@mui/material/Button';
 import React, { forwardRef } from 'react';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Container } from '@mui/material';
 
 type Step = {
   title: string;
@@ -17,13 +18,8 @@ type Props = {
 
 function HowItWorks({ title, steps, blogLink }: Props, ref) {
   return (
-    <Box sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], py: 8 }} ref={ref}>
-      <Typography
-        align="center"
-        fontWeight="bold"
-        color="bgtext.main"
-        variant="h3"
-      >
+    <Container sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 8], py: 8 }} ref={ref}>
+      <Typography align="center" fontWeight="bold" color="bgtext.main" variant="h3">
         {title}
       </Typography>
 
@@ -52,13 +48,7 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
               </Box>
             </Grid>
             <Grid item xs={9} sm={10} md={10}>
-              <Typography
-                fontWeight="bold"
-                color="bgtext.main"
-                variant="priority"
-                component="p"
-                sx={{ mb: '16px' }}
-              >
+              <Typography fontWeight="bold" color="bgtext.main" variant="priority" component="p" sx={{ mb: '16px' }}>
                 {step.title}
               </Typography>
               <Typography variant="normal" color="textAdvanced.dark" style={{ whiteSpace: 'pre-line' }}>
@@ -84,7 +74,7 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
           </Button>
         ) : null}
       </Box>
-    </Box>
+    </Container>
   );
 }
 export default forwardRef(HowItWorks);

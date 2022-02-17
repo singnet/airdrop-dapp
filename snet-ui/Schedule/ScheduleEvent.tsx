@@ -8,6 +8,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import moment from 'moment';
 
 type Event = {
   time: Date;
@@ -20,14 +21,14 @@ type ScheduleEventProps = {
   nextEventTime?: Date;
 };
 
-const now = new Date();
+const now = moment.utc(new Date());
 
 export default function ScheduleEvent({
   event,
   nextEventTime,
 }: ScheduleEventProps) {
   const isActiveEvent =
-    nextEventTime && checkDateIsBetween(event?.time, nextEventTime, now);
+    nextEventTime && checkDateIsBetween(moment.utc(event?.time), moment.utc(nextEventTime), now);
   const nextEvent = () => nextEventTime;
   const formattedDate = getDateInStandardFormat(event.time);
   return (

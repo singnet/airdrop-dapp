@@ -7,14 +7,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import { AIRDROP_LINKS, AIRDROP_SITE_STRING } from 'utils/airdropWindows';
-import { Link } from '@mui/material';
+import { Container, Link } from '@mui/material';
 
 type FooterProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
 };
 export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
-    <Box
+    <Container
       sx={{
         bgcolor: 'primary.main',
         py: 5,
@@ -73,11 +73,11 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         {LinksData.map((linkItem) => (
           <Grid item xs={12} sm={3} key={linkItem.header}>
             <List
-              subheader={(
+              subheader={
                 <Typography variant="h3" pl={2} sx={{ m: 2 }}>
                   {linkItem.header}
                 </Typography>
-              )}
+              }
             >
               {linkItem.links.map((link) => (
                 <ListItemButton
@@ -98,28 +98,40 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         ))}
       </Grid>
       <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
-      <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+      <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Grid item>
           <Typography align="center">Copyright © 2022 {AIRDROP_SITE_STRING}</Typography>
         </Grid>
-        <Divider orientation="vertical" flexItem> | </Divider>
+        <Divider orientation="vertical" flexItem>
+          {' '}
+          |{' '}
+        </Divider>
         <Grid item>
-          <Link 
-            href="https://public.singularitynet.io/terms_and_conditions.html" 
-            target="_blank" 
+          <Link
+            href="https://public.singularitynet.io/terms_and_conditions.html"
+            target="_blank"
             color="inherit"
-            underline="none">Terms of Service</Link>
+            underline="none"
+          >
+            Terms of Service
+          </Link>
         </Grid>
-        <Divider orientation="vertical" flexItem> | </Divider>
+        <Divider orientation="vertical" flexItem>
+          {' '}
+          |{' '}
+        </Divider>
         <Grid item>
-          <Link 
-            href="https://public.singularitynet.io/privacy_policy.html" 
-            target="_blank" 
+          <Link
+            href="https://public.singularitynet.io/privacy_policy.html"
+            target="_blank"
             color="inherit"
-            underline="none">Privacy Policy</Link>
+            underline="none"
+          >
+            Privacy Policy
+          </Link>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 }
 const LinksData = [
