@@ -23,22 +23,15 @@ type ScheduleEventProps = {
 
 const now = moment.utc(new Date());
 
-export default function ScheduleEvent({
-  event,
-  nextEventTime,
-}: ScheduleEventProps) {
-  const isActiveEvent =
-    nextEventTime && checkDateIsBetween(moment.utc(event?.time), moment.utc(nextEventTime), now);
+export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventProps) {
+  const isActiveEvent = nextEventTime && checkDateIsBetween(moment.utc(event?.time), moment.utc(nextEventTime), now);
   const nextEvent = () => nextEventTime;
   const formattedDate = getDateInStandardFormat(event.time);
   return (
     <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
       <TimelineOppositeContent sx={{ display: 'none' }} />
       <TimelineSeparator>
-        <TimelineDot
-          sx={{ width: 19, height: 19, borderColor: 'common.white' }}
-          color="primary"
-        />
+        <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
         {nextEventTime ? (
           <TimelineConnector>
             {isActiveEvent ? (
@@ -66,19 +59,10 @@ export default function ScheduleEvent({
             </Typography>
           </Grid>
           <Grid item xs={8}>
-            <Typography
-              variant="h6"
-              fontSize="18px"
-              color="primary"
-              component="p"
-            >
+            <Typography variant="h6" fontSize="18px" color="primary" component="p">
               {event.title}
             </Typography>
-            <Typography
-              variant="normal"
-              fontSize="14px"
-              color="textAdvanced.primary"
-            >
+            <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
               {event.description}
             </Typography>
           </Grid>

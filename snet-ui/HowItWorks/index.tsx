@@ -18,12 +18,12 @@ type Props = {
 
 function HowItWorks({ title, steps, blogLink }: Props, ref) {
   return (
-    <Container sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 8], py: 8 }} ref={ref}>
+    <Grid sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 8], py: 8 }} ref={ref}>
       <Typography align="center" fontWeight="bold" color="bgtext.main" variant="h3">
         {title}
       </Typography>
 
-      <Grid container spacing={4} mt={1} direction="row">
+      <Grid container spacing={2} mt={1} direction="row">
         {steps.map((step, index) => (
           <Grid item container xs={12} md={6} key={step.title}>
             <Grid item xs={3} sm={2} md={2} mr={0}>
@@ -74,7 +74,7 @@ function HowItWorks({ title, steps, blogLink }: Props, ref) {
           </Button>
         ) : null}
       </Box>
-    </Container>
+    </Grid>
   );
 }
 export default forwardRef(HowItWorks);

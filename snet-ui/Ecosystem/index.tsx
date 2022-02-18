@@ -1,12 +1,12 @@
-import Typography from "@mui/material/Typography";
-import Box from "@mui/system/Box";
-import { Stack } from "@mui/material";
-import Button from "@mui/material/Button";
-import React from "react";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import GradientBox from "../../snet-ui/GradientBox";
-import Container from "@mui/material/Container";
-import colors from "../Theme/colors";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/system/Box';
+import { Grid, Stack } from '@mui/material';
+import Button from '@mui/material/Button';
+import React from 'react';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import GradientBox from '../../snet-ui/GradientBox';
+import Container from '@mui/material/Container';
+import colors from '../Theme/colors';
 
 type Props = {
   blogLink?: string;
@@ -14,7 +14,7 @@ type Props = {
 
 export default function Ecosystem({ blogLink }: Props) {
   return (
-    <Container sx={{ py: 8, px: [0, 4, 15], background: `${colors.GRADIENT_1} !important` }}>
+    <Grid sx={{ py: 8, px: [0, 4, 15], background: `${colors.GRADIENT_1} !important` }}>
       <Typography align="center" variant="h2" color="text.secondary" component="p" mb={3}>
         SingularityNET Ecosystem
       </Typography>
@@ -26,7 +26,7 @@ export default function Ecosystem({ blogLink }: Props) {
           SingularityDAO, and TrueAGI.
         </Typography>
       </Container>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
         <Box textAlign="center">
           <Stack spacing={2} direction="row">
             {blogLink ? (
@@ -37,7 +37,7 @@ export default function Ecosystem({ blogLink }: Props) {
                 href={blogLink}
                 target="_blank"
                 rel="noreferrer noopener"
-                sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                sx={{ textTransform: 'capitalize', fontWeight: 600 }}
               >
                 Visit SingularityNet
               </Button>
@@ -58,6 +58,6 @@ export default function Ecosystem({ blogLink }: Props) {
           </Stack>
         </Box>
       </Box>
-    </Container>
+    </Grid>
   );
 }

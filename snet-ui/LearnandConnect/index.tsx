@@ -9,7 +9,7 @@ import { AIRDROP_LINKS } from 'utils/airdropWindows';
 
 export default function Learn() {
   return (
-    <Container
+    <Grid
       sx={{
         p: 3,
         bgcolor: 'bgHighlight.main',
@@ -25,7 +25,7 @@ export default function Learn() {
         <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
           Learn and Connect with the Community
         </Typography>
-        <Grid container spacing={{ xs: 4 }}>
+        <Grid container spacing={{ xs: 2 }}>
           <Grid item md={4}>
             <Card>
               <CardActionArea>
@@ -130,7 +130,7 @@ export default function Learn() {
                     }}
                   >
                     <Box>
-                      <Box sx={{ pb: 3 }}>
+                      <Box>
                         <Box>
                           <Typography align="center" variant="h4" color="bgtext.main">
                             View Documentation
@@ -151,6 +151,6 @@ export default function Learn() {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </Grid>
   );
 }

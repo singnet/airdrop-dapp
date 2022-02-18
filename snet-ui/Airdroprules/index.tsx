@@ -1,11 +1,11 @@
-import React from "react";
-import StarsOutlinedIcon from "@mui/icons-material/StarsOutlined";
-import { Box } from "@mui/system";
-import { Container, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import Divider from "@mui/material/Divider";
+import React from 'react';
+import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
+import { Box } from '@mui/system';
+import { Container, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Divider from '@mui/material/Divider';
 
 type Step = {
   title: string;
@@ -22,7 +22,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
     return null;
   }
   return (
-    <Container sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
+    <Grid sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
@@ -30,9 +30,9 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
         <Grid container spacing={1} mt={4}>
           {steps.map((step, index) => (
             <Grid item key={step.title}>
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: 'flex' }}>
                 <Box sx={{ mr: 1 }}>
-                  <StarsOutlinedIcon sx={{ color: "info.light" }} />
+                  <StarsOutlinedIcon sx={{ color: 'info.light' }} />
                 </Box>
                 <Typography color="bgtext.main" variant="h4" fontSize="18px">
                   {step.title}
@@ -55,14 +55,14 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
               href={blogLink}
               target="_blank"
               rel="noreferrer noopener"
-              sx={{ textTransform: "capitalize", fontWeight: 600 }}
+              sx={{ textTransform: 'capitalize', fontWeight: 600 }}
             >
               Read Blog Post
             </Button>
           ) : null}
         </Box>
       </Box>
-    </Container>
+    </Grid>
   );
 }
 

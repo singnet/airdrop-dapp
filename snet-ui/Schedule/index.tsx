@@ -2,7 +2,7 @@ import React from 'react';
 import Timeline from '@mui/lab/Timeline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ScheduleEvent from './ScheduleEvent';
 
@@ -19,7 +19,7 @@ type Props = {
 
 export default function Schedule({ title, events, blogLink }: Props) {
   return (
-    <Container sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], p: 3 }}>
+    <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ bgcolor: 'bgHighlight.main', px: [1, 4, 15], p: 3 }}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
@@ -50,6 +50,6 @@ export default function Schedule({ title, events, blogLink }: Props) {
           ) : null}
         </Box>
       </Box>
-    </Container>
+    </Grid>
   );
 }

@@ -14,7 +14,7 @@ type FooterProps = {
 };
 export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
-    <Container
+    <Grid
       sx={{
         bgcolor: 'primary.main',
         py: 5,
@@ -131,7 +131,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
           </Link>
         </Grid>
       </Grid>
-    </Container>
+    </Grid>
   );
 }
 const LinksData = [
