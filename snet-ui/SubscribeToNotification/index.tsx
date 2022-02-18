@@ -70,7 +70,7 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
   };
 
   return (
-    <Container sx={{ py: 8, background: `${colors.GRADIENT_1} !important` }} ref={ref}>
+    <Grid sx={{ py: 8, background: `${colors.GRADIENT_1} !important` }} ref={ref}>
       <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
         Get Update Notification
       </Typography>
@@ -125,7 +125,7 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
           </Alert>
         ) : null}
       </Box>
-    </Container>
+    </Grid>
   );
 }
 

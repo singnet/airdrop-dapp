@@ -1,39 +1,39 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Container } from '@mui/material';
-import { AIRDROP_LINKS } from 'utils/airdropWindows';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { CardActionArea, Container } from "@mui/material";
+import { AIRDROP_LINKS } from "utils/airdropWindows";
 
 export default function Learn() {
   return (
-    <Container
+    <Grid
       sx={{
         p: 3,
-        bgcolor: 'bgHighlight.main',
+        bgcolor: "bgHighlight.main",
       }}
     >
       <Box
         sx={{
           my: 1,
           py: 1,
-          justifyContent: 'center',
+          justifyContent: "center",
         }}
       >
         <Typography align="center" variant="h2" color="bgtext.main" mb={5}>
           Learn and Connect with the Community
         </Typography>
-        <Grid container spacing={{ xs: 4 }}>
+        <Grid container spacing={{ xs: 2 }}>
           <Grid item md={4}>
             <Card>
               <CardActionArea>
                 <CardContent>
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                       my: 2,
                     }}
                   >
@@ -44,8 +44,8 @@ export default function Learn() {
 
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
                     <Box>
@@ -78,15 +78,15 @@ export default function Learn() {
             <Card>
               <CardActionArea>
                 <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                  <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
                     <a href={AIRDROP_LINKS.TELEGRAM} rel="noopener noreferrer" target="_blank">
                       <img src="/images/Telegram.png" alt="SingularityNET" height="88px" width="98px" />
                     </a>
                   </Box>
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
                     <Box>
@@ -118,19 +118,19 @@ export default function Learn() {
             <Card>
               <CardActionArea>
                 <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                  <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
                     <a href={AIRDROP_LINKS.DOCUMENTATION} rel="noopener noreferrer" target="_blank">
                       <img src="/images/Documentation.png" alt="SingularityNET" height="88px" width="98px" />
                     </a>
                   </Box>
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
                     <Box>
-                      <Box sx={{ pb: 3 }}>
+                      <Box>
                         <Box>
                           <Typography align="center" variant="h4" color="bgtext.main">
                             View Documentation
@@ -151,6 +151,6 @@ export default function Learn() {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </Grid>
   );
 }

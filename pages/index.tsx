@@ -1,44 +1,48 @@
-import AirdropSchedules from 'components/AirdropSchedule';
-import EligibilityBanner from 'components/EligibilityBanner';
-import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
-import nextI18NextConfig from 'next-i18next.config';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Head from 'next/head';
-import HowItWorks from 'snet-ui/HowItWorks';
-import Box from '@mui/material/Box';
-import SubscribeToNotification from 'snet-ui/SubscribeToNotification';
-import Ecosystem from 'snet-ui/Ecosystem';
-import CommonLayout from 'layout/CommonLayout';
-import Registration from 'components/Registration';
-import Airdroprules from 'snet-ui/Airdroprules';
+import AirdropSchedules from "components/AirdropSchedule";
+import EligibilityBanner from "components/EligibilityBanner";
+import type { NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import nextI18NextConfig from "next-i18next.config";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
+import HowItWorks from "snet-ui/HowItWorks";
+import Box from "@mui/material/Box";
+import SubscribeToNotification from "snet-ui/SubscribeToNotification";
+import Ecosystem from "snet-ui/Ecosystem";
+import CommonLayout from "layout/CommonLayout";
+import Registration from "components/Registration";
+import Airdroprules from "snet-ui/Airdroprules";
 
-import {
-  RefObject, useEffect, useRef, useState,
-} from 'react';
-import axios from 'utils/Axios';
+import { RefObject, useEffect, useRef, useState } from "react";
+import axios from "utils/Axios";
 
-import { API_PATHS } from 'utils/constants/ApiPaths';
+import { API_PATHS } from "utils/constants/ApiPaths";
 import {
-  findActiveWindow, AIRDROP_LINKS, AIRDROP_HOW_IT_WORKS_STRING,
-  HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES, WindowStatus,
-} from 'utils/airdropWindows';
-import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
-import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
-import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
-import { APIError } from 'utils/errors';
-import { selectActiveWindow, setActiveWindowState } from 'utils/store/features/activeWindowSlice';
+  findActiveWindow,
+  AIRDROP_LINKS,
+  AIRDROP_HOW_IT_WORKS_STRING,
+  HOW_IT_WORKS,
+  AIRDROP_TITLE_STRING,
+  AIRDROP_RULES,
+  WindowStatus,
+} from "utils/airdropWindows";
+import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
+import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
+import { useAppDispatch, useAppSelector } from "utils/store/hooks";
+import { APIError } from "utils/errors";
+import { selectActiveWindow, setActiveWindowState } from "utils/store/features/activeWindowSlice";
+import { Grid } from "@mui/material";
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common'], nextI18NextConfig)),
+    ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
   },
 });
 
 const headerOffset = 82;
 
 const Home: NextPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
   const howitworksRef = useRef<HTMLDivElement>(null);
@@ -48,14 +52,14 @@ const Home: NextPage = () => {
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
   // const [activeWindow, setActiveWindow] = useState<AirdropWindow | undefined>(undefined);
   const [userEligibility, setUserEligibility] = useState<UserEligibility>(UserEligibility.PENDING);
-  const [rejectReasons, setRejectReasons] = useState<string | undefined>('');
+  const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
 
   const [airdropTotalTokens, setAirdropTotalTokens] = useState({
     value: 0,
-    name: '',
+    name: "",
   });
   const { error: walletError } = useAppSelector((state) => state.wallet);
   const { window: activeWindow } = useAppSelector(selectActiveWindow);
@@ -88,7 +92,7 @@ const Home: NextPage = () => {
         setActiveWindowState({
           totalWindows: airdrop.airdrop_windows.length,
           window: activeAirdropWindow,
-        }),
+        })
       );
 
       setSchedules(airdropSchedules);
@@ -98,7 +102,7 @@ const Home: NextPage = () => {
         name: airdrop.token_name,
       });
     } catch (e) {
-      console.log('schedule error', e);
+      console.log("schedule error", e);
       // TODO: Implement error handling
     }
   };
@@ -107,21 +111,21 @@ const Home: NextPage = () => {
     if (!elemRef) return;
 
     const offsetTop = elemRef.current?.offsetTop;
-    if (typeof offsetTop === 'undefined') {
+    if (typeof offsetTop === "undefined") {
       return;
     }
     const offsetPosition = offsetTop - headerOffset;
 
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
   const handleScrollToLink = (scrollToKey?: string) => {
-    if (scrollToKey === 'schedule') {
+    if (scrollToKey === "schedule") {
       handleScrollToView(scheduleRef);
-    } else if (scrollToKey === 'faq') {
+    } else if (scrollToKey === "faq") {
       handleScrollToView(faqRef);
-    } else if (scrollToKey === 'howitworks') {
+    } else if (scrollToKey === "howitworks") {
       handleScrollToView(howitworksRef);
-    } else if (scrollToKey === 'rules') {
+    } else if (scrollToKey === "rules") {
       handleScrollToView(rulesRef);
     }
   };
@@ -129,13 +133,15 @@ const Home: NextPage = () => {
   const getUserEligibility = async () => {
     try {
       if (
-        typeof activeWindow?.airdrop_id === 'undefined' ||
-        typeof activeWindow?.airdrop_window_id === 'undefined' ||
+        typeof activeWindow?.airdrop_id === "undefined" ||
+        typeof activeWindow?.airdrop_window_id === "undefined" ||
         !account
-      ) { return; }
+      ) {
+        return;
+      }
       setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
-        signature: '',
+        signature: "",
         address: account,
         airdrop_id: activeWindow.airdrop_id,
         airdrop_window_id: activeWindow.airdrop_window_id,
@@ -149,10 +155,12 @@ const Home: NextPage = () => {
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
 
-      if ((activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        || activeWindow?.airdrop_window_status === WindowStatus.IDLE)
-        && !isRegistered
-        && airdropRewards == 0) {
+      if (
+        (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
+          activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&
+        !isRegistered &&
+        airdropRewards == 0
+      ) {
         // HACK: Implement better logic
         // If the user is not registered but has some
         // past rewards to be claimed, allow them to do so
@@ -166,7 +174,7 @@ const Home: NextPage = () => {
       setRejectReasons(reasonForRejection);
       // setCurrentWindowRewards(data.airdrop_window_rewards);
     } catch (error: any) {
-      console.log('eligibility check error', error);
+      console.log("eligibility check error", error);
     }
   };
 
@@ -187,42 +195,36 @@ const Home: NextPage = () => {
       <Head>
         <title>{AIRDROP_TITLE_STRING}</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={18}>
-        <EligibilityBanner
+      <Grid>
+        <Box px={[0, 4, 15]} mt={18}>
+          <EligibilityBanner
+            userEligibility={userEligibility}
+            onViewRules={() => handleScrollToView(rulesRef)}
+            onViewSchedule={() => handleScrollToView(scheduleRef)}
+            rejectReasons={rejectReasons}
+          />
+        </Box>
+        <Registration
           userEligibility={userEligibility}
+          userRegistered={userRegistered}
+          setUserRegistered={setUserRegistered}
           onViewRules={() => handleScrollToView(rulesRef)}
           onViewSchedule={() => handleScrollToView(scheduleRef)}
-          rejectReasons={rejectReasons}
+          onViewNotification={() => handleScrollToView(getNotificationRef)}
+          airdropTotalTokens={airdropTotalTokens}
+          claimStatus={userClaimStatus}
+          setClaimStatus={setUserClaimStatus}
+          airdropWindowrewards={airdropWindowRewards}
         />
-      </Box>
-      <Registration
-        userEligibility={userEligibility}
-        userRegistered={userRegistered}
-        setUserRegistered={setUserRegistered}
-        onViewRules={() => handleScrollToView(rulesRef)}
-        onViewSchedule={() => handleScrollToView(scheduleRef)}
-        onViewNotification={() => handleScrollToView(getNotificationRef)}
-        airdropTotalTokens={airdropTotalTokens}
-        claimStatus={userClaimStatus}
-        setClaimStatus={setUserClaimStatus}
-        airdropWindowrewards={airdropWindowRewards}
-      />
+      </Grid>
       <HowItWorks
         ref={howitworksRef}
         title={AIRDROP_HOW_IT_WORKS_STRING}
         steps={HOW_IT_WORKS}
         blogLink={AIRDROP_LINKS.BLOG_POST}
       />
-      <SubscribeToNotification
-        ref={getNotificationRef}
-        onSubscribe={handleNotificationSubscription}
-      />
-      <Airdroprules
-        title="Airdrop Rules"
-        steps={AIRDROP_RULES}
-        blogLink={AIRDROP_LINKS.BLOG_POST}
-        ref={rulesRef}
-      />
+      <SubscribeToNotification ref={getNotificationRef} onSubscribe={handleNotificationSubscription} />
+      <Airdroprules title="Airdrop Rules" steps={AIRDROP_RULES} blogLink={AIRDROP_LINKS.BLOG_POST} ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
     </CommonLayout>

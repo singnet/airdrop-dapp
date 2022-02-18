@@ -22,7 +22,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
     return null;
   }
   return (
-    <Container sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
+    <Grid sx={{ px: [0, 1, 15], my: [0, 2], py: 3 }} ref={ref}>
       <Typography align="center" variant="h2" color="primary">
         {title}
       </Typography>
@@ -62,7 +62,7 @@ function Airdroprules({ title, steps, blogLink }: Props, ref) {
           ) : null}
         </Box>
       </Box>
-    </Container>
+    </Grid>
   );
 }
 
