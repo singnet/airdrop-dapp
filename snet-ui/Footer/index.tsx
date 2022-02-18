@@ -1,13 +1,13 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import Typography from "@mui/material/Typography";
-import ListItem from "@mui/material/ListItem";
-import { AIRDROP_LINKS, AIRDROP_SITE_STRING } from "utils/airdropWindows";
-import { Container, Link } from "@mui/material";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import { AIRDROP_LINKS, AIRDROP_SITE_STRING } from 'utils/airdropWindows';
+import { Container, Link } from '@mui/material';
 
 type FooterProps = {
   handleScrollToLink: (scrollToKey?: string) => void;
@@ -16,10 +16,10 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
     <Grid
       sx={{
-        bgcolor: "primary.main",
+        bgcolor: 'primary.main',
         py: 5,
         px: 5,
-        color: "textAdvanced.secondary",
+        color: 'textAdvanced.secondary',
       }}
     >
       <Grid container spacing={2}>
@@ -28,13 +28,13 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
           xs={12}
           sm={3}
           sx={{
-            borderRight: "solid",
+            borderRight: 'solid',
             borderRightWidth: [0, 1],
-            borderRightColor: "common.white",
+            borderRightColor: 'common.white',
           }}
         >
           <List subheader>
-            <ListItem sx={{ justifyContent: "right" }}>
+            <ListItem sx={{ justifyContent: 'right' }}>
               <img alt="" src="NuNet Logo.png" height="53px" />
             </ListItem>
             <ListItemButton
@@ -42,7 +42,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
               href={AIRDROP_LINKS.WEBSITE}
               target="_blank"
               rel="noreferrer noopener"
-              sx={{ justifyContent: "right" }}
+              sx={{ justifyContent: 'right' }}
             >
               <Typography variant="link"> {AIRDROP_SITE_STRING} Site </Typography>
             </ListItemButton>
@@ -51,18 +51,18 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
               href="/contactus"
               target="_blank"
               rel="noreferrer noopener"
-              sx={{ justifyContent: "right" }}
+              sx={{ justifyContent: 'right' }}
             >
               <Typography variant="link"> Contact Us </Typography>
             </ListItemButton>
-            <ListItem sx={{ justifyContent: "right" }}>
+            <ListItem sx={{ justifyContent: 'right' }}>
               <Typography justifyContent="right" component="p">
                 A project powered by
               </Typography>
             </ListItem>
             <ListItem
               sx={{
-                justifyContent: "right",
+                justifyContent: 'right',
               }}
             >
               <img alt="" src="SNET Logo.png" width="130px" />
@@ -81,10 +81,10 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
             >
               {linkItem.links.map((link) => (
                 <ListItemButton
-                  component={link.scrollToKey ? "b" : "a"}
+                  component={link.scrollToKey ? 'b' : 'a'}
                   href={link.url}
-                  target={link.external ? "_blank" : ""}
-                  rel={link.external ? "noreferrer noopener" : ""}
+                  target={link.external ? '_blank' : ''}
+                  rel={link.external ? 'noreferrer noopener' : ''}
                   key={link.text}
                   onClick={() => handleScrollToLink(link.scrollToKey)}
                 >
@@ -97,14 +97,14 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
           </Grid>
         ))}
       </Grid>
-      <Divider sx={{ bgcolor: "common.white", my: 3 }} />
-      <Grid container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
+      <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Grid item>
           <Typography align="center">Copyright © 2022 {AIRDROP_SITE_STRING}</Typography>
         </Grid>
         <Divider orientation="vertical" flexItem>
-          {" "}
-          |{" "}
+          {' '}
+          |{' '}
         </Divider>
         <Grid item>
           <Link
@@ -117,8 +117,8 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
           </Link>
         </Grid>
         <Divider orientation="vertical" flexItem>
-          {" "}
-          |{" "}
+          {' '}
+          |{' '}
         </Divider>
         <Grid item>
           <Link
@@ -136,55 +136,55 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
 }
 const LinksData = [
   {
-    header: "Airdrop",
+    header: 'Airdrop',
     links: [
-      { text: "How Airdrop Works", scrollToKey: "howitworks" },
-      { text: "Airdrop Rules", scrollToKey: "rules" },
-      { text: "Airdrop Schedule", scrollToKey: "schedule" },
+      { text: 'How Airdrop Works', scrollToKey: 'howitworks' },
+      { text: 'Airdrop Rules', scrollToKey: 'rules' },
+      { text: 'Airdrop Schedule', scrollToKey: 'schedule' },
       /* { text: 'F.A.Q', scrollToKey: 'faq' }, */
-      { text: "Contact Us", url: "/contactus", external: false },
+      { text: 'Contact Us', url: '/contactus', external: false },
     ],
   },
   {
-    header: "Community",
+    header: 'Community',
     links: [
       {
-        text: "Official Blog",
+        text: 'Official Blog',
         url: `${AIRDROP_LINKS.BLOG_POST}`,
         external: true,
       },
       {
-        text: "Documentation",
+        text: 'Documentation',
         url: `${AIRDROP_LINKS.DOCUMENTATION}`,
         external: true,
       },
       {
-        text: "Telegram",
+        text: 'Telegram',
         url: `${AIRDROP_LINKS.TELEGRAM}`,
         external: true,
       },
     ],
   },
   {
-    header: "Social Media",
+    header: 'Social Media',
     links: [
       {
-        text: "Twitter",
+        text: 'Twitter',
         url: `${AIRDROP_LINKS.TWITTER}`,
         external: true,
       },
       {
-        text: "Facebook",
+        text: 'Facebook',
         url: `${AIRDROP_LINKS.FACEBOOK}`,
         external: true,
       },
       {
-        text: "LinkedIn",
+        text: 'LinkedIn',
         url: `${AIRDROP_LINKS.LINKEDIN}`,
         external: true,
       },
       {
-        text: "YouTube",
+        text: 'YouTube',
         url: `${AIRDROP_LINKS.YOUTUBE}`,
         external: true,
       },

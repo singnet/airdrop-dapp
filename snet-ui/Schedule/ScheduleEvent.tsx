@@ -1,14 +1,14 @@
-import React from "react";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import { checkDateIsBetween, getDateInStandardFormat } from "utils/date";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import moment from "moment";
+import React from 'react';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import moment from 'moment';
 
 type Event = {
   time: Date;
@@ -28,18 +28,18 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
   const nextEvent = () => nextEventTime;
   const formattedDate = getDateInStandardFormat(event.time);
   return (
-    <TimelineItem sx={{ bgcolor: "textAdvanced.main" }} key={event.id}>
-      <TimelineOppositeContent sx={{ display: "none" }} />
+    <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
+      <TimelineOppositeContent sx={{ display: 'none' }} />
       <TimelineSeparator>
-        <TimelineDot sx={{ width: 19, height: 19, borderColor: "common.white" }} color="primary" />
+        <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
         {nextEventTime ? (
           <TimelineConnector>
             {isActiveEvent ? (
               <Typography
                 sx={{
-                  position: "absolute",
-                  bgcolor: "bgHighlight.main",
-                  color: "textAdvanced.dark",
+                  position: 'absolute',
+                  bgcolor: 'bgHighlight.main',
+                  color: 'textAdvanced.dark',
                   mt: 3,
                 }}
                 variant="body2"
