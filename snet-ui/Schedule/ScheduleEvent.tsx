@@ -9,6 +9,7 @@ import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import moment from 'moment';
+import { Container } from '@mui/material';
 
 type Event = {
   time: Date;
@@ -28,46 +29,48 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
   const nextEvent = () => nextEventTime;
   const formattedDate = getDateInStandardFormat(event.time);
   return (
-    <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
-      <TimelineOppositeContent sx={{ display: 'none' }} />
-      <TimelineSeparator>
-        <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
-        {nextEventTime ? (
-          <TimelineConnector>
-            {isActiveEvent ? (
-              <Typography
-                sx={{
-                  position: 'absolute',
-                  bgcolor: 'bgHighlight.main',
-                  color: 'textAdvanced.dark',
-                  mt: 3,
-                }}
-                variant="body2"
-              >
-                Upcoming
-                <span></span>
+    <Container>
+      <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
+        <TimelineOppositeContent sx={{ display: 'none' }} />
+        <TimelineSeparator>
+          <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
+          {nextEventTime ? (
+            <TimelineConnector>
+              {isActiveEvent ? (
+                <Typography
+                  sx={{
+                    position: 'absolute',
+                    bgcolor: 'bgHighlight.main',
+                    color: 'textAdvanced.dark',
+                    mt: 3,
+                  }}
+                  variant="body2"
+                >
+                  Upcoming
+                  <span></span>
+                </Typography>
+              ) : null}
+            </TimelineConnector>
+          ) : null}
+        </TimelineSeparator>
+        <TimelineContent>
+          <Grid container spacing={4}>
+            <Grid item xs={4}>
+              <Typography variant="h6" fontSize="18px" color="primary">
+                {formattedDate}
               </Typography>
-            ) : null}
-          </TimelineConnector>
-        ) : null}
-      </TimelineSeparator>
-      <TimelineContent>
-        <Grid container spacing={4}>
-          <Grid item xs={4}>
-            <Typography variant="h6" fontSize="18px" color="primary">
-              {formattedDate}
-            </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="h6" fontSize="18px" color="primary" component="p">
+                {event.title}
+              </Typography>
+              <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
+                {event.description}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <Typography variant="h6" fontSize="18px" color="primary" component="p">
-              {event.title}
-            </Typography>
-            <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
-              {event.description}
-            </Typography>
-          </Grid>
-        </Grid>
-      </TimelineContent>
-    </TimelineItem>
+        </TimelineContent>
+      </TimelineItem>
+    </Container>
   );
 }

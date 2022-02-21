@@ -71,60 +71,62 @@ function SubscribeToNotification({ onSubscribe }: SubscribeToNotificationProps, 
 
   return (
     <Grid sx={{ py: 8, background: `${colors.GRADIENT_1} !important` }} ref={ref}>
-      <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
-        Get Update Notification
-      </Typography>
-      <Box sx={{ mt: 5, px: 4 }}>
-        <Grid container component="form" spacing={2} onSubmit={handleSubscribe}>
-          <Grid item md={3} display={{ xs: 'none', sm: 'block' }} />
-          <Grid item xs={12} md={5}>
-            <TextField
-              name="EMAIL"
-              InputProps={{
-                startAdornment: <EmailOutlinedIcon sx={{ mr: 2 }} />,
-              }}
-              placeholder="Please enter your email address"
+      <Container>
+        <Typography align="center" fontWeight="bold" variant="h2" color="text.secondary">
+          Get Update Notification
+        </Typography>
+        <Box sx={{ mt: 5, px: 4 }}>
+          <Grid container component="form" spacing={2} onSubmit={handleSubscribe}>
+            <Grid item md={3} display={{ xs: 'none', sm: 'block' }} />
+            <Grid item xs={12} md={5}>
+              <TextField
+                name="EMAIL"
+                InputProps={{
+                  startAdornment: <EmailOutlinedIcon sx={{ mr: 2 }} />,
+                }}
+                placeholder="Please enter your email address"
+                sx={{
+                  bgcolor: 'bgHighlight.main',
+                  borderRadius: 1,
+                  width: '100%',
+                }}
+                color="secondary"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={subscriptionLoader}
+              />
+            </Grid>
+            <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
+              <LoadingButton
+                type="submit"
+                color="secondary"
+                variant="contained"
+                onClick={handleSubscribe}
+                loading={subscriptionLoader}
+                sx={{ width: '120px', height: '52.5px', textTransform: 'capitalize', fontWeight: 600 }}
+              >
+                Subscribe
+              </LoadingButton>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, ml: 3.3 }}>
+          {alertMessage.message ? (
+            <Alert
+              icon={<ErrorOutline sx={{ color: `${colors.DARK_RED}` }} />}
+              severity="error"
               sx={{
-                bgcolor: 'bgHighlight.main',
-                borderRadius: 1,
-                width: '100%',
+                fontWeight: '200',
+                height: '45px',
+                width: '49.5%',
+                backgroundColor: `${colors.LIGHT_RED} !important`,
               }}
-              color="secondary"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={subscriptionLoader}
-            />
-          </Grid>
-          <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
-            <LoadingButton
-              type="submit"
-              color="secondary"
-              variant="contained"
-              onClick={handleSubscribe}
-              loading={subscriptionLoader}
-              sx={{ width: '120px', height: '52.5px', textTransform: 'capitalize', fontWeight: 600 }}
             >
-              Subscribe
-            </LoadingButton>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, ml: 3.3 }}>
-        {alertMessage.message ? (
-          <Alert
-            icon={<ErrorOutline sx={{ color: `${colors.DARK_RED}` }} />}
-            severity="error"
-            sx={{
-              fontWeight: '200',
-              height: '45px',
-              width: '49.5%',
-              backgroundColor: `${colors.LIGHT_RED} !important`,
-            }}
-          >
-            <AlertTitle>{alertMessage.message}</AlertTitle>
-          </Alert>
-        ) : null}
-      </Box>
+              <AlertTitle>{alertMessage.message}</AlertTitle>
+            </Alert>
+          ) : null}
+        </Box>
+      </Container>
     </Grid>
   );
 }
