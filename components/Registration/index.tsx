@@ -92,7 +92,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
         ? moment.utc(`${activeWindow?.next_window_start_period}`)
         : moment.utc(),
-    [activeWindow]
+    [activeWindow],
   );
 
   const getStakeDetails = async () => {
@@ -117,7 +117,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
       const signature = await ethSign.sign(
         ['uint256', 'uint256', 'address'],
-        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account]
+        [Number(activeWindow?.airdrop_id), Number(activeWindow?.airdrop_window_id), account],
       );
       if (signature) {
         await airdropUserRegistration(account, signature);
@@ -212,7 +212,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       stakingAddress: string,
       tokenAddress: string,
       userWalletAddress: string,
-      contractAddress: string
+      contractAddress: string,
     ): Promise<TransactionResponse> => {
       const txn = await airdropContract.stake(
         contractAddress,
@@ -223,7 +223,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         stakeDetails.stakable_tokens,
         activeWindow.airdrop_id?.toString(),
         activeWindow.airdrop_window_id?.toString(),
-        signature
+        signature,
       );
       return txn;
     };
@@ -251,7 +251,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         stakeDetails.staking_contract_address,
         stakeDetails.token_address,
         stakeDetails.user_address,
-        stakeDetails.contract_address
+        stakeDetails.contract_address,
       );
 
       await saveClaimTxn(txn.hash, stakeDetails.claimable_amount);
@@ -332,7 +332,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       tokenAddress: string,
       signature: string,
       totalEligibleAmount: string,
-      claimAmount: string
+      claimAmount: string,
     ): Promise<TransactionResponse> => {
       const txn = await airdropContract.claim(
         contractAddress,
@@ -341,7 +341,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimAmount,
         activeWindow.airdrop_id?.toString(),
         activeWindow.airdrop_window_id?.toString(),
-        signature
+        signature,
       );
       return txn;
     };
@@ -372,7 +372,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.token_address,
         claimDetails.signature,
         claimDetails.total_eligibility_amount,
-        claimDetails.claimable_amount
+        claimDetails.claimable_amount,
       );
 
       await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
@@ -444,7 +444,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   const showRegistrationSuccess = useMemo(
     () => userRegistered && activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
-    [userRegistered, activeWindow]
+    [userRegistered, activeWindow],
   );
   if (!activeWindow) {
     return null;
