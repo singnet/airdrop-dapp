@@ -9,7 +9,7 @@ import { checkDateIsBetween, getDateInStandardFormat } from 'utils/date';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import moment from 'moment';
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 
 type Event = {
   time: Date;
@@ -30,7 +30,7 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
   const formattedDate = getDateInStandardFormat(event.time);
   return (
     <Container>
-      <TimelineItem sx={{ bgcolor: 'textAdvanced.main' }} key={event.id}>
+      <TimelineItem sx={{ bgcolor: 'textAdvanced.main', py: 3 }} key={event.id}>
         <TimelineOppositeContent sx={{ display: 'none' }} />
         <TimelineSeparator>
           <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
