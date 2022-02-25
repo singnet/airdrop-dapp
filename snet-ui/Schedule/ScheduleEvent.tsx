@@ -35,14 +35,14 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
         <TimelineSeparator>
           <TimelineDot sx={{ width: 19, height: 19, borderColor: 'common.white' }} color="primary" />
           {nextEventTime ? (
-            <TimelineConnector>
+            <TimelineConnector sx={{ height: 100 }}>
               {isActiveEvent ? (
                 <Typography
                   sx={{
                     position: 'absolute',
                     bgcolor: 'bgHighlight.main',
                     color: 'textAdvanced.dark',
-                    mt: 3,
+                    mt: 7,
                   }}
                   variant="body2"
                 >
@@ -56,14 +56,26 @@ export default function ScheduleEvent({ event, nextEventTime }: ScheduleEventPro
         <TimelineContent>
           <Grid container spacing={4}>
             <Grid item xs={4}>
-              <Typography variant="h6" fontSize="18px" color="primary">
-                {formattedDate}
-              </Typography>
+              {isActiveEvent ? (
+                <Typography variant="h6" fontSize="18px" color="green" pb="10px">
+                  {formattedDate}
+                </Typography>
+              ) : (
+                <Typography variant="h6" fontSize="18px" color="primary">
+                  {formattedDate}
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={8}>
-              <Typography variant="h6" fontSize="18px" color="primary" component="p">
-                {event.title}
-              </Typography>
+              {isActiveEvent ? (
+                <Typography variant="h6" fontSize="18px" color="green">
+                  {event.title}
+                </Typography>
+              ) : (
+                <Typography variant="h6" fontSize="18px" color="primary" component="p">
+                  {event.title}
+                </Typography>
+              )}
               <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
                 {event.description}
               </Typography>
