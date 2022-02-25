@@ -1,13 +1,13 @@
-import React, { Fragment, useState } from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { withStyles, WithStyles } from "@mui/styles";
-import CaretIcon from "@mui/icons-material/ArrowDropDown";
-import PropTypes from "prop-types";
+import React, { Fragment, useState } from 'react';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { withStyles, WithStyles } from '@mui/styles';
+import CaretIcon from '@mui/icons-material/ArrowDropDown';
+import PropTypes from 'prop-types';
 
-import { styles } from "./styles";
-import MUILink from "@mui/material/Link";
+import { styles } from './styles';
+import MUILink from '@mui/material/Link';
 
 type StyledMenuProps = WithStyles<typeof styles> & {
   label: string;
@@ -27,7 +27,9 @@ const StyledMenu = ({ classes, label, list }: StyledMenuProps) => {
   return (
     <Fragment>
       <div onClick={handleOpen}>
-        <Button className={classes.button}>{label}</Button>
+        <Button sx={{ textTransform: 'capitalize' }} className={classes.button}>
+          {label}
+        </Button>
         <CaretIcon />
       </div>
       <Menu anchorEl={anchorEl} id="simple-menu" open={Boolean(anchorEl)} onClose={handleClose}>
@@ -50,7 +52,7 @@ StyledMenu.propTypes = {
       label: PropTypes.string,
       link: PropTypes.string,
       newTab: PropTypes.bool,
-    })
+    }),
   ),
 };
 
