@@ -31,7 +31,7 @@ type HistoryEvent = {
 type StakeInfo = {
   claimableTokensToWallet: string;
   isStakable: boolean;
-  stakableTokenName: string;
+  tokenName: string;
   stakableTokens: string;
   isLoading: boolean;
 };
@@ -166,7 +166,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">
-                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}
+                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.token_name}`}
               </Typography>
             </Grid>
           </Grid>
@@ -175,7 +175,7 @@ export default function AirdropRegistration({
               <Typography variant="h5">Tokens to be claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}</Typography>
+              <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.token_name}`}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
@@ -234,7 +234,7 @@ export default function AirdropRegistration({
                       Tokens available to claim
                     </Typography>
                     <Typography variant="h2" color="textAdvanced.secondary" align="center">
-                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
+                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {stakeInfo.token_name}
                     </Typography>
                   </Box>
                   <Container
