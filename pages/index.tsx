@@ -13,21 +13,25 @@ import CommonLayout from 'layout/CommonLayout';
 import Registration from 'components/Registration';
 import Airdroprules from 'snet-ui/Airdroprules';
 
-import {
-  RefObject, useEffect, useRef, useState,
-} from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import axios from 'utils/Axios';
 
 import { API_PATHS } from 'utils/constants/ApiPaths';
 import {
-  findActiveWindow, AIRDROP_LINKS, AIRDROP_HOW_IT_WORKS_STRING,
-  HOW_IT_WORKS, AIRDROP_TITLE_STRING, AIRDROP_RULES, WindowStatus,
+  findActiveWindow,
+  AIRDROP_LINKS,
+  AIRDROP_HOW_IT_WORKS_STRING,
+  HOW_IT_WORKS,
+  AIRDROP_TITLE_STRING,
+  AIRDROP_RULES,
+  WindowStatus,
 } from 'utils/airdropWindows';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import { ClaimStatus, UserEligibility } from 'utils/constants/CustomTypes';
 import { useAppDispatch, useAppSelector } from 'utils/store/hooks';
 import { APIError } from 'utils/errors';
 import { selectActiveWindow, setActiveWindowState } from 'utils/store/features/activeWindowSlice';
+import { Grid } from '@mui/material';
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -88,7 +92,7 @@ const Home: NextPage = () => {
         setActiveWindowState({
           totalWindows: airdrop.airdrop_windows.length,
           window: activeAirdropWindow,
-        }),
+        })
       );
 
       setSchedules(airdropSchedules);
@@ -132,7 +136,9 @@ const Home: NextPage = () => {
         typeof activeWindow?.airdrop_id === 'undefined' ||
         typeof activeWindow?.airdrop_window_id === 'undefined' ||
         !account
-      ) { return; }
+      ) {
+        return;
+      }
       setUserEligibility(UserEligibility.PENDING);
       const payload: any = {
         signature: '',
@@ -149,10 +155,12 @@ const Home: NextPage = () => {
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
 
-      if ((activeWindow?.airdrop_window_status === WindowStatus.CLAIM
-        || activeWindow?.airdrop_window_status === WindowStatus.IDLE)
-        && !isRegistered
-        && airdropRewards == 0) {
+      if (
+        (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
+          activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&
+        !isRegistered &&
+        airdropRewards == 0
+      ) {
         // HACK: Implement better logic
         // If the user is not registered but has some
         // past rewards to be claimed, allow them to do so
@@ -187,42 +195,36 @@ const Home: NextPage = () => {
       <Head>
         <title>{AIRDROP_TITLE_STRING}</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={18}>
-        <EligibilityBanner
+      <Grid>
+        <Box px={[0, 4, 15]} mt={18}>
+          <EligibilityBanner
+            userEligibility={userEligibility}
+            onViewRules={() => handleScrollToView(rulesRef)}
+            onViewSchedule={() => handleScrollToView(scheduleRef)}
+            rejectReasons={rejectReasons}
+          />
+        </Box>
+        <Registration
           userEligibility={userEligibility}
+          userRegistered={userRegistered}
+          setUserRegistered={setUserRegistered}
           onViewRules={() => handleScrollToView(rulesRef)}
           onViewSchedule={() => handleScrollToView(scheduleRef)}
-          rejectReasons={rejectReasons}
+          onViewNotification={() => handleScrollToView(getNotificationRef)}
+          airdropTotalTokens={airdropTotalTokens}
+          claimStatus={userClaimStatus}
+          setClaimStatus={setUserClaimStatus}
+          airdropWindowrewards={airdropWindowRewards}
         />
-      </Box>
-      <Registration
-        userEligibility={userEligibility}
-        userRegistered={userRegistered}
-        setUserRegistered={setUserRegistered}
-        onViewRules={() => handleScrollToView(rulesRef)}
-        onViewSchedule={() => handleScrollToView(scheduleRef)}
-        onViewNotification={() => handleScrollToView(getNotificationRef)}
-        airdropTotalTokens={airdropTotalTokens}
-        claimStatus={userClaimStatus}
-        setClaimStatus={setUserClaimStatus}
-        airdropWindowrewards={airdropWindowRewards}
-      />
+      </Grid>
       <HowItWorks
         ref={howitworksRef}
         title={AIRDROP_HOW_IT_WORKS_STRING}
         steps={HOW_IT_WORKS}
         blogLink={AIRDROP_LINKS.BLOG_POST}
       />
-      <SubscribeToNotification
-        ref={getNotificationRef}
-        onSubscribe={handleNotificationSubscription}
-      />
-      <Airdroprules
-        title="Airdrop Rules"
-        steps={AIRDROP_RULES}
-        blogLink={AIRDROP_LINKS.BLOG_POST}
-        ref={rulesRef}
-      />
+      <SubscribeToNotification ref={getNotificationRef} onSubscribe={handleNotificationSubscription} />
+      <Airdroprules title="Airdrop Rules" steps={AIRDROP_RULES} blogLink={AIRDROP_LINKS.BLOG_POST} ref={rulesRef} />
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
     </CommonLayout>

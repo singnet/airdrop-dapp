@@ -8,8 +8,10 @@ import Button from '@mui/material/Button';
 import { useAppSelector } from 'utils/store/hooks';
 import { selectActiveWindow } from 'utils/store/features/activeWindowSlice';
 import {
-  AIRDROP_ELIGIBILITY_STRING, AIRDROP_NOT_QUALIFIED_STRING,
-  AIRDROP_WINDOW_INELIGIBILITY_STRING, AIRDROP_CHECK_RULES_SCHEDULE,
+  AIRDROP_ELIGIBILITY_STRING,
+  AIRDROP_NOT_QUALIFIED_STRING,
+  AIRDROP_WINDOW_INELIGIBILITY_STRING,
+  AIRDROP_CHECK_RULES_SCHEDULE,
 } from 'utils/airdropWindows';
 
 type NotqualifiedProps = {
@@ -30,17 +32,25 @@ export default function Notqualified({
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
   return (
-    <Box sx={{
-      bgcolor: 'bgHighlight.main', my: 2, py: 8, pb: 2,
-    }}
+    <Box
+      sx={{
+        bgcolor: 'bgHighlight.main',
+        my: 2,
+        py: 8,
+        pb: 2,
+      }}
     >
       <Grid container spacing={2} px={3} direction="row" justifyContent="center" alignItems="center">
         <Grid item xs={8} md={6}>
           <Typography variant="normal">{AIRDROP_ELIGIBILITY_STRING}</Typography>
 
-          <Box sx={{
-            display: 'flex', alignItems: 'center', p: 0.5, pr: 0,
-          }}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              p: 0.5,
+              pr: 0,
+            }}
           >
             <Box color="success" sx={{ mr: 1 }}>
               <CancelIcon color="error" />
@@ -75,8 +85,7 @@ export default function Notqualified({
           >
             <Box sx={{ p: 0.6, pr: 6, m: 3 }}>
               <Typography variant="body1" color="textAdvanced.primary">
-                {AIRDROP_WINDOW_INELIGIBILITY_STRING} {" "}
-                {activeWindow.airdrop_window_order} / {totalWindows} {". "}
+                {AIRDROP_WINDOW_INELIGIBILITY_STRING} {activeWindow.airdrop_window_order} / {totalWindows} {'. '}
                 {AIRDROP_CHECK_RULES_SCHEDULE}
               </Typography>
             </Box>
@@ -89,6 +98,7 @@ export default function Notqualified({
                   color="secondary"
                   size="large"
                   onClick={onViewSchedule}
+                  sx={{ textTransform: 'capitalize' }}
                 >
                   <Typography color="secondary.main" variant="subtitle2">
                     View Schedule
@@ -99,6 +109,7 @@ export default function Notqualified({
                   color="secondary"
                   size="large"
                   onClick={onViewRules}
+                  sx={{ textTransform: 'capitalize' }}
                 >
                   <Typography color="secondary.main" variant="subtitle2">
                     View Airdrop Rules

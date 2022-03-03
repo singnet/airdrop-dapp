@@ -14,7 +14,7 @@ type FooterProps = {
 };
 export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
-    <Container
+    <Grid
       sx={{
         bgcolor: 'primary.main',
         py: 5,
@@ -22,116 +22,118 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
         color: 'textAdvanced.secondary',
       }}
     >
-      <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          sm={3}
-          sx={{
-            borderRight: 'solid',
-            borderRightWidth: [0, 1],
-            borderRightColor: 'common.white',
-          }}
-        >
-          <List subheader>
-            <ListItem sx={{ justifyContent: 'right' }}>
-              <img alt="" src="NuNet Logo.png" height="53px" />
-            </ListItem>
-            <ListItemButton
-              component="a"
-              href={AIRDROP_LINKS.WEBSITE}
-              target="_blank"
-              rel="noreferrer noopener"
-              sx={{ justifyContent: 'right' }}
-            >
-              <Typography variant="link"> {AIRDROP_SITE_STRING} Site </Typography>
-            </ListItemButton>
-            <ListItemButton
-              component="a"
-              href="/contactus"
-              target="_blank"
-              rel="noreferrer noopener"
-              sx={{ justifyContent: 'right' }}
-            >
-              <Typography variant="link"> Contact Us </Typography>
-            </ListItemButton>
-            <ListItem sx={{ justifyContent: 'right' }}>
-              <Typography justifyContent="right" component="p">
-                A project powered by
-              </Typography>
-            </ListItem>
-            <ListItem
-              sx={{
-                justifyContent: 'right',
-              }}
-            >
-              <img alt="" src="SNET Logo.png" width="130px" />
-            </ListItem>
-          </List>
-        </Grid>
-
-        {LinksData.map((linkItem) => (
-          <Grid item xs={12} sm={3} key={linkItem.header}>
-            <List
-              subheader={
-                <Typography variant="h3" pl={2} sx={{ m: 2 }}>
-                  {linkItem.header}
+      <Container>
+        <Grid container spacing={2}>
+          <Grid
+            item
+            xs={12}
+            sm={3}
+            sx={{
+              borderRight: 'solid',
+              borderRightWidth: [0, 1],
+              borderRightColor: 'common.white',
+            }}
+          >
+            <List subheader>
+              <ListItem sx={{ justifyContent: 'right' }}>
+                <img alt="" src="NuNet Logo.png" height="53px" />
+              </ListItem>
+              <ListItemButton
+                component="a"
+                href={AIRDROP_LINKS.WEBSITE}
+                target="_blank"
+                rel="noreferrer noopener"
+                sx={{ justifyContent: 'right' }}
+              >
+                <Typography variant="link"> {AIRDROP_SITE_STRING} Site </Typography>
+              </ListItemButton>
+              <ListItemButton
+                component="a"
+                href="/contactus"
+                target="_blank"
+                rel="noreferrer noopener"
+                sx={{ justifyContent: 'right' }}
+              >
+                <Typography variant="link"> Contact Us </Typography>
+              </ListItemButton>
+              <ListItem sx={{ justifyContent: 'right' }}>
+                <Typography justifyContent="right" component="p">
+                  A project powered by
                 </Typography>
-              }
-            >
-              {linkItem.links.map((link) => (
-                <ListItemButton
-                  component={link.scrollToKey ? 'b' : 'a'}
-                  href={link.url}
-                  target={link.external ? '_blank' : ''}
-                  rel={link.external ? 'noreferrer noopener' : ''}
-                  key={link.text}
-                  onClick={() => handleScrollToLink(link.scrollToKey)}
-                >
-                  <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
-                    {link.text}
-                  </Typography>
-                </ListItemButton>
-              ))}
+              </ListItem>
+              <ListItem
+                sx={{
+                  justifyContent: 'right',
+                }}
+              >
+                <img alt="" src="SNET Logo.png" width="130px" />
+              </ListItem>
             </List>
           </Grid>
-        ))}
-      </Grid>
-      <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
-      <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Grid item>
-          <Typography align="center">Copyright © 2022 {AIRDROP_SITE_STRING}</Typography>
+
+          {LinksData.map((linkItem) => (
+            <Grid item xs={12} sm={3} key={linkItem.header}>
+              <List
+                subheader={
+                  <Typography variant="h3" pl={2} sx={{ m: 2 }}>
+                    {linkItem.header}
+                  </Typography>
+                }
+              >
+                {linkItem.links.map((link) => (
+                  <ListItemButton
+                    component={link.scrollToKey ? 'b' : 'a'}
+                    href={link.url}
+                    target={link.external ? '_blank' : ''}
+                    rel={link.external ? 'noreferrer noopener' : ''}
+                    key={link.text}
+                    onClick={() => handleScrollToLink(link.scrollToKey)}
+                  >
+                    <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
+                      {link.text}
+                    </Typography>
+                  </ListItemButton>
+                ))}
+              </List>
+            </Grid>
+          ))}
         </Grid>
-        <Divider orientation="vertical" flexItem>
-          {' '}
-          |{' '}
-        </Divider>
-        <Grid item>
-          <Link
-            href="https://public.singularitynet.io/terms_and_conditions.html"
-            target="_blank"
-            color="inherit"
-            underline="none"
-          >
-            Terms of Service
-          </Link>
+        <Divider sx={{ bgcolor: 'common.white', my: 3 }} />
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Grid item>
+            <Typography align="center">Copyright © 2022 {AIRDROP_SITE_STRING}</Typography>
+          </Grid>
+          <Divider orientation="vertical" flexItem>
+            {' '}
+            |{' '}
+          </Divider>
+          <Grid item>
+            <Link
+              href="https://public.singularitynet.io/terms_and_conditions.html"
+              target="_blank"
+              color="inherit"
+              underline="none"
+            >
+              Terms of Service
+            </Link>
+          </Grid>
+          <Divider orientation="vertical" flexItem>
+            {' '}
+            |{' '}
+          </Divider>
+          <Grid item>
+            <Link
+              href="https://public.singularitynet.io/privacy_policy.html"
+              target="_blank"
+              color="inherit"
+              underline="none"
+            >
+              Privacy Policy
+            </Link>
+          </Grid>
         </Grid>
-        <Divider orientation="vertical" flexItem>
-          {' '}
-          |{' '}
-        </Divider>
-        <Grid item>
-          <Link
-            href="https://public.singularitynet.io/privacy_policy.html"
-            target="_blank"
-            color="inherit"
-            underline="none"
-          >
-            Privacy Policy
-          </Link>
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Grid>
   );
 }
 const LinksData = [
