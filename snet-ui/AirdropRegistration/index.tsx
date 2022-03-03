@@ -35,7 +35,7 @@ type HistoryEvent = {
 type StakeInfo = {
   claimableTokensToWallet: string;
   isStakable: boolean;
-  stakableTokenName: string;
+  tokenName: string;
   stakableTokens: string;
   isLoading: boolean;
 };
@@ -154,29 +154,29 @@ export default function AirdropRegistration({
         aria-describedby="stake-modal-description"
       >
         <Box sx={{ ...style, flexGrow: 1 }}>
-          <Typography id="stake-modal-title" variant="h6" component="h2">
+          {/* <Typography id="stake-modal-title" variant="h6" component="h2">
             Select Your Stake Type
           </Typography>
           <Box sx={{ marginBottom: 2, marginTop: 2 }}>
             <Typography id="stake-modal-description" variant="p">
               Please select the SingularityDAO stake pool for your airdrop reward.
             </Typography>
-          </Box>
+          </Box> */}
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h5" color="text.primary">
-                Token to be Staked
+                Tokens to be staked
               </Typography>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">
-                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}
+                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.token_name}`}
               </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h5">Tokens to be Claimed into Wallet</Typography>
+              <Typography variant="h5">Tokens to be claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${
@@ -245,7 +245,7 @@ export default function AirdropRegistration({
                       Tokens available to claim
                     </Typography>
                     <Typography variant="h2" color="textAdvanced.secondary" align="center">
-                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
+                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {stakeInfo.token_name}
                     </Typography>
                   </Box>
                   <Container
@@ -304,7 +304,7 @@ export default function AirdropRegistration({
                       }}
                       onClick={toggleStakeModal}
                       loading={claimLoader}
-                      disabled={true}
+                      disabled={!stakeInfo.is_stakable}
                     >
                       Stake
                     </LoadingButton>
