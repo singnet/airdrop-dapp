@@ -6,9 +6,12 @@ import { Box } from '@mui/system';
 // import success from "public/images/success.png";
 
 import InfoIcon from '@mui/icons-material/Info';
-import { Stack } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import { SUCCESSFUL_REGISTRATION_STRING } from 'utils/airdropWindows';
+import { LoadingButton } from '@mui/lab';
+import History from 'snet-ui/History';
+import colors from '../Theme/colors';
 
 type RegistrationSuccessProps = {
   onViewSchedule: () => void;
@@ -30,36 +33,29 @@ export default function Success({
   return (
     <Box>
       <GradientBox sx={{ py: 2, pb: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', m: 4 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
-            <img
-              src="/images/success.png"
-              alt="SingularityNET"
-              height="137px"
-              width="137px"
-            />
+        <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+            <img src="/images/success.png" alt="SingularityNET" height="137px" width="137px" />
           </Box>
         </Box>
-
         <Box sx={{ display: 'flex', justifyContent: 'center', pb: 3 }}>
           <Box>
-            <Typography align="center" variant="h4" color="secondary.main">
+            <Typography align="center" variant="h3" pb={1.5} sx={{ color: `${colors.GOLDEN_YELLOW}` }}>
               Congratulations
             </Typography>
             <Box>
-              <Typography
-                align="center"
-                fontWeight="bold"
-                variant="h5"
-                color="text.secondary"
-              >
+              <Typography align="center" fontWeight="bold" variant="h5" color="text.secondary" pb={1.5}>
                 {SUCCESSFUL_REGISTRATION_STRING}
-
+              </Typography>
+            </Box>
+            <Box>
+              <Typography align="center" variant="body2" color="textAdvanced.secondary" fontWeight="500">
+                Registration ID: {}
               </Typography>
             </Box>
             <Box
               sx={{
-                my: 8,
+                my: 3,
                 mx: 28,
                 display: 'flex',
                 border: 0.3,
@@ -68,22 +64,24 @@ export default function Success({
                 borderColor: 'note.main',
               }}
             >
-              <Box sx={{
-                display: 'flex', my: 1, py: 1, m: 1,
-              }}
+              <Box
+                sx={{
+                  display: 'flex',
+                  my: 1,
+                  py: 1,
+                  m: 1,
+                }}
               >
                 <InfoIcon color="primary" />
                 <Typography variant="body2" color="textAdvanced.primary">
-                  You can start claiming your tokens from{' '}
-                  {claimStartDate}. It is possible to
-                  claim all tokens in the last window which will
-                  save you gas fees.
+                  You can start claiming your tokens from {claimStartDate}. Please use 'Registration ID' when contacting
+                  support.
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ mx: 35 }}>
-              <Stack spacing={3} direction="row">
-                <Button
+            <Box>
+              <Stack spacing={3} direction="row" justifyContent="center">
+                <LoadingButton
                   variant="outlined"
                   color="bgHighlight"
                   onClick={onViewNotification}
@@ -92,7 +90,7 @@ export default function Success({
                   <Typography color="text.secondary" fontSize="14px" fontWeight="600">
                     Get Notifications
                   </Typography>
-                </Button>
+                </LoadingButton>
                 <Button
                   variant="outlined"
                   color="bgHighlight"
