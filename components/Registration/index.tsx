@@ -438,7 +438,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdrop_window_id: activeWindow?.airdrop_window_id,
       };
       await axios.post('airdrop/registration', payload).then((response) => {
-        console.log(response);
         setRegistrationId(response.data.data);
       });
     } catch (error: any) {
