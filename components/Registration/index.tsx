@@ -65,6 +65,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ is_stakable: false });
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: any }>({ type: AlertTypes.info, message: '' });
+  const [registrationId, setRegistrationId] = useState('');
 
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
@@ -436,7 +437,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdrop_id: activeWindow?.airdrop_id,
         airdrop_window_id: activeWindow?.airdrop_window_id,
       };
-      await axios.post('airdrop/registration', payload);
+      await axios.post('airdrop/registration', payload).then((response) => {
+        console.log(response);
+        setRegistrationId(response.data.data);
+      });
     } catch (error: any) {
       throw new Error(error);
     }
@@ -524,6 +528,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         windowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
         claimStartDate={getDateInStandardFormat(`${activeWindow?.airdrop_window_claim_start_period}`)}
+        registrationValue={registrationId}
       />
     </Box>
   ) : !showMini ? (
@@ -568,3 +573,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 };
 
 export default Registration;
+function address(account: string, address: any) {
+  throw new Error('Function not implemented.');
+}

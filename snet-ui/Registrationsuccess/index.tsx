@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import GradientBox from '../../snet-ui/GradientBox';
 import { Box } from '@mui/system';
@@ -20,6 +20,7 @@ type RegistrationSuccessProps = {
   windowId: number;
   totalWindows: number;
   claimStartDate: string;
+  registrationValue: string;
 };
 
 export default function Success({
@@ -29,6 +30,7 @@ export default function Success({
   windowId,
   totalWindows,
   claimStartDate,
+  registrationValue,
 }: RegistrationSuccessProps) {
   return (
     <Box>
@@ -50,7 +52,7 @@ export default function Success({
             </Box>
             <Box>
               <Typography align="center" variant="body2" color="textAdvanced.secondary" fontWeight="500">
-                Registration ID: {}
+                Registration ID: {registrationValue}
               </Typography>
             </Box>
             <Box
