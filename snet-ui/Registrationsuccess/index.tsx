@@ -10,7 +10,6 @@ import { Container, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import { SUCCESSFUL_REGISTRATION_STRING } from 'utils/airdropWindows';
 import { LoadingButton } from '@mui/lab';
-import History from 'snet-ui/History';
 import colors from '../Theme/colors';
 
 type RegistrationSuccessProps = {
@@ -35,9 +34,9 @@ export default function Success({
   return (
     <Box>
       <GradientBox sx={{ py: 2, pb: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-            <img src="/images/success.png" alt="SingularityNET" height="137px" width="137px" />
+            <img src="/images/Congratulations.png" alt="SingularityNET" height="160px" width="170px" />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', pb: 3 }}>
