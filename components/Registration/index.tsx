@@ -572,6 +572,3 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 };
 
 export default Registration;
-function address(account: string, address: any) {
-  throw new Error('Function not implemented.');
-}
