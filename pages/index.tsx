@@ -180,8 +180,8 @@ const Home: NextPage = () => {
 
   const handleNotificationSubscription = async (email: string) => {
     try {
-      const airdrop_id = process.env.NEXT_PUBLIC_AIRDROP_ID;
-      await axios.post(API_PATHS.SUBSCRIBE_NOTIFACTION, { email,airdrop_id});
+      const AirdropId = process.env.NEXT_PUBLIC_AIRDROP_ID;
+      await axios.post(API_PATHS.SUBSCRIBE_NOTIFACTION, { email, airdrop_id: AirdropId });
     } catch (error: any) {
       const backendErrorMessage = error?.errorText?.error?.message;
       if (backendErrorMessage) {
