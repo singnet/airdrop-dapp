@@ -20,10 +20,11 @@ type EligibilityBannerProps = {
 };
 
 export default function EligibilityBanner({
-  userEligibility, onViewRules,
-  onViewSchedule, rejectReasons,
-}:
-  EligibilityBannerProps) {
+  userEligibility,
+  onViewRules,
+  onViewSchedule,
+  rejectReasons,
+}: EligibilityBannerProps) {
   const { account, chainId, library } = useActiveWeb3React();
   const { window: activeWindow, totalWindows } = useAppSelector(selectActiveWindow);
 
@@ -54,7 +55,11 @@ export default function EligibilityBanner({
   return (
     <Box
       sx={{
-        bgcolor: 'bgHighlight.main', my: 4, p: 4, py: 2, borderRadius: 2,
+        bgcolor: 'bgHighlight.main',
+        my: 1,
+        p: 4,
+        py: 2,
+        borderRadius: 2,
       }}
       color="textAdvanced.dark"
     >
@@ -68,7 +73,7 @@ export default function EligibilityBanner({
             </Box>
 
             <Typography variant="h5" color="primary.main">
-              Qualified for {windowNameActionMap[activeWindow.airdrop_window_status]} Window {' '}
+              Qualified for {windowNameActionMap[activeWindow.airdrop_window_status]} Window{' '}
               {activeWindow.airdrop_window_order} / {totalWindows}
             </Typography>
           </Box>

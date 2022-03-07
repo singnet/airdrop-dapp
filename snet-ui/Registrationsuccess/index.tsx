@@ -6,11 +6,11 @@ import { Box } from '@mui/system';
 // import success from "public/images/success.png";
 
 import InfoIcon from '@mui/icons-material/Info';
-import { Container, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import { SUCCESSFUL_REGISTRATION_STRING } from 'utils/airdropWindows';
-import { LoadingButton } from '@mui/lab';
 import colors from '../Theme/colors';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 type RegistrationSuccessProps = {
   onViewSchedule: () => void;
@@ -31,9 +31,16 @@ export default function Success({
   claimStartDate,
   registrationValue,
 }: RegistrationSuccessProps) {
+  const [copied, setCopied] = useState(false);
+  const copyIdToCipboard = () => {
+    if (window && window.navigator) {
+      window.navigator.clipboard.writeText(registrationValue);
+      setCopied(true);
+    }
+  };
   return (
     <Box>
-      <GradientBox sx={{ py: 2, pb: 2 }}>
+      <GradientBox $background="bgGradientHighlight" sx={{ py: 2, pb: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
             <img src="/images/Congratulations.png" alt="SingularityNET" height="160px" width="170px" />
@@ -49,9 +56,10 @@ export default function Success({
                 {SUCCESSFUL_REGISTRATION_STRING}
               </Typography>
             </Box>
-            <Box>
+            <Box onClick={copyIdToCipboard}>
               <Typography align="center" variant="body2" color="textAdvanced.secondary" fontWeight="500">
-                Registration ID: {registrationValue}
+                Registration ID: <span style={{ color: `${colors.DARK_TEAL}` }}>{registrationValue}</span>
+                <ContentCopyIcon sx={{ ml: 1, color: `${colors.DARK_TEAL}` }} />
               </Typography>
             </Box>
             <Box
@@ -63,6 +71,7 @@ export default function Success({
                 bgcolor: 'note.main',
                 borderRadius: 1,
                 borderColor: 'note.main',
+                width: '620px',
               }}
             >
               <Box
@@ -74,15 +83,15 @@ export default function Success({
                 }}
               >
                 <InfoIcon color="primary" />
-                <Typography variant="body2" color="textAdvanced.primary">
-                  You can start claiming your tokens from {claimStartDate}. Please use 'Registration ID' when contacting
-                  support.
+                <Typography variant="body2" color="textAdvanced.primary" pl="12px">
+                  You can start claiming your tokens from {claimStartDate}.<br /> Please use 'Registration ID' when
+                  contacting support.
                 </Typography>
               </Box>
             </Box>
             <Box>
               <Stack spacing={3} direction="row" justifyContent="center">
-                <LoadingButton
+                <Button
                   variant="outlined"
                   color="bgHighlight"
                   onClick={onViewNotification}
@@ -91,7 +100,7 @@ export default function Success({
                   <Typography color="text.secondary" fontSize="14px" fontWeight="600">
                     Get Notifications
                   </Typography>
-                </LoadingButton>
+                </Button>
                 <Button
                   variant="outlined"
                   color="bgHighlight"
