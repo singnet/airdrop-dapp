@@ -60,34 +60,25 @@ export default function CustomizedDialogs() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} sx={{ textTransform: 'capitalize' }}>
         Open dialog
       </Button>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+      <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <Staketype id="customized-dialog-title" onClose={handleClose} color="primary.main" variant="h5">
           Select Your Stake Type
         </Staketype>
         <DialogContent dividers>
-          <Typography gutterBottom>
-          Please select the SingularityDAO stake pool for your airdrop reward. 
+          <Typography gutterBottom>Please select the SingularityDAO stake pool for your airdrop reward.</Typography>
+          <Typography color="primary.main" variant="subtitle2" gutterBottom>
+            Tokens to be Staked
           </Typography>
           <Typography color="primary.main" variant="subtitle2" gutterBottom>
-          Tokens to be Staked
+            Tokens to be Claimed into wallet
           </Typography>
-          <Typography color="primary.main" variant="subtitle2" gutterBottom>
-          Tokens to be Claimed into wallet
-          </Typography>
-
-          
         </DialogContent>
-        
 
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus sx={{ textTransform: 'capitalize' }} onClick={handleClose}>
             Save changes
           </Button>
         </DialogActions>

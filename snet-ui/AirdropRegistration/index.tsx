@@ -7,8 +7,12 @@ import Box from '@mui/system/Box';
 import InfoIcon from '@mui/icons-material/Info';
 import History from '../../snet-ui/History';
 import {
-  AirdropWindow, WindowStatus, windowStatusActionMap,
-  windowStatusLabelMap, windowStateMap, AIRDROP_TOKEN_DIVISOR,
+  AirdropWindow,
+  WindowStatus,
+  windowStatusActionMap,
+  windowStatusLabelMap,
+  windowStateMap,
+  AIRDROP_TOKEN_DIVISOR,
   AIRDROP_TOKEN_SYMBOL,
 } from '../../utils/airdropWindows';
 import Alert, { AlertColor } from '@mui/material/Alert';
@@ -31,7 +35,7 @@ type HistoryEvent = {
 type StakeInfo = {
   claimableTokensToWallet: string;
   isStakable: boolean;
-  stakableTokenName: string;
+  tokenName: string;
   stakableTokens: string;
   isLoading: boolean;
 };
@@ -166,7 +170,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">
-                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}
+                {`${Number(stakeInfo.stakable_tokens) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.token_name}`}
               </Typography>
             </Grid>
           </Grid>
@@ -175,11 +179,12 @@ export default function AirdropRegistration({
               <Typography variant="h5">Tokens to be claimed into Wallet</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${stakeInfo.stakable_token_name}`}</Typography>
+              <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${
+                stakeInfo.stakable_token_name
+              }`}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
-
             <Grid item xs={6}>
               <Button onClick={toggleStakeModal} color="secondary" variant="contained" fullWidth>
                 Cancel
@@ -194,15 +199,19 @@ export default function AirdropRegistration({
 
           <Box sx={{ marginBottom: 2, marginTop: 2 }}>
             <Grid item xs={13} justifyContent="center" alignItems="right">
-            <Typography id="stake-modal-description" variant="p">
-              <Link href="https://app.singularitydao.ai/staking/bonded" target="_blank" rel="noreferrer" sx={{ mx: 1, fontSize: 14 }}>
-                Visit SingularityDAO
-              </Link>
-            </Typography>
+              <Typography id="stake-modal-description" variant="p">
+                <Link
+                  href="https://app.singularitydao.ai/staking/bonded"
+                  target="_blank"
+                  rel="noreferrer"
+                  sx={{ mx: 1, fontSize: 14 }}
+                >
+                  Visit SingularityDAO
+                </Link>
+              </Typography>
             </Grid>
           </Box>
         </Box>
-
       </Modal>
       <Grid container direction="row" justifyContent="center" alignItems="center">
         <Grid item xs={10} md={12}>
@@ -211,10 +220,12 @@ export default function AirdropRegistration({
               $background="bgGradientHighlight"
               className={styles.contentWrapper}
               sx={{
-                px: 4, pt: 4, pb: 5, borderRadius: 2,
+                px: 4,
+                pt: 4,
+                pb: 5,
+                borderRadius: 2,
               }}
             >
-              <StatusBadge label={isRegistrationActive || isClaimActive ? windowStateMap[airdropWindowStatus ?? ''] : ''} />
               <Container sx={{ my: 6 }}>
                 <Typography color="text.secondary" variant="h4" align="center" mb={1}>
                   {windowName} &nbsp;
@@ -234,7 +245,7 @@ export default function AirdropRegistration({
                       Tokens available to claim
                     </Typography>
                     <Typography variant="h2" color="textAdvanced.secondary" align="center">
-                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {AIRDROP_TOKEN_SYMBOL}
+                      {airdropWindowrewards / AIRDROP_TOKEN_DIVISOR} {stakeInfo.token_name}
                     </Typography>
                   </Box>
                   <Container
@@ -248,14 +259,17 @@ export default function AirdropRegistration({
                       borderColor: 'note.main',
                     }}
                   >
-                    <Box sx={{
-                      display: 'flex', my: 1, py: 1, m: 1,
-                    }}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        my: 1,
+                        py: 1,
+                        m: 1,
+                      }}
                     >
                       <InfoIcon color="primary" />
                       <Typography variant="body2" color="textAdvanced.primary" sx={{ mx: 1, fontSize: 16 }}>
-                        You can start claiming your tokens now.
-                        It is possible to claim all tokens in the last window
+                        You can start claiming your tokens now. It is possible to claim all tokens in the last window
                         which will save you gas fees.
                       </Typography>
                     </Box>
@@ -290,7 +304,7 @@ export default function AirdropRegistration({
                       }}
                       onClick={toggleStakeModal}
                       loading={claimLoader}
-                      disabled={true}
+                      disabled={!stakeInfo.is_stakable}
                     >
                       Stake
                     </LoadingButton>
@@ -309,45 +323,54 @@ export default function AirdropRegistration({
                   </Stack>
                 ) : (
                   <>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
-                      {airdropWindowStatus === WindowStatus.REGISTRATION ? (
-                        <LoadingButton
-                          variant="contained"
-                          color="secondary"
-                          sx={{ width: 170, fontWeight: 600 }}
-                          onClick={handleRegistrationClick}
-                          loading={registrationLoader}
-                        >
-                          Register Now
-                        </LoadingButton>
-                      ) : null}
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
-                      <LoadingButton
-                        variant="contained"
-                        color="secondary"
-                        onClick={onViewSchedule}
-                        sx={{ textTransform: 'capitalize', width: 170 }}
-                      >
-                        View Schedule
-                      </LoadingButton>
-                    </Box>
-                    <Box
-                      sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}
-                    >
-                      <LoadingButton
-                        variant="contained"
-                        color="secondary"
-                        onClick={onViewRules}
-                        sx={{
-                          textTransform: 'capitalize',
-                          width: 170,
-                          fontWeight: 600,
-                        }}
-                      >
-                        View Rules
-                      </LoadingButton>
-                    </Box>
+                    <Stack spacing={2} direction="column">
+                      <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
+                        {airdropWindowStatus === WindowStatus.REGISTRATION ? (
+                          <LoadingButton
+                            variant="contained"
+                            color="secondary"
+                            sx={{ textTransform: 'capitalize', width: 366, fontWeight: 600 }}
+                            onClick={handleRegistrationClick}
+                            loading={registrationLoader}
+                          >
+                            Register Now
+                          </LoadingButton>
+                        ) : null}
+                      </Box>
+                      <Stack spacing={3} direction="row">
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
+                          <LoadingButton
+                            variant="contained"
+                            color="secondary"
+                            onClick={onViewSchedule}
+                            style={{ border: '1px solid' }}
+                            sx={{
+                              textTransform: 'capitalize',
+                              width: 172,
+                              backgroundColor: 'transparent !important',
+                            }}
+                          >
+                            View Schedule
+                          </LoadingButton>
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: [2, 0] }}>
+                          <LoadingButton
+                            variant="contained"
+                            color="secondary"
+                            onClick={onViewRules}
+                            style={{ border: '1px solid' }}
+                            sx={{
+                              textTransform: 'capitalize',
+                              width: 172,
+                              fontWeight: 600,
+                              backgroundColor: 'transparent !important',
+                            }}
+                          >
+                            View Rules
+                          </LoadingButton>
+                        </Box>
+                      </Stack>
+                    </Stack>
                   </>
                 )}
               </Box>
