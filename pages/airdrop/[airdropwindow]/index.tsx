@@ -7,7 +7,6 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useActiveWeb3React } from 'snet-ui/Blockchain/web3Hooks';
 import Header from 'snet-ui/Header';
 import axios from 'utils/Axios';
-import { setShowConnectionModal } from 'utils/store/features/walletSlice';
 import { useAppDispatch } from 'utils/store/hooks';
 import { AIRDROP_TITLE_STRING } from 'utils/airdropWindows';
 
@@ -59,7 +58,7 @@ const AirdropWindow: FunctionComponent<AirdropWindowProps> = () => {
       <Head>
         <title>Nunet Airdrop</title>
       </Head>
-      <Header onConnectWallet={() => dispatch(setShowConnectionModal(true))} />
+      <Header />
       <Grid container spacing={2}>
         <Grid item xs={6} md={8}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

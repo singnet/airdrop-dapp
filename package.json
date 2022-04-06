@@ -47,7 +47,8 @@
     "stylis": "^4.0.10",
     "tiny-invariant": "^1.1.0",
     "ua-parser-js": "^0.7.30",
-    "usehooks-ts": "^1.0.6"
+    "usehooks-ts": "^1.0.6",
+    "web3modal": "^1.9.5"
   },
   "devDependencies": {
     "@types/react": "17.0.22",
