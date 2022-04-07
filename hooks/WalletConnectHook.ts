@@ -10,29 +10,26 @@ const INFURA_NETWORK_NAME = INFURA_NETWORK_ID === '1' ? 'mainnet' : 'ropsten';
 
 let provider: ethers.providers.Web3Provider;
 
-let web3Modal: any = null;
-
-if (typeof window !== 'undefined') {
-  const providerOptions = {
-    injected: {
-      package: null,
+const providerOptions = {
+  injected: {
+    package: null,
+  },
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: INFURA_KEY,
     },
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        infuraId: INFURA_KEY,
-      },
-    },
-  };
+  },
+};
 
-  web3Modal = new Web3Modal({
-    network: INFURA_NETWORK_NAME,
-    cacheProvider: true,
-    providerOptions,
-  });
-}
+const web3Modal = new Web3Modal({
+  network: INFURA_NETWORK_NAME,
+  cacheProvider: true,
+  providerOptions,
+});
 
 export const useWalletHook = () => {
+  const [isConnected, setIsConnected] = useState(false);
   const [address, setWalletAddress] = useState<string>('');
 
   const subscribeProvider = async (provider: ethers.providers.Web3Provider) => {
@@ -52,35 +49,31 @@ export const useWalletHook = () => {
     });
   };
 
-  const getAccount = async () => {
-    if (isNil(web3Modal)) {
-      return;
-    }
-    // const address = await provider.getSigner()?.getAddress();
-    // console.log('getAccount', address);
-  };
-
   const openWallet = async () => {
     try {
       const instance = await web3Modal.connect();
       provider = new ethers.providers.Web3Provider(instance);
       subscribeProvider(provider);
+
+      const [account] = await provider.listAccounts();
+      setWalletAddress(account);
       return provider;
     } catch (error) {
       throw error;
     }
   };
 
-  const initializeConnection = async () => {
-    try {
-      const connected = !isNil(web3Modal.cachedProvider);
-      if (connected) {
-        await openWallet();
-      }
-    } catch (error) {
-      console.log('wallet connection error', error);
+  const initializeConnection = () => {
+    const connected = !isNil(web3Modal.cachedProvider);
+    setIsConnected(connected);
+    if (connected) {
+      openWallet();
     }
   };
+
+  useEffect(() => {
+    initializeConnection();
+  }, []);
 
   const getLatestBlock = async () => {
     const block = await provider.getBlockNumber();
@@ -97,23 +90,5 @@ export const useWalletHook = () => {
     setWalletAddress('');
   };
 
-  const getWalletAddress = async () => {
-    try {
-      const [walletAddress] = await provider?.listAccounts();
-      return walletAddress;
-    } catch (error) {
-      console.log('getWalletAddress error', error);
-    }
-  };
-
-  return {
-    getAccount,
-    initializeConnection,
-    openWallet,
-    disconnectWallet,
-    address,
-    signMessage,
-    getLatestBlock,
-    getWalletAddress,
-  };
+  return { openWallet, disconnectWallet, isConnected, address, signMessage, getLatestBlock };
 };
