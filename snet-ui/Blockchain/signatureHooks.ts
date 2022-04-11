@@ -1,7 +1,6 @@
-import { solidityKeccak256, arrayify } from 'ethers/lib/utils';
+import { solidityKeccak256, hashMessage } from 'ethers/lib/utils';
 import { WalletNotConnectedError } from 'utils/errors';
 import { useActiveWeb3React } from './web3Hooks';
-import { hexlify } from '@ethersproject/bytes';
 
 export const useEthSign = () => {
   const { account, library } = useActiveWeb3React();
@@ -12,10 +11,12 @@ export const useEthSign = () => {
     }
 
     const message = solidityKeccak256(types, values);
-    const bytesDataHash = arrayify(message);
-    const signer = library.getSigner(account);
-    const signature = await signer.signMessage(hexlify(bytesDataHash));
-    console.log("useEthSign:signature", signature);
+    const signer = await library.getSigner();
+    const balance = await signer.getBalance();
+    console.log(balance.toString());
+    const hashedMessage = hashMessage(message);
+    const signature = await signer.signMessage(hashedMessage);
+    console.log('useEthSign:signature', signature);
     return signature;
   };
 
