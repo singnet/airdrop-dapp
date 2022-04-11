@@ -12,6 +12,7 @@ export const useEthSign = () => {
     const signer = await library.getSigner();
 
     const chainId = await signer.getChainId();
+    const blockNumber = await library.getBlockNumber();
 
     const [airdropId, airdropWindowId] = values;
 
@@ -25,6 +26,7 @@ export const useEthSign = () => {
       AirdropSignatureTypes: [
         { name: 'airdropId', type: 'string' },
         { name: 'airdropWindowId', type: 'string' },
+        { name: 'blockNumber', type: 'string' },
         { name: 'walletAddress', type: 'address' },
       ],
       Mail: [{ name: 'Airdrop', type: 'AirdropSignatureTypes' }],
@@ -34,6 +36,7 @@ export const useEthSign = () => {
       Airdrop: {
         airdropId: airdropId.toString(),
         airdropWindowId: airdropWindowId.toString(),
+        blockNumber: blockNumber.toString(),
         walletAddress: account,
       },
     };
