@@ -4,7 +4,7 @@ import { useActiveWeb3React } from './web3Hooks';
 export const useEthSign = () => {
   const { account, library } = useActiveWeb3React();
 
-  const sign = async (types: string[], values: Array<string | number>): Promise<string> => {
+  const sign = async (types: string[], values: Array<string | number>): Promise<any> => {
     if (!account || !library) {
       throw new WalletNotConnectedError();
     }
@@ -43,7 +43,7 @@ export const useEthSign = () => {
 
     const signature = await signer._signTypedData(domain, valueType, value);
     console.log('useEthSign:signature', signature);
-    return signature;
+    return { signature, blockNumber };
   };
 
   return {
