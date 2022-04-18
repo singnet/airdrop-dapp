@@ -1,23 +1,49 @@
-import { solidityKeccak256, hashMessage } from 'ethers/lib/utils';
 import { WalletNotConnectedError } from 'utils/errors';
 import { useActiveWeb3React } from './web3Hooks';
 
 export const useEthSign = () => {
   const { account, library } = useActiveWeb3React();
 
-  const sign = async (types: string[], values: Array<string | number>): Promise<string> => {
+  const sign = async (types: string[], values: Array<string | number>): Promise<any> => {
     if (!account || !library) {
       throw new WalletNotConnectedError();
     }
 
-    const message = solidityKeccak256(types, values);
     const signer = await library.getSigner();
-    const balance = await signer.getBalance();
-    console.log(balance.toString());
-    const hashedMessage = hashMessage(message);
-    const signature = await signer.signMessage(hashedMessage);
+
+    const chainId = await signer.getChainId();
+    const blockNumber = await library.getBlockNumber();
+
+    const [airdropId, airdropWindowId] = values;
+
+    const domain = {
+      name: 'Nunet Airdrop',
+      version: '1',
+      chainId,
+    };
+
+    const valueType = {
+      AirdropSignatureTypes: [
+        { name: 'airdropId', type: 'string' },
+        { name: 'airdropWindowId', type: 'string' },
+        { name: 'blockNumber', type: 'string' },
+        { name: 'walletAddress', type: 'address' },
+      ],
+      Mail: [{ name: 'Airdrop', type: 'AirdropSignatureTypes' }],
+    };
+
+    const value = {
+      Airdrop: {
+        airdropId: airdropId.toString(),
+        airdropWindowId: airdropWindowId.toString(),
+        blockNumber: blockNumber.toString(),
+        walletAddress: account,
+      },
+    };
+
+    const signature = await signer._signTypedData(domain, valueType, value);
     console.log('useEthSign:signature', signature);
-    return signature;
+    return { signature, blockNumber };
   };
 
   return {
