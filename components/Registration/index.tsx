@@ -160,11 +160,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const history = response.data.data.claim_history.map((el) => [
       {
-        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} Rewards`,
+        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_order} Rewards`,
         value: `${Number(el.claimable_amount) / AIRDROP_TOKEN_DIVISOR} ${airdropTotalTokens.name}`,
       },
       {
-        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_id} ${el.action_type} status`,
+        label: `${AIRDROP_WINDOW_STRING} ${el.airdrop_window_order} ${el.action_type} status`,
         value: `${el.txn_status}`,
       },
     ]);
@@ -449,6 +449,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       };
       await axios.post('airdrop/registration', payload).then((response) => {
         setRegistrationId(response.data.data);
+        localStorage.setItem("registration_id", response.data.data);
       });
     } catch (error: any) {
       throw new Error(error);
