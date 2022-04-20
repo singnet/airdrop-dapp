@@ -56,7 +56,7 @@ const Home: NextPage = () => {
   const [userRegistered, setUserRegistered] = useState(false);
   const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
-
+  const [registrationId, setRegistrationId] = useState('');
   const [airdropTotalTokens, setAirdropTotalTokens] = useState({
     value: 0,
     name: '',
