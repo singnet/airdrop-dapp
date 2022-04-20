@@ -56,7 +56,7 @@ const Home: NextPage = () => {
   const [userRegistered, setUserRegistered] = useState(false);
   const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(ClaimStatus.NOT_STARTED);
-
+  const [registrationId, setRegistrationId] = useState('');
   const [airdropTotalTokens, setAirdropTotalTokens] = useState({
     value: 0,
     name: '',
@@ -147,14 +147,17 @@ const Home: NextPage = () => {
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
-
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.data);
       const data = response.data.data;
       let isEligible = data.is_eligible;
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
-
+      setRegistrationId(data.registration_id);
+      localStorage.setItem("registration_id", data.registration_id);
       if (
         (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
           activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&

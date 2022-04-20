@@ -449,6 +449,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       };
       await axios.post('airdrop/registration', payload).then((response) => {
         setRegistrationId(response.data.data);
+        localStorage.setItem("registration_id", response.data.data);
       });
     } catch (error: any) {
       throw new Error(error);
