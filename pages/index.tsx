@@ -154,7 +154,7 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
-
+      localStorage.setItem("registration_id", response.data.data);
       if (
         (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
           activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&
