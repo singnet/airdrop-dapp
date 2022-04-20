@@ -147,9 +147,6 @@ const Home: NextPage = () => {
         airdrop_window_id: activeWindow.airdrop_window_id,
       };
       const response = await axios.post(API_PATHS.AIRDROP_USER_ELIGIBILITY, payload);
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.data);
       const data = response.data.data;
       let isEligible = data.is_eligible;
       const claimStatus = data.airdrop_window_claim_status;
