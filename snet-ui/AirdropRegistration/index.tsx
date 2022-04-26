@@ -180,7 +180,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / AIRDROP_TOKEN_DIVISOR} ${
-                stakeInfo.stakable_token_name
+                stakeInfo.token_name
               }`}</Typography>
             </Grid>
           </Grid>
