@@ -145,6 +145,8 @@ export class AirdropStack extends cdk.Stack {
       sources: [s3deploy.Source.asset(path.join(buildOutputDir, "assets"))],
       destinationBucket: myBucket,
       distribution: distribution,
+      prune:true,
+      retainOnDelete: false,
     });
 
     this.urlOutput = new cdk.CfnOutput(this, "DistributionDomain", {
