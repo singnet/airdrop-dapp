@@ -24,9 +24,9 @@ export const useEthSign = () => {
 
     const valueType = {
       AirdropSignatureTypes: [
-        { name: 'airdropId', type: 'string' },
-        { name: 'airdropWindowId', type: 'string' },
-        { name: 'blockNumber', type: 'string' },
+        { name: 'airdropId', type: 'uint256' },
+        { name: 'airdropWindowId', type: 'uint256' },
+        { name: 'blockNumber', type: 'uint256' },
         { name: 'walletAddress', type: 'address' },
       ],
       Mail: [{ name: 'Airdrop', type: 'AirdropSignatureTypes' }],
@@ -34,9 +34,9 @@ export const useEthSign = () => {
 
     const value = {
       Airdrop: {
-        airdropId: airdropId.toString(),
-        airdropWindowId: airdropWindowId.toString(),
-        blockNumber: blockNumber.toString(),
+        airdropId: airdropId,
+        airdropWindowId: airdropWindowId,
+        blockNumber: blockNumber,
         walletAddress: account,
       },
     };
