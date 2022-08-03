@@ -154,20 +154,22 @@ const Home: NextPage = () => {
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
       const airdropRewards = data.airdrop_window_rewards;
-      localStorage.setItem("registration_id", data.registration_id);
+      localStorage.setItem('registration_id', data.registration_id);
       if (
         (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
-          activeWindow?.airdrop_window_status === WindowStatus.IDLE)
-        &&
-        ((!isRegistered && airdropRewards == 0))
-
+          activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&
+        !isRegistered &&
+        airdropRewards == 0
       ) {
         // HACK: Implement better logic
         // If the user is not registered but has some
         // past rewards to be claimed, allow them to do so
         isEligible = false;
-      } else if ((activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
-        activeWindow?.airdrop_window_status === WindowStatus.IDLE) && airdropRewards > 0) {
+      } else if (
+        (activeWindow?.airdrop_window_status === WindowStatus.CLAIM ||
+          activeWindow?.airdrop_window_status === WindowStatus.IDLE) &&
+        airdropRewards > 0
+      ) {
         isEligible = true;
       }
 
