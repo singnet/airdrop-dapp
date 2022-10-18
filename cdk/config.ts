@@ -9,7 +9,6 @@ export const awsEnvironment = {
 export enum appEnv {
   ropsten = "ropsten",
   mainnet = "mainnet",
-  goerli = "goerli",
 }
 
 const envS3Bucket: { [key in appEnv]: string } = {
@@ -22,14 +21,12 @@ const zoneName = "singularitynet.io";
 const domainNames: { [key in appEnv]: string } = {
   [appEnv.ropsten]: "ropsten-airdrop.singularitynet.io",
   [appEnv.mainnet]: "nunet-airdrop.singularitynet.io",
-  [appEnv.goerli]: "goerli-airdrop.singularitynet.io",
 };
 
 const githubRepo = "singnet/airdrop-dapp";
 const githubBranch: { [key in string]: string } = {
   ropsten: "development",
   mainnet: "master",
-  goerli: "goerli",
 };
 
 type Config = {
@@ -78,6 +75,6 @@ const createConfig = (stage: appEnv): Config => ({
 
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
 config.set(appEnv.mainnet, createConfig(appEnv.mainnet));
-config.set(appEnv.goerli, createConfig(appEnv.goerli));
+
 
 export default config;
