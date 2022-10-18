@@ -76,5 +76,4 @@ const createConfig = (stage: appEnv): Config => ({
 config.set(appEnv.ropsten, createConfig(appEnv.ropsten));
 config.set(appEnv.mainnet, createConfig(appEnv.mainnet));
 
-
 export default config;
