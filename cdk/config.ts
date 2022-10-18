@@ -15,7 +15,6 @@ export enum appEnv {
 const envS3Bucket: { [key in appEnv]: string } = {
   [appEnv.ropsten]: "snet-ropsten-v2-configs",
   [appEnv.mainnet]: "snet-mainnet-v2-configs",
-  [appEnv.goerli]: "snet-goerli-v2-configs",
 };
 
 const zoneName = "singularitynet.io";
