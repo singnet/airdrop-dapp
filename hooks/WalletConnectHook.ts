@@ -6,7 +6,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 
 const INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY;
 const INFURA_NETWORK_ID = process.env.NEXT_PUBLIC_SUPPORTED_CHAIN_ID;
-const INFURA_NETWORK_NAME = INFURA_NETWORK_ID === '1' ? 'mainnet' : 'ropsten';
+const INFURA_NETWORK_NAME = INFURA_NETWORK_ID === '1' ? 'mainnet' : 'goerli';
 
 let provider: ethers.providers.Web3Provider;
 
