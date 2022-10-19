@@ -46,7 +46,5 @@ export class CDKPipelineStack extends Stack {
 
     createPipeline(this, appEnv.ropsten);
     createPipeline(this, appEnv.mainnet);
-    createPipeline(this, appEnv.goerli);
-
   }
 }
