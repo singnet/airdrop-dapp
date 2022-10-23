@@ -17,9 +17,9 @@ const AirdropSchedules = ({ schedules }: AirdropProps, ref) => {
     );
   }
   return (
-    // <Box sx={{ bgcolor: 'bgHighlight.main' }} ref={ref}>
-    <Schedule title={AIRDROP_SCHEDULE_STRING} events={schedules} blogLink={AIRDROP_LINKS.BLOG_POST} />
-    // </Box>
+    <Box sx={{ bgcolor: 'bgHighlight.main' }} ref={ref}>
+      <Schedule title={AIRDROP_SCHEDULE_STRING} events={schedules} blogLink={AIRDROP_LINKS.BLOG_POST} />
+    </Box>
   );
 };
 
