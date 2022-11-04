@@ -209,7 +209,6 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
     activeWindow.airdrop_window_status = WindowStatus.LAST_CLAIM;
     activeWindow.next_window_start_period = activeWindow.airdrop_window_claim_end_period;
   }
-  console.log({activeWindow})
   return activeWindow;
 };
 
