@@ -198,6 +198,8 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.IDLE;
+    } else if (activeWindow.airdrop_window_order === windows.length) {
+      activeWindow.airdrop_window_status = WindowStatus.LAST_CLAIM;
     } else {
       activeWindow.airdrop_window_status = WindowStatus.CLAIM;
     }
@@ -207,7 +209,7 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
     activeWindow.airdrop_window_status = WindowStatus.LAST_CLAIM;
     activeWindow.next_window_start_period = activeWindow.airdrop_window_claim_end_period;
   }
-
+  console.log({activeWindow})
   return activeWindow;
 };
 
