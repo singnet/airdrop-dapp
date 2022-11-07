@@ -130,16 +130,18 @@ export default function AirdropRegistration({
   }
 
   const now = moment.utc(new Date());
-  const isClaimActive = checkDateIsBetween(
-    moment.utc(activeWindow?.airdrop_window_claim_start_period),
-    moment.utc(activeWindow?.airdrop_window_claim_end_period),
-    now,
-  );
+  const isClaimActive =
+    checkDateIsBetween(
+      moment.utc(activeWindow?.airdrop_window_claim_start_period),
+      moment.utc(activeWindow?.airdrop_window_claim_end_period),
+      now,
+    ) &&
+    (airdropWindowStatus === WindowStatus.CLAIM || airdropWindowStatus === WindowStatus.LAST_CLAIM);
 
   const isRegistrationActive = checkDateIsBetween(
     moment.utc(activeWindow?.airdrop_window_registration_start_period),
     moment.utc(activeWindow?.airdrop_window_registration_end_period),
-    now,
+    now
   );
 
   const windowName = windowStatusLabelMap[activeWindow?.airdrop_window_status ?? ''];
@@ -238,7 +240,7 @@ export default function AirdropRegistration({
               </Container>
 
               <FlipCountdown endDate={endDate} />
-              {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
+              {isClaimActive ? (
                 <>
                   <Box sx={{ mt: 6 }}>
                     <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
@@ -292,7 +294,7 @@ export default function AirdropRegistration({
                   gap: [0, 2],
                 }}
               >
-                {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
+                {isClaimActive ? (
                   <Stack spacing={2} direction="row">
                     <LoadingButton
                       variant="contained"
