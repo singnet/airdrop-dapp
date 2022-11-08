@@ -235,7 +235,7 @@ export default function AirdropRegistration({
                 {/* {NOTE: Static window order to fix production issue
                     Remove below Typography once all window closed} */}
                 <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-                  {windowName} 4/4 closes
+                  Airdrop Claim Ends on
                 </Typography>
                 <Typography color="text.secondary" variant="h4" align="center" mb={6}>
                   {formattedDate}
