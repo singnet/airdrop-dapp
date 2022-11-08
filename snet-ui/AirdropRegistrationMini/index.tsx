@@ -37,11 +37,20 @@ export default function AirdropRegistrationMini({
     <GradientBox
       $background="bgGradientHighlight"
       sx={{
-        px: 2, pt: 2, pb: 2, borderRadius: 2,
+        px: 2,
+        pt: 2,
+        pb: 2,
+        borderRadius: 2,
       }}
     >
-      <Typography color="text.secondary" variant="h4" align="center" mb={2}>
+      {/* NOTE: Uncomment below lines once after all airdrop window closesd */}
+      {/* <Typography color="text.secondary" variant="h4" align="center" mb={2}>
         {windowMessage} {currentAirdropWindow}/{totalAirdropWindows} {windowAction}
+      </Typography> */}
+      {/* {NOTE: Static window order to fix production issue
+      Remove below Typography once all window closed} */}
+      <Typography color="text.secondary" variant="h4" align="center" mb={2}>
+        {windowMessage} 4/4 closes
       </Typography>
       <Typography color="text.secondary" variant="h4" align="center" mb={4}>
         {formattedDate}

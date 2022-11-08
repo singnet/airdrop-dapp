@@ -198,8 +198,6 @@ export const findActiveWindow = (windows: AirdropWindow[]): AirdropWindow | unde
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.IDLE;
-    } else if (activeWindow.airdrop_window_order === windows.length) {
-      activeWindow.airdrop_window_status = WindowStatus.LAST_CLAIM;
     } else {
       activeWindow.airdrop_window_status = WindowStatus.CLAIM;
     }
