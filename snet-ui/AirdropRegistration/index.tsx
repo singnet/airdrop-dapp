@@ -130,14 +130,11 @@ export default function AirdropRegistration({
   }
 
   const now = moment.utc(new Date());
-  const isClaimActive =
-    checkDateIsBetween(
-      moment.utc(activeWindow?.airdrop_window_claim_start_period),
-      moment.utc(activeWindow?.airdrop_window_claim_end_period),
-      now,
-    ) &&
-    (airdropWindowStatus === WindowStatus.CLAIM || airdropWindowStatus === WindowStatus.LAST_CLAIM);
-
+  const isClaimActive = checkDateIsBetween(
+    moment.utc(activeWindow?.airdrop_window_claim_start_period),
+    moment.utc(activeWindow?.airdrop_window_claim_end_period),
+    now
+  );
   const isRegistrationActive = checkDateIsBetween(
     moment.utc(activeWindow?.airdrop_window_registration_start_period),
     moment.utc(activeWindow?.airdrop_window_registration_end_period),
@@ -229,10 +226,16 @@ export default function AirdropRegistration({
               }}
             >
               <Container sx={{ my: 6 }}>
-                <Typography color="text.secondary" variant="h4" align="center" mb={1}>
+                {/* NOTE: Uncomment below lines once after all airdrop window closesd */}
+                {/* <Typography color="text.secondary" variant="h4" align="center" mb={1}>
                   {windowName} &nbsp;
                   {windowOrder} / {totalWindows} &nbsp;
                   {windowAction}:
+                </Typography> */}
+                {/* {NOTE: Static window order to fix production issue
+                    Remove below Typography once all window closed} */}
+                <Typography color="text.secondary" variant="h4" align="center" mb={1}>
+                  Airdrop Claim Ends on
                 </Typography>
                 <Typography color="text.secondary" variant="h4" align="center" mb={6}>
                   {formattedDate}
@@ -240,7 +243,7 @@ export default function AirdropRegistration({
               </Container>
 
               <FlipCountdown endDate={endDate} />
-              {isClaimActive ? (
+              {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
                 <>
                   <Box sx={{ mt: 6 }}>
                     <Typography variant="subtitle1" align="center" component="p" color="text.secondary">
@@ -294,7 +297,7 @@ export default function AirdropRegistration({
                   gap: [0, 2],
                 }}
               >
-                {isClaimActive ? (
+                {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
                   <Stack spacing={2} direction="row">
                     <LoadingButton
                       variant="contained"

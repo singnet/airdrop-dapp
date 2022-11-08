@@ -92,8 +92,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         ? moment.utc(`${activeWindow?.airdrop_window_claim_start_period}`)
         : activeWindow?.airdrop_window_status === WindowStatus.CLAIM
         ? moment.utc(`${activeWindow?.next_window_start_period}`)
-        : activeWindow?.airdrop_window_status === WindowStatus.LAST_CLAIM
-        ? moment.utc(`${activeWindow?.airdrop_window_claim_end_period}`)
         : moment.utc(),
     [activeWindow]
   );
@@ -512,7 +510,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
   if (
     (claimStatus === ClaimStatus.SUCCESS || claimStatus === ClaimStatus.PENDING) &&
-    (activeWindow.airdrop_window_status === WindowStatus.CLAIM || activeWindow.airdrop_window_status === WindowStatus.LAST_CLAIM)
+    activeWindow.airdrop_window_status === WindowStatus.CLAIM
   ) {
     return (
       <Box sx={{ px: [0, 4, 15] }}>
